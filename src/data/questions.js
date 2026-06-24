@@ -1,0 +1,325 @@
+const option = (id, label, effects) => ({ id, label, effects });
+
+export const questions = [
+  {
+    id: 1,
+    category: "emotion",
+    prompt: "싸움 후 감정이 얼마나 지속되나요?",
+    options: [
+      option("1-1", "당일 안에 정리됨", { totalScore: 0, categoryScore: { emotion: 0 } }),
+      option("1-2", "하루 정도 지속", { totalScore: -5, categoryScore: { emotion: -5 } }),
+      option("1-3", "2~3일 지속", { totalScore: -10, categoryScore: { emotion: -10 } }),
+      option("1-4", "3일 이상 지속", { totalScore: -15, categoryScore: { emotion: -15 } }),
+    ],
+  },
+  {
+    id: 2,
+    category: "emotion",
+    prompt: "연락이 늦어지면 불안한가요?",
+    options: [
+      option("2-1", "거의 없음", { totalScore: 0, categoryScore: { emotion: 0 } }),
+      option("2-2", "가끔 불안", { totalScore: -5, categoryScore: { emotion: -5 } }),
+      option("2-3", "자주 불안", { totalScore: -10, categoryScore: { emotion: -10 } }),
+      option("2-4", "매우 불안", { totalScore: -15, categoryScore: { emotion: -15 } }),
+    ],
+  },
+  {
+    id: 3,
+    category: "emotion",
+    prompt: "혼자만 노력한다고 느끼나요?",
+    options: [
+      option("3-1", "전혀 아님", { totalScore: 0, categoryScore: { emotion: 0 } }),
+      option("3-2", "가끔 느낌", { totalScore: -5, categoryScore: { emotion: -5 } }),
+      option("3-3", "자주 느낌", { totalScore: -10, categoryScore: { emotion: -10 } }),
+      option("3-4", "항상 느낌", { totalScore: -15, categoryScore: { emotion: -15 } }),
+    ],
+  },
+  {
+    id: 4,
+    category: "emotion",
+    prompt: "상대 눈치를 보는 편인가요?",
+    options: [
+      option("4-1", "거의 없음", { totalScore: 0, categoryScore: { emotion: 0 } }),
+      option("4-2", "가끔 있음", { totalScore: -5, categoryScore: { emotion: -5 } }),
+      option("4-3", "자주 있음", { totalScore: -10, categoryScore: { emotion: -10 } }),
+      option("4-4", "항상 있음", { totalScore: -15, categoryScore: { emotion: -15 } }),
+    ],
+  },
+  {
+    id: 5,
+    category: "emotion",
+    prompt: "갈등을 피하려고 감정을 억누르나요?",
+    options: [
+      option("5-1", "전혀 아님", { totalScore: 0, categoryScore: { emotion: 0 } }),
+      option("5-2", "가끔 있음", { totalScore: -5, categoryScore: { emotion: -5 } }),
+      option("5-3", "자주 있음", { totalScore: -10, categoryScore: { emotion: -10 } }),
+      option("5-4", "거의 항상", { totalScore: -15, categoryScore: { emotion: -15 } }),
+    ],
+  },
+  {
+    id: 6,
+    category: "emotion",
+    prompt: "이 관계가 나를 성장시킨다고 느끼나요?",
+    options: [
+      option("6-1", "매우 그렇다", { totalScore: 0, categoryScore: { emotion: 0 } }),
+      option("6-2", "어느 정도 그렇다", { totalScore: -3, categoryScore: { emotion: -3 } }),
+      option("6-3", "잘 모르겠다", { totalScore: -8, categoryScore: { emotion: -8 } }),
+      option("6-4", "전혀 아니다", { totalScore: -15, categoryScore: { emotion: -15 } }),
+    ],
+  },
+  {
+    id: 7,
+    category: "emotion",
+    prompt: "상대와 있을 때 긴장감이 있나요?",
+    options: [
+      option("7-1", "전혀 없음", { totalScore: 0, categoryScore: { emotion: 0 } }),
+      option("7-2", "약간 있음", { totalScore: -5, categoryScore: { emotion: -5 } }),
+      option("7-3", "자주 있음", { totalScore: -10, categoryScore: { emotion: -10 } }),
+      option("7-4", "항상 긴장", { totalScore: -15, categoryScore: { emotion: -15 } }),
+    ],
+  },
+  {
+    id: 8,
+    category: "emotion",
+    prompt: "싸움 후 먼저 연락하는 쪽은?",
+    options: [
+      option("8-1", "상대가 먼저", { totalScore: 0, categoryScore: { emotion: 0 } }),
+      option("8-2", "비슷함", { totalScore: -3, categoryScore: { emotion: -3 } }),
+      option("8-3", "내가 먼저", { totalScore: -8, categoryScore: { emotion: -8 } }),
+      option("8-4", "거의 항상 내가", { totalScore: -12, categoryScore: { emotion: -12 } }),
+    ],
+  },
+  {
+    id: 9,
+    category: "emotion",
+    prompt: "최근 3개월간 헤어짐을 고민한 적이 있나요?",
+    options: [
+      option("9-1", "없음", { totalScore: 0, categoryScore: { emotion: 0 } }),
+      option("9-2", "1~2번", { totalScore: -8, categoryScore: { emotion: -8 } }),
+      option("9-3", "여러 번", { totalScore: -12, categoryScore: { emotion: -12 } }),
+      option("9-4", "거의 매주", { totalScore: -20, categoryScore: { emotion: -20 } }),
+    ],
+  },
+  {
+    id: 10,
+    category: "emotion",
+    prompt: "관계에서 감정적으로 소진된 느낌이 있나요?",
+    options: [
+      option("10-1", "전혀 아님", { totalScore: 0, categoryScore: { emotion: 0 } }),
+      option("10-2", "가끔 있음", { totalScore: -5, categoryScore: { emotion: -5 } }),
+      option("10-3", "자주 있음", { totalScore: -10, categoryScore: { emotion: -10 } }),
+      option("10-4", "매우 심함", { totalScore: -20, categoryScore: { emotion: -20 } }),
+    ],
+  },
+  {
+    id: 11,
+    category: "stability",
+    prompt: "결혼/장기 관계 의향이 일치하나요?",
+    options: [
+      option("11-1", "명확히 일치", { totalScore: 20, categoryScore: { stability: 20 } }),
+      option("11-2", "대체로 비슷", { totalScore: 10, categoryScore: { stability: 10 } }),
+      option("11-3", "애매함", { totalScore: 0, categoryScore: { stability: 0 } }),
+      option("11-4", "다름", { totalScore: -20, categoryScore: { stability: -20 } }),
+    ],
+  },
+  {
+    id: 12,
+    category: "stability",
+    prompt: "경제관은 비슷한가요?",
+    options: [
+      option("12-1", "매우 비슷", { totalScore: 15, categoryScore: { stability: 15 } }),
+      option("12-2", "대체로 비슷", { totalScore: 5, categoryScore: { stability: 5 } }),
+      option("12-3", "약간 다름", { totalScore: -5, categoryScore: { stability: -5 } }),
+      option("12-4", "많이 다름", { totalScore: -20, categoryScore: { stability: -20 } }),
+    ],
+  },
+  {
+    id: 13,
+    category: "stability",
+    prompt: "갈등 후 회복 속도는?",
+    options: [
+      option("13-1", "빠름", { totalScore: 20, categoryScore: { stability: 20 } }),
+      option("13-2", "보통", { totalScore: 5, categoryScore: { stability: 5 } }),
+      option("13-3", "오래 감", { totalScore: -10, categoryScore: { stability: -10 } }),
+      option("13-4", "반복적으로 쌓임", { totalScore: -20, categoryScore: { stability: -20 } }),
+    ],
+  },
+  {
+    id: 14,
+    category: "stability",
+    prompt: "미래 계획을 구체적으로 공유하나요?",
+    options: [
+      option("14-1", "자주 공유", { totalScore: 15, categoryScore: { stability: 15 } }),
+      option("14-2", "가끔 공유", { totalScore: 5, categoryScore: { stability: 5 } }),
+      option("14-3", "거의 없음", { totalScore: -10, categoryScore: { stability: -10 } }),
+      option("14-4", "전혀 없음", { totalScore: -20, categoryScore: { stability: -20 } }),
+    ],
+  },
+  {
+    id: 15,
+    category: "stability",
+    prompt: "서로의 가족/지인 관계는 안정적인가요?",
+    options: [
+      option("15-1", "매우 안정적", { totalScore: 10, categoryScore: { stability: 10 } }),
+      option("15-2", "큰 문제 없음", { totalScore: 5, categoryScore: { stability: 5 } }),
+      option("15-3", "갈등 있음", { totalScore: -5, categoryScore: { stability: -5 } }),
+      option("15-4", "심각한 갈등", { totalScore: -15, categoryScore: { stability: -15 } }),
+    ],
+  },
+  {
+    id: 16,
+    category: "stability",
+    prompt: "서로의 성향을 존중한다고 느끼나요?",
+    options: [
+      option("16-1", "매우 그렇다", { totalScore: 15, categoryScore: { stability: 15 } }),
+      option("16-2", "대체로 그렇다", { totalScore: 5, categoryScore: { stability: 5 } }),
+      option("16-3", "가끔 무시됨", { totalScore: -5, categoryScore: { stability: -5 } }),
+      option("16-4", "자주 무시됨", { totalScore: -20, categoryScore: { stability: -20 } }),
+    ],
+  },
+  {
+    id: 17,
+    category: "stability",
+    prompt: "상대에 대한 신뢰 수준은?",
+    options: [
+      option("17-1", "매우 높음", { totalScore: 20, categoryScore: { stability: 20 } }),
+      option("17-2", "대체로 신뢰", { totalScore: 10, categoryScore: { stability: 10 } }),
+      option("17-3", "불안함 있음", { totalScore: -10, categoryScore: { stability: -10 } }),
+      option("17-4", "신뢰하기 어려움", { totalScore: -25, categoryScore: { stability: -25 } }),
+    ],
+  },
+  {
+    id: 18,
+    category: "stability",
+    prompt: "같은 주제로 반복 갈등이 있나요?",
+    options: [
+      option("18-1", "거의 없음", { totalScore: 5, categoryScore: { stability: 5 } }),
+      option("18-2", "가끔 있음", { totalScore: 0, categoryScore: { stability: 0 } }),
+      option("18-3", "자주 반복", { totalScore: -10, categoryScore: { stability: -10 } }),
+      option("18-4", "항상 같은 문제", { totalScore: -20, categoryScore: { stability: -20 } }),
+    ],
+  },
+  {
+    id: 19,
+    category: "conflict",
+    prompt: "갈등 시 상대의 반응은?",
+    options: [
+      option("19-1", "대화를 피함", { totalRisk: 8, conflictRisk: 8, typeTag: "avoidant" }),
+      option("19-2", "감정적으로 격해짐", { totalRisk: 10, conflictRisk: 10, typeTag: "explosive" }),
+      option("19-3", "침묵 유지", { totalRisk: 10, conflictRisk: 10, typeTag: "cold" }),
+      option("19-4", "차분히 해결", { totalRisk: 0, conflictRisk: 0, typeTag: "stable" }),
+    ],
+  },
+  {
+    id: 20,
+    category: "conflict",
+    prompt: "갈등 시 나의 반응은?",
+    options: [
+      option("20-1", "계속 확인 요구", { totalRisk: 8, conflictRisk: 8, typeTag: "pursuer" }),
+      option("20-2", "감정 표현 강함", { totalRisk: 10, conflictRisk: 10, typeTag: "explosive" }),
+      option("20-3", "말 안 함", { totalRisk: 10, conflictRisk: 10, typeTag: "cold" }),
+      option("20-4", "대화 시도", { totalRisk: 0, conflictRisk: 0, typeTag: "stable" }),
+    ],
+  },
+  {
+    id: 21,
+    category: "conflict",
+    prompt: "갈등 반복성은?",
+    options: [
+      option("21-1", "같은 문제 반복", { totalRisk: 10, conflictRisk: 10 }),
+      option("21-2", "가끔 반복", { totalRisk: 5, conflictRisk: 5 }),
+      option("21-3", "거의 없음", { totalRisk: 0, conflictRisk: 0 }),
+    ],
+  },
+  {
+    id: 22,
+    category: "conflict",
+    prompt: "갈등 해결 방식은?",
+    options: [
+      option("22-1", "시간 지나 해결", { totalRisk: 5, conflictRisk: 5 }),
+      option("22-2", "감정 폭발 후 해결", { totalRisk: 10, conflictRisk: 10 }),
+      option("22-3", "침묵 유지", { totalRisk: 15, conflictRisk: 15 }),
+      option("22-4", "즉시 대화 해결", { totalRisk: 0, conflictRisk: 0 }),
+    ],
+  },
+  {
+    id: 23,
+    category: "conflict",
+    prompt: "사과 패턴은?",
+    options: [
+      option("23-1", "한쪽만 자주 사과", { totalRisk: 10, conflictRisk: 10 }),
+      option("23-2", "번갈아 사과", { totalRisk: 5, conflictRisk: 5 }),
+      option("23-3", "균형적", { totalRisk: 0, conflictRisk: 0 }),
+    ],
+  },
+  {
+    id: 24,
+    category: "conflict",
+    prompt: "갈등 빈도는?",
+    options: [
+      option("24-1", "매주", { totalRisk: 15, conflictRisk: 15 }),
+      option("24-2", "월 1~2회", { totalRisk: 5, conflictRisk: 5 }),
+      option("24-3", "드묾", { totalRisk: 0, conflictRisk: 0 }),
+    ],
+  },
+  {
+    id: 25,
+    category: "conflict",
+    prompt: "신뢰가 흔들린 경험이 있나요?",
+    options: [
+      option("25-1", "있음", { totalRisk: 20, conflictRisk: 20 }),
+      option("25-2", "약간 있음", { totalRisk: 10, conflictRisk: 10 }),
+      option("25-3", "없음", { totalRisk: 0, conflictRisk: 0 }),
+    ],
+  },
+  {
+    id: 26,
+    category: "conflict",
+    prompt: "중요한 결정을 함께 합의한 경험은?",
+    options: [
+      option("26-1", "거의 없음", { totalRisk: 10, conflictRisk: 10 }),
+      option("26-2", "몇 번 있음", { totalRisk: 5, conflictRisk: 5 }),
+      option("26-3", "충분히 있음", { totalRisk: 0, conflictRisk: 0 }),
+    ],
+  },
+  {
+    id: 27,
+    category: "future",
+    prompt: "3년 후 계획을 함께 이야기한 적이 있나요?",
+    options: [
+      option("27-1", "구체적으로 있음", { totalScore: 5, categoryScore: { future: 5 } }),
+      option("27-2", "추상적으로 있음", { totalScore: 3, categoryScore: { future: 3 } }),
+      option("27-3", "없음", { totalScore: 0, categoryScore: { future: 0 } }),
+    ],
+  },
+  {
+    id: 28,
+    category: "future",
+    prompt: "거주/이사 계획이 일치하나요?",
+    options: [
+      option("28-1", "명확히 일치", { totalScore: 5, categoryScore: { future: 5 } }),
+      option("28-2", "애매함", { totalScore: 0, categoryScore: { future: 0 } }),
+      option("28-3", "다름", { totalScore: -5, categoryScore: { future: -5 } }),
+    ],
+  },
+  {
+    id: 29,
+    category: "future",
+    prompt: "자녀/라이프스타일 방향성은 일치하나요?",
+    options: [
+      option("29-1", "거의 일치", { totalScore: 5, categoryScore: { future: 5 } }),
+      option("29-2", "일부 차이", { totalScore: 0, categoryScore: { future: 0 } }),
+      option("29-3", "큰 차이", { totalScore: -5, categoryScore: { future: -5 } }),
+    ],
+  },
+  {
+    id: 30,
+    category: "future",
+    prompt: "커리어 우선순위 충돌이 있나요?",
+    options: [
+      option("30-1", "충돌 없음", { totalScore: 5, categoryScore: { future: 5 } }),
+      option("30-2", "약간 충돌", { totalScore: 0, categoryScore: { future: 0 } }),
+      option("30-3", "명확한 충돌", { totalScore: -5, categoryScore: { future: -5 } }),
+    ],
+  },
+];

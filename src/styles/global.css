@@ -1,0 +1,155 @@
+@import "./theme.css";
+
+:root {
+  font-family: "Pretendard", sans-serif;
+
+  /* ========================================
+     Color System - Calm Lavender
+  ======================================== */
+  --bg: #ede2f9;
+  --bg-soft: #fbf8ff;
+
+  --card-bg: #ffffff;
+  --card-bg-soft: #fffaff;
+
+  --surface-muted: #f1edf6;
+  --surface-line: #d8cfe3;
+
+  --text: #2c0f27;
+  --inverse-text: #ffffff;
+  --text-soft: #5e3c64;
+  --muted: #7b4b7a;
+
+  --border: #d3c8e2;
+  --border-strong: #b39bc2;
+  --primary: #7b4b7a;
+  --primary-hover: #6a4068;
+  --primary-strong: #3b1e3d;
+  --primary-soft: #eee8f5;
+
+  --accent: #a77b9d;
+  --accent-soft: #f4edf5;
+
+  --premium-bg: #efe6f4;
+  --premium-text: #7b4b7a;
+
+  /* ========================================
+     Shadow
+  ======================================== */
+  --shadow: 0 2px 8px rgba(74, 43, 82, 0.05);
+  --shadow-soft: 0 1px 3px rgba(74, 43, 82, 0.04);
+  --shadow-flat: none;
+
+  /* ========================================
+     Radius
+  ======================================== */
+  --radius-sm: 8px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 999px;
+
+  /* ========================================
+     Gradient
+  ======================================== */
+  --gradient-main: linear-gradient(
+    90deg,
+    #d9d4ef 0%,
+    #b39bc2 36%,
+    #7b4b7a 68%,
+    #3b1e3d 100%
+  );
+  --gradient-page: linear-gradient(
+    180deg,
+    #fdfbff 0%,
+    #f8f6fb 46%,
+    #f1edf6 100%
+  );
+
+  /* ========================================
+     Typography
+  ======================================== */
+  --font-label: 0.66rem;
+  --font-caption: 0.75rem;
+  --font-body: 0.9rem;
+  --font-list: 0.9rem;
+  --font-section-title: 1.08rem;
+  --font-card-title: 1.16rem;
+  --font-result-title: clamp(1.55rem, 2.6vw, 2.15rem);
+  --font-hero-title: clamp(1.8rem, 3vw, 2.8rem);
+  --font-value: 1rem;
+  --font-value-lg: 1.28rem;
+
+  --line-tight: 1.25;
+  --line-title: 1.35;
+  --line-body: 1.68;
+  --line-list: 1.58;
+
+  --letter-label: 0.14em;
+
+  /* ========================================
+     Spacing
+  ======================================== */
+  --space-2xs: 4px;
+  --space-xs: 6px;
+  --space-sm: 10px;
+  --space-md: 14px;
+  --space-lg: 18px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+
+  --card-padding: 20px 24px;
+  --card-padding-sm: 16px 20px;
+  --card-padding-lg: 34px 36px;
+
+  --card-gap: 18px;
+  --section-gap: 18px;
+  --section-gap-lg: 26px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--gradient-page);
+  font-size: var(--font-body);
+  line-height: var(--line-body);
+}
+
+button {
+  font: inherit;
+}
+
+button,
+a,
+input,
+textarea,
+select,
+[role="button"],
+[tabindex] {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  -webkit-touch-callout: none;
+}
+
+button:focus,
+button:focus-visible,
+button:active,
+a:focus,
+a:focus-visible,
+a:active,
+[role="button"]:focus,
+[role="button"]:focus-visible,
+[role="button"]:active {
+  outline: none;
+  box-shadow: none;
+}
