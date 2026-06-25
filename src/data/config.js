@@ -14,14 +14,14 @@ export const RELATIONSHIP_MODE_META = {
     shortLabel: "연인 버전",
     title: "연인 관계 리포트",
     description:
-      "연애 기간, 연락 온도, 만남의 리듬, 결혼과 미래 방향성을 중심으로 봅니다.",
+      "연락과 친밀감, 관계 유지 노력의 상호성, 신뢰 경계, 결혼과 다음 단계 준비도를 중심으로 봅니다.",
   },
   [RELATIONSHIP_MODE.MARRIED]: {
     label: "부부",
     shortLabel: "부부 버전",
     title: "부부 관계 리포트",
     description:
-      "결혼 생활의 역할 분담, 경제, 자녀, 양가와 생활 운영을 중심으로 봅니다.",
+      "배우자 친밀감, 가사와 보이지 않는 노동, 경제·자녀·양가 경계, 장기 생활 운영을 중심으로 봅니다.",
   },
 };
 
