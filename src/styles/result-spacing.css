@@ -1,0 +1,27 @@
+.app-shell {
+  --result-card-gap: var(--card-gap);
+}
+
+/* 결과 화면의 큰 카드들은 모두 같은 세로 간격 규칙을 사용합니다. */
+.capture-export {
+  gap: var(--result-card-gap);
+  margin-bottom: var(--result-card-gap);
+}
+
+.saved-result-notice,
+.capture-export ~ .card {
+  margin-bottom: var(--result-card-gap);
+}
+
+/* 캡처 영역 안에서는 grid gap만 간격을 담당하도록 카드 자체 마진을 제거합니다. */
+.capture-export > .card,
+.capture-export > .capture-panel,
+.capture-export > div > .premium-report {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .app-shell {
+    --result-card-gap: 14px;
+  }
+}
