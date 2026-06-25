@@ -12,7 +12,7 @@ import { PremiumLockedSection } from "../premium/PremiumLockedSection.jsx";
 import { PremiumReport } from "../premium/PremiumReport.jsx";
 
 async function shareResult(shareConfig, relationshipLevelTitle, finalValue, modeLabel) {
-  const shareText = `내 ${modeLabel ?? "관계"} 테스트 결과: ${relationshipLevelTitle} (최종 판단값 ${finalValue})`;
+  const shareText = `내 ${modeLabel ?? "관계"} 테스트 결과: ${relationshipLevelTitle} (종합 관계 지수 ${finalValue}/100)`;
 
   try {
     if (navigator.share) {
@@ -52,12 +52,12 @@ export function ResultView({
 
   const detailedSections = [
     {
-      title: "감정 상태 분석",
+      title: "감정적 안전감 분석",
       desc: analysis.emotionReport.desc,
       points: analysis.emotionReport.points,
     },
     {
-      title: "관계 안정성 분석",
+      title: "현실적 안정성 분석",
       desc: analysis.stabilityReport.desc,
       points: analysis.stabilityReport.points,
     },
@@ -86,7 +86,7 @@ export function ResultView({
 
   function handlePaymentClick() {
     const isConfirmed = window.confirm(
-      "테스트 결제를 진행할까요? 확인을 누르면 프리미엄 리포트가 열립니다."
+      "테스트 모드로 프리미엄 리포트를 열까요? 실제 결제 금액은 청구되지 않습니다."
     );
 
     if (!isConfirmed) return;
@@ -184,7 +184,7 @@ export function ResultView({
             </div>
 
             <div className="capture-panel__type-box">
-              <span className="capture-panel__type-label">대표 갈등 경향</span>
+              <span className="capture-panel__type-label">주요 갈등 반응</span>
               <strong className="capture-panel__type-value">
                 {analysis.topTypeLabel}
               </strong>
@@ -206,13 +206,13 @@ export function ResultView({
               <span className="capture-panel__block-label">핵심 지표</span>
               <MetricGrid
                 items={[
-                  { label: "최종 판단값", value: analysis.finalValue },
-                  { label: "대표 갈등 경향", value: analysis.topTypeLabel },
+                  { label: "종합 관계 지수", value: `${analysis.finalValue}/100` },
+                  { label: "주요 갈등 반응", value: analysis.topTypeLabel },
                   {
-                    label: "관계 안정성",
-                    value: analysis.categoryScores.stability,
+                    label: "현실적 안정성",
+                    value: `${analysis.categoryScores.stability}/100`,
                   },
-                  { label: "갈등 리스크", value: analysis.conflictRisk },
+                  { label: "갈등 부담 지수", value: `${analysis.conflictRisk}/100` },
                 ]}
               />
             </div>
@@ -236,8 +236,8 @@ export function ResultView({
             </div>
 
             <div className="result-overview-card__score">
-              <span>FINAL SCORE</span>
-              <strong>{analysis.finalValue}</strong>
+              <span>RELATIONSHIP INDEX</span>
+              <strong>{analysis.finalValue} / 100</strong>
             </div>
           </div>
 
@@ -248,30 +248,30 @@ export function ResultView({
 
         <SectionCard
           title="한눈에 보는 관계 보고서"
-          desc="선택한 답변을 바탕으로 현재 관계의 강점과 조율이 필요한 영역을 요약했습니다. 아래 항목들은 단정이 아니라, 대화와 점검을 시작하기 위한 참고 지표입니다."
+          desc="선택한 답변을 바탕으로 현재 관계의 강점과 조율이 필요한 영역을 요약했습니다. 아래 지표는 각 영역의 서로 다른 배점 범위를 0~100으로 환산한 앱 내부 참고값이며, 임상 진단이나 표준화 검사 점수가 아닙니다."
           points={analysis.summaryLines}
         />
 
         <section className="card result-card">
-          <h3 className="result-card__title">카테고리별 세부 점수</h3>
+          <h3 className="result-card__title">영역별 참고 지수</h3>
           <p className="result-card__desc">
-            점수는 좋고 나쁨의 낙인이 아니라, 어느 영역을 먼저 대화해야 하는지 보여주는 신호입니다.
+            낮은 점수는 사람이나 관계의 가치를 뜻하지 않고, 어느 영역을 먼저 대화해야 하는지 보여주는 신호입니다.
           </p>
 
           <MetricGrid
             items={[
               {
-                label: CATEGORY_META.emotion.label,
-                value: analysis.categoryScores.emotion,
+                label: "감정적 안전감",
+                value: `${analysis.categoryScores.emotion}/100`,
               },
               {
-                label: CATEGORY_META.stability.label,
-                value: analysis.categoryScores.stability,
+                label: "현실적 안정성",
+                value: `${analysis.categoryScores.stability}/100`,
               },
-              { label: "갈등 리스크", value: analysis.conflictRisk },
+              { label: "갈등 부담 지수", value: `${analysis.conflictRisk}/100` },
               {
                 label: CATEGORY_META.future.label,
-                value: analysis.categoryScores.future,
+                value: `${analysis.categoryScores.future}/100`,
               },
             ]}
           />
