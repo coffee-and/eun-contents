@@ -6,13 +6,13 @@ export function PremiumLockedSection({ onClickPayment }) {
       <div className="premium-lock__label">PREMIUM REPORT</div>
 
       <h3 className="premium-lock__title">
-        내 답변을 근거로 관계의 강점과 반복 패턴을 구체적으로 분석해요
+        연인과 부부의 관계 과제를 구분해 상담 관점으로 깊이 분석해요
       </h3>
 
       <p className="premium-lock__desc">
         무료 결과가 현재 관계의 전체적인 흐름을 보여준다면, 프리미엄
-        리포트는 왜 이런 결과가 나왔는지, 무엇을 먼저 다뤄야 하는지,
-        실제로 어떤 행동 변화를 확인해야 하는지를 단계별로 정리합니다.
+        리포트는 선택한 모드와 답변을 근거로 관계의 보호 요인, 취약 지점,
+        갈등 구조, 회복 조건과 실제 행동 계획까지 단계별로 정리합니다.
       </p>
 
       <ul className="premium-lock__list">
@@ -24,16 +24,16 @@ export function PremiumLockedSection({ onClickPayment }) {
       <div className="premium-lock__sample">
         <div className="premium-lock__sample-label">PREMIUM PREVIEW</div>
         <p>
-          근거 응답 → 해석 → 반복될 때의 영향 → 확인할 행동 기준 순서로
-          핵심 답변을 분석합니다.
+          연인은 상호성·신뢰 경계·애착 안정감·결혼 전환 준비도를 중심으로
+          분석합니다.
         </p>
         <p>
-          가장 약한 영역과 갈등 반응을 연결해, 현재 관계의 악순환이 어디서
-          시작되는지 보여줍니다.
+          부부는 보이지 않는 노동·배우자 친밀감·경제와 양가 경계·장기
+          공동체를 중심으로 분석합니다.
         </p>
         <p>
-          결과에 맞춘 대화 문장과 7일 실행 플랜으로 실제 변화 여부까지
-          점검할 수 있습니다.
+          근거 응답 → 상담적 의미 → 관계 영향 → 대화 목표 → 14일 관찰
+          계획 순서로 실제 변화 가능성을 점검합니다.
         </p>
       </div>
 
