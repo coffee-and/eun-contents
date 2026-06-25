@@ -1,20 +1,42 @@
-// 공통 상수, 화면 카피
 export const PLAN = {
   FREE: "FREE",
   PREMIUM: "PREMIUM",
 };
 
+export const RELATIONSHIP_MODE = {
+  COUPLE: "couple",
+  MARRIED: "married",
+};
+
+export const RELATIONSHIP_MODE_META = {
+  [RELATIONSHIP_MODE.COUPLE]: {
+    label: "연인",
+    shortLabel: "연인 버전",
+    title: "연인 관계 리포트",
+    description:
+      "연애 기간, 연락 온도, 만남의 리듬, 결혼과 미래 방향성을 중심으로 봅니다.",
+  },
+  [RELATIONSHIP_MODE.MARRIED]: {
+    label: "부부",
+    shortLabel: "부부 버전",
+    title: "부부 관계 리포트",
+    description:
+      "결혼 생활의 역할 분담, 경제, 자녀, 양가와 생활 운영을 중심으로 봅니다.",
+  },
+};
+
 export const APP_COPY = {
   brand: "RELATIONSHIP ANALYZER",
   eyebrow: "RELATIONSHIP REPORT",
-  title: "연인 관계 지속성 리포트",
+  title: "관계 지속성 리포트",
   subtitle:
-    "감정 상태, 관계 안정성, 갈등 패턴, 미래 방향성을 바탕으로 현재 관계의 흐름을 분석합니다.",
+    "연인인지 부부인지 먼저 고른 뒤, 지금 관계의 감정 상태와 안정성, 갈등 패턴, 미래 방향성을 살펴봅니다.",
   footer:
-    "본 결과는 감정 상태, 관계 안정성, 갈등 패턴, 미래 방향성을 바탕으로 구성한 참고용 콘텐츠 리포트입니다.",
+    "이 결과는 감정 상태, 관계 안정성, 갈등 패턴, 미래 방향성을 바탕으로 구성한 참고용 리포트입니다.",
 };
 
 export const CATEGORY_META = {
+  context: { label: "관계 맥락", shortLabel: "Context" },
   emotion: { label: "감정 상태", shortLabel: "Emotion" },
   stability: { label: "관계 안정성", shortLabel: "Stability" },
   conflict: { label: "갈등 패턴", shortLabel: "Conflict" },
@@ -27,10 +49,10 @@ export const TYPE_LABELS = {
   cold: "냉담형",
   pursuer: "추적형",
   stable: "안정형",
-  mixed: "갈등 누적형",
+  mixed: "복합형",
 };
 
 export const SHARE = {
-  title: "연인 관계 지속성 리포트 결과",
+  title: "관계 지속성 리포트 결과",
   fileName: "relationship-analyzer-result.png",
 };

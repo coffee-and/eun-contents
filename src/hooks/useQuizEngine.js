@@ -1,16 +1,17 @@
 import { useMemo, useState } from "react";
-import { questions } from "../data/questions.js";
 import { createInitialState } from "../domain/createInitialState.js";
 import { applyOptionEffects } from "../domain/applyOptionEffects.js";
 
-// 퀴즈 진행 상태를 화면과 분리해서 관리하는 Hook
-export function useQuizEngine({ planType = "FREE" } = {}) {
+export function useQuizEngine({ planType = "FREE", questions = [] } = {}) {
   const [state, setState] = useState(() => createInitialState(planType));
 
   const currentQuestion = questions[state.currentIndex] ?? null;
   const totalQuestions = questions.length;
-  const isComplete = state.currentIndex >= totalQuestions;
-  const progress = Math.min((state.currentIndex / totalQuestions) * 100, 100);
+  const isComplete = totalQuestions > 0 && state.currentIndex >= totalQuestions;
+  const progress =
+    totalQuestions > 0
+      ? Math.min((state.currentIndex / totalQuestions) * 100, 100)
+      : 0;
 
   const resultPayload = useMemo(
     () => ({

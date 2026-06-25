@@ -1,14 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import html2canvas from "html2canvas";
-import { APP_COPY, CATEGORY_META } from "../../data/config.js";
+import {
+  APP_COPY,
+  CATEGORY_META,
+  RELATIONSHIP_MODE_META,
+} from "../../data/config.js";
 import { buildResultUrl, saveResult } from "../../utils/resultStorage.js";
 import { MetricGrid } from "./MetricGrid.jsx";
 import { SectionCard } from "./SectionCard.jsx";
 import { PremiumLockedSection } from "../premium/PremiumLockedSection.jsx";
 import { PremiumReport } from "../premium/PremiumReport.jsx";
 
-async function shareResult(shareConfig, relationshipLevelTitle, finalValue) {
-  const shareText = `내 연인 관계 지속성 테스트 결과: ${relationshipLevelTitle} (최종 판단값 ${finalValue})`;
+async function shareResult(shareConfig, relationshipLevelTitle, finalValue, modeLabel) {
+  const shareText = `내 ${modeLabel ?? "관계"} 테스트 결과: ${relationshipLevelTitle} (최종 판단값 ${finalValue})`;
 
   try {
     if (navigator.share) {
@@ -29,7 +33,9 @@ async function shareResult(shareConfig, relationshipLevelTitle, finalValue) {
 export function ResultView({
   analysis,
   answers,
+  relationshipMode,
   onRestart,
+  onChooseAgain,
   shareConfig,
   isSavedResult = false,
   savedAt,
@@ -40,6 +46,32 @@ export function ResultView({
   const [isAnswerOpen, setIsAnswerOpen] = useState(false);
   const [showComingSoon, setShowComingSoon] = useState(false);
   const [savedResultUrl, setSavedResultUrl] = useState("");
+  const modeLabel = relationshipMode
+    ? RELATIONSHIP_MODE_META[relationshipMode]?.shortLabel
+    : analysis.relationshipLabel;
+
+  const detailedSections = [
+    {
+      title: "감정 상태 분석",
+      desc: analysis.emotionReport.desc,
+      points: analysis.emotionReport.points,
+    },
+    {
+      title: "관계 안정성 분석",
+      desc: analysis.stabilityReport.desc,
+      points: analysis.stabilityReport.points,
+    },
+    {
+      title: analysis.conflictReport.title,
+      desc: analysis.conflictReport.desc,
+      points: analysis.conflictReport.points,
+    },
+    {
+      title: "미래 방향성 분석",
+      desc: analysis.futureReport.desc,
+      points: analysis.futureReport.points,
+    },
+  ];
 
   useEffect(() => {
     if (!isPremium || !premiumReportRef.current) return;
@@ -54,7 +86,7 @@ export function ResultView({
 
   function handlePaymentClick() {
     const isConfirmed = window.confirm(
-      "테스트 결제를 진행할까요? 확인을 누르면 프리미엄 리포트가 열립니다.",
+      "테스트 결제를 진행할까요? 확인을 누르면 프리미엄 리포트가 열립니다."
     );
 
     if (!isConfirmed) return;
@@ -70,7 +102,7 @@ export function ResultView({
       return;
     }
 
-    const savedResult = saveResult({ analysis, answers });
+    const savedResult = saveResult({ analysis, answers, relationshipMode });
     const nextUrl = buildResultUrl(savedResult.id);
 
     setSavedResultUrl(nextUrl);
@@ -79,7 +111,7 @@ export function ResultView({
       await navigator.clipboard.writeText(nextUrl);
       window.alert("결과 링크를 저장하고 클립보드에 복사했어요.");
     } catch (error) {
-      window.alert("결과는 저장했지만 링크 복사는 실패했어요. 화면의 링크를 복사해주세요.");
+      window.alert("결과는 저장됐지만 링크 복사에 실패했어요. 화면의 링크를 복사해 주세요.");
     }
   }
 
@@ -90,9 +122,7 @@ export function ResultView({
 
     const shouldIncludePremium =
       isPremium &&
-      window.confirm(
-        "프리미엄 리포트 내용도 결과 이미지에 포함할까요?",
-      );
+      window.confirm("프리미엄 리포트 내용도 결과 이미지에 포함할까요?");
 
     node.classList.add("capture-export--saving");
 
@@ -140,11 +170,11 @@ export function ResultView({
 
       <div ref={captureRef} className="capture-export">
         <section className="capture-panel capture-panel--cozy">
-          <div className="capture-panel__floating capture-panel__floating--top" />
-          <div className="capture-panel__floating capture-panel__floating--bottom" />
-
           <div className="capture-panel__hero">
             <div className="capture-panel__hero-main">
+              <span className="capture-panel__summary-label">
+                {modeLabel ?? "관계 리포트"}
+              </span>
               <h2 className="capture-panel__title">
                 {analysis.relationshipLevel.title}
               </h2>
@@ -162,13 +192,12 @@ export function ResultView({
           </div>
 
           <div className="capture-panel__summary-box">
-            <span className="capture-panel__summary-label">핵심 한줄 분석</span>
+            <span className="capture-panel__summary-label">핵심 분석</span>
             <p className="capture-panel__summary-text">
               {analysis.summaryLines[0]}
             </p>
             <p className="capture-panel__summary-sub">
-              {analysis.summaryLines[1] ??
-                "현재 관계 흐름을 조금 더 정교하게 점검해보면, 유지 가능성과 감정 만족도를 더 분명하게 볼 수 있어요."}
+              {analysis.summaryLines[1]}
             </p>
           </div>
 
@@ -198,7 +227,9 @@ export function ResultView({
         <section className="card result-overview-card">
           <div className="result-overview-card__head">
             <div>
-              <span className="result-overview-card__eyebrow">OVERVIEW</span>
+              <span className="result-overview-card__eyebrow">
+                {modeLabel ?? "OVERVIEW"}
+              </span>
               <h3 className="result-overview-card__title">
                 {analysis.relationshipLevel.title}
               </h3>
@@ -217,13 +248,14 @@ export function ResultView({
 
         <SectionCard
           title="한눈에 보는 관계 보고서"
+          desc="선택한 답변을 바탕으로 현재 관계의 강점과 조율이 필요한 영역을 요약했습니다. 아래 항목들은 단정이 아니라, 대화와 점검을 시작하기 위한 참고 지표입니다."
           points={analysis.summaryLines}
         />
 
         <section className="card result-card">
           <h3 className="result-card__title">카테고리별 세부 점수</h3>
           <p className="result-card__desc">
-            관계의 각 영역을 조금 더 세부적으로 볼 수 있어요.
+            점수는 좋고 나쁨의 낙인이 아니라, 어느 영역을 먼저 대화해야 하는지 보여주는 신호입니다.
           </p>
 
           <MetricGrid
@@ -245,9 +277,18 @@ export function ResultView({
           />
         </section>
 
+        {detailedSections.map((section) => (
+          <SectionCard
+            key={section.title}
+            title={section.title}
+            desc={section.desc}
+            points={section.points}
+          />
+        ))}
+
         {isPremium ? (
           <div ref={premiumReportRef}>
-            <PremiumReport analysis={analysis} />
+            <PremiumReport analysis={analysis} answers={answers} />
           </div>
         ) : null}
       </div>
@@ -289,6 +330,7 @@ export function ResultView({
           </ul>
         ) : null}
       </section>
+
       <section className="card result-card result-card--actions">
         <h3 className="result-card__title">결과 저장 / 공유</h3>
         <p className="result-card__desc">
@@ -327,6 +369,7 @@ export function ResultView({
                 shareConfig,
                 analysis.relationshipLevel.title,
                 analysis.finalValue,
+                modeLabel
               )
             }
           >
@@ -339,6 +382,14 @@ export function ResultView({
             onClick={onRestart}
           >
             다시 테스트하기
+          </button>
+
+          <button
+            type="button"
+            className="button button--secondary"
+            onClick={onChooseAgain}
+          >
+            다시 선택하기
           </button>
         </div>
       </section>

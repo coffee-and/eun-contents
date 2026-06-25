@@ -1,6 +1,4 @@
-export function Hero({ eyebrow, title, subtitle, progressText }) {
-  const [current, total] = progressText.split(" / ");
-
+export function Hero({ eyebrow, title, subtitle }) {
   return (
     <header className="hero">
       <div className="hero__copy">
@@ -13,21 +11,6 @@ export function Hero({ eyebrow, title, subtitle, progressText }) {
 
         <p className="hero__subtitle">{subtitle}</p>
       </div>
-
-      <aside className="hero__meta">
-        <div className="hero__progress-card">
-          <span className="hero__progress-label">STEP</span>
-          <div className="hero__progress-value">
-            <strong>{current}</strong>
-            <span>/ {total}</span>
-          </div>
-        </div>
-
-        <div className="hero__mini-card">
-          <span className="hero__mini-label">CURRENT MODE</span>
-          <strong>Relationship Scan</strong>
-        </div>
-      </aside>
     </header>
   );
 }

@@ -23,6 +23,7 @@
 .hero {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: var(--card-gap);
   margin-bottom: var(--section-gap);
 }
@@ -72,40 +73,6 @@
   line-height: var(--line-body);
 }
 
-.hero__meta {
-  display: grid;
-  gap: var(--space-xs);
-  min-width: 150px;
-}
-
-.hero__progress-card,
-.hero__mini-card {
-  padding: 12px 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--card-bg);
-}
-
-.hero__progress-label,
-.hero__mini-label {
-  display: block;
-  margin-bottom: 4px;
-  color: var(--muted);
-  font-size: var(--font-label);
-  font-weight: 700;
-  letter-spacing: var(--letter-label);
-}
-
-.hero__progress-value strong {
-  color: var(--text);
-  font-size: var(--font-value-lg);
-}
-
-.hero__progress-value span,
-.hero__mini-card strong {
-  color: var(--text-soft);
-}
-
 /* ========================================
    Progress Bar
 ======================================== */
@@ -123,6 +90,37 @@
   border-radius: var(--radius-pill);
   background: var(--gradient-main);
   transition: width 0.32s ease;
+}
+
+.quiz-utility {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  margin: -8px 0 var(--space-sm);
+  color: var(--muted);
+  font-size: var(--font-caption);
+  font-weight: 700;
+}
+
+.quiz-utility span {
+  letter-spacing: 0.04em;
+}
+
+.quiz-utility button {
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-soft);
+  font-size: var(--font-caption);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.quiz-utility button:hover {
+  color: var(--text);
 }
 
 /* ========================================
@@ -227,6 +225,89 @@
   background: var(--card-bg);
   color: var(--text);
   border-color: var(--border);
+}
+
+/* ========================================
+   Mode Select
+======================================== */
+.mode-select {
+  margin-bottom: var(--card-gap);
+}
+
+.mode-select__head {
+  margin-bottom: var(--space-lg);
+}
+
+.mode-select__eyebrow,
+.mode-card__label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  margin-bottom: var(--space-xs);
+  color: var(--muted);
+  font-size: var(--font-label);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: var(--letter-label);
+}
+
+.mode-select__title {
+  margin: 0 0 var(--space-xs);
+  color: var(--text);
+  font-size: var(--font-result-title);
+  line-height: var(--line-title);
+  letter-spacing: -0.03em;
+  word-break: keep-all;
+}
+
+.mode-select__desc {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: var(--font-body);
+  line-height: var(--line-body);
+}
+
+.mode-select__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.mode-card {
+  min-height: 168px;
+  padding: var(--card-padding);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--card-bg);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 0.16s ease,
+    background 0.16s ease,
+    border-color 0.16s ease;
+}
+
+.mode-card:hover {
+  background: var(--primary-soft);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+
+.mode-card strong {
+  display: block;
+  margin-bottom: var(--space-sm);
+  color: var(--text);
+  font-size: var(--font-card-title);
+  line-height: var(--line-title);
+}
+
+.mode-card small {
+  display: block;
+  color: var(--text-soft);
+  font-size: var(--font-body);
+  line-height: var(--line-body);
+  word-break: keep-all;
 }
 
 /* ========================================
@@ -397,7 +478,7 @@
   display: none;
 }
 
-/* 첫 번째 결과 카드도 아래 카드들과 같은 밝은 카드 스타일 */
+/* 嶺??뺢퀡????롪퍒????곸궠?獄???熬곣뫁???곸궠?獄??釉띻땁 ?띠룇?? ?꾩룇鍮? ?곸궠?獄??????*/
 .capture-panel {
   position: relative;
   overflow: hidden;
@@ -486,8 +567,8 @@
 .capture-panel__type-box,
 .result-overview-card__score,
 .metric-card {
-  min-height: 44px;
-  padding: 10px 16px;
+  min-height: 40px;
+  padding: 8px 14px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -512,7 +593,7 @@
 .metric-card__label,
 .premium-report__summary span {
   color: var(--muted);
-  font-size: var(--font-label);
+  font-size: 0.66rem;
   font-weight: 700;
   line-height: 1;
   white-space: nowrap;
@@ -536,11 +617,17 @@
   justify-content: center;
 }
 
+.premium-report__summary strong {
+  line-height: 1.25;
+  white-space: normal;
+  word-break: keep-all;
+}
+
 .metric-grid,
 .premium-report__summary {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-sm);
+  gap: 10px;
 }
 
 /* ========================================
@@ -591,7 +678,7 @@
    Result Sections
 ======================================== */
 .page--result {
-  background: #f58baa; /* 원하는 결과화면 배경색 */
+  background: #f58baa; /* ??믨퀡由???롪퍒????븐뻼???꾩룄?쀧몭??*/
 }
 
 .result-overview-card__head {
@@ -614,13 +701,13 @@
 .result-card__desc,
 .premium-lock__desc,
 .premium-report__desc {
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
 }
 
 .bullet-list,
 .answer-list,
 .premium-report__points {
-  margin: var(--space-xs) 0 0;
+  margin: 8px 0 0;
   padding-left: var(--space-lg);
   color: var(--text-soft);
   font-size: var(--font-list);
@@ -629,7 +716,11 @@
 
 .answer-list li,
 .premium-report__points li {
-  margin-bottom: var(--space-sm);
+  margin-bottom: 5px;
+}
+
+.bullet-list li {
+  margin-bottom: 5px;
 }
 
 .premium-report__points li::marker {
@@ -687,7 +778,7 @@
 
 .premium-lock__list {
   display: grid;
-  gap: var(--space-sm);
+  gap: 7px;
   margin: 0 0 var(--section-gap);
   padding: 0;
   list-style: none;
@@ -747,40 +838,42 @@
    Premium Report
 ======================================== */
 .premium-report__summary {
-  margin: var(--section-gap) 0;
+  margin: var(--space-md) 0;
 }
 
 .premium-report__summary div {
-  min-height: 82px;
-  padding: var(--section-gap);
+  min-height: 58px;
+  padding: 12px 16px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
 }
 
 .premium-report__sections {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-md);
+  gap: var(--space-sm);
 }
 
 .premium-report__section {
-  padding: var(--space-xl) var(--space-lg);
+  padding: 16px 18px;
 }
 
 .premium-report__section h4 {
   margin: 0 0 var(--space-sm);
   color: var(--text);
-  font-size: var(--font-body);
+  font-size: var(--font-section-title);
   line-height: var(--line-title);
 }
 
 .premium-report__section p {
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-sm);
 }
 
 .premium-report__section .premium-report__points {
-  margin-top: var(--space-md);
+  margin-top: var(--space-sm);
 }
 
 /* ========================================
@@ -824,7 +917,7 @@
 ======================================== */
 .result-card--actions .button-row {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: var(--space-sm);
   margin-top: var(--section-gap);
 }
@@ -880,10 +973,6 @@
     align-items: flex-start;
   }
 
-  .hero__meta {
-    display: none;
-  }
-
   .progress {
     height: 5px;
     margin-bottom: 14px;
@@ -907,6 +996,7 @@
 
   .capture-panel__grid,
   .metric-grid,
+  .mode-select__grid,
   .premium-report__summary,
   .premium-report__sections,
   .result-card--actions .button-row {
@@ -918,26 +1008,26 @@
   }
 
   .hero__title {
-    font-size: clamp(1.45rem, 6vw, 1.9rem);
+    font-size: clamp(1.34rem, 5.5vw, 1.72rem);
     line-height: 1.12;
   }
 
   .question-card__title {
-    font-size: clamp(1.22rem, 5.4vw, 1.48rem);
+    font-size: clamp(1.12rem, 5vw, 1.34rem);
     line-height: 1.38;
     letter-spacing: -0.03em;
   }
 
   .capture-panel__title {
-    font-size: clamp(1.32rem, 5.4vw, 1.72rem);
+    font-size: clamp(1.18rem, 5vw, 1.5rem);
   }
 
   .result-overview-card__title,
   .result-card__title,
   .premium-lock__title,
   .premium-report__title,
-  .answer-toggle-card__button strong {
-    font-size: 1.16rem;
+.answer-toggle-card__button strong {
+    font-size: 1.04rem;
   }
 
   .question-card__top {
@@ -967,7 +1057,7 @@
   }
 
   .option-card__text {
-    font-size: 0.86rem;
+    font-size: 0.82rem;
     line-height: 1.5;
   }
 
@@ -979,11 +1069,16 @@
   .button {
     min-height: 48px;
     padding: 12px 14px;
-    font-size: 0.86rem;
+    font-size: 0.82rem;
   }
 
   .button-row {
     gap: 12px;
+  }
+
+  .mode-card {
+    min-height: 144px;
+    padding: 18px 20px;
   }
 
   .capture-panel__summary-box,
@@ -1006,11 +1101,11 @@
   .metric-card__value,
   .capture-panel__type-value,
   .result-overview-card__score strong {
-    font-size: 1.08rem;
+    font-size: 0.98rem;
   }
 
   .premium-report__summary strong {
-    font-size: 0.98rem;
+    font-size: 0.9rem;
     line-height: 1.36;
     white-space: normal;
     word-break: keep-all;
@@ -1078,13 +1173,13 @@
   }
 
   .premium-report__summary div {
-    min-height: 70px;
-    padding: 16px 18px;
+    min-height: 56px;
+    padding: 12px 14px;
     gap: 8px;
   }
 
   .premium-report__section {
-    padding: 22px 24px;
+    padding: 18px 20px;
   }
 }
 
@@ -1103,22 +1198,22 @@
   }
 
   .hero__title {
-    font-size: clamp(1.42rem, 8vw, 1.78rem);
+    font-size: clamp(1.28rem, 7vw, 1.54rem);
   }
 
   .question-card__title {
-    font-size: clamp(1.18rem, 6.2vw, 1.38rem);
+    font-size: clamp(1.08rem, 5.8vw, 1.26rem);
   }
 
   .capture-panel__title {
-    font-size: clamp(1.26rem, 6.5vw, 1.58rem);
+    font-size: clamp(1.12rem, 5.8vw, 1.36rem);
   }
 
   .result-overview-card__title,
   .result-card__title,
   .premium-lock__title,
   .premium-report__title,
-  .answer-toggle-card__button strong {
-    font-size: 1.12rem;
+.answer-toggle-card__button strong {
+    font-size: 1rem;
   }
 }

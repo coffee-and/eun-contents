@@ -31,7 +31,7 @@ export function getStoredResult(resultId) {
   return results[resultId] ?? null;
 }
 
-export function saveResult({ analysis, answers }) {
+export function saveResult({ analysis, answers, relationshipMode }) {
   const id = createResultId();
   const results = readStoredResults();
   const savedAt = new Date().toISOString();
@@ -40,6 +40,7 @@ export function saveResult({ analysis, answers }) {
     id,
     analysis,
     answers,
+    relationshipMode,
     savedAt,
   };
 

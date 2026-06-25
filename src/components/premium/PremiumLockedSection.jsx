@@ -1,19 +1,16 @@
 import { PREMIUM_PRICE, premiumBenefits } from "../../data/premiumContent.js";
 
-// 프리미엄 리포트 결제 전 잠금 카드
 export function PremiumLockedSection({ onClickPayment }) {
   return (
     <section className="card premium-lock">
       <div className="premium-lock__label">PREMIUM REPORT</div>
 
       <h3 className="premium-lock__title">
-        관계의 반복 패턴을 더 깊게 확인해보세요
+        관계를 더 깊게 해석한 상세 보고서를 열어볼 수 있어요
       </h3>
 
       <p className="premium-lock__desc">
-        무료 결과에서는 현재 관계의 핵심 흐름을 요약하고, 프리미엄 리포트에서는
-        반복되는 갈등 구조와 실제 대화에 사용할 수 있는 문장 가이드까지
-        제공합니다.
+        무료 결과가 현재 관계의 큰 흐름을 보여준다면, 프리미엄 리포트는 왜 그런 결과가 나왔는지와 실제로 어떤 대화를 해야 하는지를 더 구체적으로 정리합니다.
       </p>
 
       <ul className="premium-lock__list">
@@ -24,18 +21,9 @@ export function PremiumLockedSection({ onClickPayment }) {
 
       <div className="premium-lock__sample">
         <div className="premium-lock__sample-label">PREMIUM PREVIEW</div>
-        <p>
-          “갈등의 핵심은 사건 자체보다, 이후 회복 방식의 차이에 있을 수
-          있습니다.”
-        </p>
-        <p>
-          “한쪽은 빠른 확인을 원하고, 다른 한쪽은 시간을 두고 정리하려는 흐름이
-          반복될 수 있습니다.”
-        </p>
-        <p>
-          “이 차이가 누적되면 작은 문제도 관계 전체의 불안으로 확장될 수
-          있습니다.”
-        </p>
+        <p>성숙한 사랑의 요소 중 현재 관계에서 가장 강한 축과 약한 축을 분리해 보여줍니다.</p>
+        <p>반복 갈등은 주제보다 패턴이 중요하므로, 어떤 대화 방식이 관계를 지치게 하는지 정리합니다.</p>
+        <p>결과에 맞춘 대화 질문과 7일 실행 플랜을 제공해 바로 점검할 수 있게 합니다.</p>
       </div>
 
       <button
@@ -43,7 +31,7 @@ export function PremiumLockedSection({ onClickPayment }) {
         className="button button--primary premium-lock__button"
         onClick={onClickPayment}
       >
-        테스트 결제하기 · ₩{PREMIUM_PRICE.toLocaleString()}
+        테스트 결제하기 · {PREMIUM_PRICE.toLocaleString()}원
       </button>
     </section>
   );
