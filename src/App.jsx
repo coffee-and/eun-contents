@@ -5,6 +5,7 @@ import {
   RELATIONSHIP_MODE_META,
   SHARE,
 } from "./data/config.js";
+import { getModeContextQuestions } from "./data/modeQuestions.js";
 import { getQuestionsByMode } from "./data/questions.js";
 import { analyzeRelationship } from "./domain/analyzeRelationship.js";
 import { useQuizEngine } from "./hooks/useQuizEngine.js";
@@ -21,7 +22,10 @@ export default function App() {
   const [savedResult, setSavedResult] = useState(null);
   const [relationshipMode, setRelationshipMode] = useState(null);
   const activeQuestions = useMemo(
-    () => getQuestionsByMode(relationshipMode),
+    () => [
+      ...getQuestionsByMode(relationshipMode),
+      ...getModeContextQuestions(relationshipMode),
+    ],
     [relationshipMode]
   );
 
