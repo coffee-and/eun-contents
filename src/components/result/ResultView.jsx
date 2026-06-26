@@ -11,6 +11,8 @@ import { SectionCard } from "./SectionCard.jsx";
 import { PremiumLockedSection } from "../premium/PremiumLockedSection.jsx";
 import { PremiumReport } from "../premium/PremiumReport.jsx";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
+
 async function shareResult(shareConfig, relationshipLevelTitle, finalValue, modeLabel) {
   const shareText = `내 ${modeLabel ?? "관계"} 테스트 결과: ${relationshipLevelTitle} (종합 관계 지수 ${finalValue}/100)`;
 
@@ -46,6 +48,8 @@ export function ResultView({
   const [isAnswerOpen, setIsAnswerOpen] = useState(false);
   const [showComingSoon, setShowComingSoon] = useState(false);
   const [savedResultUrl, setSavedResultUrl] = useState("");
+  const [serverResultId, setServerResultId] = useState("");
+  const [serverSaveStatus, setServerSaveStatus] = useState("idle");
   const modeLabel = relationshipMode
     ? RELATIONSHIP_MODE_META[relationshipMode]?.shortLabel
     : analysis.relationshipLabel;
@@ -96,10 +100,50 @@ export function ResultView({
   }
 
   async function handleSaveResultLink() {
+    if (serverSaveStatus === "saving") return;
+
     if (savedResultUrl) {
       await navigator.clipboard.writeText(savedResultUrl);
       window.alert("저장된 결과 링크를 다시 복사했어요.");
       return;
+    }
+
+    if (!serverResultId) {
+      setServerSaveStatus("saving");
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/results`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            mode: relationshipMode ?? "relationship",
+            answers: {
+              items: answers,
+            },
+            scores: {
+              finalValue: analysis.finalValue,
+              conflictRisk: analysis.conflictRisk,
+              categoryScores: analysis.categoryScores,
+            },
+            resultType: analysis.relationshipLevel.title,
+          }),
+        });
+        const payload = await response.json();
+
+        if (!response.ok || !payload.ok || !payload.result?.id) {
+          throw new Error("Result server save failed.");
+        }
+
+        setServerResultId(payload.result.id);
+        setServerSaveStatus("saved");
+      } catch (error) {
+        setServerSaveStatus("error");
+        console.error("Failed to save result on server.", error);
+        window.alert("서버 저장에 실패했어요. 잠시 후 다시 시도해 주세요.");
+        return;
+      }
     }
 
     const savedResult = saveResult({ analysis, answers, relationshipMode });
@@ -357,8 +401,13 @@ export function ResultView({
             type="button"
             className="button button--primary"
             onClick={handleSaveResultLink}
+            disabled={serverSaveStatus === "saving"}
           >
-            {savedResultUrl ? "결과 링크 다시 복사" : "결과 링크 저장/복사"}
+            {serverSaveStatus === "saving"
+              ? "결과 저장 중..."
+              : savedResultUrl
+                ? "결과 링크 다시 복사"
+                : "결과 링크 저장/복사"}
           </button>
 
           <button
