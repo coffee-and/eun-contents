@@ -13,25 +13,6 @@ import { PremiumReport } from "../premium/PremiumReport.jsx";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
 
-async function shareResult(shareConfig, relationshipLevelTitle, finalValue, modeLabel) {
-  const shareText = `내 ${modeLabel ?? "관계"} 테스트 결과: ${relationshipLevelTitle} (종합 관계 지수 ${finalValue}/100)`;
-
-  try {
-    if (navigator.share) {
-      await navigator.share({
-        title: shareConfig.title,
-        text: shareText,
-      });
-      return;
-    }
-
-    await navigator.clipboard.writeText(shareText);
-    window.alert("결과 문구를 클립보드에 복사했어요.");
-  } catch (error) {
-    window.alert("공유를 완료하지 못했어요. 다시 시도해 주세요.");
-  }
-}
-
 export function ResultView({
   analysis,
   answers,
@@ -40,16 +21,25 @@ export function ResultView({
   onChooseAgain,
   shareConfig,
   isSavedResult = false,
+  savedResultId,
   savedAt,
 }) {
   const captureRef = useRef(null);
   const premiumReportRef = useRef(null);
+  const saveRequestRef = useRef(null);
   const [isPremium, setIsPremium] = useState(false);
   const [isAnswerOpen, setIsAnswerOpen] = useState(false);
   const [showComingSoon, setShowComingSoon] = useState(false);
-  const [savedResultUrl, setSavedResultUrl] = useState("");
-  const [serverResultId, setServerResultId] = useState("");
+  const [savedResultUrl, setSavedResultUrl] = useState(() =>
+    isSavedResult && savedResultId ? buildResultUrl(savedResultId) : ""
+  );
+  const [serverResultId, setServerResultId] = useState(() =>
+    isSavedResult && savedResultId ? savedResultId : ""
+  );
   const [serverSaveStatus, setServerSaveStatus] = useState("idle");
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const canNativeShare =
+    typeof navigator !== "undefined" && Boolean(navigator.share);
   const modeLabel = relationshipMode
     ? RELATIONSHIP_MODE_META[relationshipMode]?.shortLabel
     : analysis.relationshipLabel;
@@ -88,6 +78,20 @@ export function ResultView({
     });
   }, [isPremium]);
 
+  useEffect(() => {
+    if (!isShareModalOpen) return;
+
+    function handleEscape(event) {
+      if (event.key === "Escape") {
+        setIsShareModalOpen(false);
+      }
+    }
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [isShareModalOpen]);
+
   function handlePaymentClick() {
     const isConfirmed = window.confirm(
       "테스트 모드로 프리미엄 리포트를 열까요? 실제 결제 금액은 청구되지 않습니다."
@@ -99,16 +103,23 @@ export function ResultView({
     setIsPremium(true);
   }
 
-  async function handleSaveResultLink() {
-    if (serverSaveStatus === "saving") return;
+  async function prepareSavedResultUrl() {
+    if (savedResultUrl) return savedResultUrl;
+    if (saveRequestRef.current) return saveRequestRef.current;
 
-    if (savedResultUrl) {
-      await navigator.clipboard.writeText(savedResultUrl);
-      window.alert("저장된 결과 링크를 다시 복사했어요.");
-      return;
+    saveRequestRef.current = saveAndBuildResultUrl();
+
+    try {
+      return await saveRequestRef.current;
+    } finally {
+      saveRequestRef.current = null;
     }
+  }
 
-    if (!serverResultId) {
+  async function saveAndBuildResultUrl() {
+    let remoteResultId = serverResultId;
+
+    if (!remoteResultId) {
       setServerSaveStatus("saving");
 
       try {
@@ -127,6 +138,7 @@ export function ResultView({
               conflictRisk: analysis.conflictRisk,
               categoryScores: analysis.categoryScores,
             },
+            analysis,
             resultType: analysis.relationshipLevel.title,
           }),
         });
@@ -136,7 +148,8 @@ export function ResultView({
           throw new Error("Result server save failed.");
         }
 
-        setServerResultId(payload.result.id);
+        remoteResultId = payload.result.id;
+        setServerResultId(remoteResultId);
         setServerSaveStatus("saved");
       } catch (error) {
         setServerSaveStatus("error");
@@ -146,17 +159,51 @@ export function ResultView({
       }
     }
 
-    const savedResult = saveResult({ analysis, answers, relationshipMode });
-    const nextUrl = buildResultUrl(savedResult.id);
+    saveResult({ analysis, answers, relationshipMode });
+    const nextUrl = buildResultUrl(remoteResultId);
 
     setSavedResultUrl(nextUrl);
+    return nextUrl;
+  }
+
+  async function handleOpenShareModal() {
+    if (serverSaveStatus === "saving") return;
+
+    const nextUrl = savedResultUrl || (await prepareSavedResultUrl());
+
+    if (!nextUrl) return;
+
+    setIsShareModalOpen(true);
+  }
+
+  async function handleNativeShare() {
+    if (!canNativeShare) return;
 
     try {
-      await navigator.clipboard.writeText(nextUrl);
-      window.alert("결과 링크를 저장하고 클립보드에 복사했어요.");
+      await navigator.share({
+        title: shareConfig.title,
+        text: `내 ${modeLabel ?? "관계"} 테스트 결과: ${analysis.relationshipLevel.title}`,
+        url: savedResultUrl,
+      });
     } catch (error) {
-      window.alert("결과는 저장됐지만 링크 복사에 실패했어요. 화면의 링크를 복사해 주세요.");
+      if (error.name === "AbortError") return;
+
+      console.error("Failed to share result.", error);
     }
+  }
+
+  async function handleCopyShareLink() {
+    try {
+      await navigator.clipboard.writeText(savedResultUrl);
+      window.alert("결과 링크를 클립보드에 복사했어요.");
+      setIsShareModalOpen(false);
+    } catch (error) {
+      window.alert("링크 복사에 실패했어요. 다시 시도해 주세요.");
+    }
+  }
+
+  function handleShareModalBackdrop() {
+    setIsShareModalOpen(false);
   }
 
   async function handleCapture() {
@@ -378,7 +425,7 @@ export function ResultView({
       <section className="card result-card result-card--actions">
         <h3 className="result-card__title">결과 저장 / 공유</h3>
         <p className="result-card__desc">
-          결과 카드 이미지를 저장하거나, 결과 링크와 문구를 바로 공유할 수 있어요.
+          결과 카드 이미지를 저장하거나, 결과 링크를 바로 공유할 수 있어요.
         </p>
 
         {savedResultUrl ? (
@@ -400,29 +447,10 @@ export function ResultView({
           <button
             type="button"
             className="button button--primary"
-            onClick={handleSaveResultLink}
+            onClick={handleOpenShareModal}
             disabled={serverSaveStatus === "saving"}
           >
-            {serverSaveStatus === "saving"
-              ? "결과 저장 중..."
-              : savedResultUrl
-                ? "결과 링크 다시 복사"
-                : "결과 링크 저장/복사"}
-          </button>
-
-          <button
-            type="button"
-            className="button button--primary"
-            onClick={() =>
-              shareResult(
-                shareConfig,
-                analysis.relationshipLevel.title,
-                analysis.finalValue,
-                modeLabel
-              )
-            }
-          >
-            결과 문구 공유하기
+            {serverSaveStatus === "saving" ? "공유 링크 준비 중..." : "공유하기"}
           </button>
 
           <button
@@ -442,6 +470,66 @@ export function ResultView({
           </button>
         </div>
       </section>
+
+      {isShareModalOpen ? (
+        <div
+          className="share-modal"
+          role="presentation"
+          onMouseDown={handleShareModalBackdrop}
+        >
+          <section
+            className="share-modal__panel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="share-modal-title"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <div className="share-modal__header">
+              <div>
+                <h3 id="share-modal-title">결과 공유하기</h3>
+                <p>공유할 방법을 선택해 주세요.</p>
+              </div>
+
+              <button
+                type="button"
+                className="share-modal__close"
+                onClick={() => setIsShareModalOpen(false)}
+                aria-label="공유 창 닫기"
+              >
+                닫기
+              </button>
+            </div>
+
+            <div className="share-modal__actions">
+              {canNativeShare ? (
+                <button
+                  type="button"
+                  className="button button--primary"
+                  onClick={handleNativeShare}
+                >
+                  다른 앱으로 공유
+                </button>
+              ) : null}
+
+              <button
+                type="button"
+                className="button button--primary"
+                onClick={handleCopyShareLink}
+              >
+                링크 복사
+              </button>
+
+              <button
+                type="button"
+                className="button button--secondary"
+                onClick={() => setIsShareModalOpen(false)}
+              >
+                닫기
+              </button>
+            </div>
+          </section>
+        </div>
+      ) : null}
     </>
   );
 }

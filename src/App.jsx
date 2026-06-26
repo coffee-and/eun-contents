@@ -17,9 +17,17 @@ import { QuestionCard } from "./components/question/QuestionCard.jsx";
 import { ResultView } from "./components/result/ResultView.jsx";
 import { RelationshipModeSelect } from "./components/mode/RelationshipModeSelect.jsx";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
+
 export default function App() {
   const resultTopRef = useRef(null);
+  const [sharedResultId, setSharedResultId] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("resultId");
+  });
   const [savedResult, setSavedResult] = useState(null);
+  const [isResultLoading, setIsResultLoading] = useState(false);
+  const [resultLoadError, setResultLoadError] = useState("");
   const [relationshipMode, setRelationshipMode] = useState(null);
   const activeQuestions = useMemo(
     () => [
@@ -46,18 +54,62 @@ export default function App() {
   } = useQuizEngine({ planType: PLAN.FREE, questions: activeQuestions });
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const resultId = params.get("resultId");
+    if (!sharedResultId) return;
 
-    if (!resultId) return;
+    const controller = new AbortController();
+    let isMounted = true;
 
-    const storedResult = getStoredResult(resultId);
+    async function loadSavedResult() {
+      setIsResultLoading(true);
+      setResultLoadError("");
 
-    if (storedResult) {
-      setSavedResult(storedResult);
-      setRelationshipMode(storedResult.relationshipMode ?? null);
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/api/results/${encodeURIComponent(sharedResultId)}`,
+          { signal: controller.signal }
+        );
+        const payload = await response.json();
+
+        if (!response.ok || !payload.ok || !payload.result?.analysis) {
+          throw new Error("Failed to load server result.");
+        }
+
+        if (!isMounted) return;
+
+        setSavedResult({
+          id: payload.result.id,
+          analysis: payload.result.analysis,
+          answers: payload.result.answers,
+          relationshipMode: payload.result.relationshipMode,
+          savedAt: payload.result.savedAt,
+        });
+        setRelationshipMode(payload.result.relationshipMode ?? null);
+      } catch (error) {
+        if (error.name === "AbortError" || !isMounted) return;
+
+        const localResult = getStoredResult(sharedResultId);
+
+        if (localResult) {
+          setSavedResult(localResult);
+          setRelationshipMode(localResult.relationshipMode ?? null);
+          return;
+        }
+
+        setResultLoadError("failed");
+      } finally {
+        if (isMounted) {
+          setIsResultLoading(false);
+        }
+      }
     }
-  }, []);
+
+    loadSavedResult();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, [sharedResultId]);
 
   const analysis = useMemo(() => {
     if (!isComplete) return null;
@@ -74,7 +126,12 @@ export default function App() {
   const heroSubtitle = activeModeName
     ? `${activeModeName}: 현재 관계의 감정 상태와 안정성, 갈등 패턴, 미래 방향성을 살펴봅니다.`
     : APP_COPY.subtitle;
-  const shouldShowModeSelect = !savedResult && !relationshipMode;
+  const shouldShowModeSelect =
+    !sharedResultId &&
+    !isResultLoading &&
+    !resultLoadError &&
+    !savedResult &&
+    !relationshipMode;
   const shouldShowQuestion = !savedResult && !isComplete && currentQuestion;
   const shouldShowResult = Boolean(activeAnalysis);
   const shouldShowQuizUtility = !savedResult && relationshipMode && !isComplete;
@@ -106,20 +163,26 @@ export default function App() {
 
   function handleSelectMode(mode) {
     clearResultUrl();
+    setSharedResultId(null);
     setSavedResult(null);
+    setResultLoadError("");
     handleRestart();
     setRelationshipMode(mode);
   }
 
   function handleRetakeSameMode() {
     setSavedResult(null);
+    setResultLoadError("");
     clearResultUrl();
+    setSharedResultId(null);
     handleRestart();
   }
 
   function handleChooseAgain() {
     setSavedResult(null);
+    setResultLoadError("");
     clearResultUrl();
+    setSharedResultId(null);
     handleRestart();
     setRelationshipMode(null);
   }
@@ -134,6 +197,34 @@ export default function App() {
 
       {shouldShowModeSelect ? (
         <RelationshipModeSelect onSelectMode={handleSelectMode} />
+      ) : null}
+
+      {isResultLoading ? (
+        <section className="card result-card">
+          <h3 className="result-card__title">
+            저장된 결과를 불러오고 있어요
+          </h3>
+        </section>
+      ) : null}
+
+      {resultLoadError ? (
+        <section className="card result-card">
+          <h3 className="result-card__title">
+            결과를 불러오지 못했어요
+          </h3>
+
+          <p className="result-card__desc">
+            링크가 올바른지 확인하거나 새 테스트를 시작해 주세요.
+          </p>
+
+          <button
+            type="button"
+            className="button button--primary"
+            onClick={handleChooseAgain}
+          >
+            새 테스트 시작하기
+          </button>
+        </section>
       ) : null}
 
       {!savedResult && relationshipMode ? <ProgressBar value={progress} /> : null}
@@ -170,6 +261,7 @@ export default function App() {
             onChooseAgain={handleChooseAgain}
             shareConfig={SHARE}
             isSavedResult={Boolean(savedResult)}
+            savedResultId={savedResult?.id}
             savedAt={savedResult?.savedAt}
           />
         </div>

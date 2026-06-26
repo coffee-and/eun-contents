@@ -917,7 +917,7 @@
 ======================================== */
 .result-card--actions .button-row {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--space-sm);
   margin-top: var(--section-gap);
 }
@@ -930,6 +930,63 @@
 
 .result-card--actions .button:hover {
   background: var(--primary-hover);
+}
+
+.share-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: var(--space-xl);
+  background: rgba(44, 15, 39, 0.34);
+}
+
+.share-modal__panel {
+  width: min(100%, 420px);
+  padding: var(--card-padding);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+}
+
+.share-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.share-modal__header h3 {
+  margin: 0 0 var(--space-xs);
+  color: var(--text);
+  font-size: var(--font-card-title);
+  line-height: var(--line-title);
+}
+
+.share-modal__header p {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: var(--font-body);
+  line-height: var(--line-body);
+}
+
+.share-modal__close {
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 0 var(--space-md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-muted);
+  color: var(--text-soft);
+  cursor: pointer;
+}
+
+.share-modal__actions {
+  display: grid;
+  gap: var(--space-sm);
 }
 
 /* ========================================
