@@ -1,470 +1,240 @@
-import { CATEGORY_META } from "../data/config.js";
-import {
-  MODE_PROFILES,
-  SPECIAL_MEANINGS,
-} from "../data/modeCounselingContent.js";
+import { MODE_PROFILES } from "../data/modeCounselingContent.js";
 
-function getOptionRank(answer) {
-  const value = String(answer?.selectedOptionId ?? "").split("-").pop();
-  const rank = Number(value);
-  return Number.isFinite(rank) ? rank : 2;
-}
+const clamp = (value) => Math.max(0, Math.min(100, Number(value) || 0));
+const relationshipStability = (analysis) => clamp(100 - clamp(analysis.conflictRisk));
 
-function getRisk(answer) {
+function classify(answer) {
+  if (!answer) return "mixed";
   const effects = answer.effects ?? {};
-  return Math.max(effects.totalRisk ?? 0, effects.conflictRisk ?? 0);
+  const risk = Math.max(effects.totalRisk ?? 0, effects.conflictRisk ?? 0);
+  const score = effects.totalScore ?? 0;
+  if (risk >= 12 || score <= -18) return "high";
+  if (risk > 0 || score < 0) return "concern";
+  if (score >= 10) return "strong";
+  return "mixed";
 }
 
-function getScore(answer) {
-  return answer.effects?.totalScore ?? 0;
-}
-
-function classifyAnswer(answer) {
-  if (!answer) return { level: "missing", severity: 0, strength: 0 };
-
-  if (answer.category === "context") {
-    const rank = getOptionRank(answer);
-    if (rank <= 1) return { level: "strong", severity: 0, strength: 3 };
-    if (rank === 2) return { level: "mixed", severity: 1, strength: 1 };
-    if (rank === 3) return { level: "concern", severity: 2, strength: 0 };
-    return { level: "high", severity: 3, strength: 0 };
-  }
-
-  const risk = getRisk(answer);
-  const score = getScore(answer);
-
-  if (risk >= 12 || score <= -18) {
-    return { level: "high", severity: 3, strength: 0 };
-  }
-  if (risk > 0 || score < 0) {
-    return { level: "concern", severity: 2, strength: 0 };
-  }
-  if (score >= 10) {
-    return { level: "strong", severity: 0, strength: 3 };
-  }
-  return { level: "mixed", severity: 1, strength: 1 };
-}
-
-function getEvidence(answer) {
-  return `'${answer.question}' 문항에 '${answer.selectedLabel}'라고 답했습니다.`;
-}
-
-function getMeaning(answer) {
-  if (SPECIAL_MEANINGS[answer.questionId]) {
-    return SPECIAL_MEANINGS[answer.questionId];
-  }
-
-  const meanings = {
-    emotion:
-      "감정을 표현하고 받아들이는 안전감, 친밀감, 애정 표현의 균형과 연결된 응답입니다.",
-    stability:
-      "약속, 신뢰, 책임, 생활 운영처럼 관계가 실제 일상에서 유지되는 방식과 연결된 응답입니다.",
-    future:
-      "결혼, 자녀, 커리어, 주거와 장기 목표처럼 관계의 방향성과 연결된 응답입니다.",
-    conflict:
-      "갈등이 시작되고 커지고 회복되는 과정에서 반복되는 반응을 보여주는 응답입니다.",
-    context:
-      "현재 관계가 어떤 방식으로 운영되고 있는지 이해하는 핵심 맥락 응답입니다.",
-  };
-
-  return meanings[answer.category] ?? meanings.context;
-}
-
-function buildAnswerInsights(answers) {
+function buildInsights(answers) {
   const assessed = answers
-    .filter((answer) => answer.questionId !== 1)
-    .map((answer) => ({ ...answer, assessment: classifyAnswer(answer) }));
-
+    .filter((answer) => answer?.questionId !== 1)
+    .map((answer) => ({ ...answer, level: classify(answer) }));
   return {
-    strengths: assessed
-      .filter((answer) => answer.assessment.level === "strong")
-      .sort((a, b) => b.assessment.strength - a.assessment.strength)
-      .slice(0, 4),
-    concerns: assessed
-      .filter((answer) => ["concern", "high"].includes(answer.assessment.level))
-      .sort((a, b) => b.assessment.severity - a.assessment.severity)
-      .slice(0, 4),
+    strengths: assessed.filter((answer) => answer.level === "strong"),
+    concerns: assessed.filter((answer) => ["concern", "high"].includes(answer.level)),
   };
 }
 
-function getWeakestArea(analysis) {
-  const areas = [
-    ["감정적 안전감", analysis.categoryScores.emotion],
-    ["현실적 안정성", analysis.categoryScores.stability],
-    ["미래 방향성", analysis.categoryScores.future],
-  ];
-
-  if (analysis.conflictRisk >= 65) {
-    return ["갈등 회복 구조", 100 - analysis.conflictRisk];
-  }
-
-  return areas.sort((a, b) => a[1] - b[1])[0];
-}
-
-function getStrongestArea(analysis) {
+function getAreas(analysis) {
   return [
-    ["감정적 안전감", analysis.categoryScores.emotion],
-    ["현실적 안정성", analysis.categoryScores.stability],
-    ["미래 방향성", analysis.categoryScores.future],
-  ].sort((a, b) => b[1] - a[1])[0];
+    { key: "emotion", label: "정서 교감", value: clamp(analysis.categoryScores?.emotion) },
+    { key: "reality", label: "현실 조율", value: clamp(analysis.categoryScores?.stability) },
+    { key: "stability", label: "관계 안정", value: relationshipStability(analysis) },
+    { key: "future", label: "미래 정렬", value: clamp(analysis.categoryScores?.future) },
+  ];
 }
 
-function getOverallReading(analysis, profile, weakestArea) {
-  if (analysis.finalValue >= 75) {
-    return `${profile.noun}는 전반적으로 안정적인 자원을 갖고 있습니다. 다만 좋은 관계도 자동으로 유지되지는 않으므로, 현재 가장 낮은 '${weakestArea[0]}' 영역을 예방적으로 관리하는 것이 중요합니다.`;
-  }
-  if (analysis.finalValue >= 50) {
-    return `${profile.noun}는 관계를 이어갈 자원과 반복 조율이 필요한 과제가 함께 나타납니다. 지금은 관계 전체를 평가하기보다 '${weakestArea[0]}'에서 구체적인 합의와 행동 변화를 만드는 단계가 필요합니다.`;
-  }
-  if (analysis.finalValue >= 25) {
-    return `${profile.noun}는 감정만으로 버티기에는 부담이 커진 상태일 수 있습니다. 사랑의 유무보다 '${weakestArea[0]}'에서 안전감과 책임, 회복 가능한 행동이 실제로 존재하는지를 확인해야 합니다.`;
-  }
-  return `${profile.noun}는 현재 방식의 지속 가능성을 신중히 다시 살펴야 하는 구간입니다. 이 결과가 관계의 결론을 대신하지는 않지만, 최소한의 존중과 안전, 책임 있는 행동 변화가 가능한지를 우선 확인해야 합니다.`;
+function tone(value) {
+  if (value >= 85) return "strong";
+  if (value >= 70) return "steady";
+  if (value >= 50) return "mixed";
+  return "care";
 }
 
-function buildStrengthPoints(insights, profile) {
-  if (!insights.strengths.length) {
-    return [
-      `현재 뚜렷하게 한두 가지 강점이 튀기보다 여러 영역이 섞여 나타납니다. ${profile.noun}에서 작은 안정 행동을 의식적으로 반복해 보호 요인을 새로 만드는 과정이 필요합니다.`,
-      "보호 요인은 거창한 이벤트보다 약속한 시간에 돌아오는 행동, 감정을 끝까지 듣는 태도, 상대의 부담을 알아차리는 반응처럼 반복 가능한 행동에서 만들어집니다.",
-    ];
-  }
+const AREA_COPY = {
+  emotion: {
+    strong: "서로의 감정을 표현하고 받아들이는 기반이 비교적 안정적입니다. 친밀감이 갈등 뒤에도 다시 연결될 수 있는 자원으로 작동할 가능성이 높습니다.",
+    steady: "정서적 교감의 기반은 있지만 사랑을 표현하고 확인하는 방식에는 차이가 있을 수 있습니다. 말, 시간, 행동 중 무엇이 서로에게 중요한지 확인하면 만족도가 더 높아질 수 있습니다.",
+    mixed: "감정을 나누는 순간과 혼자 견디는 순간이 섞여 있을 수 있습니다. 해결책보다 먼저 감정을 이해받는 경험을 만드는 것이 필요합니다.",
+    care: "감정 표현이 부담스럽거나 충분히 받아들여지지 않는다고 느낄 수 있습니다. 더 많이 말하기보다 안전하게 말할 수 있는 조건을 먼저 만드는 것이 중요합니다.",
+  },
+  reality: {
+    strong: "생활 방식과 책임을 함께 조정하는 힘이 비교적 잘 형성되어 있습니다. 암묵적인 배려를 구체적인 합의로 바꾸면 장기적인 안정감이 더 커질 수 있습니다.",
+    steady: "일상과 책임에서 큰 충돌은 적지만 시간, 경제, 역할 분담의 기준은 아직 구체적이지 않을 수 있습니다. 대체로 맞는다는 감각을 실제 행동 합의로 연결해보세요.",
+    mixed: "생활 운영 방식에서 한쪽이 더 많이 맞추거나 책임질 가능성이 있습니다. 누가 무엇을 언제 맡는지 관찰 가능한 기준으로 정리하는 것이 좋습니다.",
+    care: "현실적인 부담과 책임의 불균형이 관계 피로로 이어질 수 있습니다. 애정의 크기보다 약속 이행과 공정한 분담이 가능한지를 우선 확인해야 합니다.",
+  },
+  stability: {
+    strong: "갈등이 생겨도 관계 전체가 쉽게 무너지기보다 다시 대화와 조정으로 돌아올 힘이 큽니다. 다만 갈등이 적다는 이유로 중요한 문제를 미루지는 않는지 점검해보세요.",
+    steady: "갈등 이후 회복할 수 있는 기반은 남아 있습니다. 사과와 좋은 의도가 실제 행동 변화로 이어질 때 안정감이 더 단단해집니다.",
+    mixed: "갈등이 생기면 해결보다 거리 두기, 추궁, 방어가 먼저 나타날 수 있습니다. 감정이 낮아진 뒤 대화를 재개할 시간과 방식을 미리 합의하는 것이 필요합니다.",
+    care: "현재는 갈등이 관계의 안전감과 신뢰를 크게 흔들 수 있습니다. 대화를 더 오래 하기보다 멈추고 다시 돌아올 수 있는 구조를 만드는 것이 먼저입니다.",
+  },
+  future: {
+    strong: "장기적인 방향과 중요한 가치가 비교적 잘 맞습니다. 큰 방향뿐 아니라 시기와 역할까지 구체적으로 확인하면 불확실성을 더 줄일 수 있습니다.",
+    steady: "미래에 대한 큰 방향은 비슷하지만 결혼, 자녀, 주거, 커리어의 시기와 조건은 더 조율할 필요가 있습니다.",
+    mixed: "장기 계획에 대한 기대와 속도가 다를 수 있습니다. 미래 대화를 사랑의 확인으로만 해석하지 말고 선택 가능한 조건과 기한을 함께 정리해보세요.",
+    care: "앞으로의 방향에 대한 차이가 관계 불안의 핵심이 될 수 있습니다. 서로 양보 가능한 부분과 어려운 부분을 구분해 확인해야 합니다.",
+  },
+};
 
-  return insights.strengths.map(
-    (answer) =>
-      `응답 근거: ${getEvidence(answer)} 상담적 의미: ${getMeaning(answer)} 이 강점은 당연하게 넘기기보다 '${answer.selectedLabel}'에 해당하는 행동을 구체적으로 인정하고 반복할 때 관계의 회복 자원으로 유지됩니다.`
-  );
-}
-
-function buildConcernPoints(insights) {
-  if (!insights.concerns.length) {
-    return [
-      "선택 답변에서 강한 위험 신호는 두드러지지 않았습니다. 다만 문제가 없다는 뜻보다, 평온한 시기에 돈·가족·개인 시간·미래 계획 같은 주제를 미리 합의하기 좋은 상태로 해석하는 편이 정확합니다.",
-      "예방적 점검에서는 갈등 횟수보다 불편을 말했을 때 서로가 방어적으로 변하지 않고 다시 대화로 돌아오는지를 확인하세요.",
-    ];
-  }
-
-  return insights.concerns.map((answer) => {
-    const levelText =
-      answer.assessment.level === "high"
-        ? "우선순위가 높은 위험 신호"
-        : "반복 여부를 확인해야 할 조율 신호";
-
-    return `응답 근거: ${getEvidence(answer)} 상담적 의미: ${getMeaning(
-      answer
-    )} 현재는 ${levelText}로 볼 수 있습니다. 상대의 의도보다 같은 상황에서 실제 행동이 달라지는지, 약속이 최소 2주 이상 반복되는지를 확인해야 합니다.`;
-  });
-}
-
-function assessDimension(dimension, answers) {
-  const relevantAnswers = answers.filter((answer) =>
-    dimension.questionIds.includes(answer.questionId)
-  );
-  const assessed = relevantAnswers.map((answer) => ({
-    ...answer,
-    assessment: classifyAnswer(answer),
-  }));
-  const high = assessed.filter((answer) => answer.assessment.level === "high");
-  const concerns = assessed.filter((answer) =>
-    ["concern", "high"].includes(answer.assessment.level)
-  );
-  const strengths = assessed.filter(
-    (answer) => answer.assessment.level === "strong"
-  );
-
-  let level = "mixed";
-  if (high.length) level = "high";
-  else if (concerns.length >= 2) level = "concern";
-  else if (strengths.length >= Math.max(2, Math.ceil(assessed.length * 0.5))) {
-    level = "strong";
-  } else if (concerns.length) level = "concern";
-
-  const evidence = [
-    ...concerns.sort(
-      (a, b) => b.assessment.severity - a.assessment.severity
-    ),
-    ...strengths,
-    ...assessed.filter(
-      (answer) => !concerns.includes(answer) && !strengths.includes(answer)
-    ),
-  ].slice(0, 3);
-
-  return { level, evidence };
-}
-
-function buildDimensionSection(dimension, answers) {
-  const assessment = assessDimension(dimension, answers);
-  const levelLabel = {
-    strong: "보호 요인",
-    mixed: "관찰·조율 영역",
-    concern: "우선 조율 영역",
-    high: "집중 점검 영역",
-  }[assessment.level];
-  const evidenceText = assessment.evidence.length
-    ? assessment.evidence.map(getEvidence).join(" ")
-    : "해당 영역의 저장된 응답이 충분하지 않아 현재 점수와 공통 문항을 중심으로 해석했습니다.";
-
+function areaSection(area) {
+  const questions = {
+    emotion: "서로가 사랑받고 있다고 느끼는 구체적인 행동은 무엇인가요?",
+    reality: "일상에서 한쪽에게 더 많이 몰려 있는 책임은 무엇인가요?",
+    stability: "갈등 뒤 다시 대화를 시작하기 위해 필요한 시간과 방식은 무엇인가요?",
+    future: "앞으로 2~3년 동안 각자가 가장 중요하게 이루고 싶은 것은 무엇인가요?",
+  };
   return {
-    title: dimension.title,
-    description: dimension[assessment.level],
+    title: `${area.label} · ${area.value}/100`,
+    description: AREA_COPY[area.key][tone(area.value)],
     points: [
-      `상담적 분류: ${levelLabel}. 이 분류는 성격 진단이 아니라, 현재 관계에서 대화를 먼저 시작할 우선순위를 의미합니다.`,
-      `응답 근거: ${evidenceText}`,
-      `관계에 미치는 영향: ${dimension.impact}`,
-      `상담 목표: ${dimension.goal}`,
-      `함께 다룰 질문: ${dimension.question}`,
+      `${area.label} 점수는 관계의 가치를 평가하는 수치가 아니라 현재 대화와 조율의 우선순위를 보여주는 내부 참고 지수입니다.`,
+      `함께 확인할 질문: ${questions[area.key]}`,
     ],
   };
 }
 
-function buildConflictCycle(analysis, insights, profile) {
-  const topConcern = insights.concerns[0];
-  const trigger = topConcern
-    ? `${getEvidence(topConcern)}`
-    : `${profile.noun}에서 기대가 어긋나는 상황`;
-  const cycles = {
-    avoidant: {
-      emotion: "갈등이 커질 것이라는 부담과 압박",
-      reaction: "침묵, 대화 미루기, 거리 두기로 감정을 낮추려 합니다.",
-      partner:
-        "상대는 이유를 알기 어려워 더 불안해지고 설명이나 답변을 강하게 요구할 수 있습니다.",
-      result:
-        "한쪽은 더 피하고 다른 쪽은 더 붙잡으면서 원래 주제보다 단절감이 핵심 문제가 됩니다.",
-      exit:
-        "지금 해결하지 못하더라도 대화를 다시 시작할 정확한 시간과 다룰 주제 한 가지를 약속합니다.",
-    },
-    explosive: {
-      emotion: "무시당했다는 감각, 억울함, 통제되지 않는 긴장",
-      reaction:
-        "말의 속도와 강도가 높아지고 과거 문제까지 한꺼번에 꺼낼 수 있습니다.",
-      partner:
-        "상대는 맞대응하거나 방어적으로 닫히고, 대화 내용보다 공격받았다는 기억을 남길 수 있습니다.",
-      result:
-        "갈등의 본래 주제는 해결되지 않고 상처 준 표현이 다음 갈등의 촉발점이 됩니다.",
-      exit:
-        "감정 강도가 10점 중 7점을 넘으면 20분 이상 멈추고, 복귀 후 사실 한 가지와 요청 한 가지만 말합니다.",
-    },
-    cold: {
-      emotion: "상처받지 않기 위해 감정을 차단하려는 마음",
-      reaction:
-        "짧은 대답, 비꼼, 무시, 무표정한 철수로 관계에서 빠져나갑니다.",
-      partner:
-        "상대는 인정받지 못했다고 느껴 더 강하게 설명하거나 결국 대화를 포기할 수 있습니다.",
-      result: "겉으로 싸움은 줄어도 정서적 거리와 체념이 누적됩니다.",
-      exit:
-        "동의하지 않더라도 상대가 느낀 감정을 한 문장으로 확인한 뒤 내 입장을 설명합니다.",
-    },
-    pursuer: {
-      emotion: "관계가 멀어질 수 있다는 불안과 중요하지 않다는 두려움",
-      reaction:
-        "답변, 설명, 확인을 반복적으로 요구하며 즉시 결론을 얻으려 합니다.",
-      partner:
-        "상대는 압박을 느껴 방어하거나 연락과 대화를 피할 수 있습니다.",
-      result:
-        "확인이 늘수록 신뢰는 줄고, 불안한 쪽은 다시 더 강한 확인을 원하게 됩니다.",
-      exit:
-        "확인 횟수를 늘리는 대신 예측 가능한 연락·복귀 기준과 약속 불이행 시 대응을 합의합니다.",
-    },
-    mixed: {
-      emotion: "불안, 분노, 체념이 빠르게 바뀌는 혼란",
-      reaction:
-        "추궁, 회피, 폭발, 냉담이 상황에 따라 번갈아 나타납니다.",
-      partner:
-        "다음 반응을 예측하기 어려워 양쪽 모두 빠르게 방어적으로 변합니다.",
-      result:
-        "한 가지 문제가 해결되기 전에 감정적 상처가 겹치며 갈등 전체가 커집니다.",
-      exit:
-        "한 번의 대화에서는 사실 한 가지, 감정 한 가지, 요청 한 가지만 다루고 해결 범위를 제한합니다.",
-    },
-    stable: {
-      emotion:
-        "불편은 있지만 관계가 완전히 무너질 것이라는 두려움은 상대적으로 낮음",
-      reaction:
-        "감정을 조절한 뒤 문제를 구체적으로 말하려는 힘이 있습니다.",
-      partner:
-        "완벽하지 않더라도 다시 대화로 돌아오고 해결점을 찾을 가능성이 높습니다.",
-      result:
-        "갈등이 관계 전체의 위협보다 조율할 문제로 남을 수 있습니다.",
-      exit:
-        "사과 뒤 행동이 달라졌는지 확인하고, 평온할 때 큰 주제를 예방적으로 다룹니다.",
-    },
-  };
-  const cycle = cycles[analysis.topTypeTag] ?? cycles.mixed;
-
+function overallSection(analysis, profile, areas) {
+  const strongest = [...areas].sort((a, b) => b.value - a.value)[0];
+  const weakest = [...areas].sort((a, b) => a.value - b.value)[0];
+  const description = analysis.finalValue >= 75
+    ? `${profile.noun}는 정서적 연결과 관계를 유지하는 힘이 비교적 안정적입니다. 현재 필요한 것은 관계의 가능성을 다시 확인하는 일보다, 이미 가진 안정감을 생활과 미래의 구체적인 합의로 연결하는 것입니다.`
+    : `${profile.noun}에는 관계를 이어갈 자원과 반복해서 조율해야 할 과제가 함께 보입니다. 전체를 좋다거나 나쁘다고 단정하기보다 가장 낮은 영역에서 작은 행동 변화를 만드는 것이 중요합니다.`;
   return {
-    title: "갈등 악순환과 회복 구조",
-    description: `현재 주요 갈등 반응은 '${analysis.topTypeLabel}'이며, 갈등 부담 지수는 ${analysis.conflictRisk}/100입니다. 이는 고정된 성격 유형이 아니라 선택 답변에서 상대적으로 강하게 나타난 보호 반응을 요약한 것입니다.`,
-    points: [
-      `주요 촉발 근거: ${trigger}`,
-      `갈등 아래의 감정: ${cycle.emotion}`,
-      `나타나는 보호 반응: ${cycle.reaction}`,
-      `상대에게 유발할 수 있는 반응: ${cycle.partner}`,
-      `반복 결과: ${cycle.result}`,
-      `악순환 차단 지점: ${cycle.exit}`,
-    ],
-  };
-}
-
-function buildRecoverySection(analysis, insights, profile) {
-  const highRiskCount = insights.concerns.filter(
-    (answer) => answer.assessment.level === "high"
-  ).length;
-  const strengthCount = insights.strengths.length;
-  let description;
-
-  if (analysis.conflictRisk >= 70 || highRiskCount >= 3) {
-    description =
-      "현재는 좋은 의도나 한 번의 사과만으로 회복을 판단하기 어렵습니다. 관계를 계속 이어갈지보다 먼저 안전한 대화, 책임 인정, 반복 행동의 변화가 실제로 가능한지를 확인해야 합니다.";
-  } else if (analysis.finalValue >= 50 && strengthCount >= 2) {
-    description =
-      "회복에 사용할 수 있는 보호 요인이 남아 있습니다. 다만 관계가 좋아질 가능성은 감정의 크기보다 두 사람이 불편한 주제를 피하지 않고 작은 행동 합의를 반복할 수 있는지에 달려 있습니다.";
-  } else {
-    description =
-      "관계를 회복할 가능성은 열려 있지만 현재 방식이 자동으로 좋아질 가능성은 낮습니다. 문제를 개인 성격으로만 설명하지 않고 상호작용과 생활 구조를 함께 바꾸는 노력이 필요합니다.";
-  }
-
-  return {
-    title: "회복 가능성을 가늠하는 조건",
+    title: "핵심 소견",
     description,
     points: [
-      `회복 자원: 현재 확인된 뚜렷한 보호 응답은 ${strengthCount}개, 우선 점검 응답은 ${insights.concerns.length}개입니다. 숫자 자체보다 강점이 실제 갈등 상황에서도 작동하는지가 중요합니다.`,
-      "긍정적 변화 신호: 문제를 축소하지 않고 인정함, 상대 감정을 반박하기 전에 들음, 구체적인 행동 약속을 정함, 약속한 행동이 최소 2주 이상 반복됨.",
-      "회복을 방해하는 신호: 사과 후 같은 행동 반복, 모든 책임을 상대에게 돌림, 대화를 처벌이나 침묵으로 사용함, 합의한 점검을 계속 미룸.",
-      `모드별 확인점: ${profile.developmentalLens}`,
-      "안전 기준: 두려움, 위협, 강압적 통제, 신체적·성적 폭력, 심각한 경제적 통제가 있다면 관계 개선 대화보다 개인의 안전과 외부 지원을 우선해야 합니다.",
+      `종합 관계 지수 ${clamp(analysis.finalValue)}/100 · 정서 교감 ${areas[0].value}/100 · 현실 조율 ${areas[1].value}/100 · 관계 안정 ${areas[2].value}/100 · 미래 정렬 ${areas[3].value}/100`,
+      `현재 가장 강한 영역은 '${strongest.label}', 우선적으로 조율할 영역은 '${weakest.label}'입니다.`,
+      "점수보다 중요한 것은 대화에서 정한 약속이 실제 행동으로 이어지고 그 변화가 일정 기간 반복되는지입니다.",
     ],
   };
 }
 
-function buildConversationSection(profile, insights) {
-  const topConcern = insights.concerns[0];
-  const dynamicScript = topConcern
-    ? `핵심 응답 시작 문장: '${topConcern.selectedLabel}'라고 답한 상황을 두고, "누가 맞는지 결론내기 전에 그 상황이 나에게 어떤 의미였는지와 다음에는 어떤 행동이 필요할지 차례로 말하고 싶어."라고 시작해보세요.`
-    : "예방 대화 시작 문장: '요즘 큰 문제가 생기기 전에, 우리가 잘하고 있는 점과 앞으로 맞춰야 할 기준을 하나씩 확인하고 싶어.'";
-
+function patternSection(analysis) {
+  const cycles = {
+    avoidant: ["갈등 부담이 커짐", "대화를 미루거나 거리를 둠", "상대는 더 확인하려 함", "거리감과 불안이 함께 커짐", "대화를 다시 시작할 정확한 시간과 주제 하나를 약속하기"],
+    explosive: ["억울함과 긴장이 커짐", "말의 속도와 강도가 높아짐", "상대가 방어적으로 닫힘", "원래 문제보다 상처 준 표현이 남음", "감정이 낮아진 뒤 사실과 요청을 하나씩 말하기"],
+    cold: ["상처받지 않기 위해 감정을 차단함", "짧은 대답이나 침묵으로 빠져나감", "상대가 더 강하게 반응함", "정서적 거리가 누적됨", "상대 감정을 한 문장으로 확인한 뒤 내 입장 말하기"],
+    pursuer: ["관계가 멀어질 수 있다는 불안이 생김", "즉시 답변과 확인을 요구함", "상대는 압박을 느껴 피함", "확인이 늘수록 신뢰와 여유가 줄어듦", "확인 횟수보다 예측 가능한 연락 기준을 합의하기"],
+    mixed: ["불안, 분노, 체념이 빠르게 바뀜", "추궁과 회피가 번갈아 나타남", "상대도 방어적으로 변함", "문제보다 감정적 상처가 겹침", "한 번의 대화에서 사실, 감정, 요청을 하나씩만 다루기"],
+    stable: ["불편한 상황이 생김", "감정을 조절한 뒤 문제를 말함", "상대도 다시 대화로 돌아옴", "갈등이 조율할 문제로 남음", "사과 뒤 행동이 달라졌는지 확인하기"],
+  };
+  const cycle = cycles[analysis.topTypeTag] ?? cycles.mixed;
   return {
-    title: "상담식 대화 스크립트",
-    description:
-      "좋은 대화는 감정을 억누르는 것이 아니라 사실·감정·의미·요청을 분리하는 과정입니다. 아래 문장을 그대로 사용하거나 관계 상황에 맞게 짧게 바꿔도 됩니다.",
-    points: [
-      dynamicScript,
-      "감정 확인: '네가 틀렸다는 말을 하려는 게 아니라, 그 상황에서 나는 중요하게 여겨지지 않는 느낌이 들었어.'",
-      "영향 설명: '그 일이 한 번이라서가 아니라 반복될 때 내가 우리 관계를 안전하게 느끼기 어려워져.'",
-      "행동 요청: '앞으로 잘하겠다는 말보다 다음에 같은 상황이 오면 우리가 각각 무엇을 다르게 할지 한 가지씩 정하고 싶어.'",
-      "중단과 복귀: '지금은 서로를 이해하기보다 상처 주는 쪽으로 가고 있어. 30분 쉬고 오늘 밤 9시에 이 주제만 다시 이야기하자.'",
-      "점검 합의: '우리가 정한 행동이 실제로 지켜졌는지 2주 뒤에 같이 확인하자.'",
-      ...profile.scripts,
-    ],
+    title: "우리 관계의 반복 패턴",
+    description: `주요 갈등 반응은 '${analysis.topTypeLabel}'로 나타났습니다. 이는 고정된 성격 유형이 아니라 부담이 생겼을 때 나타날 수 있는 반응을 요약한 것입니다.`,
+    points: cycle.map((item, index) => `${index + 1}. ${item}`),
   };
 }
 
-function buildTwoWeekPlan(profile, weakestArea, insights) {
-  const topConcern = insights.concerns[0];
-  const focus = topConcern
-    ? `'${topConcern.selectedLabel}'라고 답한 상황`
-    : `'${weakestArea[0]}' 영역`;
-
+function resourcesSection(insights) {
   return {
-    title: "14일 실행·관찰 플랜",
-    description:
-      "이 계획의 목표는 2주 안에 관계를 완전히 바꾸는 것이 아니라, 말이 실제 행동으로 이어지는지와 두 사람이 함께 조정할 능력이 있는지를 확인하는 것입니다.",
+    title: "우리 관계 이해하기",
+    description: "관계의 가능성은 갈등이 없는지보다 어려울 때 다시 사용할 수 있는 보호 요인과 반복을 멈출 수 있는 행동이 있는지에서 확인할 수 있습니다.",
     points: [
-      `1~2일차 · 관찰: ${focus}가 발생하는 구체적인 상황, 당시 감정, 자동 반응을 기록합니다. 상대의 의도는 추측하지 않습니다.`,
-      "3일차 · 욕구 정리: 비난 문장 대신 내가 중요하게 여기는 기준과 필요한 행동을 각각 한 문장으로 적습니다.",
-      "4일차 · 강점 확인: 현재 관계에서 유지하고 싶은 보호 행동 두 가지를 서로 말합니다.",
-      "5일차 · 한 주제 대화: 여러 문제를 묶지 않고 가장 중요한 주제 하나만 30분 이내로 다룹니다.",
-      "6일차 · 행동 합의: 누가, 언제, 무엇을 할지 관찰 가능한 행동 한 가지를 정합니다.",
-      "7일차 · 중간 점검: 약속이 지켜졌는지, 감정 강도와 피로가 줄었는지 10점 척도로 확인합니다.",
-      "8~9일차 · 연결 회복: 문제 해결과 무관한 대화 또는 함께하는 시간을 짧게 확보합니다.",
-      "10일차 · 경계 점검: 하지 않기로 한 말과 행동, 대화를 멈춰야 할 기준, 복귀 시간을 다시 확인합니다.",
-      "11~12일차 · 반복 관찰: 같은 상황에서 이전과 다른 행동이 한 번이라도 나타났는지 기록합니다.",
-      "13일차 · 공정성 확인: 변화 노력이 한쪽에만 쏠리지 않았는지, 상대도 자발적으로 참여했는지 확인합니다.",
-      "14일차 · 재평가: 약속 이행, 정서적 안전감, 책임 분담, 미래 대화 가능성을 기준으로 유지·수정·추가 지원 필요 여부를 정합니다.",
-      ...profile.actionExamples.map(
-        (example) => `모드별 실천 예시: ${example}`
-      ),
-      "변화 판정 기준: 좋은 말을 했는지가 아니라 합의한 행동이 반복되었는지, 갈등 후 복귀 시간이 짧아졌는지, 한쪽의 긴장과 피로가 실제로 줄었는지를 봅니다.",
+      insights.strengths.length
+        ? `보호 요인: ${insights.strengths.length}개의 비교적 안정적인 반응이 확인됐습니다. 감정을 듣는 태도, 약속을 지키는 행동, 다시 연결하는 시도를 구체적으로 인정하고 반복해보세요.`
+        : "보호 요인: 작은 약속을 지키고 감정을 끝까지 듣는 행동부터 새 보호 요인으로 만들어보세요.",
+      insights.concerns.length
+        ? `주의 요인: ${insights.concerns.length}개의 조율 신호가 확인됐습니다. 상대의 의도를 추측하기보다 같은 상황에서 행동이 달라지는지 확인하세요.`
+        : "주의 요인: 강한 위험 신호는 두드러지지 않았지만 평온할 때 돈, 가족, 개인 시간, 미래 계획을 예방적으로 합의하는 것이 좋습니다.",
+      "회복을 돕는 신호: 문제를 인정함, 감정을 반박하기 전에 들음, 구체적인 행동을 합의함, 정한 행동이 2주 이상 반복됨.",
+      "회복을 방해하는 신호: 사과 뒤 같은 행동 반복, 모든 책임을 상대에게 돌림, 합의한 점검을 계속 미룸.",
     ],
   };
 }
 
-function buildModeContextPoints(answers, profile) {
-  const modeAnswerIds = profile.dimensions.flatMap(
-    (dimension) => dimension.questionIds
-  );
-  const contextAnswers = answers.filter(
-    (answer) =>
-      answer.category === "context" &&
-      answer.questionId !== 1 &&
-      modeAnswerIds.includes(answer.questionId)
-  );
+function prioritySection(areas, insights) {
+  const weakest = [...areas].sort((a, b) => a.value - b.value)[0];
+  const actions = {
+    emotion: "감정을 설명한 뒤 상대가 이해한 내용을 한 문장으로 요약하게 해보세요.",
+    reality: "생활, 시간, 책임 중 가장 부담이 큰 한 가지를 골라 누가 언제 무엇을 할지 정해보세요.",
+    stability: "갈등이 커질 때 사용할 중단 문장과 대화를 다시 시작할 시간을 미리 합의해보세요.",
+    future: "가장 중요한 미래 주제 하나를 골라 원하는 방향, 가능한 시기, 어려운 조건을 각각 말해보세요.",
+  };
+  return {
+    title: "지금 가장 필요한 변화",
+    description: insights.concerns.length
+      ? `현재는 '${weakest.label}' 영역을 가장 먼저 다루는 것이 좋습니다. 감정을 더 길게 설명하는 것보다 한 번 정한 행동이 실제로 지켜지는 경험을 만드는 것이 우선입니다.`
+      : `현재 가장 낮은 영역은 '${weakest.label}'이지만 강한 위험 신호라기보다 예방적으로 조율할 주제에 가깝습니다.`,
+    points: [`이번 주 우선 과제: ${actions[weakest.key]}`, "확인 기준: 누가 언제 무엇을 하기로 했는지 명확하고 그 행동이 실제로 반복되었는지 확인합니다."],
+  };
+}
 
-  if (!contextAnswers.length) {
-    return [
-      "이번 결과에는 새로 추가된 모드별 맥락 응답이 저장되지 않았습니다. 기존 저장 결과일 수 있으므로 공통 문항과 점수를 중심으로 해석했습니다.",
-    ];
-  }
+function conversationSection(profile) {
+  return {
+    title: "대화를 시작하는 방법",
+    description: "감정 확인과 문제 해결을 한꺼번에 하려 하면 대화가 쉽게 방어적으로 흐를 수 있습니다. 사실, 감정, 의미, 요청을 나눠 짧게 말해보세요.",
+    points: [
+      "시작: '지금 당장 결론을 내리자는 뜻은 아니야. 이 문제가 나에게 왜 중요한지 먼저 설명하고 네 생각도 정확히 듣고 싶어.'",
+      "감정: '이야기가 미뤄질 때 나는 우리 관계가 같은 방향으로 가는지 확인하기 어렵게 느껴져.'",
+      "확인: '내 말을 듣고 어떤 뜻으로 이해했는지 먼저 이야기해줄래?'",
+      "요청: '막연히 잘하겠다고 하기보다 다음에 같은 상황이 오면 우리가 각각 할 행동 하나를 정했으면 좋겠어.'",
+      ...(profile.scripts ?? []).slice(0, 2),
+    ],
+  };
+}
 
-  return contextAnswers.map((answer) => {
-    const assessment = classifyAnswer(answer);
-    const label = {
-      strong: "보호 요인",
-      mixed: "조율 가능 영역",
-      concern: "우선 점검 영역",
-      high: "집중 점검 영역",
-    }[assessment.level];
+const sayThisSection = {
+  title: "이렇게 말해보세요",
+  description: "비난은 상대의 방어를 키우기 쉽습니다. 행동과 영향, 필요한 요청을 분리해서 말하면 대화의 초점을 유지하기 좋습니다.",
+  points: [
+    "'넌 항상 그래' 대신 → '이 상황이 반복되면 내 요구가 중요하게 받아들여지지 않는다고 느껴.'",
+    "'내가 몇 번을 말해야 해?' 대신 → '지금 해결책보다 내 마음을 먼저 이해해줬으면 좋겠어.'",
+    "'결국 내가 중요하지 않은 거지?' 대신 → '이 일이 나에게 어떤 의미였는지 설명하고 다음에는 어떤 행동이 필요할지 함께 정하고 싶어.'",
+  ],
+};
 
-    return `모드별 핵심 응답 · ${label}: ${getEvidence(answer)} ${getMeaning(
-      answer
-    )}`;
-  });
+function questionsSection(areas) {
+  const weakest = [...areas].sort((a, b) => a.value - b.value)[0];
+  return {
+    title: "함께 확인해볼 질문",
+    description: "한 번에 모두 답하려 하기보다 가장 마음에 걸리는 질문 하나를 골라 20분 이내로 이야기해보세요.",
+    points: [
+      "내가 사랑받는다고 느끼는 구체적인 행동은 무엇인가요?",
+      "갈등이 생겼을 때 내가 가장 두려워하는 것은 무엇인가요?",
+      `현재 '${weakest.label}' 영역에서 상대에게 바라는 행동 한 가지는 무엇인가요?`,
+      "앞으로 2주 동안 서로가 실제로 확인할 수 있는 변화는 무엇인가요?",
+    ],
+  };
+}
+
+function twoWeekSection(profile, areas) {
+  const weakest = [...areas].sort((a, b) => a.value - b.value)[0];
+  return {
+    title: "2주 실천 가이드",
+    description: "목표는 2주 안에 관계를 완전히 바꾸는 것이 아니라 말이 행동으로 이어지는지와 두 사람이 함께 조정할 수 있는지를 확인하는 것입니다.",
+    points: [
+      `1단계 · 관찰하기(1~3일): '${weakest.label}'과 관련해 감정이 움직인 상황, 원했던 반응, 실제 행동을 기록합니다.`,
+      "2단계 · 핵심 욕구 정리(4~6일): 비난 문장 대신 중요하게 여기는 기준과 필요한 행동을 한 문장씩 적습니다.",
+      "3단계 · 행동 합의(7~10일): 가장 중요한 주제 하나만 골라 누가 언제 무엇을 할지 정합니다.",
+      "4단계 · 변화 확인(11~14일): 약속이 지켜졌는지, 감정적 피로가 줄었는지, 노력이 한쪽에만 몰리지 않았는지 점검합니다.",
+      ...(profile.actionExamples ?? []).slice(0, 2).map((example) => `실천 예시: ${example}`),
+    ],
+  };
+}
+
+function finalSection(analysis, areas) {
+  const weakest = [...areas].sort((a, b) => a.value - b.value)[0];
+  return {
+    title: "최종 소견",
+    description: relationshipStability(analysis) >= 80
+      ? `현재 관계는 갈등 이후 다시 연결될 수 있는 힘이 비교적 충분합니다. 앞으로의 핵심은 안정성을 다시 증명하는 것이 아니라 그 안정감을 '${weakest.label}' 영역의 구체적인 행동과 합의로 확장하는 것입니다.`
+      : "현재 관계에는 회복 가능성과 조율 과제가 함께 보입니다. 감정의 크기보다 존중과 책임, 합의한 행동이 실제로 반복되는지를 기준으로 변화를 확인하는 것이 중요합니다.",
+    points: ["좋은 관계는 갈등이 전혀 없는 관계보다 불편을 안전하게 말하고 작은 합의를 행동으로 이어갈 수 있는 관계에 가깝습니다.", "이 리포트는 진단이나 치료를 대신하지 않는 참고 자료입니다."],
+  };
 }
 
 export function buildCounselingReport(analysis, answers = []) {
-  const profile =
-    MODE_PROFILES[analysis.relationshipMode] ?? MODE_PROFILES.couple;
-  const insights = buildAnswerInsights(answers);
-  const weakestArea = getWeakestArea(analysis);
-  const strongestArea = getStrongestArea(analysis);
-  const modeSections = profile.dimensions.map((dimension) =>
-    buildDimensionSection(dimension, answers)
-  );
-
-  const sections = [
-    {
-      title: "상담 관점 종합 소견",
-      description: getOverallReading(analysis, profile, weakestArea),
-      points: [
-        `종합 관계 지수 ${analysis.finalValue}/100 · 갈등 부담 지수 ${analysis.conflictRisk}/100. 각 점수는 이 서비스 문항의 배점 범위를 0~100으로 환산한 내부 참고 지수입니다.`,
-        `가장 강한 영역은 '${strongestArea[0]}' ${strongestArea[1]}/100, 가장 먼저 살펴볼 영역은 '${weakestArea[0]}' ${weakestArea[1]}/100입니다.`,
-        `관계 발달 관점: ${profile.developmentalLens}`,
-        ...buildModeContextPoints(answers, profile),
-        "이 리포트는 진단이나 치료를 대신하지 않으며, 선택한 답변을 바탕으로 대화와 행동 점검의 우선순위를 정리한 참고 자료입니다.",
-      ],
-    },
-    {
-      title: "관계를 지탱하는 보호 요인",
-      description:
-        "상담에서는 문제의 크기뿐 아니라 관계가 어려울 때 다시 사용할 수 있는 자원을 함께 봅니다. 보호 요인은 갈등이 없다는 뜻이 아니라, 갈등 뒤 다시 연결될 가능성을 높이는 행동과 태도를 의미합니다.",
-      points: buildStrengthPoints(insights, profile),
-    },
-    {
-      title: "핵심 취약 지점과 위험 요인",
-      description:
-        "아래 항목은 상대를 나쁜 사람으로 규정하기 위한 것이 아니라, 같은 상황이 반복될 때 신뢰와 안전감이 손상될 가능성이 높은 지점을 우선순위에 따라 정리한 것입니다.",
-      points: buildConcernPoints(insights),
-    },
-    ...modeSections,
-    buildConflictCycle(analysis, insights, profile),
-    buildRecoverySection(analysis, insights, profile),
-    buildConversationSection(profile, insights),
-    buildTwoWeekPlan(profile, weakestArea, insights),
-  ];
-
+  const profile = MODE_PROFILES[analysis.relationshipMode] ?? MODE_PROFILES.couple;
+  const insights = buildInsights(answers);
+  const areas = getAreas(analysis);
   return {
     title: profile.reportTitle,
     eyebrow: profile.eyebrow,
     intro: profile.intro,
-    sections,
+    sections: [
+      overallSection(analysis, profile, areas),
+      ...areas.map(areaSection),
+      patternSection(analysis),
+      resourcesSection(insights),
+      prioritySection(areas, insights),
+      conversationSection(profile),
+      sayThisSection,
+      questionsSection(areas),
+      twoWeekSection(profile, areas),
+      finalSection(analysis, areas),
+    ],
   };
 }

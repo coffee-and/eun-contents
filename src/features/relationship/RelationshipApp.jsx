@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   APP_COPY,
   PLAN,
@@ -21,7 +21,6 @@ import { getResultId } from "../../app/routes.js";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
 
 export default function RelationshipApp({ onNavigateHome }) {
-  const resultTopRef = useRef(null);
   const [sharedResultId, setSharedResultId] = useState(getResultId);
   const [savedResult, setSavedResult] = useState(null);
   const [isResultLoading, setIsResultLoading] = useState(false);
@@ -135,29 +134,17 @@ export default function RelationshipApp({ onNavigateHome }) {
   const shouldShowQuizUtility = !savedResult && relationshipMode && !isComplete;
 
   useEffect(() => {
-    if (!isComplete || savedResult || !shouldShowResult) return;
+    if (!shouldShowResult) return;
 
-    const scrollToResultTop = () => {
-      const node = resultTopRef.current;
-
-      if (!node) return;
-
-      const top = node.getBoundingClientRect().top + window.scrollY - 8;
-
-      window.scrollTo({
-        top: Math.max(top, 0),
-        behavior: "smooth",
-      });
+    const scrollToPageTop = () => {
+      window.scrollTo({ top: 0, behavior: "auto" });
     };
 
-    requestAnimationFrame(() => {
-      scrollToResultTop();
-    });
-
-    const timeoutId = window.setTimeout(scrollToResultTop, 160);
+    requestAnimationFrame(scrollToPageTop);
+    const timeoutId = window.setTimeout(scrollToPageTop, 120);
 
     return () => window.clearTimeout(timeoutId);
-  }, [isComplete, savedResult, shouldShowResult]);
+  }, [shouldShowResult, savedResult]);
 
   function handleSelectMode(mode) {
     clearResultUrl();
@@ -200,17 +187,13 @@ export default function RelationshipApp({ onNavigateHome }) {
 
       {isResultLoading ? (
         <section className="card result-card">
-          <h3 className="result-card__title">
-            저장된 결과를 불러오고 있어요
-          </h3>
+          <h3 className="result-card__title">저장된 결과를 불러오고 있어요</h3>
         </section>
       ) : null}
 
       {resultLoadError ? (
         <section className="card result-card">
-          <h3 className="result-card__title">
-            결과를 불러오지 못했어요
-          </h3>
+          <h3 className="result-card__title">결과를 불러오지 못했어요</h3>
 
           <p className="result-card__desc">
             링크가 올바른지 확인하거나 새 테스트를 시작해 주세요.
@@ -251,19 +234,17 @@ export default function RelationshipApp({ onNavigateHome }) {
       ) : null}
 
       {shouldShowResult ? (
-        <div ref={resultTopRef}>
-          <ResultView
-            analysis={activeAnalysis}
-            answers={activeAnswers}
-            relationshipMode={activeMode}
-            onRestart={handleRetakeSameMode}
-            onChooseAgain={handleChooseAgain}
-            shareConfig={SHARE}
-            isSavedResult={Boolean(savedResult)}
-            savedResultId={savedResult?.id}
-            savedAt={savedResult?.savedAt}
-          />
-        </div>
+        <ResultView
+          analysis={activeAnalysis}
+          answers={activeAnswers}
+          relationshipMode={activeMode}
+          onRestart={handleRetakeSameMode}
+          onChooseAgain={handleChooseAgain}
+          shareConfig={SHARE}
+          isSavedResult={Boolean(savedResult)}
+          savedResultId={savedResult?.id}
+          savedAt={savedResult?.savedAt}
+        />
       ) : null}
     </AppShell>
   );
