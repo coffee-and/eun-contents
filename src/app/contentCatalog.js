@@ -27,8 +27,8 @@ export const CONTENT_CATALOG = [
       "연인, 부부, 가족, 친구와 서로를 조금 더 알아가는 질문을 나눠요.",
     icon: "💬",
     theme: "couple",
-    status: CONTENT_STATUS.COMING_SOON,
-    actionLabel: "준비 중",
+    status: CONTENT_STATUS.ACTIVE,
+    actionLabel: "문답 시작하기",
   },
   {
     id: "saju",
