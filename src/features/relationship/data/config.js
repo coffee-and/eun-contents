@@ -26,7 +26,7 @@ export const RELATIONSHIP_MODE_META = {
 };
 
 export const APP_COPY = {
-  brand: "RELATIONSHIP ANALYZER",
+  brand: "우리 관계 진단",
   eyebrow: "RELATIONSHIP REPORT",
   title: "관계 지속성 리포트",
   subtitle:

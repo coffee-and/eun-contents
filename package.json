@@ -1,5 +1,5 @@
 {
-  "name": "relationship-analyzer",
+  "name": "eun-contents",
   "private": true,
   "version": "2.0.0",
   "type": "module",
@@ -7,8 +7,9 @@
     "dev": "vite",
     "dev:vercel": "vercel dev",
     "build": "vite build",
+    "build:pages": "vite build --mode github-pages",
     "preview": "vite preview",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build:pages",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {

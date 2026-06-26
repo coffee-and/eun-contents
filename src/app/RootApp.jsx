@@ -1,44 +1,32 @@
 import { useEffect, useState } from "react";
-import RelationshipAnalyzer from "./App.jsx";
-import { AppShell } from "./components/layout/AppShell.jsx";
-import { getContentByRoute } from "./data/contentCatalog.js";
-import { HomePage } from "./pages/HomePage.jsx";
-
-function getRoute() {
-  return window.location.hash.replace(/^#\/?/, "") || "home";
-}
+import RelationshipAnalyzer from "../features/relationship/RelationshipApp.jsx";
+import { AppShell } from "../shared/components/AppShell.jsx";
+import { getContentByRoute } from "./contentCatalog.js";
+import { HomePage } from "../pages/HomePage.jsx";
+import { getCurrentRoute, ROUTES } from "./routes.js";
 
 export default function RootApp() {
-  const [route, setRoute] = useState(getRoute);
+  const [route, setRoute] = useState(getCurrentRoute);
 
   useEffect(() => {
-    const handleHashChange = () => setRoute(getRoute());
+    const handleHashChange = () => setRoute(getCurrentRoute());
     window.addEventListener("hashchange", handleHashChange);
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
   function navigate(nextRoute) {
-    window.location.hash = nextRoute === "home" ? "/" : `/${nextRoute}`;
+    window.location.hash = nextRoute === ROUTES.HOME ? "/" : `/${nextRoute}`;
   }
 
-  if (route === "relationship") {
+  if (route === ROUTES.RELATIONSHIP) {
     return (
       <div className="content-route theme-relationship">
-        <div className="content-route__navigation">
-          <button
-            type="button"
-            className="hub-back-button"
-            onClick={() => navigate("home")}
-          >
-            콘텐츠 홈으로
-          </button>
-        </div>
-        <RelationshipAnalyzer />
+        <RelationshipAnalyzer onNavigateHome={() => navigate("home")} />
       </div>
     );
   }
 
-  if (route !== "home") {
+  if (route !== ROUTES.HOME) {
     const content = getContentByRoute(route);
 
     return (

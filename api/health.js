@@ -2,7 +2,7 @@ export default {
   fetch() {
     return Response.json({
       ok: true,
-      service: "relationship-analyzer-api",
+      service: "eun-contents",
       timestamp: new Date().toISOString(),
     });
   },

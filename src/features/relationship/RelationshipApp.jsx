@@ -10,21 +10,19 @@ import { getQuestionsByMode } from "./data/questions.js";
 import { analyzeRelationship } from "./domain/analyzeRelationship.js";
 import { useQuizEngine } from "./hooks/useQuizEngine.js";
 import { clearResultUrl, getStoredResult } from "./utils/resultStorage.js";
-import { AppShell } from "./components/layout/AppShell.jsx";
+import { AppShell } from "../../shared/components/AppShell.jsx";
 import { Hero } from "./components/hero/Hero.jsx";
 import { ProgressBar } from "./components/progress/ProgressBar.jsx";
 import { QuestionCard } from "./components/question/QuestionCard.jsx";
 import { ResultView } from "./components/result/ResultView.jsx";
 import { RelationshipModeSelect } from "./components/mode/RelationshipModeSelect.jsx";
+import { getResultId } from "../../app/routes.js";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
 
-export default function App() {
+export default function RelationshipApp({ onNavigateHome }) {
   const resultTopRef = useRef(null);
-  const [sharedResultId, setSharedResultId] = useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    return params.get("resultId");
-  });
+  const [sharedResultId, setSharedResultId] = useState(getResultId);
   const [savedResult, setSavedResult] = useState(null);
   const [isResultLoading, setIsResultLoading] = useState(false);
   const [resultLoadError, setResultLoadError] = useState("");
@@ -193,6 +191,7 @@ export default function App() {
         eyebrow={APP_COPY.eyebrow}
         title={APP_COPY.title}
         subtitle={heroSubtitle}
+        onNavigateHome={onNavigateHome}
       />
 
       {shouldShowModeSelect ? (

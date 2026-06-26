@@ -1,0 +1,41 @@
+:root {
+  font-family: "Pretendard", sans-serif;
+
+  --font-label: 0.62rem;
+  --font-caption: 0.7rem;
+  --font-body: 0.84rem;
+  --font-list: 0.84rem;
+  --font-section-title: 0.96rem;
+  --font-card-title: 1.02rem;
+  --font-result-title: clamp(1.22rem, 2vw, 1.68rem);
+  --font-hero-title: clamp(1.36rem, 2.35vw, 2rem);
+  --font-value: 0.88rem;
+  --font-value-lg: 1.02rem;
+
+  --line-tight: 1.25;
+  --line-title: 1.32;
+  --line-body: 1.56;
+  --line-list: 1.42;
+  --letter-label: 0.14em;
+
+  --space-2xs: 4px;
+  --space-xs: 6px;
+  --space-sm: 10px;
+  --space-md: 14px;
+  --space-lg: 18px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+
+  --card-padding: 20px 24px;
+  --card-padding-sm: 16px 20px;
+  --card-padding-lg: 34px 36px;
+  --card-gap: 18px;
+  --section-gap: 18px;
+  --section-gap-lg: 26px;
+
+  --radius-sm: 8px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 999px;
+}

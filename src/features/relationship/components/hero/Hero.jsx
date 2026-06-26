@@ -1,4 +1,4 @@
-export function Hero({ eyebrow, title, subtitle }) {
+export function Hero({ eyebrow, title, subtitle, onNavigateHome }) {
   return (
     <header className="hero">
       <div className="hero__copy">
@@ -11,6 +11,16 @@ export function Hero({ eyebrow, title, subtitle }) {
 
         <p className="hero__subtitle">{subtitle}</p>
       </div>
+
+      {onNavigateHome ? (
+        <button
+          type="button"
+          className="hero__home-button"
+          onClick={onNavigateHome}
+        >
+          콘텐츠 홈으로
+        </button>
+      ) : null}
     </header>
   );
 }

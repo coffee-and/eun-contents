@@ -24,6 +24,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  flex-wrap: wrap;
   gap: var(--card-gap);
   margin-bottom: var(--section-gap);
 }
@@ -71,6 +72,26 @@
   color: var(--text-soft);
   font-size: var(--font-body);
   line-height: var(--line-body);
+}
+
+.hero__home-button {
+  flex: 0 0 auto;
+  min-height: 32px;
+  padding: 7px 11px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--text-soft);
+  font-size: var(--font-caption);
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.hero__home-button:hover {
+  border-color: var(--border-strong);
+  background: var(--card-bg);
+  color: var(--text);
 }
 
 /* ========================================
@@ -1030,6 +1051,17 @@
     align-items: flex-start;
   }
 
+  .hero {
+    gap: 10px;
+  }
+
+  .hero__home-button {
+    order: -1;
+    align-self: flex-end;
+    min-height: 30px;
+    padding: 6px 10px;
+  }
+
   .progress {
     height: 5px;
     margin-bottom: 14px;
@@ -1065,18 +1097,18 @@
   }
 
   .hero__title {
-    font-size: clamp(1.34rem, 5.5vw, 1.72rem);
+    font-size: clamp(1.24rem, 4.8vw, 1.58rem);
     line-height: 1.12;
   }
 
   .question-card__title {
-    font-size: clamp(1.12rem, 5vw, 1.34rem);
+    font-size: clamp(1.04rem, 4.5vw, 1.24rem);
     line-height: 1.38;
     letter-spacing: -0.03em;
   }
 
   .capture-panel__title {
-    font-size: clamp(1.18rem, 5vw, 1.5rem);
+    font-size: clamp(1.1rem, 4.6vw, 1.38rem);
   }
 
   .result-overview-card__title,
@@ -1084,7 +1116,7 @@
   .premium-lock__title,
   .premium-report__title,
 .answer-toggle-card__button strong {
-    font-size: 1.04rem;
+    font-size: 0.98rem;
   }
 
   .question-card__top {
@@ -1158,7 +1190,7 @@
   .metric-card__value,
   .capture-panel__type-value,
   .result-overview-card__score strong {
-    font-size: 0.98rem;
+    font-size: 0.92rem;
   }
 
   .premium-report__summary strong {
@@ -1255,15 +1287,15 @@
   }
 
   .hero__title {
-    font-size: clamp(1.28rem, 7vw, 1.54rem);
+    font-size: clamp(1.18rem, 6.2vw, 1.42rem);
   }
 
   .question-card__title {
-    font-size: clamp(1.08rem, 5.8vw, 1.26rem);
+    font-size: clamp(1rem, 5.2vw, 1.18rem);
   }
 
   .capture-panel__title {
-    font-size: clamp(1.12rem, 5.8vw, 1.36rem);
+    font-size: clamp(1.04rem, 5.2vw, 1.26rem);
   }
 
   .result-overview-card__title,

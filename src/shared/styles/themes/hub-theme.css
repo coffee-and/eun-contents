@@ -1,0 +1,41 @@
+.theme-hub {
+  --bg: #f3eee7;
+  --bg-soft: #fbf8f3;
+
+  --card-bg: rgba(255, 255, 255, 0.72);
+  --card-bg-soft: rgba(255, 255, 255, 0.62);
+
+  --surface-muted: rgba(255, 255, 255, 0.52);
+  --surface-line: rgba(79, 57, 46, 0.12);
+
+  --text: #342720;
+  --inverse-text: #ffffff;
+  --text-soft: #74645a;
+  --muted: #927f72;
+
+  --border: rgba(79, 57, 46, 0.13);
+  --border-strong: rgba(79, 57, 46, 0.24);
+  --primary: #4f392e;
+  --primary-hover: #3f2d25;
+  --primary-strong: #2f211b;
+  --primary-soft: #eee5dc;
+
+  --accent: #96715f;
+  --accent-soft: #f2e9e1;
+
+  --premium-bg: #eee5dc;
+  --premium-text: #4f392e;
+
+  --shadow: 0 12px 32px rgba(68, 48, 38, 0.08);
+  --shadow-soft: 0 6px 22px rgba(68, 48, 38, 0.06);
+  --shadow-flat: none;
+
+  --gradient-main: linear-gradient(90deg, #b89b89 0%, #74574a 50%, #3f2d25 100%);
+  --gradient-page: linear-gradient(180deg, #fbf8f3 0%, #f3eee7 100%);
+
+  --hub-icon-relationship: #eee6f5;
+  --hub-icon-couple: #f7e4e8;
+  --hub-icon-family: #f1e7d8;
+  --hub-icon-saju: #e4eaf1;
+  --hub-icon-game: #e1eee7;
+}
