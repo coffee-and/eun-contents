@@ -23,8 +23,12 @@ export default function RootApp() {
 
   if (route === "relationship") {
     return (
-      <div className="content-route">
-        <button type="button" className="hub-back-button hub-back-button--floating" onClick={() => navigate("home")}>
+      <div className="content-route theme-relationship">
+        <button
+          type="button"
+          className="hub-back-button hub-back-button--floating"
+          onClick={() => navigate("home")}
+        >
           ← 콘텐츠 홈
         </button>
         <RelationshipAnalyzer />
@@ -36,26 +40,38 @@ export default function RootApp() {
     const content = getContentByRoute(route);
 
     return (
-      <AppShell>
-        <div className="coming-soon">
-          <button type="button" className="hub-back-button" onClick={() => navigate("home")}>
-            ← 콘텐츠 홈
-          </button>
-          <section className="coming-soon__card">
-            <span className="coming-soon__icon">{content?.icon ?? "✦"}</span>
-            <span className="coming-soon__category">{content?.category ?? "새 콘텐츠"}</span>
-            <h1>{content?.title ?? "준비 중인 콘텐츠"}</h1>
-            <p>{content?.description ?? "새로운 콘텐츠를 준비하고 있어요."}</p>
-            <strong>COMING SOON</strong>
-          </section>
-        </div>
-      </AppShell>
+      <div className="theme-hub">
+        <AppShell>
+          <div className="coming-soon">
+            <button
+              type="button"
+              className="hub-back-button"
+              onClick={() => navigate("home")}
+            >
+              ← 콘텐츠 홈
+            </button>
+            <section className="coming-soon__card">
+              <span className="coming-soon__icon">{content?.icon ?? "✦"}</span>
+              <span className="coming-soon__category">
+                {content?.category ?? "새 콘텐츠"}
+              </span>
+              <h1>{content?.title ?? "준비 중인 콘텐츠"}</h1>
+              <p>
+                {content?.description ?? "새로운 콘텐츠를 준비하고 있어요."}
+              </p>
+              <strong>COMING SOON</strong>
+            </section>
+          </div>
+        </AppShell>
+      </div>
     );
   }
 
   return (
-    <AppShell>
-      <HomePage onNavigate={navigate} />
-    </AppShell>
+    <div className="theme-hub">
+      <AppShell>
+        <HomePage onNavigate={navigate} />
+      </AppShell>
+    </div>
   );
 }
