@@ -1,7 +1,12 @@
-const RESULT_STORAGE_KEY = "relationship-analyzer-results";
+import { buildResultUrl } from "../../../app/routes.js";
 
-function readStoredResults() {
-  const rawData = window.localStorage.getItem(RESULT_STORAGE_KEY);
+const RESULT_STORAGE_KEY = "eun-contents-relationship-results";
+const LEGACY_RESULT_STORAGE_KEY = "relationship-analyzer-results";
+
+export { buildResultUrl };
+
+function parseStoredResults(storageKey) {
+  const rawData = window.localStorage.getItem(storageKey);
 
   if (!rawData) return {};
 
@@ -10,6 +15,21 @@ function readStoredResults() {
   } catch {
     return {};
   }
+}
+
+function readStoredResults() {
+  const currentResults = parseStoredResults(RESULT_STORAGE_KEY);
+  const legacyResults = parseStoredResults(LEGACY_RESULT_STORAGE_KEY);
+  const mergedResults = {
+    ...legacyResults,
+    ...currentResults,
+  };
+
+  if (Object.keys(legacyResults).length > 0) {
+    writeStoredResults(mergedResults);
+  }
+
+  return mergedResults;
 }
 
 function writeStoredResults(results) {
@@ -52,14 +72,17 @@ export function saveResult({ analysis, answers, relationshipMode }) {
   return nextResult;
 }
 
-export function buildResultUrl(resultId) {
-  const url = new URL(window.location.href);
-  url.searchParams.set("resultId", resultId);
-  return url.toString();
-}
-
 export function clearResultUrl() {
   const url = new URL(window.location.href);
   url.searchParams.delete("resultId");
+  const [hashPath, hashQuery] = url.hash.split("?");
+
+  if (hashQuery) {
+    const hashParams = new URLSearchParams(hashQuery);
+    hashParams.delete("resultId");
+    const nextHashQuery = hashParams.toString();
+    url.hash = nextHashQuery ? `${hashPath}?${nextHashQuery}` : hashPath;
+  }
+
   window.history.replaceState({}, "", url.toString());
 }

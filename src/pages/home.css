@@ -27,7 +27,7 @@
   max-width: 620px;
   margin: 12px auto 10px;
   color: var(--text);
-  font-size: clamp(1.8rem, 4vw, 2.7rem);
+  font-size: clamp(1.55rem, 3.2vw, 2.25rem);
   line-height: 1.25;
   letter-spacing: -0.04em;
 }
@@ -93,30 +93,30 @@
   font-size: 1.15rem;
 }
 
-.content-card:nth-child(1) .content-card__icon {
+.content-card--relationship .content-card__icon {
   background: var(--hub-icon-relationship);
 }
 
-.content-card:nth-child(2) .content-card__icon {
+.content-card--couple .content-card__icon {
   background: var(--hub-icon-couple);
 }
 
-.content-card:nth-child(3) .content-card__icon {
+.content-card--family .content-card__icon {
   background: var(--hub-icon-family);
 }
 
-.content-card:nth-child(4) .content-card__icon {
+.content-card--saju .content-card__icon {
   background: var(--hub-icon-saju);
 }
 
-.content-card:nth-child(5) .content-card__icon {
+.content-card--game .content-card__icon {
   background: var(--hub-icon-game);
 }
 
 .content-card__title {
   margin: 20px 0 8px;
   color: var(--text);
-  font-size: 1.2rem;
+  font-size: clamp(1.05rem, 1.35vw, 1.14rem);
 }
 
 .content-card__description {
@@ -164,37 +164,6 @@
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-}
-
-.content-route {
-  position: relative;
-}
-
-.content-route__navigation {
-  position: absolute;
-  z-index: 10;
-  top: 14px;
-  right: max(16px, calc((100% - 960px) / 2 + 16px));
-}
-
-.theme-relationship .content-route__navigation .hub-back-button {
-  min-height: 30px;
-  margin: 0;
-  padding: 6px 10px;
-  border-color: var(--border);
-  border-radius: 8px;
-  color: var(--text-soft);
-  background: rgba(255, 255, 255, 0.76);
-  box-shadow: none;
-  font-size: var(--font-caption);
-  font-weight: 700;
-  line-height: 1;
-}
-
-.theme-relationship .content-route__navigation .hub-back-button:hover {
-  color: var(--text);
-  border-color: var(--border-strong);
-  background: var(--card-bg);
 }
 
 .coming-soon {
@@ -245,14 +214,4 @@
     border-radius: 20px;
   }
 
-  .content-route__navigation {
-    top: 10px;
-    right: 14px;
-  }
-
-  .theme-relationship .content-route__navigation .hub-back-button {
-    min-height: 28px;
-    padding: 5px 9px;
-    font-size: 0.66rem;
-  }
 }

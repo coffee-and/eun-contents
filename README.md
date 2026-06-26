@@ -1,252 +1,245 @@
-# Relationship Analyzer
+﻿# EUN CONTENTS
 
-> 질문 응답을 바탕으로 연인 관계의 감정 상태, 관계 안정성, 갈등 패턴, 미래 방향성을 분석하는 관계 리포트 서비스입니다.
+관계 진단, 커플·가족 문답, 사주와 미니게임 등 나와 우리를 알아가는 다양한 콘텐츠를 한곳에서 제공하는 React 기반 웹서비스입니다.
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Relationship_Analyzer-6C63FF?style=for-the-badge)](https://coffee-and.github.io/relationship-analyzer/)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-EUN_CONTENTS-4f392e?style=for-the-badge)](https://coffee-and.github.io/eun-contents/)
 
----
+## 서비스 구조
 
-## 프로젝트 소개
+EUN CONTENTS는 하나의 웹사이트 안에서 여러 콘텐츠를 선택해 이용하는 통합 콘텐츠 서비스입니다.
 
-**Relationship Analyzer**는 사용자가 관계에 관한 질문에 답하면 감정 상태, 관계 안정성, 갈등 패턴, 미래 방향성을 기준으로 현재 관계의 흐름을 분석하고 리포트 형태로 보여주는 React 기반 웹서비스입니다.
+현재 제공 콘텐츠:
 
-단순한 점수 결과를 제공하는 것이 아니라, 관계를 여러 영역으로 나누어 분석하고 관계 유형, 대표 갈등 유형, 카테고리별 리포트, 관계 회복 가이드까지 확인할 수 있도록 구성했습니다.
+- 우리 관계 진단: 기존 Relationship Analyzer 기능을 통합 서비스 안의 첫 번째 하위 콘텐츠로 제공합니다.
 
-> 본 서비스는 전문 심리검사 또는 심리상담을 대체하지 않으며 자기 이해와 관계 점검을 위한 참고용 콘텐츠입니다.
+준비 중 콘텐츠:
 
----
+- 커플 문답
+- 가족 문답
+- 사주 콘텐츠
+- 미니게임
+- 이후 추가될 테스트, 문답, 분석형 콘텐츠
 
-## 분석 영역
+## 우리 관계 진단
 
-| 영역 | 확인하는 내용 |
-| --- | --- |
-| 감정 상태 | 관계에서 느끼는 편안함, 긴장감, 감정 소모 |
-| 관계 안정성 | 신뢰, 존중, 정서적 안정감, 관계 유지 기반 |
-| 갈등 패턴 | 갈등 반응 방식, 반복되는 문제, 회복 과정 |
-| 미래 방향성 | 가치관, 장기 계획, 관계의 방향성 |
+우리 관계 진단은 질문 응답을 바탕으로 감정 상태, 관계 안정성, 갈등 패턴, 미래 방향성을 분석하고 리포트 형태로 보여주는 콘텐츠입니다.
 
----
+보조 영문명으로 Relationship Analyzer를 사용할 수 있지만, EUN CONTENTS 전체 서비스명과는 구분합니다.
 
-## 주요 기능
+주요 기능:
 
-### 관계 진단
-
-- 질문 기반 관계 진단
-- 단계별 진행률 표시
-- 답변별 점수 및 위험도 계산
-- 카테고리별 지표 산출
-- 대표 갈등 유형 분석
-- 최종 관계 결과 도출
-
-### 결과 리포트
-
-- 핵심 관계 지표 제공
-- 관계 결과 요약
-- 감정 상태 분석
-- 관계 안정성 분석
-- 갈등 패턴 분석
-- 미래 방향성 분석
-- 사용자가 선택한 답변 다시 보기
-
-### 프리미엄 리포트
-
-- 개인화 상세 분석
-- 반복 갈등 패턴 해석
-- 감정 소모 포인트 분석
-- 관계 회복 가이드
-- 실전 대화 예시 제공
-- 7일 관계 점검 가이드
-
-### 공유 및 저장
-
-- PNG 결과 이미지 저장
-- Web Share API 기반 공유
-- 클립보드 복사 지원
-- 결과 재확인 및 테스트 재시작
-
-### 기타
-
-- 모바일 / 데스크톱 반응형 UI
-- GitHub Pages 배포
-
----
-
-## 프리미엄 리포트 구성
-
-| 구분 | 제공 내용 |
-| --- | --- |
-| 무료 결과 | 관계 결과, 대표 갈등 유형, 핵심 지표, 카테고리별 분석 |
-| 프리미엄 리포트 | 개인화 상세 분석, 반복 갈등 해석, 대화 가이드, 관계 회복 가이드 |
-
-프리미엄 리포트에서는 다음 내용을 제공합니다.
-
-1. 핵심 진단
-2. 감정 상태 분석
-3. 관계 안정성 분석
-4. 갈등 패턴 분석
-5. 미래 방향성 분석
-6. 지금 필요한 대화 방식
-7. 바로 사용할 수 있는 대화 예시
-8. 관계 회복을 위한 7일 점검 가이드
-
----
-
-## 분석 방식
-
-각 답변에는 다음 정보가 포함됩니다.
-
-- 점수
-- 위험도
-- 카테고리
-- 갈등 유형 태그
-
-사용자가 모든 질문에 답변하면 아래 데이터를 종합하여 결과를 생성합니다.
-
-- 전체 누적 점수
-- 전체 위험도
-- 카테고리별 점수
-- 대표 갈등 유형
-- 관계 결과 유형
-- 개인화 요약 문구
-
-### 최종 판단값
-
-```text
-최종 판단값 = 전체 누적 점수 - 전체 위험도
-```
-
-긍정적인 요소와 관계 리스크를 함께 반영하도록 설계했습니다.
-
-### 대표 갈등 유형
-
-가장 많이 선택된 갈등 유형 태그를 기준으로 대표 유형을 산출합니다.
-
-- 안정형
-- 회피형
-- 폭발형
-- 냉담형
-- 추적형
-
----
-
-## 구현 포인트
-
-### 1. 데이터 중심 구조
-
-질문, 답변, 점수, 위험도, 유형 태그를 데이터 구조로 관리합니다.
-
-분석 기준을 수정하더라도 UI 컴포넌트 수정이 최소화되도록 설계했습니다.
-
-### 2. 분석 로직 분리
-
-분석 규칙과 계산 로직을 화면 컴포넌트와 분리했습니다.
-
-결과 화면은 계산된 데이터를 표현하는 역할에 집중합니다.
-
-### 3. 상태 관리
-
-현재 질문, 선택 답변, 진행률, 결과 화면 전환 상태를 관리합니다.
-
-응답 누락이 발생하지 않도록 답변 선택 후에만 다음 단계로 진행할 수 있습니다.
-
-### 4. 개인화 리포트 생성
-
-단순 총점이 아닌 여러 지표를 종합하여 사용자별 결과를 생성합니다.
-
-지표 조합에 따라 강조되는 설명이 달라집니다.
-
-### 5. 결과 이미지 저장
-
-html2canvas를 활용해 리포트 화면을 PNG로 저장합니다.
-
-캡처 전용 스타일과 고해상도 배율을 적용하여 실제 화면과 유사한 결과를 제공합니다.
-
-### 6. 공유 환경 대응
-
-Web Share API 지원 환경에서는 기본 공유 창을 사용합니다.
-
-지원하지 않는 브라우저에서는 클립보드 복사 방식으로 대체합니다.
-
----
+- 관계 유형 선택
+- 질문 기반 진단
+- 이전/다음 질문 이동
+- 진행률 표시
+- 점수 및 카테고리 분석
+- 무료 결과 리포트
+- 프리미엄 리포트 준비 UI
+- 결과 이미지 저장
+- 공유 링크 생성
+- 서버 저장 및 조회
+- 로컬 저장 결과 fallback
+- 저장된 결과 재열기
 
 ## 기술 스택
 
-| 구분 | 기술 |
-| --- | --- |
-| Frontend | React, JavaScript |
-| Build Tool | Vite |
-| Styling | CSS |
-| Image Export | html2canvas |
-| Browser API | Web Share API, Clipboard API |
-| Deployment | GitHub Pages |
-
----
+- React
+- Vite
+- JavaScript
+- CSS
+- Vercel Functions
+- Supabase
+- html2canvas
+- Web Share API
+- Clipboard API
+- GitHub Pages
 
 ## 프로젝트 구조
 
 ```text
 src/
-├── components/
-├── data/
-├── domain/
-├── hooks/
-├── layout/
-├── styles/
-├── App.jsx
-└── main.jsx
+├─ app/
+│  ├─ RootApp.jsx
+│  ├─ contentCatalog.js
+│  └─ routes.js
+├─ pages/
+│  ├─ HomePage.jsx
+│  └─ home.css
+├─ features/
+│  └─ relationship/
+│     ├─ RelationshipApp.jsx
+│     ├─ components/
+│     ├─ data/
+│     ├─ domain/
+│     ├─ hooks/
+│     ├─ styles/
+│     └─ utils/
+├─ shared/
+│  ├─ components/
+│  └─ styles/
+└─ main.jsx
 ```
 
-### 주요 역할
+## 콘텐츠 추가 방법
 
-- `data`: 질문, 답변, 분석 규칙 데이터
-- `domain`: 점수 계산 및 리포트 생성 로직
-- `hooks`: 퀴즈 진행 및 상태 관리
-- `components`: 질문 화면, 결과 카드, 리포트 UI
-- `styles`: 공통 스타일 및 캡처 전용 스타일
+1. `src/app/contentCatalog.js`에 콘텐츠 정보를 추가합니다.
+2. `id`, `route`, `title`, `description`, `theme`, `status`를 지정합니다.
+3. 활성 콘텐츠라면 `src/features/<content-id>/` 아래에 화면과 도메인 로직을 추가합니다.
+4. 준비 중 콘텐츠는 별도 feature 없이 카탈로그만으로 Coming Soon 화면에 연결됩니다.
 
----
+예시:
 
-## 실행 방법
+```js
+{
+  id: "couple-questions",
+  route: "couple-questions",
+  title: "커플 문답",
+  theme: "couple",
+  status: "coming-soon",
+}
+```
+
+## 테마 구조
+
+공통 토큰과 콘텐츠별 테마를 분리합니다.
+
+```text
+src/shared/styles/
+├─ global.css
+├─ tokens.css
+└─ themes/
+   ├─ hub-theme.css
+   └─ relationship-theme.css
+```
+
+- `global.css`: reset, 기본 요소 스타일, 공통 import
+- `tokens.css`: typography, spacing, radius 등 공통 토큰
+- `hub-theme.css`: EUN CONTENTS 홈 테마
+- `relationship-theme.css`: 우리 관계 진단 라벤더 테마
+- `features/relationship/styles/`: 관계 진단 전용 레이아웃과 컴포넌트 스타일
+
+## 로컬 실행
 
 ```bash
-git clone https://github.com/coffee-and/relationship-analyzer.git
-
-cd relationship-analyzer
-
 npm install
-
 npm run dev
 ```
 
----
+로컬 개발 서버는 기본 Vite base `/`를 사용합니다.
 
 ## 빌드
+
+Vercel 또는 일반 정적 빌드:
 
 ```bash
 npm run build
 npm run preview
 ```
 
----
+GitHub Pages 빌드:
 
-## 배포
+```bash
+npm run build:pages
+```
+
+GitHub Pages 배포:
 
 ```bash
 npm run deploy
 ```
 
-`predeploy` 스크립트가 프로덕션 빌드를 수행한 뒤 GitHub Pages에 자동 배포합니다.
+## 배포 주소
 
----
+- GitHub Pages: https://coffee-and.github.io/eun-contents/
+- GitHub Repository: https://github.com/coffee-and/eun-contents
+- Vercel: 프로젝트명 `eun-contents` 기준으로 대시보드에서 실제 도메인을 확인합니다.
 
-## 링크
+## 환경변수
 
-- Live Demo: https://coffee-and.github.io/relationship-analyzer/
-- GitHub Repository: https://github.com/coffee-and/relationship-analyzer
-- Main Portfolio: https://coffee-and.github.io/eun-portfolio/
+클라이언트:
 
----
+```text
+VITE_API_BASE_URL=
+```
 
-## License
+서버:
 
-Personal Portfolio Project
+```text
+SUPABASE_URL=
+SUPABASE_SECRET_KEY=
+```
+
+주의:
+
+- `SUPABASE_SECRET_KEY`는 서버 전용입니다.
+- `SUPABASE_SECRET_KEY`를 `VITE_` 환경변수로 만들지 않습니다.
+- 실제 비밀값은 README, 코드, 커밋에 포함하지 않습니다.
+
+## 결과 저장 및 공유 구조
+
+우리 관계 진단 결과는 Vercel Functions를 통해 Supabase `results` 테이블에 저장됩니다.
+
+- 저장 API: `POST /api/results`
+- 조회 API: `GET /api/results/:id`
+- 공유 링크 표준 형식: `?resultId=<uuid>#/relationship`
+
+기존 공유 링크 호환:
+
+- `?resultId=<uuid>`
+- `?resultId=<uuid>#/relationship`
+- `#/relationship?resultId=<uuid>`
+- `#/relationship`
+
+앱 진입 시 `resultId`가 있으면 자동으로 우리 관계 진단 콘텐츠를 활성화하고 서버에서 저장 결과를 조회합니다. 서버 조회가 실패하면 기존 localStorage 저장 결과를 fallback으로 확인합니다.
+
+## localStorage 호환
+
+새 저장 키:
+
+```text
+eun-contents-relationship-results
+```
+
+기존 키 fallback:
+
+```text
+relationship-analyzer-results
+```
+
+기존 브라우저에 저장된 결과를 잃지 않도록 기존 키를 읽고 새 키로 병합 저장합니다.
+
+## Supabase 연결
+
+현재 결과 저장과 조회만 사용합니다.
+
+- `api/results.js`: insert
+- `api/results/[id].js`: select
+- `api/supabase-health.js`: 연결 확인
+
+서비스명과 레포명이 바뀌어도 Supabase 프로젝트나 테이블명은 변경하지 않습니다.
+
+## GitHub Pages와 Vercel
+
+Vite base는 환경별로 다릅니다.
+
+- 로컬 개발: `/`
+- Vercel: `/`
+- GitHub Pages: `/eun-contents/`
+
+GitHub Pages용 빌드는 `npm run build:pages`를 사용합니다.
+
+## 보안 주의사항
+
+- `.vercel/`은 로컬 연결 정보이므로 커밋하지 않습니다.
+- `dist/`와 `node_modules/`는 커밋하지 않습니다.
+- 서버 전용 Supabase key는 프론트 번들에 포함하지 않습니다.
+- 결과 조회 API는 공유 링크를 가진 사용자가 결과를 볼 수 있는 구조입니다. 민감한 개인정보를 답변에 넣지 않도록 서비스 문구에서 안내가 필요합니다.
+
+## 향후 계획
+
+- 커플 문답 콘텐츠 추가
+- 가족 문답 콘텐츠 추가
+- 사주 콘텐츠 추가
+- 미니게임 추가
+- 콘텐츠별 테마 확장
+- 기존 GitHub Pages 주소에서 새 주소로 안내하는 정적 리다이렉트 검토

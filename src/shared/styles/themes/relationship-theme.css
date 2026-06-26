@@ -1,0 +1,46 @@
+.theme-relationship {
+  --bg: #ede2f9;
+  --bg-soft: #fbf8ff;
+
+  --card-bg: #ffffff;
+  --card-bg-soft: #fffaff;
+
+  --surface-muted: #f1edf6;
+  --surface-line: #d8cfe3;
+
+  --text: #2c0f27;
+  --inverse-text: #ffffff;
+  --text-soft: #5e3c64;
+  --muted: #7b4b7a;
+
+  --border: #d3c8e2;
+  --border-strong: #b39bc2;
+  --primary: #7b4b7a;
+  --primary-hover: #6a4068;
+  --primary-strong: #3b1e3d;
+  --primary-soft: #eee8f5;
+
+  --accent: #a77b9d;
+  --accent-soft: #f4edf5;
+
+  --premium-bg: #efe6f4;
+  --premium-text: #7b4b7a;
+
+  --shadow: 0 2px 8px rgba(74, 43, 82, 0.05);
+  --shadow-soft: 0 1px 3px rgba(74, 43, 82, 0.04);
+  --shadow-flat: none;
+
+  --gradient-main: linear-gradient(
+    90deg,
+    #d9d4ef 0%,
+    #b39bc2 36%,
+    #7b4b7a 68%,
+    #3b1e3d 100%
+  );
+  --gradient-page: linear-gradient(
+    180deg,
+    #fdfbff 0%,
+    #f8f6fb 46%,
+    #f1edf6 100%
+  );
+}

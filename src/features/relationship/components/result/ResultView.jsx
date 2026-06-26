@@ -311,7 +311,7 @@ export function ResultView({
 
           <div className="capture-panel__footer">
             <p>{APP_COPY.footer}</p>
-            <span>relationship-analyzer</span>
+            <span>EUN CONTENTS · 우리 관계 진단</span>
           </div>
         </section>
 
