@@ -8,12 +8,13 @@ export const CONTENT_CATALOG = [
     id: "relationship",
     route: "relationship",
     category: "관계 진단",
-    title: "릴레이션십 아날라이저",
-    description: "현재 관계의 감정 상태와 안정성, 갈등 패턴을 차분하게 살펴봐요.",
+    title: "우리 관계 진단",
+    description:
+      "현재 관계의 감정 상태와 안정성, 갈등 패턴을 차분하게 살펴봐요.",
     icon: "♡",
     status: CONTENT_STATUS.ACTIVE,
-    actionLabel: "분석 시작하기",
-  },
+    actionLabel: "진단 시작하기",
+  }, 
   {
     id: "couple-questions",
     route: "couple-questions",
