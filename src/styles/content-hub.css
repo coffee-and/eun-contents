@@ -166,13 +166,15 @@
   -webkit-backdrop-filter: blur(14px);
 }
 
+.content-route {
+  position: relative;
+}
+
 .content-route__navigation {
-  display: flex;
-  justify-content: flex-end;
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 8px 16px 0;
-  background: var(--bg);
+  position: absolute;
+  z-index: 10;
+  top: 14px;
+  right: max(16px, calc((100% - 960px) / 2 + 16px));
 }
 
 .theme-relationship .content-route__navigation .hub-back-button {
@@ -244,7 +246,8 @@
   }
 
   .content-route__navigation {
-    padding: 6px 14px 0;
+    top: 10px;
+    right: 14px;
   }
 
   .theme-relationship .content-route__navigation .hub-back-button {
