@@ -6,8 +6,52 @@
   font-family: "Pretendard", sans-serif;
 
   /* ========================================
-     Color System - Calm Lavender
+     Shared Design Tokens
   ======================================== */
+  --font-label: 0.62rem;
+  --font-caption: 0.7rem;
+  --font-body: 0.84rem;
+  --font-list: 0.84rem;
+  --font-section-title: 1rem;
+  --font-card-title: 1.06rem;
+  --font-result-title: clamp(1.34rem, 2.2vw, 1.86rem);
+  --font-hero-title: clamp(1.5rem, 2.55vw, 2.28rem);
+  --font-value: 0.92rem;
+  --font-value-lg: 1.1rem;
+
+  --line-tight: 1.25;
+  --line-title: 1.32;
+  --line-body: 1.56;
+  --line-list: 1.42;
+  --letter-label: 0.14em;
+
+  --space-2xs: 4px;
+  --space-xs: 6px;
+  --space-sm: 10px;
+  --space-md: 14px;
+  --space-lg: 18px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+
+  --card-padding: 20px 24px;
+  --card-padding-sm: 16px 20px;
+  --card-padding-lg: 34px 36px;
+  --card-gap: 18px;
+  --section-gap: 18px;
+  --section-gap-lg: 26px;
+
+  --radius-sm: 8px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 999px;
+}
+
+/* ========================================
+   Relationship Analyzer Theme
+   Calm Lavender
+======================================== */
+.theme-relationship {
   --bg: #ede2f9;
   --bg-soft: #fbf8ff;
 
@@ -35,25 +79,10 @@
   --premium-bg: #efe6f4;
   --premium-text: #7b4b7a;
 
-  /* ========================================
-     Shadow
-  ======================================== */
   --shadow: 0 2px 8px rgba(74, 43, 82, 0.05);
   --shadow-soft: 0 1px 3px rgba(74, 43, 82, 0.04);
   --shadow-flat: none;
 
-  /* ========================================
-     Radius
-  ======================================== */
-  --radius-sm: 8px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-pill: 999px;
-
-  /* ========================================
-     Gradient
-  ======================================== */
   --gradient-main: linear-gradient(
     90deg,
     #d9d4ef 0%,
@@ -67,46 +96,52 @@
     #f8f6fb 46%,
     #f1edf6 100%
   );
+}
 
-  /* ========================================
-     Typography
-  ======================================== */
-  --font-label: 0.62rem;
-  --font-caption: 0.7rem;
-  --font-body: 0.84rem;
-  --font-list: 0.84rem;
-  --font-section-title: 1rem;
-  --font-card-title: 1.06rem;
-  --font-result-title: clamp(1.34rem, 2.2vw, 1.86rem);
-  --font-hero-title: clamp(1.5rem, 2.55vw, 2.28rem);
-  --font-value: 0.92rem;
-  --font-value-lg: 1.1rem;
+/* ========================================
+   Content Hub Theme
+   Warm Ivory + Dark Brown + iOS Glass
+======================================== */
+.theme-hub {
+  --bg: #f3eee7;
+  --bg-soft: #fbf8f3;
 
-  --line-tight: 1.25;
-  --line-title: 1.32;
-  --line-body: 1.56;
-  --line-list: 1.42;
+  --card-bg: rgba(255, 255, 255, 0.72);
+  --card-bg-soft: rgba(255, 255, 255, 0.62);
 
-  --letter-label: 0.14em;
+  --surface-muted: rgba(255, 255, 255, 0.52);
+  --surface-line: rgba(79, 57, 46, 0.12);
 
-  /* ========================================
-     Spacing
-  ======================================== */
-  --space-2xs: 4px;
-  --space-xs: 6px;
-  --space-sm: 10px;
-  --space-md: 14px;
-  --space-lg: 18px;
-  --space-xl: 24px;
-  --space-2xl: 32px;
+  --text: #342720;
+  --inverse-text: #ffffff;
+  --text-soft: #74645a;
+  --muted: #927f72;
 
-  --card-padding: 20px 24px;
-  --card-padding-sm: 16px 20px;
-  --card-padding-lg: 34px 36px;
+  --border: rgba(79, 57, 46, 0.13);
+  --border-strong: rgba(79, 57, 46, 0.24);
+  --primary: #4f392e;
+  --primary-hover: #3f2d25;
+  --primary-strong: #2f211b;
+  --primary-soft: #eee5dc;
 
-  --card-gap: 18px;
-  --section-gap: 18px;
-  --section-gap-lg: 26px;
+  --accent: #96715f;
+  --accent-soft: #f2e9e1;
+
+  --premium-bg: #eee5dc;
+  --premium-text: #4f392e;
+
+  --shadow: 0 12px 32px rgba(68, 48, 38, 0.08);
+  --shadow-soft: 0 6px 22px rgba(68, 48, 38, 0.06);
+  --shadow-flat: none;
+
+  --gradient-main: linear-gradient(90deg, #b89b89 0%, #74574a 50%, #3f2d25 100%);
+  --gradient-page: linear-gradient(180deg, #fbf8f3 0%, #f3eee7 100%);
+
+  --hub-icon-relationship: #eee6f5;
+  --hub-icon-couple: #f7e4e8;
+  --hub-icon-family: #f1e7d8;
+  --hub-icon-saju: #e4eaf1;
+  --hub-icon-game: #e1eee7;
 }
 
 * {
@@ -121,8 +156,8 @@ body,
 
 body {
   margin: 0;
-  color: var(--text);
-  background: var(--gradient-page);
+  color: #342720;
+  background: #f3eee7;
   font-size: var(--font-body);
   line-height: var(--line-body);
 }
