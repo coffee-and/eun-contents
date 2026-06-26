@@ -162,6 +162,9 @@ npm run deploy
 VITE_API_BASE_URL=
 ```
 
+GitHub Pages 빌드는 `--mode github-pages`로 실행되므로, Pages에서 사용할 공개 API 주소는 `.env.github-pages`의 `VITE_API_BASE_URL`에 둡니다.
+현재 값은 비밀값이 아닌 Vercel API 공개 URL입니다.
+
 서버:
 
 ```text
@@ -227,6 +230,7 @@ Vite base는 환경별로 다릅니다.
 - GitHub Pages: `/eun-contents/`
 
 GitHub Pages용 빌드는 `npm run build:pages`를 사용합니다.
+이 빌드는 `.env.github-pages`를 읽어 Vercel API 도메인으로 결과 저장과 조회를 요청합니다.
 
 ## 보안 주의사항
 
