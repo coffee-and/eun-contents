@@ -3,6 +3,25 @@ import { createClient } from "@supabase/supabase-js";
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseSecretKey = process.env.SUPABASE_SECRET_KEY;
 
+const ALLOWED_ORIGINS = new Set([
+  "https://coffee-and.github.io",
+  "http://localhost:3000",
+  "http://localhost:5173",
+]);
+
+function applyCors(request, response) {
+  const origin = request.headers.origin;
+
+  if (origin && ALLOWED_ORIGINS.has(origin)) {
+    response.setHeader("Access-Control-Allow-Origin", origin);
+  }
+
+  response.setHeader("Vary", "Origin");
+  response.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  response.setHeader("Access-Control-Max-Age", "86400");
+}
+
 function getSupabaseClient() {
   if (!supabaseUrl || !supabaseSecretKey) {
     throw new Error("Supabase environment variables are missing.");
@@ -17,8 +36,14 @@ function getSupabaseClient() {
 }
 
 export default async function handler(request, response) {
+  applyCors(request, response);
+
+  if (request.method === "OPTIONS") {
+    return response.status(204).end();
+  }
+
   if (request.method !== "POST") {
-    response.setHeader("Allow", "POST");
+    response.setHeader("Allow", "POST, OPTIONS");
 
     return response.status(405).json({
       ok: false,
