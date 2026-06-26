@@ -19,6 +19,10 @@ function PremiumSection({ title, description, points }) {
 
 export function PremiumReport({ analysis, answers = [] }) {
   const report = buildCounselingReport(analysis, answers);
+  const relationshipStability = Math.max(
+    0,
+    Math.min(100, 100 - Number(analysis.conflictRisk ?? 0))
+  );
 
   return (
     <section className="card premium-report">
@@ -34,16 +38,24 @@ export function PremiumReport({ analysis, answers = [] }) {
           <strong>{analysis.relationshipLevel.title}</strong>
         </div>
         <div>
-          <span>주요 갈등 반응</span>
-          <strong>{analysis.topTypeLabel}</strong>
+          <span>정서 교감</span>
+          <strong>{analysis.categoryScores.emotion} / 100</strong>
+        </div>
+        <div>
+          <span>현실 조율</span>
+          <strong>{analysis.categoryScores.stability} / 100</strong>
+        </div>
+        <div>
+          <span>관계 안정</span>
+          <strong>{relationshipStability} / 100</strong>
+        </div>
+        <div>
+          <span>미래 정렬</span>
+          <strong>{analysis.categoryScores.future} / 100</strong>
         </div>
         <div>
           <span>종합 관계 지수</span>
           <strong>{analysis.finalValue} / 100</strong>
-        </div>
-        <div>
-          <span>갈등 부담 지수</span>
-          <strong>{analysis.conflictRisk} / 100</strong>
         </div>
       </div>
 
