@@ -1,5 +1,6 @@
 @import "./theme.css";
 @import "./result-spacing.css";
+@import "./content-hub.css";
 
 :root {
   font-family: "Pretendard", sans-serif;
