@@ -24,13 +24,15 @@ export default function RootApp() {
   if (route === "relationship") {
     return (
       <div className="content-route theme-relationship">
-        <button
-          type="button"
-          className="hub-back-button hub-back-button--floating"
-          onClick={() => navigate("home")}
-        >
-          ← 콘텐츠 홈
-        </button>
+        <div className="content-route__navigation">
+          <button
+            type="button"
+            className="hub-back-button"
+            onClick={() => navigate("home")}
+          >
+            콘텐츠 홈으로
+          </button>
+        </div>
         <RelationshipAnalyzer />
       </div>
     );
