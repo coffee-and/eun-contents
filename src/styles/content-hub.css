@@ -171,15 +171,22 @@
   justify-content: flex-end;
   max-width: 960px;
   margin: 0 auto;
-  padding: 18px 16px 0;
+  padding: 8px 16px 0;
+  background: var(--bg);
 }
 
 .theme-relationship .content-route__navigation .hub-back-button {
+  min-height: 30px;
   margin: 0;
+  padding: 6px 10px;
   border-color: var(--border);
+  border-radius: 8px;
   color: var(--text-soft);
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: var(--shadow-soft);
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: none;
+  font-size: var(--font-caption);
+  font-weight: 700;
+  line-height: 1;
 }
 
 .theme-relationship .content-route__navigation .hub-back-button:hover {
@@ -237,6 +244,12 @@
   }
 
   .content-route__navigation {
-    padding: 12px 14px 0;
+    padding: 6px 14px 0;
+  }
+
+  .theme-relationship .content-route__navigation .hub-back-button {
+    min-height: 28px;
+    padding: 5px 9px;
+    font-size: 0.66rem;
   }
 }
