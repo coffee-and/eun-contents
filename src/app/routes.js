@@ -1,6 +1,7 @@
 export const ROUTES = {
   HOME: "home",
   RELATIONSHIP: "relationship",
+  TOGETHER_QUESTIONS: "together-questions",
 };
 
 export function getResultId() {
