@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import RelationshipAnalyzer from "../features/relationship/RelationshipApp.jsx";
+import TogetherQuestionsApp from "../features/together-questions/TogetherQuestionsApp.jsx";
 import { AppShell } from "../shared/components/AppShell.jsx";
 import { getContentByRoute } from "./contentCatalog.js";
 import { HomePage } from "../pages/HomePage.jsx";
@@ -21,9 +22,13 @@ export default function RootApp() {
   if (route === ROUTES.RELATIONSHIP) {
     return (
       <div className="content-route theme-relationship">
-        <RelationshipAnalyzer onNavigateHome={() => navigate("home")} />
+        <RelationshipAnalyzer onNavigateHome={() => navigate(ROUTES.HOME)} />
       </div>
     );
+  }
+
+  if (route === ROUTES.TOGETHER_QUESTIONS) {
+    return <TogetherQuestionsApp onNavigateHome={() => navigate(ROUTES.HOME)} />;
   }
 
   if (route !== ROUTES.HOME) {
@@ -36,7 +41,7 @@ export default function RootApp() {
             <button
               type="button"
               className="hub-back-button"
-              onClick={() => navigate("home")}
+              onClick={() => navigate(ROUTES.HOME)}
             >
               ← 콘텐츠 홈
             </button>
