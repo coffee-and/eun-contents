@@ -7,7 +7,7 @@ export function HomePage({ onNavigate }) {
         <span className="hub-hero__eyebrow">EUN CONTENTS</span>
         <h1 className="hub-hero__title">나와 우리를 조금 더 알아가는 다양한 콘텐츠</h1>
         <p className="hub-hero__description">
-          관계 진단부터 커플·가족 문답, 사주와 미니게임까지 하나씩 채워갈게요.
+          관계 진단부터 함께하는 문답, 사주와 미니게임까지 하나씩 채워갈게요.
         </p>
       </header>
 
@@ -34,6 +34,7 @@ export function HomePage({ onNavigate }) {
                 type="button"
                 className={`content-card__button${isActive ? " content-card__button--active" : ""}`}
                 onClick={() => onNavigate(content.route)}
+                disabled={!isActive}
               >
                 {content.actionLabel}
               </button>
