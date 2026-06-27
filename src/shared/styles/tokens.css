@@ -1,22 +1,24 @@
 :root {
   font-family: "Pretendard", sans-serif;
 
-  --font-label: 0.62rem;
-  --font-caption: 0.7rem;
-  --font-body: 0.84rem;
-  --font-list: 0.84rem;
-  --font-section-title: 0.96rem;
-  --font-card-title: 1.02rem;
-  --font-result-title: clamp(1.22rem, 2vw, 1.68rem);
-  --font-hero-title: clamp(1.36rem, 2.35vw, 2rem);
-  --font-value: 0.88rem;
-  --font-value-lg: 1.02rem;
+  --font-size-label: 0.62rem;
+  --font-size-caption: 0.7rem;
+  --font-size-body-small: 0.76rem;
+  --font-size-body: 0.82rem;
+  --font-size-body-large: 0.9rem;
+  --font-size-card-title: 1rem;
+  --font-size-section-title: clamp(1.12rem, 2vw, 1.34rem);
+  --font-size-page-title: clamp(1.38rem, 2.8vw, 1.92rem);
+  --font-size-question-title: clamp(1.22rem, 2.8vw, 1.72rem);
+  --font-size-result-title: clamp(1.18rem, 2vw, 1.58rem);
+  --font-size-value: 0.86rem;
+  --font-size-value-large: 1rem;
 
-  --line-tight: 1.25;
-  --line-title: 1.32;
-  --line-body: 1.56;
-  --line-list: 1.42;
-  --letter-label: 0.14em;
+  --line-height-tight: 1.25;
+  --line-height-title: 1.34;
+  --line-height-body: 1.62;
+  --line-height-list: 1.45;
+  --letter-spacing-label: 0.14em;
 
   --space-2xs: 4px;
   --space-xs: 6px;
@@ -38,4 +40,34 @@
   --radius-lg: 12px;
   --radius-xl: 16px;
   --radius-pill: 999px;
+
+  --font-label: var(--font-size-label);
+  --font-caption: var(--font-size-caption);
+  --font-body: var(--font-size-body);
+  --font-list: var(--font-size-body);
+  --font-section-title: var(--font-size-section-title);
+  --font-card-title: var(--font-size-card-title);
+  --font-result-title: var(--font-size-result-title);
+  --font-hero-title: var(--font-size-page-title);
+  --font-value: var(--font-size-value);
+  --font-value-lg: var(--font-size-value-large);
+  --line-tight: var(--line-height-tight);
+  --line-title: var(--line-height-title);
+  --line-body: var(--line-height-body);
+  --line-list: var(--line-height-list);
+  --letter-label: var(--letter-spacing-label);
+}
+
+@media (max-width: 720px) {
+  :root {
+    --font-size-label: 0.6rem;
+    --font-size-caption: 0.68rem;
+    --font-size-body-small: 0.72rem;
+    --font-size-body: 0.78rem;
+    --font-size-body-large: 0.84rem;
+    --font-size-card-title: 0.94rem;
+    --font-size-section-title: 1.08rem;
+    --font-size-page-title: 1.4rem;
+    --font-size-question-title: 1.22rem;
+  }
 }
