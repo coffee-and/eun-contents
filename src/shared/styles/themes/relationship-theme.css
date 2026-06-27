@@ -26,6 +26,13 @@
   --primary-hover: var(--relationship-red-700);
   --primary-strong: var(--relationship-red-900);
   --primary-soft: var(--relationship-red-100);
+  --secondary-action-bg: #fff8f8;
+  --secondary-action-bg-hover: #ffecee;
+  --secondary-action-border: #f2c3c8;
+  --secondary-action-text: #b65360;
+  --secondary-action-text-hover: #963844;
+  --disabled-bg: #f5eeee;
+  --disabled-text: #7f696d;
   --accent: var(--relationship-red-500);
   --accent-soft: var(--relationship-red-50);
   --premium-bg: var(--relationship-red-100);

@@ -43,17 +43,19 @@ export default function RootApp() {
               className="hub-back-button"
               onClick={() => navigate(ROUTES.HOME)}
             >
-              ← 콘텐츠 홈
+              콘텐츠 홈
             </button>
             <section className="coming-soon__card">
-              <span className="coming-soon__icon">{content?.icon ?? "✦"}</span>
+              <img
+                className="coming-soon__icon"
+                src={content?.iconSrc ?? "/eun-icon-v3.svg"}
+                alt={content?.iconAlt ?? "콘텐츠 아이콘"}
+              />
               <span className="coming-soon__category">
                 {content?.category ?? "새 콘텐츠"}
               </span>
               <h1>{content?.title ?? "준비 중인 콘텐츠"}</h1>
-              <p>
-                {content?.description ?? "새로운 콘텐츠를 준비하고 있어요."}
-              </p>
+              <p>{content?.description ?? "새로운 콘텐츠를 준비하고 있어요."}</p>
               <strong>COMING SOON</strong>
             </section>
           </div>

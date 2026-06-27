@@ -11,22 +11,22 @@
 }
 
 .question-card__previous {
-  background: color-mix(in srgb, var(--primary-soft) 72%, white);
-  color: var(--text-soft);
-  border-color: var(--border-strong);
+  background: var(--secondary-action-bg);
+  color: var(--secondary-action-text);
+  border-color: var(--secondary-action-border);
 }
 
 .question-card__previous:not(:disabled):hover {
-  background: var(--primary-soft);
-  color: var(--text);
-  border-color: var(--primary);
+  background: var(--secondary-action-bg-hover);
+  color: var(--secondary-action-text-hover);
+  border-color: var(--secondary-action-text);
 }
 
 .question-card__previous:disabled {
-  background: var(--surface-muted);
-  color: var(--muted);
+  background: var(--disabled-bg);
+  color: var(--disabled-text);
   border-color: var(--border);
-  opacity: 0.55;
+  opacity: 1;
 }
 
 .question-card__next {
