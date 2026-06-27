@@ -1,16 +1,16 @@
 .theme-relationship {
   --relationship-red-50: #fff7f7;
-  --relationship-red-100: #ffe9ea;
+  --relationship-red-100: var(--content-red-light);
   --relationship-red-200: #ffcfd2;
   --relationship-red-300: #f7a7ad;
-  --relationship-red-400: #ef747e;
+  --relationship-red-400: var(--content-red-medium);
   --relationship-red-500: #df4653;
-  --relationship-red-600: #c93442;
+  --relationship-red-600: var(--content-red-strong);
   --relationship-red-700: #a82634;
   --relationship-red-800: #7f1d28;
   --relationship-red-900: #4f1720;
 
-  --bg: var(--relationship-red-100);
+  --bg: #ffffff;
   --bg-soft: var(--relationship-red-50);
   --card-bg: #ffffff;
   --card-bg-soft: #fffafa;
@@ -33,17 +33,6 @@
   --shadow: 0 2px 8px rgba(117, 29, 42, 0.06);
   --shadow-soft: 0 1px 3px rgba(117, 29, 42, 0.04);
   --shadow-flat: none;
-  --gradient-main: linear-gradient(
-    90deg,
-    var(--relationship-red-200) 0%,
-    var(--relationship-red-400) 38%,
-    var(--relationship-red-600) 70%,
-    var(--relationship-red-800) 100%
-  );
-  --gradient-page: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    var(--relationship-red-50) 48%,
-    #f8edef 100%
-  );
+  --gradient-main: linear-gradient(90deg,var(--relationship-red-200) 0%,var(--relationship-red-400) 38%,var(--relationship-red-600) 70%,var(--relationship-red-800) 100%);
+  --gradient-page: linear-gradient(180deg,#ffffff 0%,var(--relationship-red-50) 65%,#f8edef 100%);
 }
