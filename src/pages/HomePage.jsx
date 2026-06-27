@@ -22,18 +22,13 @@ export function HomePage({ onNavigate }) {
                 isActive ? " content-card--active" : ""
               }`}
             >
-              <div className="content-card__top">
-                <img
-                  className="content-card__icon"
-                  src={content.iconSrc}
-                  alt={content.iconAlt}
-                />
-                <span className="content-card__category">설명</span>
-              </div>
+              <img
+                className="content-card__icon"
+                src={content.iconSrc}
+                alt={content.iconAlt}
+              />
 
-              <div className="content-card__body">
-                <p className="content-card__description">{content.description}</p>
-              </div>
+              <p className="content-card__description">{content.description}</p>
 
               <button
                 type="button"
