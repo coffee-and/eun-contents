@@ -1,3 +1,4 @@
+// Together Questions 서버 API에서 쓰는 Supabase, 토큰, 응답 직렬화 공통 함수입니다.
 import { randomBytes, createHash, timingSafeEqual } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
 

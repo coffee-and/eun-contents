@@ -1,3 +1,4 @@
+// 홈 화면에 표시되는 콘텐츠 카드 데이터를 관리합니다.
 export const CONTENT_STATUS = {
   ACTIVE: "active",
   COMING_SOON: "coming-soon",

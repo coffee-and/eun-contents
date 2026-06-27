@@ -1,3 +1,4 @@
+// Relationship Analyzer 저장 결과 조회 API입니다.
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.SUPABASE_URL;

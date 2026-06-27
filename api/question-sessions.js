@@ -1,3 +1,4 @@
+// Together Questions 새 세션을 생성하는 API입니다.
 import {
   ROLES,
   SESSION_STATUS,

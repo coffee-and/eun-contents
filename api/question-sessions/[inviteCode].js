@@ -1,3 +1,4 @@
+// Together Questions 세션 조회와 삭제를 처리하는 API입니다.
 import {
   applyCors,
   findParticipantByToken,
@@ -36,7 +37,9 @@ export default async function handler(request, response) {
     const participant = findParticipantByToken(bundle.participants, token);
 
     if (request.method === "DELETE") {
-      if (!participant) return jsonError(response, 403, "문답을 삭제할 권한을 확인하지 못했어요.");
+      if (!participant) {
+        return jsonError(response, 403, "문답을 삭제할 권한을 확인하지 못했어요.");
+      }
 
       const { error } = await supabase
         .from("question_sessions")

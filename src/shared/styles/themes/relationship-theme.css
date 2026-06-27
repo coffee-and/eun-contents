@@ -12,12 +12,12 @@
 
   --bg: var(--relationship-red-100);
   --bg-soft: var(--relationship-red-50);
-  --card-bg: #ffffff;
+  --card-bg: var(--color-white);
   --card-bg-soft: #fffafa;
   --surface-muted: #f8edef;
   --surface-line: #ead0d4;
   --text: #2d2022;
-  --inverse-text: #ffffff;
+  --inverse-text: var(--color-white);
   --text-soft: #6d5559;
   --muted: #97767c;
   --border: #e4c7cc;

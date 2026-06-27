@@ -1,3 +1,4 @@
+// Together Questions 화면 단계와 입력 제한값을 관리합니다.
 export const SESSION_STEPS = {
   START: "start",
   CREATOR_ANSWER: "creator-answer",

@@ -1,3 +1,4 @@
+// Together Questions 참여자의 답변 저장과 제출을 처리하는 API입니다.
 import {
   LIMITS,
   SESSION_STATUS,

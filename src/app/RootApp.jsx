@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import RelationshipAnalyzer from "../features/relationship/RelationshipApp.jsx";
 import TogetherQuestionsApp from "../features/together-questions/TogetherQuestionsApp.jsx";
 import { AppShell } from "../shared/components/AppShell.jsx";
-import { getContentByRoute } from "./contentCatalog.js";
+import { getContentByRoute } from "../data/contentCatalog.js";
 import { HomePage } from "../pages/HomePage.jsx";
 import { getCurrentRoute, ROUTES } from "./routes.js";
 
