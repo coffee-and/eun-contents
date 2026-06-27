@@ -41,6 +41,19 @@
   --radius-xl: 16px;
   --radius-pill: 999px;
 
+  --content-red-light: #ffe8e8;
+  --content-red-medium: #ff7373;
+  --content-red-strong: #d92f3f;
+  --content-yellow-light: #fff3b8;
+  --content-yellow-medium: #ffd43b;
+  --content-yellow-strong: #b98600;
+  --content-green-light: #dcf4df;
+  --content-green-medium: #6cc477;
+  --content-green-strong: #218b38;
+  --content-blue-light: #dceaff;
+  --content-blue-medium: #68a4ff;
+  --content-blue-strong: #2365d4;
+
   --font-label: var(--font-size-label);
   --font-caption: var(--font-size-caption);
   --font-body: var(--font-size-body);
