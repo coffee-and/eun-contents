@@ -1,105 +1,653 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import { AppShell } from "../../shared/components/AppShell.jsx";
-import { QUESTION_MOODS, RELATIONSHIP_TYPES, getQuestions } from "./data/questionPacks.js";
-import { clearJournal, createJournal, loadJournal, saveJournal } from "./utils/journalStorage.js";
+import {
+  QUESTION_PACKS,
+  RELATIONSHIP_TYPES,
+  getQuestionPack,
+  getQuestions,
+  getRelationshipType,
+} from "./data/questionPacks.js";
+import { ANSWER_LIMITS, PARTICIPANT_ROLES, SESSION_STEPS } from "./constants/sessionFlow.js";
+import {
+  clearDraft,
+  clearParticipantToken,
+  loadDraft,
+  loadParticipantToken,
+  saveDraft,
+  saveParticipantToken,
+} from "./services/draftStorage.js";
+import {
+  createQuestionSession,
+  deleteQuestionSession,
+  joinQuestionSession,
+  loadQuestionSession,
+  saveQuestionAnswers,
+} from "./services/questionSessionApi.js";
+import { buildQuestionComparisons, summarizeComparison } from "./domain/comparison.js";
 import "./styles/together-questions.css";
 import "./styles/together-questions-journal.css";
 
-const STEP = { TYPE: "type", PROFILE: "profile", MOOD: "mood", QUESTION: "question", COMPLETE: "complete" };
+function getInviteCodeFromUrl() {
+  const hashQuery = window.location.hash.split("?")[1] ?? "";
+  const search = new URLSearchParams(window.location.search);
+  const hashSearch = new URLSearchParams(hashQuery);
+  return search.get("invite") ?? hashSearch.get("invite") ?? "";
+}
+
+function buildInviteUrl(inviteCode) {
+  const url = new URL(window.location.href);
+  url.searchParams.delete("resultId");
+  url.searchParams.delete("invite");
+  url.hash = `/together-questions?invite=${encodeURIComponent(inviteCode)}`;
+  return url.toString();
+}
+
+function answersFromSession(session, role) {
+  const entries = (session?.answers ?? [])
+    .filter((answer) => answer.role === role)
+    .map((answer) => [answer.questionId, answer.answer]);
+  return Object.fromEntries(entries);
+}
+
+function getErrorMessage(error) {
+  return error?.message || "잠시 문제가 생겼어요. 다시 시도해 주세요.";
+}
 
 export default function TogetherQuestionsApp({ onNavigateHome }) {
-  const [step, setStep] = useState(STEP.TYPE);
-  const [journal, setJournal] = useState(loadJournal);
+  const [step, setStep] = useState(SESSION_STEPS.START);
+  const [inviteCode, setInviteCode] = useState(getInviteCodeFromUrl);
+  const [participantToken, setParticipantToken] = useState("");
+  const [session, setSession] = useState(null);
+  const [startForm, setStartForm] = useState({
+    displayName: "",
+    relationshipType: "couple",
+    questionPackId: "light",
+  });
+  const [inviteeName, setInviteeName] = useState("");
+  const [answers, setAnswers] = useState({});
   const [questionIndex, setQuestionIndex] = useState(0);
-  const [draft, setDraft] = useState({ firstAnswer: "", secondAnswer: "" });
+  const [notice, setNotice] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isBusy, setIsBusy] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const reportRef = useRef(null);
-  const selectedType = RELATIONSHIP_TYPES.find((item) => item.id === journal.relationshipType);
-  const selectedMood = QUESTION_MOODS.find((item) => item.id === journal.mood);
-  const questions = useMemo(() => getQuestions(journal.relationshipType, journal.mood), [journal.relationshipType, journal.mood]);
+
+  const participantRole = session?.participant?.role ?? null;
+  const selectedType = getRelationshipType(session?.relationshipType ?? startForm.relationshipType);
+  const selectedPack = getQuestionPack(session?.questionPackId ?? startForm.questionPackId);
+  const questions = useMemo(
+    () =>
+      getQuestions(
+        session?.relationshipType ?? startForm.relationshipType,
+        session?.questionPackId ?? startForm.questionPackId
+      ),
+    [session?.relationshipType, session?.questionPackId, startForm.relationshipType, startForm.questionPackId]
+  );
   const currentQuestion = questions[questionIndex];
+  const inviteUrl = inviteCode ? buildInviteUrl(inviteCode) : "";
+  const comparisons = useMemo(
+    () => buildQuestionComparisons(questions, session?.answers ?? []),
+    [questions, session?.answers]
+  );
+  const comparisonSummary = useMemo(() => summarizeComparison(comparisons), [comparisons]);
+  const isCreator = participantRole === PARTICIPANT_ROLES.CREATOR;
+  const isInvitee = participantRole === PARTICIPANT_ROLES.INVITEE;
+  const isSubmitted = Boolean(session?.participant?.submittedAt);
+  const isComplete = session?.status === "completed";
 
-  useEffect(() => { saveJournal(journal); }, [journal]);
   useEffect(() => {
-    const saved = currentQuestion ? journal.answers[currentQuestion.id] : null;
-    setDraft({ firstAnswer: saved?.firstAnswer ?? "", secondAnswer: saved?.secondAnswer ?? "" });
-  }, [currentQuestion, journal.answers]);
+    if (!inviteCode) return;
 
-  const top = () => window.scrollTo({ top: 0, behavior: "smooth" });
-  const updateParticipant = (key, value) => setJournal((item) => ({ ...item, participants: { ...item.participants, [key]: value } }));
+    const savedToken = loadParticipantToken(inviteCode);
+    setParticipantToken(savedToken);
 
-  function selectType(type) {
-    setJournal((item) => ({ ...item, relationshipType: type, mood: null }));
-    setStep(STEP.PROFILE);
-    top();
-  }
+    async function restoreSession() {
+      setIsBusy(true);
+      setErrorMessage("");
 
-  function selectMood(mood) {
-    setJournal((item) => ({ ...item, mood }));
-    setQuestionIndex(0);
-    setStep(STEP.QUESTION);
-    top();
-  }
+      try {
+        const payload = await loadQuestionSession(inviteCode, savedToken);
+        setSession(payload.session);
 
-  function saveAnswer() {
-    if (!currentQuestion) return;
-    setJournal((item) => ({
-      ...item,
-      answers: {
-        ...item.answers,
-        [currentQuestion.id]: {
-          questionId: currentQuestion.id,
-          prompt: currentQuestion.prompt,
-          category: currentQuestion.category,
-          firstAnswer: draft.firstAnswer.trim(),
-          secondAnswer: draft.secondAnswer.trim(),
-          completedAt: new Date().toISOString(),
-        },
-      },
+        if (payload.session.isExpired) {
+          setStep(SESSION_STEPS.ERROR);
+          setErrorMessage("초대 링크가 만료됐어요. 새 문답을 시작해 주세요.");
+          return;
+        }
+
+        if (payload.session.status === "completed") {
+          setStep(SESSION_STEPS.RESULT);
+          return;
+        }
+
+        if (payload.session.participant?.role) {
+          const role = payload.session.participant.role;
+          setAnswers({
+            ...loadDraft(inviteCode, role),
+            ...answersFromSession(payload.session, role),
+          });
+          setStep(payload.session.participant.submittedAt ? SESSION_STEPS.WAITING : `${role}-answer`);
+          return;
+        }
+
+        setStep(SESSION_STEPS.INVITE);
+      } catch (error) {
+        setStep(SESSION_STEPS.ERROR);
+        setErrorMessage(getErrorMessage(error));
+      } finally {
+        setIsBusy(false);
+      }
+    }
+
+    restoreSession();
+  }, [inviteCode]);
+
+  useEffect(() => {
+    if (!inviteCode || !participantRole || isSubmitted) return;
+
+    const timeoutId = window.setTimeout(() => {
+      saveDraft(inviteCode, participantRole, answers);
+    }, 350);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [answers, inviteCode, isSubmitted, participantRole]);
+
+  function updateAnswer(questionId, value) {
+    setAnswers((current) => ({
+      ...current,
+      [questionId]: value.slice(0, ANSWER_LIMITS.answer),
     }));
   }
 
-  function nextQuestion() {
-    saveAnswer();
-    if (questionIndex === questions.length - 1) {
-      setStep(STEP.COMPLETE);
-      top();
-    } else setQuestionIndex((index) => index + 1);
+  async function handleCreateSession(event) {
+    event.preventDefault();
+    setIsBusy(true);
+    setErrorMessage("");
+
+    try {
+      const payload = await createQuestionSession(startForm);
+      setSession(payload.session);
+      setInviteCode(payload.session.inviteCode);
+      setParticipantToken(payload.participantToken);
+      saveParticipantToken(payload.session.inviteCode, payload.participantToken);
+      window.location.hash = `/together-questions?invite=${encodeURIComponent(payload.session.inviteCode)}`;
+      setAnswers(loadDraft(payload.session.inviteCode, PARTICIPANT_ROLES.CREATOR));
+      setStep(SESSION_STEPS.CREATOR_ANSWER);
+    } catch (error) {
+      setErrorMessage(getErrorMessage(error));
+    } finally {
+      setIsBusy(false);
+    }
   }
 
-  function restart() {
-    clearJournal();
-    setJournal(createJournal());
-    setQuestionIndex(0);
-    setStep(STEP.TYPE);
-    top();
+  async function handleJoinSession(event) {
+    event.preventDefault();
+    setIsBusy(true);
+    setErrorMessage("");
+
+    try {
+      const payload = await joinQuestionSession(inviteCode, inviteeName);
+      setSession(payload.session);
+      setParticipantToken(payload.participantToken);
+      saveParticipantToken(inviteCode, payload.participantToken);
+      setAnswers(loadDraft(inviteCode, PARTICIPANT_ROLES.INVITEE));
+      setQuestionIndex(0);
+      setStep(SESSION_STEPS.INVITEE_ANSWER);
+    } catch (error) {
+      setErrorMessage(getErrorMessage(error));
+    } finally {
+      setIsBusy(false);
+    }
+  }
+
+  async function persistAnswers({ submit = false, nextStep = null } = {}) {
+    if (!inviteCode || !participantToken || !participantRole) return false;
+
+    setIsSaving(true);
+    setErrorMessage("");
+
+    try {
+      const payload = await saveQuestionAnswers(inviteCode, {
+        participantToken,
+        answers,
+        submit,
+      });
+      setSession(payload.session);
+
+      if (submit) {
+        clearDraft(inviteCode, participantRole);
+        setStep(payload.session.status === "completed" ? SESSION_STEPS.RESULT : SESSION_STEPS.WAITING);
+      } else if (nextStep) {
+        setStep(nextStep);
+      }
+
+      setNotice(submit ? "답변 제출이 완료됐어요." : "답변을 저장했어요.");
+      return true;
+    } catch (error) {
+      setErrorMessage(getErrorMessage(error));
+      return false;
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  async function handleNextQuestion() {
+    const saved = await persistAnswers();
+    if (!saved) return;
+
+    if (questionIndex >= questions.length - 1) {
+      await persistAnswers({ submit: true });
+      return;
+    }
+
+    setQuestionIndex((index) => index + 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  async function handlePreviousQuestion() {
+    await persistAnswers();
+    setQuestionIndex((index) => Math.max(0, index - 1));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  async function refreshSession() {
+    if (!inviteCode) return;
+
+    setIsBusy(true);
+    setErrorMessage("");
+
+    try {
+      const payload = await loadQuestionSession(inviteCode, participantToken);
+      setSession(payload.session);
+      if (payload.session.status === "completed") setStep(SESSION_STEPS.RESULT);
+      else if (payload.session.participant?.submittedAt) setStep(SESSION_STEPS.WAITING);
+      setNotice("상태를 새로 확인했어요.");
+    } catch (error) {
+      setErrorMessage(getErrorMessage(error));
+    } finally {
+      setIsBusy(false);
+    }
+  }
+
+  async function copyInviteLink() {
+    try {
+      await navigator.clipboard.writeText(inviteUrl);
+      setNotice("초대 링크를 복사했어요.");
+    } catch {
+      setErrorMessage("링크 복사에 실패했어요. 주소창의 링크를 직접 복사해 주세요.");
+    }
+  }
+
+  async function shareInviteLink() {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "함께하는 문답 초대",
+          text: `${session?.participants?.creator?.displayName ?? "초대한 사람"}님이 함께하는 문답에 초대했어요.`,
+          url: inviteUrl,
+        });
+        setNotice("공유 화면을 열었어요.");
+        return;
+      } catch {
+        setNotice("공유가 취소됐거나 실패했어요. 링크 복사를 사용할게요.");
+      }
+    }
+
+    await copyInviteLink();
+  }
+
+  async function handleDeleteSession() {
+    if (!window.confirm("이 문답을 삭제할까요? 삭제 후에는 링크로 다시 볼 수 없어요.")) return;
+
+    setIsBusy(true);
+    setErrorMessage("");
+
+    try {
+      await deleteQuestionSession(inviteCode, participantToken);
+      clearDraft(inviteCode, participantRole);
+      clearParticipantToken(inviteCode);
+      setSession(null);
+      setInviteCode("");
+      setParticipantToken("");
+      setAnswers({});
+      setQuestionIndex(0);
+      setStep(SESSION_STEPS.START);
+      window.location.hash = "/together-questions";
+      setNotice("문답을 삭제했어요.");
+    } catch (error) {
+      setErrorMessage(getErrorMessage(error));
+    } finally {
+      setIsBusy(false);
+    }
   }
 
   async function saveImage() {
     if (!reportRef.current) return;
-    const canvas = await html2canvas(reportRef.current, { backgroundColor: "#ffffff", scale: 2 });
-    const link = document.createElement("a");
-    link.download = `함께하는-문답-${new Date().toISOString().slice(0, 10)}.png`;
-    link.href = canvas.toDataURL("image/png");
-    link.click();
+
+    try {
+      const canvas = await html2canvas(reportRef.current, { backgroundColor: "#ffffff", scale: 2 });
+      const link = document.createElement("a");
+      link.download = `함께하는-문답-${new Date().toISOString().slice(0, 10)}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    } catch {
+      setErrorMessage("이미지 저장에 실패했어요. 잠시 후 다시 시도해 주세요.");
+    }
   }
 
-  const answered = questions.filter((question) => journal.answers[question.id]);
+  function printPdf() {
+    try {
+      window.print();
+    } catch {
+      setErrorMessage("PDF 저장 창을 열지 못했어요. 브라우저 인쇄 메뉴를 이용해 주세요.");
+    }
+  }
+
+  function resetFlow() {
+    setSession(null);
+    setInviteCode("");
+    setParticipantToken("");
+    setAnswers({});
+    setQuestionIndex(0);
+    setNotice("");
+    setErrorMessage("");
+    setStep(SESSION_STEPS.START);
+    window.location.hash = "/together-questions";
+  }
+
+  const renderStatus = () => (
+    <>
+      {notice ? <p className="tq-alert tq-alert--success">{notice}</p> : null}
+      {errorMessage ? <p className="tq-alert tq-alert--error">{errorMessage}</p> : null}
+    </>
+  );
+
+  const renderAnswerScreen = () => (
+    <section className="tq-panel tq-answer-panel">
+      <div className="tq-progress">
+        <span>{currentQuestion?.category}</span>
+        <strong>
+          {questionIndex + 1} / {questions.length}
+        </strong>
+        <div aria-hidden="true">
+          <i style={{ width: `${((questionIndex + 1) / questions.length) * 100}%` }} />
+        </div>
+      </div>
+
+      <article className="tq-question-card">
+        <span>오늘의 질문</span>
+        <h2>{currentQuestion?.prompt}</h2>
+        <p>{currentQuestion?.helperText}</p>
+      </article>
+
+      <label className="tq-answer-field">
+        <span>나의 답변</span>
+        <textarea
+          rows="8"
+          maxLength={ANSWER_LIMITS.answer}
+          value={answers[currentQuestion?.id] ?? ""}
+          onChange={(event) => updateAnswer(currentQuestion.id, event.target.value)}
+          placeholder="빈 답변으로도 넘어갈 수 있어요. 다만 결과에는 '아직 적지 않았어요.'로 표시됩니다."
+        />
+        <small>
+          빈 답변은 허용돼요. 현재 질문을 이동할 때마다 서버 저장을 시도하고, 실패하면 임시 저장으로 복구해요.
+        </small>
+      </label>
+
+      <div className="tq-actions tq-actions--split">
+        <button
+          type="button"
+          className="tq-button tq-button--secondary"
+          disabled={questionIndex === 0 || isSaving}
+          onClick={handlePreviousQuestion}
+        >
+          이전 질문
+        </button>
+        <button
+          type="button"
+          className="tq-button tq-button--primary"
+          disabled={isSaving}
+          onClick={handleNextQuestion}
+        >
+          {questionIndex === questions.length - 1
+            ? isCreator
+              ? "내 답변 완료하기"
+              : "답변 제출하기"
+            : "저장하고 다음"}
+        </button>
+      </div>
+    </section>
+  );
 
   return (
-    <div className="theme-together-questions"><AppShell>
-      <header className="tq-hero"><div><span className="tq-hero__eyebrow">QUESTIONS TOGETHER</span><h1>함께하는 문답</h1><p>서로의 마음과 추억을 한 질문씩 천천히 기록해보세요.</p></div><button type="button" className="tq-home-button" onClick={onNavigateHome}>콘텐츠 홈</button></header>
-      {step !== STEP.TYPE ? <nav className="tq-breadcrumb"><button type="button" onClick={restart}>관계 선택</button>{selectedType ? <span>› {selectedType.title}</span> : null}{selectedMood ? <span>› {selectedMood.title}</span> : null}</nav> : null}
+    <div className="theme-together-questions">
+      <AppShell>
+        <header className="tq-hero">
+          <div>
+            <span className="tq-hero__eyebrow">QUESTIONS TOGETHER</span>
+            <h1>함께하는 문답</h1>
+            <p>내 답변을 먼저 남기고, 초대 링크로 상대방의 답변을 받아 함께 결과를 확인해요.</p>
+          </div>
+          <button type="button" className="tq-home-button" onClick={onNavigateHome}>
+            콘텐츠 홈
+          </button>
+        </header>
 
-      {step === STEP.TYPE ? <section className="tq-section"><div className="tq-section__head"><span>STEP 01</span><h2>누구와 함께 기록하나요?</h2><p>관계를 선택하면 어울리는 질문을 준비해드려요.</p></div><div className="tq-type-grid">{RELATIONSHIP_TYPES.map((type) => <button type="button" key={type.id} className={`tq-type-card tq-type-card--${type.accent}`} onClick={() => selectType(type.id)}><span className="tq-type-card__icon">{type.icon}</span><strong>{type.title}</strong><small>{type.description}</small><em>선택하기 →</em></button>)}</div></section> : null}
+        {renderStatus()}
 
-      {step === STEP.PROFILE ? <section className="tq-section tq-profile"><div className="tq-section__head"><span>STEP 02</span><h2>우리의 정보를 남겨볼까요?</h2><p>모든 항목은 선택 사항이며 기록 표지에 표시돼요.</p></div><div className="tq-profile-grid"><label>첫 번째 이름<input value={journal.participants.firstName} onChange={(e) => updateParticipant("firstName", e.target.value)} /></label><label>두 번째 이름<input value={journal.participants.secondName} onChange={(e) => updateParticipant("secondName", e.target.value)} /></label><label>첫 번째 생일<input type="date" value={journal.participants.firstBirthday} onChange={(e) => updateParticipant("firstBirthday", e.target.value)} /></label><label>두 번째 생일<input type="date" value={journal.participants.secondBirthday} onChange={(e) => updateParticipant("secondBirthday", e.target.value)} /></label><label>서로의 애칭<input value={journal.participants.nickname} onChange={(e) => updateParticipant("nickname", e.target.value)} /></label><label>기념일<input type="date" value={journal.participants.anniversary} onChange={(e) => updateParticipant("anniversary", e.target.value)} /></label><label className="tq-profile-grid__wide">우리의 좌우명<textarea rows="2" value={journal.participants.motto} onChange={(e) => updateParticipant("motto", e.target.value)} /></label><label className="tq-profile-grid__wide">삶에서 가장 중요하게 생각하는 것<textarea rows="2" value={journal.participants.importantValue} onChange={(e) => updateParticipant("importantValue", e.target.value)} /></label></div><button type="button" className="tq-button tq-button--primary tq-profile-next" onClick={() => setStep(STEP.MOOD)}>저장하고 다음</button></section> : null}
+        {isBusy && !session ? <p className="tq-alert">문답 정보를 확인하고 있어요.</p> : null}
 
-      {step === STEP.MOOD ? <section className="tq-section"><div className="tq-section__head"><span>STEP 03</span><h2>오늘은 어떤 이야기를 기록할까요?</h2><p>{selectedType?.title} 사이에 어울리는 주제를 골라보세요.</p></div><div className="tq-mood-grid">{QUESTION_MOODS.map((item) => <button type="button" key={item.id} className="tq-mood-card" onClick={() => selectMood(item.id)}><span>{item.icon}</span><div><strong>{item.title}</strong><small>{item.description}</small></div><em>→</em></button>)}</div></section> : null}
+        {step === SESSION_STEPS.START ? (
+          <form className="tq-panel tq-start" onSubmit={handleCreateSession}>
+            <div className="tq-section__head">
+              <span>START</span>
+              <h2>내 답변부터 시작해볼게요</h2>
+              <p>상대방 정보는 초대받은 사람이 직접 입력해요.</p>
+            </div>
 
-      {step === STEP.QUESTION && currentQuestion ? <section className="tq-question-wrap"><div className="tq-question-meta"><span>{currentQuestion.category} · {selectedMood?.title}</span><strong>{questionIndex + 1} / {questions.length}</strong></div><article className="tq-question-card"><span className="tq-question-card__label">TODAY'S QUESTION</span><h2>{currentQuestion.prompt}</h2><p>{currentQuestion.helperText}</p></article><div className="tq-answer-grid"><label><span>{journal.participants.firstName || "첫 번째 사람"}의 답변</span><textarea rows="5" value={draft.firstAnswer} onChange={(e) => setDraft((item) => ({ ...item, firstAnswer: e.target.value }))} /></label><label><span>{journal.participants.secondName || "두 번째 사람"}의 답변</span><textarea rows="5" value={draft.secondAnswer} onChange={(e) => setDraft((item) => ({ ...item, secondAnswer: e.target.value }))} /></label></div><div className="tq-question-actions"><button type="button" className="tq-button tq-button--soft" disabled={questionIndex === 0} onClick={() => { saveAnswer(); setQuestionIndex((index) => Math.max(0, index - 1)); }}>이전 질문</button><button type="button" className="tq-button tq-button--primary" onClick={nextQuestion}>{questionIndex === questions.length - 1 ? "기록 완성하기" : "저장하고 다음"}</button></div></section> : null}
+            <label className="tq-field">
+              <span>내 이름 또는 닉네임</span>
+              <input
+                required
+                maxLength={ANSWER_LIMITS.displayName}
+                value={startForm.displayName}
+                onChange={(event) =>
+                  setStartForm((form) => ({ ...form, displayName: event.target.value }))
+                }
+                placeholder="예: 은"
+              />
+            </label>
 
-      {step === STEP.COMPLETE ? <section className="tq-complete-wrap"><article className="tq-complete-card tq-journal-report" ref={reportRef}><span>OUR QUESTION JOURNAL</span><h2>{journal.participants.firstName || "우리"}와 {journal.participants.secondName || "소중한 사람"}의 문답</h2><p>{selectedType?.title} · {selectedMood?.title} · {new Date().toLocaleDateString("ko-KR")}</p><div className="tq-answer-report">{answered.map((question) => { const answer = journal.answers[question.id]; return <section key={question.id}><small>{question.category}</small><h3>{question.prompt}</h3><div><strong>{journal.participants.firstName || "첫 번째 사람"}</strong><p>{answer.firstAnswer || "아직 작성하지 않았어요."}</p></div><div><strong>{journal.participants.secondName || "두 번째 사람"}</strong><p>{answer.secondAnswer || "아직 작성하지 않았어요."}</p></div></section>; })}</div></article><div className="tq-export-actions"><button type="button" className="tq-button tq-button--soft" onClick={saveImage}>이미지 저장</button><button type="button" className="tq-button tq-button--soft" onClick={() => window.print()}>PDF로 저장</button><button type="button" className="tq-button tq-button--primary" onClick={() => setStep(STEP.MOOD)}>다른 주제 이어가기</button></div></section> : null}
-    </AppShell></div>
+            <div className="tq-choice-group">
+              <span>상대와의 관계</span>
+              <div className="tq-card-grid">
+                {RELATIONSHIP_TYPES.map((type) => (
+                  <button
+                    type="button"
+                    key={type.id}
+                    className={`tq-select-card ${
+                      startForm.relationshipType === type.id ? "is-selected" : ""
+                    }`}
+                    onClick={() => setStartForm((form) => ({ ...form, relationshipType: type.id }))}
+                  >
+                    <strong>{type.title}</strong>
+                    <small>{type.description}</small>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="tq-choice-group">
+              <span>질문 주제</span>
+              <div className="tq-card-grid">
+                {QUESTION_PACKS.map((pack) => (
+                  <button
+                    type="button"
+                    key={pack.id}
+                    className={`tq-select-card ${
+                      startForm.questionPackId === pack.id ? "is-selected" : ""
+                    }`}
+                    onClick={() => setStartForm((form) => ({ ...form, questionPackId: pack.id }))}
+                  >
+                    <strong>{pack.title}</strong>
+                    <small>{pack.description}</small>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <button type="submit" className="tq-button tq-button--primary" disabled={isBusy}>
+              문답 시작하기
+            </button>
+          </form>
+        ) : null}
+
+        {[SESSION_STEPS.CREATOR_ANSWER, SESSION_STEPS.INVITEE_ANSWER].includes(step)
+          ? renderAnswerScreen()
+          : null}
+
+        {step === SESSION_STEPS.CREATOR_DONE || (step === SESSION_STEPS.WAITING && isCreator) ? (
+          <section className="tq-panel tq-waiting">
+            <div className="tq-status-grid">
+              <strong>내 답변 완료</strong>
+              <span>상대 답변 대기 중</span>
+              <p>상대가 완료하면 함께 결과 보기가 열려요.</p>
+            </div>
+            <div className="tq-link-box">{inviteUrl}</div>
+            <div className="tq-actions">
+              <button type="button" className="tq-button tq-button--primary" onClick={shareInviteLink}>
+                상대에게 보내기
+              </button>
+              <button type="button" className="tq-button tq-button--secondary" onClick={copyInviteLink}>
+                초대 링크 복사
+              </button>
+              <button type="button" className="tq-button tq-button--secondary" onClick={refreshSession}>
+                상태 새로고침
+              </button>
+              <button type="button" className="tq-button tq-button--danger" onClick={handleDeleteSession}>
+                문답 삭제
+              </button>
+              <button type="button" className="tq-button tq-button--ghost" onClick={resetFlow}>
+                새 문답 시작
+              </button>
+            </div>
+          </section>
+        ) : null}
+
+        {step === SESSION_STEPS.INVITE ? (
+          <form className="tq-panel tq-invite" onSubmit={handleJoinSession}>
+            <div className="tq-section__head">
+              <span>INVITE</span>
+              <h2>{session?.participants?.creator?.displayName ?? "초대한 사람"}님이 함께하는 문답에 초대했어요.</h2>
+              <p>같은 질문에 내 답변을 제출하기 전까지 초대한 사람의 답변은 보이지 않아요.</p>
+            </div>
+            <label className="tq-field">
+              <span>내 이름 또는 닉네임</span>
+              <input
+                required
+                maxLength={ANSWER_LIMITS.displayName}
+                value={inviteeName}
+                onChange={(event) => setInviteeName(event.target.value)}
+                placeholder="예: 하린"
+              />
+            </label>
+            <button type="submit" className="tq-button tq-button--primary" disabled={isBusy}>
+              질문 답변 시작하기
+            </button>
+          </form>
+        ) : null}
+
+        {step === SESSION_STEPS.WAITING && isInvitee ? (
+          <section className="tq-panel tq-waiting">
+            <div className="tq-status-grid">
+              <strong>내 답변 완료</strong>
+              <span>상대 답변 대기 중</span>
+              <p>상대가 완료하면 결과 확인 가능 상태로 바뀌어요.</p>
+            </div>
+            <div className="tq-actions">
+              <button type="button" className="tq-button tq-button--primary" onClick={refreshSession}>
+                상태 새로고침
+              </button>
+              <button type="button" className="tq-button tq-button--danger" onClick={handleDeleteSession}>
+                문답 삭제
+              </button>
+            </div>
+          </section>
+        ) : null}
+
+        {step === SESSION_STEPS.RESULT && isComplete ? (
+          <section className="tq-complete-wrap">
+            <article className="tq-complete-card tq-journal-report" ref={reportRef}>
+              <span>함께 결과 보기</span>
+              <h2>
+                {session.participants.creator?.displayName}님과 {session.participants.invitee?.displayName}님의 문답
+              </h2>
+              <p>
+                {selectedType?.title} · {selectedPack?.title} ·{" "}
+                {new Date(session.completedAt ?? Date.now()).toLocaleDateString("ko-KR")}
+              </p>
+
+              <div className="tq-summary-grid">
+                <section>
+                  <h3>같은 생각이었던 부분</h3>
+                  <ul>{comparisonSummary.shared.map((item) => <li key={item}>{item}</li>)}</ul>
+                </section>
+                <section>
+                  <h3>서로 다르게 생각한 부분</h3>
+                  <ul>{comparisonSummary.different.map((item) => <li key={item}>{item}</li>)}</ul>
+                </section>
+                <section>
+                  <h3>더 이야기해볼 질문</h3>
+                  <ul>{comparisonSummary.followUps.map((item) => <li key={item}>{item}</li>)}</ul>
+                </section>
+              </div>
+
+              <div className="tq-answer-report">
+                {comparisons.map((item) => (
+                  <section key={item.question.id}>
+                    <small>{item.question.category}</small>
+                    <h3>{item.question.prompt}</h3>
+                    <div>
+                      <strong>{session.participants.creator?.displayName}</strong>
+                      <p>{item.creatorAnswer}</p>
+                    </div>
+                    <div>
+                      <strong>{session.participants.invitee?.displayName}</strong>
+                      <p>{item.inviteeAnswer}</p>
+                    </div>
+                  </section>
+                ))}
+              </div>
+            </article>
+
+            <div className="tq-export-actions">
+              <button type="button" className="tq-button tq-button--secondary" onClick={saveImage}>
+                이미지 저장
+              </button>
+              <button type="button" className="tq-button tq-button--secondary" onClick={printPdf}>
+                PDF 저장
+              </button>
+              <button type="button" className="tq-button tq-button--danger" onClick={handleDeleteSession}>
+                문답 삭제
+              </button>
+              <button type="button" className="tq-button tq-button--primary" onClick={resetFlow}>
+                새 문답 시작
+              </button>
+            </div>
+          </section>
+        ) : null}
+
+        {step === SESSION_STEPS.ERROR ? (
+          <section className="tq-panel tq-error">
+            <h2>문답을 열 수 없어요</h2>
+            <p>{errorMessage || "링크가 올바른지 다시 확인해 주세요."}</p>
+            <button type="button" className="tq-button tq-button--primary" onClick={resetFlow}>
+              새 문답 시작
+            </button>
+          </section>
+        ) : null}
+      </AppShell>
+    </div>
   );
 }

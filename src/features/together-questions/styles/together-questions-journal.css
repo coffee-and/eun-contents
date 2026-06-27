@@ -1,11 +1,142 @@
-.theme-together-questions{--tq-bg:#f8f9fb;--tq-card:#fff;--tq-primary:#e0a900;--tq-primary-strong:#b88400;--tq-primary-soft:#fff5c9;--tq-secondary:#dce6f2;--tq-secondary-soft:#f0f4f8;--tq-text:#242628;--tq-text-soft:#666c72;--tq-border:#dfe3e8;--tq-shadow:0 12px 32px rgba(24,29,35,.07);background:linear-gradient(180deg,#fff 0%,var(--tq-bg) 100%)}
-.tq-hero{padding:26px 0 20px}.tq-hero h1{font-size:var(--font-size-page-title)}.tq-hero p{font-size:var(--font-size-body-large);line-height:var(--line-height-body)}
-.tq-section__head h2{font-size:var(--font-size-section-title)}.tq-section__head p,.tq-breadcrumb{font-size:var(--font-size-body)}
-.tq-type-card{min-height:180px;padding:20px;border-radius:18px}.tq-type-card__icon{width:auto;height:auto;margin-bottom:20px;border-radius:0;background:transparent!important;color:var(--tq-primary-strong);font-size:1.4rem}.tq-type-card strong{font-size:var(--font-size-card-title)}.tq-type-card small{font-size:var(--font-size-body);line-height:var(--line-height-body)}
-.tq-mood-card{padding:17px 18px;border-radius:15px}.tq-mood-card strong{font-size:var(--font-size-card-title)}.tq-mood-card small{font-size:var(--font-size-body-small)}
-.tq-question-card{min-height:220px;padding:32px;border-radius:22px;background:#fff}.tq-question-card h2{font-size:var(--font-size-question-title);line-height:var(--line-height-title)}.tq-question-card p{font-size:var(--font-size-body)}
-.tq-profile-grid,.tq-answer-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.tq-profile-grid label,.tq-answer-grid label{display:grid;gap:7px;color:var(--tq-text-soft);font-size:var(--font-size-body-small);font-weight:700}.tq-profile-grid input,.tq-profile-grid textarea,.tq-answer-grid textarea{width:100%;border:1px solid var(--tq-border);border-radius:12px;background:#fff;color:var(--tq-text);padding:12px 13px;font:inherit;resize:vertical}.tq-profile-grid input:focus,.tq-profile-grid textarea:focus,.tq-answer-grid textarea:focus{border-color:var(--tq-primary);box-shadow:0 0 0 3px var(--tq-primary-soft)}.tq-profile-grid__wide{grid-column:1/-1}.tq-profile-next{width:100%;margin-top:16px}
-.tq-answer-grid{margin-top:16px}.tq-answer-grid label{padding:16px;border:1px solid var(--tq-border);border-radius:16px;background:#fff}.tq-answer-grid label>span{color:var(--tq-text);font-size:var(--font-size-body);font-weight:800}
-.tq-complete-wrap{padding-bottom:54px}.tq-journal-report{text-align:left}.tq-journal-report>h2,.tq-journal-report>p{text-align:center}.tq-answer-report{display:grid;gap:14px;margin-top:24px}.tq-answer-report section{padding:18px;border:1px solid var(--tq-border);border-radius:16px;background:#fff}.tq-answer-report small{color:var(--tq-primary-strong);font-weight:800}.tq-answer-report h3{margin:7px 0 14px;font-size:var(--font-size-card-title);line-height:var(--line-height-title)}.tq-answer-report section>div{padding:10px 0;border-top:1px solid var(--tq-border)}.tq-answer-report strong{font-size:var(--font-size-body-small)}.tq-answer-report p{margin:4px 0 0;color:var(--tq-text-soft);white-space:pre-wrap}.tq-export-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px}
-@media(max-width:720px){.tq-profile-grid,.tq-answer-grid{grid-template-columns:1fr}.tq-profile-grid__wide{grid-column:auto}.tq-question-card{min-height:190px;padding:24px 18px}.tq-export-actions{grid-template-columns:1fr}.tq-type-card{min-height:168px;padding:16px 14px}}
-@media print{body{background:#fff}.theme-together-questions .page{padding:0;background:#fff}.theme-together-questions .app-shell{max-width:none}.tq-hero,.tq-breadcrumb,.tq-export-actions,.tq-home-button{display:none!important}.tq-complete-wrap{padding:0}.tq-journal-report{box-shadow:none;border:0;margin:0}.tq-answer-report section{break-inside:avoid}}
+.tq-complete-wrap {
+  padding-bottom: 54px;
+}
+
+.tq-journal-report {
+  margin: 0 0 14px;
+  text-align: left;
+}
+
+.tq-journal-report > h2,
+.tq-journal-report > p {
+  text-align: center;
+}
+
+.tq-journal-report > p {
+  margin: 10px auto 0;
+  color: var(--tq-text-soft);
+}
+
+.tq-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.tq-summary-grid section,
+.tq-answer-report section {
+  border: 1px solid var(--tq-border);
+  border-radius: var(--radius-lg);
+  background: var(--tq-card-soft);
+}
+
+.tq-summary-grid section {
+  padding: 15px;
+}
+
+.tq-summary-grid h3,
+.tq-answer-report h3 {
+  margin: 0;
+  color: var(--tq-text);
+  font-size: var(--font-card-title);
+  line-height: var(--line-title);
+}
+
+.tq-summary-grid ul {
+  margin: 10px 0 0;
+  padding-left: 1.1rem;
+  color: var(--tq-text-soft);
+  font-size: var(--font-body-small);
+  line-height: var(--line-list);
+}
+
+.tq-summary-grid li {
+  margin-bottom: 6px;
+}
+
+.tq-answer-report {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.tq-answer-report section {
+  padding: 16px;
+}
+
+.tq-answer-report small {
+  display: inline-flex;
+  margin-bottom: 7px;
+  color: var(--tq-accent-strong);
+  font-size: var(--font-label);
+  font-weight: 800;
+}
+
+.tq-answer-report section > div {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--tq-border);
+}
+
+.tq-answer-report strong {
+  color: var(--tq-text);
+  font-size: var(--font-body-small);
+}
+
+.tq-answer-report p {
+  margin: 5px 0 0;
+  color: var(--tq-text-soft);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.tq-export-actions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+@media (max-width: 720px) {
+  .tq-summary-grid,
+  .tq-export-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  body {
+    background: #ffffff;
+  }
+
+  .theme-together-questions .page {
+    padding: 0;
+    background: #ffffff;
+  }
+
+  .theme-together-questions .app-shell {
+    max-width: none;
+  }
+
+  .tq-hero,
+  .tq-alert,
+  .tq-export-actions,
+  .tq-home-button {
+    display: none !important;
+  }
+
+  .tq-complete-wrap {
+    padding: 0;
+  }
+
+  .tq-journal-report {
+    box-shadow: none;
+    border: 0;
+    margin: 0;
+  }
+
+  .tq-summary-grid,
+  .tq-answer-report section {
+    break-inside: avoid;
+  }
+}
