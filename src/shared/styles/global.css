@@ -2,6 +2,7 @@
 @import "./themes/hub-theme.css";
 @import "./themes/relationship-theme.css";
 @import "../../pages/home.css";
+@import "../../pages/home-refinements.css";
 @import "../../features/relationship/styles/relationship-components.css";
 @import "../../features/relationship/styles/relationship-result-spacing.css";
 
@@ -17,8 +18,8 @@ body,
 
 body {
   margin: 0;
-  color: #342720;
-  background: #f3eee7;
+  color: #222426;
+  background: #f7f8fa;
   font-size: var(--font-body);
   line-height: var(--line-body);
 }
