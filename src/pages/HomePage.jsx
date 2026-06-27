@@ -1,4 +1,4 @@
-import { CONTENT_CATALOG, CONTENT_STATUS } from "../app/contentCatalog.js";
+import { CONTENT_CATALOG, CONTENT_STATUS } from "../data/contentCatalog.js";
 
 export function HomePage({ onNavigate }) {
   return (

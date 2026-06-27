@@ -7,16 +7,16 @@
   --tq-focus-ring: rgba(245, 184, 0, 0.26);
   --tq-text-on-accent: #2d2100;
   --tq-bg: #fffaf0;
-  --tq-card: #ffffff;
+  --tq-card: var(--color-white);
   --tq-card-soft: #fffdf7;
   --tq-text: #29251d;
   --tq-text-soft: #695f4d;
   --tq-border: #eadfbd;
-  --tq-danger: #c54848;
-  --tq-danger-soft: #fff0f0;
+  --tq-danger: var(--color-danger);
+  --tq-danger-soft: var(--color-danger-soft);
   --tq-shadow: 0 12px 30px rgba(79, 58, 12, 0.08);
   min-height: 100vh;
-  background: linear-gradient(180deg, #ffffff 0%, var(--tq-bg) 100%);
+  background: linear-gradient(180deg, var(--color-white) 0%, var(--tq-bg) 100%);
   color: var(--tq-text);
 }
 
@@ -213,15 +213,15 @@
 }
 
 .tq-button--danger {
-  border-color: #efb3b3;
+  border-color: var(--color-danger-border);
   background: var(--tq-danger-soft);
   color: var(--tq-danger);
 }
 
 .tq-button:disabled {
   border-color: var(--tq-border);
-  background: #f4efe2;
-  color: #7d725e;
+  background: var(--color-disabled-bg);
+  color: var(--color-disabled-text);
   cursor: not-allowed;
 }
 
@@ -242,7 +242,7 @@
 }
 
 .tq-alert--error {
-  border-color: #efb3b3;
+  border-color: var(--color-danger-border);
   background: var(--tq-danger-soft);
   color: var(--tq-danger);
 }
@@ -278,7 +278,7 @@
   padding: clamp(22px, 5vw, 42px);
   border: 1px solid var(--tq-accent-border);
   border-radius: var(--radius-xl);
-  background: linear-gradient(180deg, #ffffff 0%, #fff9df 100%);
+  background: linear-gradient(180deg, var(--color-white) 0%, #fff9df 100%);
   text-align: center;
 }
 

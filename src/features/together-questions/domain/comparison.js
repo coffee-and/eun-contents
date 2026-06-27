@@ -1,3 +1,4 @@
+// 두 사람이 제출한 답변을 질문별 결과와 간단한 대화 주제로 정리합니다.
 import { EMPTY_ANSWER_TEXT } from "../constants/sessionFlow.js";
 
 function normalizeAnswer(value) {
@@ -52,6 +53,6 @@ export function summarizeComparison(comparisons) {
   return {
     shared: shared.length ? shared : ["서로의 답변을 읽으며 겹치는 표현과 마음을 직접 찾아보세요."],
     different: different.length ? different : ["큰 차이보다 비슷한 방향이 더 많이 보였어요."],
-    followUps: followUps.length ? followUps : ["오늘 답변 중 가장 오래 기억하고 싶은 문장을 골라 이야기해보세요."],
+    followUps: followUps.length ? followUps : ["오늘 답변 중 오래 기억하고 싶은 문장을 골라 이야기해보세요."],
   };
 }

@@ -1,4 +1,4 @@
-/* ========================================
+﻿/* ========================================
    Page Layout
 ======================================== */
 .page {
@@ -499,7 +499,6 @@
   display: none;
 }
 
-/* 嶺??뺢퀡????롪퍒????곸궠?獄???熬곣뫁???곸궠?獄??釉띻땁 ?띠룇?? ?꾩룇鍮? ?곸궠?獄??????*/
 .capture-panel {
   position: relative;
   overflow: hidden;
@@ -699,7 +698,7 @@
    Result Sections
 ======================================== */
 .page--result {
-  background: #f58baa; /* ??믨퀡由???롪퍒????븐뻼???꾩룄?쀧몭??*/
+  background: #f58baa;
 }
 
 .result-overview-card__head {
@@ -814,7 +813,7 @@
 }
 
 .premium-lock__list li::before {
-  content: "✓";
+  content: "+";
   position: absolute;
   left: 16px;
   top: 50%;

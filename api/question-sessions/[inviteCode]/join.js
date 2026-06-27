@@ -1,3 +1,4 @@
+// Together Questions 초대받은 사람의 참여를 등록하는 API입니다.
 import {
   ROLES,
   applyCors,
