@@ -2,7 +2,7 @@
   --hub-page-background: #f7f8fa;
   --hub-page-background-soft: #ffffff;
   --hub-card-background: #ffffff;
-  --hub-card-background-muted: rgba(255, 255, 255, 0.9);
+  --hub-card-background-muted: rgba(255, 255, 255, 0.92);
   --hub-text-primary: #222426;
   --hub-text-secondary: #5f656b;
   --hub-text-muted: #8b9197;
@@ -11,10 +11,10 @@
   --hub-border-color-strong: rgba(31, 35, 39, 0.18);
   --hub-content-width: 980px;
   --hub-grid-gap: 18px;
-  --hub-card-radius: 24px;
-  --hub-card-padding: 26px;
-  --hub-card-min-height: 300px;
-  --hub-button-height: 46px;
+  --hub-card-radius: 22px;
+  --hub-card-padding: 24px;
+  --hub-card-min-height: 286px;
+  --hub-button-height: 44px;
   --hub-shadow-card: 0 10px 28px rgba(27, 31, 35, 0.055);
   --hub-shadow-card-hover: 0 16px 38px rgba(27, 31, 35, 0.09);
   --hub-primary-color: #2f3337;
@@ -38,29 +38,25 @@
 }
 
 .theme-hub .content-card--relationship {
-  --hub-card-accent-light: #ffe6e8;
-  --hub-card-accent: #ef6672;
-  --hub-card-accent-strong: #c93442;
-  --hub-card-accent-border: #f0b7bd;
+  --hub-card-accent-light: var(--content-red-light);
+  --hub-card-accent: var(--content-red-medium);
+  --hub-card-accent-strong: var(--content-red-strong);
 }
 
 .theme-hub .content-card--couple {
-  --hub-card-accent-light: #fff4c4;
-  --hub-card-accent: #ffd347;
-  --hub-card-accent-strong: #d69d00;
-  --hub-card-accent-border: #edd47b;
+  --hub-card-accent-light: var(--content-yellow-light);
+  --hub-card-accent: var(--content-yellow-medium);
+  --hub-card-accent-strong: var(--content-yellow-strong);
 }
 
 .theme-hub .content-card--saju {
-  --hub-card-accent-light: #e3f5e7;
-  --hub-card-accent: #58b96a;
-  --hub-card-accent-strong: #2f8f43;
-  --hub-card-accent-border: #a9dcb3;
+  --hub-card-accent-light: var(--content-green-light);
+  --hub-card-accent: var(--content-green-medium);
+  --hub-card-accent-strong: var(--content-green-strong);
 }
 
 .theme-hub .content-card--game {
-  --hub-card-accent-light: #e5f0ff;
-  --hub-card-accent: #5c9cf2;
-  --hub-card-accent-strong: #2f80ed;
-  --hub-card-accent-border: #aacbf7;
+  --hub-card-accent-light: var(--content-blue-light);
+  --hub-card-accent: var(--content-blue-medium);
+  --hub-card-accent-strong: var(--content-blue-strong);
 }
