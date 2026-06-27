@@ -23,20 +23,32 @@ export function HomePage({ onNavigate }) {
               }`}
             >
               <div className="content-card__top">
-                <span className="content-card__icon">{content.icon}</span>
+                <span className="content-card__icon" aria-hidden="true">
+                  {content.icon}
+                </span>
                 <span className="content-card__category">{content.category}</span>
               </div>
-              <div>
+
+              <div className="content-card__body">
                 <h2 className="content-card__title">{content.title}</h2>
+                <span className="content-card__accent" aria-hidden="true" />
                 <p className="content-card__description">{content.description}</p>
               </div>
+
               <button
                 type="button"
-                className={`content-card__button${isActive ? " content-card__button--active" : ""}`}
+                className={`content-card__button${
+                  isActive ? " content-card__button--active" : ""
+                }`}
                 onClick={() => onNavigate(content.route)}
                 disabled={!isActive}
               >
-                {content.actionLabel}
+                <span>{content.actionLabel}</span>
+                {isActive ? (
+                  <span className="content-card__button-icon" aria-hidden="true">
+                    →
+                  </span>
+                ) : null}
               </button>
             </article>
           );
