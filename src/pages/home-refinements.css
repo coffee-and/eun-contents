@@ -1,14 +1,138 @@
-.theme-hub .page{background:linear-gradient(180deg,#fff 0%,#f7f8fa 100%)}
-.hub-hero__title{font-size:var(--font-size-page-title)}
-.hub-hero__description{font-size:var(--font-size-body-large)}
-.content-card__icon{width:66px;height:66px;flex:0 0 66px;object-fit:contain;border-radius:0;background:transparent}
-.content-card__category{border:1px solid var(--hub-card-accent-border);border-radius:999px;color:var(--hub-card-accent-strong);background:#fff;font-size:var(--font-size-caption)}
-.content-card__title{font-size:var(--font-size-card-title)}
-.content-card__palette{display:grid;grid-template-columns:repeat(3,1fr);width:96px;height:7px;margin-top:13px;overflow:hidden;border-radius:999px}
-.content-card__palette i:nth-child(1){background:var(--hub-card-accent-light)}
-.content-card__palette i:nth-child(2){background:var(--hub-card-accent)}
-.content-card__palette i:nth-child(3){background:var(--hub-card-accent-strong)}
-.content-card__description{margin-top:18px;font-size:var(--font-size-body);line-height:var(--line-height-body)}
-.content-card__button{margin-top:28px;background:#fff;font-size:var(--font-size-body)}
-.content-card__button--active:hover{border-color:var(--hub-card-accent-strong);background:var(--hub-card-accent-strong)}
-@media(max-width:720px){.content-card__icon{width:44px;height:44px;flex-basis:44px}.content-card__palette{width:70px;height:6px;margin-top:9px}.content-card__button{margin-top:16px}}
+.theme-hub .page {
+  background: linear-gradient(180deg, #fff 0%, #f7f8fa 100%);
+}
+
+.hub-hero__title {
+  font-size: var(--font-size-page-title);
+}
+
+.hub-hero__description {
+  font-size: var(--font-size-body-large);
+}
+
+.theme-hub .app-shell {
+  max-width: 860px;
+}
+
+.content-grid {
+  width: min(100%, 760px);
+  margin: 0 auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.content-card {
+  min-height: 270px;
+  padding: 24px;
+  grid-template-rows: auto 1fr auto;
+}
+
+.content-card__top {
+  align-items: flex-start;
+}
+
+.content-card__icon {
+  width: 96px;
+  height: 96px;
+  flex: 0 0 96px;
+  object-fit: contain;
+  border-radius: 0;
+  background: transparent;
+}
+
+.content-card__category {
+  min-height: 28px;
+  padding: 5px 10px;
+  border: 1px solid var(--hub-card-accent-border);
+  border-radius: 999px;
+  color: var(--hub-card-accent-strong);
+  background: #fff;
+  font-size: var(--font-size-caption);
+}
+
+.content-card__body {
+  padding-top: 14px;
+}
+
+.content-card__title,
+.content-card__palette {
+  display: none;
+}
+
+.content-card__description {
+  margin: 0;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+.content-card__button {
+  justify-content: center;
+  min-height: 42px;
+  margin-top: 22px;
+  border-color: var(--hub-card-accent-border);
+  color: var(--hub-card-accent-strong);
+  background: #fff;
+  font-size: var(--font-size-body);
+}
+
+.content-card__button--active:hover {
+  border-color: var(--hub-card-accent-strong);
+  color: var(--hub-card-accent-strong);
+  background: var(--hub-card-accent-light);
+}
+
+.content-card__button:disabled {
+  border-color: var(--hub-card-accent-border);
+  color: var(--hub-card-accent-strong);
+  background: #fff;
+  opacity: 0.52;
+}
+
+@media (max-width: 720px) {
+  .theme-hub .app-shell {
+    max-width: none;
+  }
+
+  .content-grid {
+    width: 100%;
+    gap: 10px;
+  }
+
+  .content-card {
+    min-height: 244px;
+    padding: 15px 13px;
+  }
+
+  .content-card__icon {
+    width: 70px;
+    height: 70px;
+    flex-basis: 70px;
+  }
+
+  .content-card__category {
+    min-height: 25px;
+    padding: 4px 7px;
+    font-size: 0.62rem;
+  }
+
+  .content-card__body {
+    padding-top: 12px;
+  }
+
+  .content-card__description {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 0.76rem;
+    line-height: 1.55;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+  }
+
+  .content-card__button {
+    min-height: 38px;
+    margin-top: 14px;
+    padding: 8px 9px;
+    border-radius: 12px;
+    font-size: 0.74rem;
+  }
+}
