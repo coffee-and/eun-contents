@@ -28,16 +28,10 @@ export function HomePage({ onNavigate }) {
                   src={content.iconSrc}
                   alt={content.iconAlt}
                 />
-                <span className="content-card__category">{content.category}</span>
+                <span className="content-card__category">설명</span>
               </div>
 
               <div className="content-card__body">
-                <h2 className="content-card__title">{content.title}</h2>
-                <span className="content-card__palette" aria-hidden="true">
-                  <i />
-                  <i />
-                  <i />
-                </span>
                 <p className="content-card__description">{content.description}</p>
               </div>
 
@@ -49,12 +43,7 @@ export function HomePage({ onNavigate }) {
                 onClick={() => onNavigate(content.route)}
                 disabled={!isActive}
               >
-                <span>{content.actionLabel}</span>
-                {isActive ? (
-                  <span className="content-card__button-icon" aria-hidden="true">
-                    →
-                  </span>
-                ) : null}
+                {content.title}
               </button>
             </article>
           );
