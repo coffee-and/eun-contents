@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import { AppShell } from "../../shared/components/AppShell.jsx";
 import {
-  QUESTION_PACKS,
   RELATIONSHIP_TYPES,
   getQuestionPack,
   getQuestions,
@@ -61,7 +60,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
   const [session, setSession] = useState(null);
   const [startForm, setStartForm] = useState({
     displayName: "",
-    relationshipType: "couple",
+    relationshipType: "",
     questionPackId: "light",
   });
   const [inviteeName, setInviteeName] = useState("");
@@ -77,12 +76,8 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
   const selectedType = getRelationshipType(session?.relationshipType ?? startForm.relationshipType);
   const selectedPack = getQuestionPack(session?.questionPackId ?? startForm.questionPackId);
   const questions = useMemo(
-    () =>
-      getQuestions(
-        session?.relationshipType ?? startForm.relationshipType,
-        session?.questionPackId ?? startForm.questionPackId
-      ),
-    [session?.relationshipType, session?.questionPackId, startForm.relationshipType, startForm.questionPackId]
+    () => getQuestions(session?.relationshipType ?? startForm.relationshipType),
+    [session?.relationshipType, startForm.relationshipType]
   );
   const currentQuestion = questions[questionIndex];
   const inviteUrl = inviteCode ? buildInviteUrl(inviteCode) : "";
@@ -95,6 +90,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
   const isInvitee = participantRole === PARTICIPANT_ROLES.INVITEE;
   const isSubmitted = Boolean(session?.participant?.submittedAt);
   const isComplete = session?.status === "completed";
+  const canStart = Boolean(startForm.relationshipType && startForm.displayName.trim() && !isBusy);
 
   useEffect(() => {
     if (!inviteCode) return;
@@ -162,8 +158,14 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
 
   async function handleCreateSession(event) {
     event.preventDefault();
+    if (!canStart) {
+      setErrorMessage("관계를 먼저 선택하고, 내 이름 또는 닉네임을 입력해 주세요.");
+      return;
+    }
+
     setIsBusy(true);
     setErrorMessage("");
+    setNotice("");
 
     try {
       const payload = await createQuestionSession(startForm);
@@ -173,6 +175,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
       saveParticipantToken(payload.session.inviteCode, payload.participantToken);
       window.location.hash = `/together-questions?invite=${encodeURIComponent(payload.session.inviteCode)}`;
       setAnswers(loadDraft(payload.session.inviteCode, PARTICIPANT_ROLES.CREATOR));
+      setQuestionIndex(0);
       setStep(SESSION_STEPS.CREATOR_ANSWER);
     } catch (error) {
       setErrorMessage(getErrorMessage(error));
@@ -185,6 +188,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
     event.preventDefault();
     setIsBusy(true);
     setErrorMessage("");
+    setNotice("");
 
     try {
       const payload = await joinQuestionSession(inviteCode, inviteeName);
@@ -201,11 +205,12 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
     }
   }
 
-  async function persistAnswers({ submit = false, nextStep = null } = {}) {
+  async function persistAnswers({ submit = false } = {}) {
     if (!inviteCode || !participantToken || !participantRole) return false;
 
     setIsSaving(true);
     setErrorMessage("");
+    setNotice("");
 
     try {
       const payload = await saveQuestionAnswers(inviteCode, {
@@ -218,11 +223,9 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
       if (submit) {
         clearDraft(inviteCode, participantRole);
         setStep(payload.session.status === "completed" ? SESSION_STEPS.RESULT : SESSION_STEPS.WAITING);
-      } else if (nextStep) {
-        setStep(nextStep);
+        setNotice("답변 제출이 완료됐어요.");
       }
 
-      setNotice(submit ? "답변 제출이 완료됐어요." : "답변을 저장했어요.");
       return true;
     } catch (error) {
       setErrorMessage(getErrorMessage(error));
@@ -233,9 +236,6 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
   }
 
   async function handleNextQuestion() {
-    const saved = await persistAnswers();
-    if (!saved) return;
-
     if (questionIndex >= questions.length - 1) {
       await persistAnswers({ submit: true });
       return;
@@ -245,8 +245,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  async function handlePreviousQuestion() {
-    await persistAnswers();
+  function handlePreviousQuestion() {
     setQuestionIndex((index) => Math.max(0, index - 1));
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -352,6 +351,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
     setQuestionIndex(0);
     setNotice("");
     setErrorMessage("");
+    setStartForm({ displayName: "", relationshipType: "", questionPackId: "light" });
     setStep(SESSION_STEPS.START);
     window.location.hash = "/together-questions";
   }
@@ -375,6 +375,12 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
         </div>
       </div>
 
+      <div className="tq-inline-actions">
+        <button type="button" className="tq-button tq-button--ghost" onClick={resetFlow}>
+          다시 선택하기
+        </button>
+      </div>
+
       <article className="tq-question-card">
         <span>오늘의 질문</span>
         <h2>{currentQuestion?.prompt}</h2>
@@ -388,10 +394,10 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
           maxLength={ANSWER_LIMITS.answer}
           value={answers[currentQuestion?.id] ?? ""}
           onChange={(event) => updateAnswer(currentQuestion.id, event.target.value)}
-          placeholder="빈 답변으로도 넘어갈 수 있어요. 다만 결과에는 '아직 적지 않았어요.'로 표시됩니다."
+          placeholder="정답은 없어요. 지금 떠오르는 내 마음을 편하게 적어주세요."
         />
         <small>
-          빈 답변은 허용돼요. 현재 질문을 이동할 때마다 서버 저장을 시도하고, 실패하면 임시 저장으로 복구해요.
+          답변은 이 기기 안에 임시 저장되고, 마지막 질문에서 한 번에 제출돼요.
         </small>
       </label>
 
@@ -414,7 +420,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
             ? isCreator
               ? "내 답변 완료하기"
               : "답변 제출하기"
-            : "저장하고 다음"}
+            : "다음 질문"}
         </button>
       </div>
     </section>
@@ -427,7 +433,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
           <div>
             <span className="tq-hero__eyebrow">QUESTIONS TOGETHER</span>
             <h1>함께하는 문답</h1>
-            <p>내 답변을 먼저 남기고, 초대 링크로 상대방의 답변을 받아 함께 결과를 확인해요.</p>
+            <p>내 마음을 먼저 기록하고, 초대 링크로 상대의 답변을 받아 함께 비교해요.</p>
           </div>
           <button type="button" className="tq-home-button" onClick={onNavigateHome}>
             콘텐츠 홈
@@ -442,8 +448,30 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
           <form className="tq-panel tq-start" onSubmit={handleCreateSession}>
             <div className="tq-section__head">
               <span>START</span>
-              <h2>내 답변부터 시작해볼게요</h2>
-              <p>상대방 정보는 초대받은 사람이 직접 입력해요.</p>
+              <h2>먼저 누구와의 문답인지 골라주세요</h2>
+              <p>질문 주제 선택 없이, 기본 15문항으로 자연스럽게 시작해요.</p>
+            </div>
+
+            <div className="tq-choice-group">
+              <span>상대와의 관계</span>
+              <div className="tq-card-grid">
+                {RELATIONSHIP_TYPES.map((type) => (
+                  <button
+                    type="button"
+                    key={type.id}
+                    className={`tq-select-card ${
+                      startForm.relationshipType === type.id ? "is-selected" : ""
+                    }`}
+                    onClick={() => {
+                      setStartForm((form) => ({ ...form, relationshipType: type.id }));
+                      setQuestionIndex(0);
+                    }}
+                  >
+                    <strong>{type.title}</strong>
+                    <small>{type.description}</small>
+                  </button>
+                ))}
+              </div>
             </div>
 
             <label className="tq-field">
@@ -459,45 +487,12 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
               />
             </label>
 
-            <div className="tq-choice-group">
-              <span>상대와의 관계</span>
-              <div className="tq-card-grid">
-                {RELATIONSHIP_TYPES.map((type) => (
-                  <button
-                    type="button"
-                    key={type.id}
-                    className={`tq-select-card ${
-                      startForm.relationshipType === type.id ? "is-selected" : ""
-                    }`}
-                    onClick={() => setStartForm((form) => ({ ...form, relationshipType: type.id }))}
-                  >
-                    <strong>{type.title}</strong>
-                    <small>{type.description}</small>
-                  </button>
-                ))}
-              </div>
+            <div className="tq-flow-note">
+              <strong>무료 기본 문답 15문항</strong>
+              <p>답변은 마지막에 한 번만 제출돼요. 이후 심화 문답 20문항은 프리미엄으로 확장할 예정이에요.</p>
             </div>
 
-            <div className="tq-choice-group">
-              <span>질문 주제</span>
-              <div className="tq-card-grid">
-                {QUESTION_PACKS.map((pack) => (
-                  <button
-                    type="button"
-                    key={pack.id}
-                    className={`tq-select-card ${
-                      startForm.questionPackId === pack.id ? "is-selected" : ""
-                    }`}
-                    onClick={() => setStartForm((form) => ({ ...form, questionPackId: pack.id }))}
-                  >
-                    <strong>{pack.title}</strong>
-                    <small>{pack.description}</small>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <button type="submit" className="tq-button tq-button--primary" disabled={isBusy}>
+            <button type="submit" className="tq-button tq-button--primary" disabled={!canStart}>
               문답 시작하기
             </button>
           </form>
