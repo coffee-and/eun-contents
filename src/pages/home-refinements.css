@@ -22,57 +22,52 @@
 }
 
 .content-card {
-  min-height: 270px;
-  padding: 24px;
-  grid-template-rows: auto 1fr auto;
+  display: flex;
+  min-height: 250px;
+  padding: 22px 24px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
-.content-card__top {
-  align-items: flex-start;
+.content-card__top,
+.content-card__body,
+.content-card__category,
+.content-card__title,
+.content-card__palette {
+  display: contents;
 }
 
 .content-card__icon {
-  width: 96px;
-  height: 96px;
-  flex: 0 0 96px;
+  width: 112px;
+  height: 112px;
+  flex: 0 0 112px;
   object-fit: contain;
   border-radius: 0;
   background: transparent;
 }
 
-.content-card__category {
-  min-height: 28px;
-  padding: 5px 10px;
-  border: 1px solid var(--hub-card-accent-border);
-  border-radius: 999px;
-  color: var(--hub-card-accent-strong);
-  background: #fff;
-  font-size: var(--font-size-caption);
-}
-
-.content-card__body {
-  padding-top: 14px;
-}
-
-.content-card__title,
-.content-card__palette {
-  display: none;
-}
-
 .content-card__description {
-  margin: 0;
+  max-width: 29rem;
+  margin: 18px auto 0;
+  color: var(--hub-text-secondary);
   font-size: var(--font-size-body);
-  line-height: var(--line-height-body);
+  line-height: 1.65;
+  text-align: center;
+  text-wrap: balance;
 }
 
 .content-card__button {
   justify-content: center;
-  min-height: 42px;
+  min-height: 46px;
+  width: 100%;
   margin-top: 22px;
   border-color: var(--hub-card-accent-border);
   color: var(--hub-card-accent-strong);
   background: #fff;
-  font-size: var(--font-size-body);
+  font-size: 1rem;
+  font-weight: 800;
 }
 
 .content-card__button--active:hover {
@@ -99,28 +94,19 @@
   }
 
   .content-card {
-    min-height: 244px;
-    padding: 15px 13px;
+    min-height: 232px;
+    padding: 16px 13px;
   }
 
   .content-card__icon {
-    width: 70px;
-    height: 70px;
-    flex-basis: 70px;
-  }
-
-  .content-card__category {
-    min-height: 25px;
-    padding: 4px 7px;
-    font-size: 0.62rem;
-  }
-
-  .content-card__body {
-    padding-top: 12px;
+    width: 82px;
+    height: 82px;
+    flex-basis: 82px;
   }
 
   .content-card__description {
     display: -webkit-box;
+    margin-top: 14px;
     overflow: hidden;
     font-size: 0.76rem;
     line-height: 1.55;
@@ -129,10 +115,10 @@
   }
 
   .content-card__button {
-    min-height: 38px;
+    min-height: 40px;
     margin-top: 14px;
     padding: 8px 9px;
     border-radius: 12px;
-    font-size: 0.74rem;
+    font-size: 0.82rem;
   }
 }
