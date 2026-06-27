@@ -1,26 +1,26 @@
 .theme-relationship {
   --relationship-red-50: #fff7f7;
-  --relationship-red-100: #ffe9ea;
-  --relationship-red-200: #ffcfd2;
-  --relationship-red-300: #f7a7ad;
-  --relationship-red-400: #ef747e;
-  --relationship-red-500: #df4653;
-  --relationship-red-600: #c93442;
-  --relationship-red-700: #a82634;
-  --relationship-red-800: #7f1d28;
-  --relationship-red-900: #4f1720;
+  --relationship-red-100: #ffe8e8;
+  --relationship-red-200: #ffc7c9;
+  --relationship-red-300: #f79ca2;
+  --relationship-red-400: #ef6a75;
+  --relationship-red-500: #df3f4d;
+  --relationship-red-600: #c92f3e;
+  --relationship-red-700: #a82432;
+  --relationship-red-800: #7f1c27;
+  --relationship-red-900: #4e171f;
 
-  --bg: var(--relationship-red-100);
+  --bg: #ffffff;
   --bg-soft: var(--relationship-red-50);
   --card-bg: #ffffff;
   --card-bg-soft: #fffafa;
-  --surface-muted: #f8edef;
+  --surface-muted: #f9eff0;
   --surface-line: #ead0d4;
-  --text: #2d2022;
+  --text: #2b2325;
   --inverse-text: #ffffff;
-  --text-soft: #6d5559;
-  --muted: #97767c;
-  --border: #e4c7cc;
+  --text-soft: #68575a;
+  --muted: #92777c;
+  --border: #e4c9cd;
   --border-strong: #cb9da5;
   --primary: var(--relationship-red-600);
   --primary-hover: var(--relationship-red-700);
@@ -43,7 +43,7 @@
   --gradient-page: linear-gradient(
     180deg,
     #ffffff 0%,
-    var(--relationship-red-50) 48%,
-    #f8edef 100%
+    var(--relationship-red-50) 65%,
+    #f9eff0 100%
   );
 }
