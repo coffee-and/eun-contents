@@ -14,7 +14,7 @@ export const ROLES = {
 export const LIMITS = {
   displayName: 24,
   answer: 1000,
-  answersPerSubmit: 20,
+  answersPerSubmit: 40,
 };
 
 const supabaseUrl = process.env.SUPABASE_URL;
