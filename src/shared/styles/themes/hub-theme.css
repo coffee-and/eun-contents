@@ -1,40 +1,76 @@
 .theme-hub {
-  --bg: #f3eee7;
-  --bg-soft: #fbf8f3;
+  --hub-page-background: #f7f3ee;
+  --hub-page-background-soft: #fcfaf7;
+  --hub-card-background: #fffdfb;
+  --hub-card-background-muted: rgba(255, 255, 255, 0.74);
 
-  --card-bg: rgba(255, 255, 255, 0.72);
-  --card-bg-soft: rgba(255, 255, 255, 0.62);
+  --hub-text-primary: #2f2926;
+  --hub-text-secondary: #6f635d;
+  --hub-text-muted: #95877e;
+  --hub-text-inverse: #ffffff;
 
-  --surface-muted: rgba(255, 255, 255, 0.52);
-  --surface-line: rgba(79, 57, 46, 0.12);
+  --hub-border-color: rgba(80, 62, 52, 0.13);
+  --hub-border-color-strong: rgba(80, 62, 52, 0.2);
 
-  --text: #342720;
-  --inverse-text: #ffffff;
-  --text-soft: #74645a;
-  --muted: #927f72;
+  --hub-content-width: 980px;
+  --hub-grid-gap: 20px;
+  --hub-card-radius: 26px;
+  --hub-card-padding: 28px;
+  --hub-card-min-height: 308px;
+  --hub-button-height: 48px;
 
-  --border: rgba(79, 57, 46, 0.13);
-  --border-strong: rgba(79, 57, 46, 0.24);
-  --primary: #4f392e;
-  --primary-hover: #3f2d25;
-  --primary-strong: #2f211b;
-  --primary-soft: #eee5dc;
+  --hub-shadow-card: 0 14px 34px rgba(79, 58, 47, 0.075);
+  --hub-shadow-card-hover: 0 18px 42px rgba(79, 58, 47, 0.11);
 
-  --accent: #96715f;
-  --accent-soft: #f2e9e1;
+  --hub-primary-color: #5a4034;
+  --hub-primary-color-hover: #453128;
+  --hub-primary-color-soft: #efe6df;
 
-  --premium-bg: #eee5dc;
-  --premium-text: #4f392e;
+  --bg: var(--hub-page-background);
+  --card-bg: var(--hub-card-background);
+  --card-bg-soft: var(--hub-card-background-muted);
+  --text: var(--hub-text-primary);
+  --text-soft: var(--hub-text-secondary);
+  --muted: var(--hub-text-muted);
+  --inverse-text: var(--hub-text-inverse);
+  --border: var(--hub-border-color);
+  --border-strong: var(--hub-border-color-strong);
+  --primary: var(--hub-primary-color);
+  --primary-hover: var(--hub-primary-color-hover);
+  --primary-soft: var(--hub-primary-color-soft);
+  --shadow: var(--hub-shadow-card-hover);
+  --shadow-soft: var(--hub-shadow-card);
+  --gradient-page: linear-gradient(
+    180deg,
+    var(--hub-page-background-soft) 0%,
+    var(--hub-page-background) 100%
+  );
+}
 
-  --shadow: 0 12px 32px rgba(68, 48, 38, 0.08);
-  --shadow-soft: 0 6px 22px rgba(68, 48, 38, 0.06);
-  --shadow-flat: none;
+.theme-hub .content-card--relationship {
+  --hub-card-accent: #8f6fc2;
+  --hub-card-accent-strong: #7254a5;
+  --hub-card-accent-soft: #f1eafa;
+  --hub-card-accent-border: #d9c9ef;
+}
 
-  --gradient-main: linear-gradient(90deg, #b89b89 0%, #74574a 50%, #3f2d25 100%);
-  --gradient-page: linear-gradient(180deg, #fbf8f3 0%, #f3eee7 100%);
+.theme-hub .content-card--couple {
+  --hub-card-accent: #df8fab;
+  --hub-card-accent-strong: #c96f90;
+  --hub-card-accent-soft: #fcecf2;
+  --hub-card-accent-border: #f1c5d3;
+}
 
-  --hub-icon-relationship: #eee6f5;
-  --hub-icon-couple: #f7e4e8;
-  --hub-icon-saju: #e4eaf1;
-  --hub-icon-game: #e1eee7;
+.theme-hub .content-card--saju {
+  --hub-card-accent: #c39156;
+  --hub-card-accent-strong: #a8753d;
+  --hub-card-accent-soft: #fbf2e5;
+  --hub-card-accent-border: #ead0ad;
+}
+
+.theme-hub .content-card--game {
+  --hub-card-accent: #69a89a;
+  --hub-card-accent-strong: #4d8d80;
+  --hub-card-accent-soft: #e8f4f0;
+  --hub-card-accent-border: #b9ddd4;
 }
