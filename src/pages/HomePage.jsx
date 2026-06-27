@@ -23,15 +23,21 @@ export function HomePage({ onNavigate }) {
               }`}
             >
               <div className="content-card__top">
-                <span className="content-card__icon" aria-hidden="true">
-                  {content.icon}
-                </span>
+                <img
+                  className="content-card__icon"
+                  src={content.iconSrc}
+                  alt={content.iconAlt}
+                />
                 <span className="content-card__category">{content.category}</span>
               </div>
 
               <div className="content-card__body">
                 <h2 className="content-card__title">{content.title}</h2>
-                <span className="content-card__accent" aria-hidden="true" />
+                <span className="content-card__palette" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                </span>
                 <p className="content-card__description">{content.description}</p>
               </div>
 
