@@ -17,6 +17,10 @@ import { QuestionCard } from "./components/question/QuestionCard.jsx";
 import { ResultView } from "./components/result/ResultView.jsx";
 import { RelationshipModeSelect } from "./components/mode/RelationshipModeSelect.jsx";
 import { getResultId } from "../../app/routes.js";
+import "./styles/relationship-theme.css";
+import "./styles/relationship-components.css";
+import "./styles/relationship-result-spacing.css";
+import "./styles/relationship-refinements.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
 

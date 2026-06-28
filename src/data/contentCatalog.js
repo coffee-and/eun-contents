@@ -24,7 +24,7 @@ export const CONTENT_CATALOG = [
     category: "함께하는 시간",
     title: "함께하는 문답",
     subtitle: "Questions Together",
-    description: "내 답변을 먼저 남기고, 초대 링크로 상대방과 같은 질문에 답해요.",
+    description: "30문항에 답하며 나와 관계의 이야기를 한 권의 문답집으로 남겨요.",
     iconSrc: "/icons/content/together-chat.png",
     iconAlt: "겹친 두 개의 말풍선",
     theme: "couple",

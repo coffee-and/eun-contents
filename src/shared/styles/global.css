@@ -1,9 +1,6 @@
 @import "./tokens.css";
 @import "./themes/hub-theme.css";
-@import "./themes/relationship-theme.css";
-@import "../../pages/home.css";
-@import "../../features/relationship/styles/relationship-components.css";
-@import "../../features/relationship/styles/relationship-result-spacing.css";
+@import "./home.css";
 
 * {
   box-sizing: border-box;

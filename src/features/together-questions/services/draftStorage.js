@@ -1,5 +1,6 @@
-const DRAFT_PREFIX = "eun:together-questions:v2:draft:";
-const TOKEN_PREFIX = "eun:together-questions:v2:participant:";
+// Together Questions 작성 중 임시 저장과 최근 결과 복구를 관리합니다.
+const DRAFT_KEY = "eun:together-questions:v3:draft";
+const RESULT_KEY = "eun:together-questions:v3:result";
 
 function safeJsonParse(raw) {
   if (!raw) return null;
@@ -11,42 +12,34 @@ function safeJsonParse(raw) {
   }
 }
 
-export function getDraftKey(inviteCode, role) {
-  return `${DRAFT_PREFIX}${inviteCode}:${role}`;
+export function loadDraft() {
+  const saved = safeJsonParse(window.localStorage.getItem(DRAFT_KEY));
+  return saved && typeof saved === "object" ? saved : null;
 }
 
-export function loadDraft(inviteCode, role) {
-  if (!inviteCode || !role) return {};
-
-  const saved = safeJsonParse(window.localStorage.getItem(getDraftKey(inviteCode, role)));
-  return saved && typeof saved.answers === "object" ? saved.answers : {};
-}
-
-export function saveDraft(inviteCode, role, answers) {
-  if (!inviteCode || !role) return;
-
+export function saveDraft(draft) {
   window.localStorage.setItem(
-    getDraftKey(inviteCode, role),
-    JSON.stringify({ answers, savedAt: new Date().toISOString() })
+    DRAFT_KEY,
+    JSON.stringify({ ...draft, savedAt: new Date().toISOString() })
   );
 }
 
-export function clearDraft(inviteCode, role) {
-  if (!inviteCode || !role) return;
-  window.localStorage.removeItem(getDraftKey(inviteCode, role));
+export function clearDraft() {
+  window.localStorage.removeItem(DRAFT_KEY);
 }
 
-export function saveParticipantToken(inviteCode, token) {
-  if (!inviteCode || !token) return;
-  window.localStorage.setItem(`${TOKEN_PREFIX}${inviteCode}`, token);
+export function loadSavedResult() {
+  const saved = safeJsonParse(window.localStorage.getItem(RESULT_KEY));
+  return saved && typeof saved === "object" ? saved : null;
 }
 
-export function loadParticipantToken(inviteCode) {
-  if (!inviteCode) return "";
-  return window.localStorage.getItem(`${TOKEN_PREFIX}${inviteCode}`) ?? "";
+export function saveResult(result) {
+  window.localStorage.setItem(
+    RESULT_KEY,
+    JSON.stringify({ ...result, savedAt: new Date().toISOString() })
+  );
 }
 
-export function clearParticipantToken(inviteCode) {
-  if (!inviteCode) return;
-  window.localStorage.removeItem(`${TOKEN_PREFIX}${inviteCode}`);
+export function clearSavedResult() {
+  window.localStorage.removeItem(RESULT_KEY);
 }
