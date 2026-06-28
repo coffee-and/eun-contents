@@ -1,17 +1,18 @@
 ﻿.theme-together-questions {
-  --tq-accent: var(--content-yellow);
-  --tq-accent-strong: var(--content-yellow-strong);
-  --tq-accent-soft: var(--content-yellow-light);
-  --tq-accent-border: var(--content-yellow-hover);
-  --tq-accent-hover: var(--content-yellow-hover);
-  --tq-focus-ring: rgba(255, 211, 79, 0.32);
-  --tq-text-on-accent: var(--content-ink);
-  --tq-bg: var(--content-cream);
+  --tq-accent: #e6cc83;
+  --tq-accent-strong: #7a6532;
+  --tq-accent-soft: #faf2e8;
+  --tq-accent-border: #cdb98a;
+  --tq-accent-hover: #d8bd6c;
+  --tq-green: #bdcdb7;
+  --tq-focus-ring: rgba(230, 204, 131, 0.32);
+  --tq-text-on-accent: #292722;
+  --tq-bg: #f8f2e7;
   --tq-card: var(--color-white);
   --tq-card-soft: #fffdf4;
-  --tq-text: var(--content-ink);
-  --tq-text-soft: var(--content-ink-soft);
-  --tq-border: #e4d5ad;
+  --tq-text: #292722;
+  --tq-text-soft: var(--editorial-text);
+  --tq-border: #ded2bd;
   --tq-danger: var(--color-danger);
   --tq-danger-soft: var(--color-danger-soft);
   --tq-shadow: 0 1px 2px rgba(79, 58, 12, 0.04);
@@ -100,8 +101,8 @@
 .tq-panel,
 .tq-complete-card {
   padding: var(--card-padding);
-  border: 1.5px solid var(--tq-border);
-  border-radius: var(--radius-xl);
+  border: 1px solid var(--tq-border);
+  border-radius: var(--card-radius);
   background: var(--tq-card);
   box-shadow: var(--tq-shadow);
 }
@@ -135,7 +136,7 @@
 .tq-answer-field textarea {
   width: 100%;
   border: 1px solid var(--tq-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--control-radius);
   background: var(--tq-card);
   color: var(--tq-text);
   padding: 12px 13px;
@@ -158,7 +159,7 @@
   margin-bottom: 20px;
   padding: 14px 16px;
   border: 1px solid var(--tq-accent-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--card-radius);
   background: var(--tq-card-soft);
 }
 
@@ -178,9 +179,9 @@
 .tq-select-card {
   min-height: 112px;
   padding: 16px;
-  border: 1.5px solid var(--tq-border);
-  border-radius: var(--radius-lg);
-  background: #fff8d3;
+  border: 1px solid var(--tq-border);
+  border-radius: var(--card-radius);
+  background: var(--tq-card-soft);
   color: var(--tq-text);
   text-align: left;
   cursor: pointer;
@@ -191,12 +192,12 @@
 
 .tq-select-card:hover,
 .tq-select-card.is-selected {
-  border-color: var(--content-line);
-  background: var(--tq-accent-soft);
+  border-color: var(--tq-accent-border);
+  background: #f4f8f1;
 }
 
 .tq-select-card.is-selected {
-  box-shadow: inset 0 0 0 2px var(--tq-accent);
+  box-shadow: inset 4px 0 0 var(--tq-green);
 }
 
 .tq-select-card strong,
@@ -224,7 +225,7 @@
   margin: 0 0 12px;
   padding: 12px 14px;
   border: 1px solid var(--tq-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--card-radius);
   background: var(--tq-card);
   color: var(--tq-text-soft);
   font-weight: 700;
@@ -266,7 +267,7 @@
 .tq-question-item {
   padding: 18px;
   border: 1px solid var(--tq-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--card-radius);
   background: var(--tq-card-soft);
 }
 
@@ -290,7 +291,7 @@
   margin: 18px 0;
   padding: 14px 16px;
   border: 1px solid var(--tq-accent-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--card-radius);
   background: var(--tq-accent-soft);
   color: var(--tq-text);
 }
@@ -407,7 +408,7 @@
 
 .tq-answer-report section {
   border: 1px solid var(--tq-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--card-radius);
   background: var(--tq-card-soft);
 }
 

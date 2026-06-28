@@ -37,10 +37,11 @@
 .hero__eyebrow {
   display: inline-flex;
   margin-bottom: var(--space-xs);
-  padding: 7px 12px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-pill);
-  background: var(--card-bg);
+  padding: 0 0 6px;
+  border: 0;
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+  background: transparent;
   color: var(--muted);
   font-size: var(--font-label);
   font-weight: 700;
@@ -89,16 +90,16 @@
 ======================================== */
 .progress {
   width: 100%;
-  height: 6px;
+  height: 4px;
   margin-bottom: var(--section-gap);
   overflow: hidden;
-  border-radius: var(--radius-pill);
+  border-radius: 0;
   background: var(--surface-line);
 }
 
 .progress__fill {
   height: 100%;
-  border-radius: var(--radius-pill);
+  border-radius: 0;
   background: var(--gradient-main);
   transition: width 0.32s ease;
 }
@@ -144,7 +145,7 @@
   justify-content: center;
   min-height: 26px;
   padding: 6px 10px;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-sm);
   background: var(--primary-soft);
   color: var(--text-soft);
   font-size: var(--font-label);
@@ -211,7 +212,7 @@
   min-height: 168px;
   padding: var(--card-padding);
   border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
+  border-radius: var(--card-radius);
   background: var(--card-bg);
   color: var(--text);
   text-align: left;
@@ -225,7 +226,7 @@
 .mode-card:hover {
   background: var(--primary-soft);
   border-color: var(--border-strong);
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .mode-card strong {
@@ -321,7 +322,7 @@
 }
 
 .option-card:hover {
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .option-card--selected {
@@ -908,7 +909,7 @@
   width: min(100%, 420px);
   padding: var(--card-padding);
   border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
+  border-radius: var(--card-radius);
   background: var(--card-bg);
   box-shadow: var(--shadow);
 }

@@ -4,46 +4,42 @@ export function HomePage({ onNavigate }) {
   return (
     <div className="hub-page">
       <header className="hub-hero">
-        <span className="hub-hero__eyebrow">EUN CONTENTS</span>
-        <h1 className="hub-hero__title">나와 우리를 조금 더 알아가는 다양한 콘텐츠</h1>
-        <p className="hub-hero__description">
-          관계 진단부터 함께하는 문답, 사주와 미니게임까지 하나씩 채워갈게요.
-        </p>
+        <p className="hub-hero__tagline">[: 오늘의 나와 우리]</p>
+        <h1 className="hub-hero__title">moment ON</h1>
       </header>
 
-      <section className="content-grid">
+      <section className="content-grid" aria-label="콘텐츠 목록">
         {CONTENT_CATALOG.map((content) => {
           const isActive = content.status === CONTENT_STATUS.ACTIVE;
 
           return (
             <article
               key={content.id}
-              className={`content-card content-card--${content.theme}${
+              className={`content-card content-card--${content.layout}${
                 isActive ? " content-card--active" : ""
               }`}
             >
               <div className="content-card__media">
-                <span className="content-card__category">{content.category}</span>
                 <img
-                  className="content-card__icon"
-                  src={content.iconSrc}
-                  alt={content.iconAlt}
+                  className="content-card__image"
+                  src={content.imageSrc}
+                  alt={content.imageAlt}
+                  loading="lazy"
                 />
               </div>
 
               <div className="content-card__body">
-                <p className="content-card__subtitle">{content.subtitle}</p>
+                <p className="content-card__category">{content.category}</p>
+                <h2 className="content-card__title">{content.title}</h2>
                 <p className="content-card__description">{content.description}</p>
 
                 <button
                   type="button"
-                  className={`content-card__button${
-                    isActive ? " content-card__button--active" : ""
-                  }`}
+                  className="content-card__link"
                   onClick={() => onNavigate(content.route)}
                   disabled={!isActive}
                 >
-                  {content.title}
+                  {content.actionLabel}
                 </button>
               </div>
             </article>
