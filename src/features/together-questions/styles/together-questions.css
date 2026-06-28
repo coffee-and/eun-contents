@@ -1,17 +1,17 @@
 ﻿.theme-together-questions {
-  --tq-accent: #ffbd12;
-  --tq-accent-strong: #a85700;
-  --tq-accent-soft: #fff6cf;
-  --tq-accent-border: #f0bc45;
-  --tq-accent-hover: #e99a00;
-  --tq-focus-ring: rgba(255, 189, 18, 0.28);
-  --tq-text-on-accent: #2b2105;
-  --tq-bg: #fffaf1;
+  --tq-accent: var(--content-yellow);
+  --tq-accent-strong: var(--content-yellow-strong);
+  --tq-accent-soft: var(--content-yellow-light);
+  --tq-accent-border: var(--content-yellow-hover);
+  --tq-accent-hover: var(--content-yellow-hover);
+  --tq-focus-ring: rgba(255, 211, 79, 0.32);
+  --tq-text-on-accent: var(--content-ink);
+  --tq-bg: var(--content-cream);
   --tq-card: var(--color-white);
-  --tq-card-soft: #fffdf8;
-  --tq-text: #272520;
-  --tq-text-soft: #6f6a5f;
-  --tq-border: #eadfca;
+  --tq-card-soft: #fffdf4;
+  --tq-text: var(--content-ink);
+  --tq-text-soft: var(--content-ink-soft);
+  --tq-border: #e4d5ad;
   --tq-danger: var(--color-danger);
   --tq-danger-soft: var(--color-danger-soft);
   --tq-shadow: 0 1px 2px rgba(79, 58, 12, 0.04);
@@ -100,7 +100,7 @@
 .tq-panel,
 .tq-complete-card {
   padding: var(--card-padding);
-  border: 1px solid var(--tq-border);
+  border: 1.5px solid var(--tq-border);
   border-radius: var(--radius-xl);
   background: var(--tq-card);
   box-shadow: var(--tq-shadow);
@@ -178,9 +178,9 @@
 .tq-select-card {
   min-height: 112px;
   padding: 16px;
-  border: 1px solid var(--tq-border);
+  border: 1.5px solid var(--tq-border);
   border-radius: var(--radius-lg);
-  background: var(--tq-card-soft);
+  background: #fff8d3;
   color: var(--tq-text);
   text-align: left;
   cursor: pointer;
@@ -191,12 +191,12 @@
 
 .tq-select-card:hover,
 .tq-select-card.is-selected {
-  border-color: var(--tq-accent);
+  border-color: var(--content-line);
   background: var(--tq-accent-soft);
 }
 
 .tq-select-card.is-selected {
-  box-shadow: inset 0 0 0 1px var(--tq-accent);
+  box-shadow: inset 0 0 0 2px var(--tq-accent);
 }
 
 .tq-select-card strong,
