@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import { AppShell } from "../../shared/components/AppShell.jsx";
+import { TextAction } from "../../shared/components/TextAction.jsx";
 import { AnswerPanel } from "./components/AnswerPanel.jsx";
 import { ResultPanel } from "./components/ResultPanel.jsx";
 import { StartPanel } from "./components/StartPanel.jsx";
@@ -187,9 +188,9 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
             <h1>함께하는 문답</h1>
             <p>내 마음을 차례대로 적고, 완성된 나의 문답집을 저장하거나 공유해요.</p>
           </div>
-          <button type="button" className="text-action tq-home-button" onClick={onNavigateHome}>
+          <TextAction className="tq-home-button" onClick={onNavigateHome}>
             ← 다른 콘텐츠 보기
-          </button>
+          </TextAction>
         </header>
 
         <StatusMessage notice={notice} errorMessage={errorMessage} />

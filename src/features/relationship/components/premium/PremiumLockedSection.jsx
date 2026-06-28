@@ -1,3 +1,4 @@
+import { Button } from "../../../../shared/components/Button.jsx";
 import { PREMIUM_PRICE, premiumBenefits } from "../../data/premiumContent.js";
 
 export function PremiumLockedSection({ onClickPayment }) {
@@ -37,13 +38,13 @@ export function PremiumLockedSection({ onClickPayment }) {
         </p>
       </div>
 
-      <button
-        type="button"
-        className="button button--primary premium-lock__button"
+      <Button
+        variant="primary"
+        className="premium-lock__button"
         onClick={onClickPayment}
       >
         테스트 결제로 심층 리포트 열기 · {PREMIUM_PRICE.toLocaleString()}원
-      </button>
+      </Button>
 
       <p className="premium-lock__desc">
         현재는 실제 결제 연동 전 테스트 모드이며, 결제 금액이 청구되지

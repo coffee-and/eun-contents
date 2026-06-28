@@ -1,3 +1,4 @@
+import { Button } from "../../../../shared/components/Button.jsx";
 import { CATEGORY_META } from "../../data/config.js";
 
 export function QuestionCard({
@@ -54,23 +55,23 @@ export function QuestionCard({
       </div>
 
       <div className="question-card__actions">
-        <button
-          type="button"
-          className="button button--secondary question-card__previous"
+        <Button
+          variant="secondary"
+          className="question-card__previous"
           disabled={!canGoPrevious}
           onClick={onPrevious}
         >
           이전 질문으로
-        </button>
+        </Button>
 
-        <button
-          type="button"
-          className="button button--primary question-card__next"
+        <Button
+          variant="primary"
+          className="question-card__next"
           disabled={!selectedOptionId}
           onClick={onNext}
         >
           다음 질문으로
-        </button>
+        </Button>
       </div>
     </section>
   );

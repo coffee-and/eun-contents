@@ -1,3 +1,5 @@
+import { TextAction } from "../../../../shared/components/TextAction.jsx";
+
 export function Hero({ eyebrow, title, subtitle, onNavigateHome }) {
   return (
     <header className="hero">
@@ -13,13 +15,9 @@ export function Hero({ eyebrow, title, subtitle, onNavigateHome }) {
       </div>
 
       {onNavigateHome ? (
-        <button
-          type="button"
-          className="text-action hero__home-button"
-          onClick={onNavigateHome}
-        >
+        <TextAction className="hero__home-button" onClick={onNavigateHome}>
           ← 다른 콘텐츠 보기
-        </button>
+        </TextAction>
       ) : null}
     </header>
   );

@@ -11,6 +11,8 @@ import { analyzeRelationship } from "./domain/analyzeRelationship.js";
 import { useQuizEngine } from "./hooks/useQuizEngine.js";
 import { clearResultUrl, getStoredResult } from "./utils/resultStorage.js";
 import { AppShell } from "../../shared/components/AppShell.jsx";
+import { Button } from "../../shared/components/Button.jsx";
+import { TextAction } from "../../shared/components/TextAction.jsx";
 import { Hero } from "./components/hero/Hero.jsx";
 import { ProgressBar } from "./components/progress/ProgressBar.jsx";
 import { QuestionCard } from "./components/question/QuestionCard.jsx";
@@ -203,13 +205,9 @@ export default function RelationshipApp({ onNavigateHome }) {
             링크가 올바른지 확인하거나 새 테스트를 시작해 주세요.
           </p>
 
-          <button
-            type="button"
-            className="button button--primary"
-            onClick={handleChooseAgain}
-          >
+          <Button variant="primary" onClick={handleChooseAgain}>
             새 테스트 시작하기
-          </button>
+          </Button>
         </section>
       ) : null}
 
@@ -218,9 +216,9 @@ export default function RelationshipApp({ onNavigateHome }) {
       {shouldShowQuizUtility ? (
         <div className="quiz-utility">
           <span>{activeModeLabel}</span>
-          <button type="button" onClick={handleChooseAgain}>
+          <TextAction onClick={handleChooseAgain}>
             다시 선택하기
-          </button>
+          </TextAction>
         </div>
       ) : null}
 

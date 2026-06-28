@@ -1,4 +1,5 @@
 // Together Questions 시작 화면을 표시합니다.
+import { Button } from "../../../shared/components/Button.jsx";
 import { ANSWER_LIMITS } from "../constants/sessionFlow.js";
 import { QUESTION_PACKS, RELATIONSHIP_TYPES } from "../data/index.js";
 
@@ -50,9 +51,9 @@ export function StartPanel({ startForm, canStart, isBusy, onSubmit, onChangeForm
         </p>
       </div>
 
-      <button type="submit" className="tq-button tq-button--primary" disabled={!canStart || isBusy}>
+      <Button type="submit" variant="primary" disabled={!canStart || isBusy}>
         문답 시작하기
-      </button>
+      </Button>
     </form>
   );
 }

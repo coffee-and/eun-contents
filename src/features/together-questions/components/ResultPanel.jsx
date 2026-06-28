@@ -1,4 +1,5 @@
 // Together Questions 나의 문답집 결과 화면을 표시합니다.
+import { Button } from "../../../shared/components/Button.jsx";
 import { EMPTY_ANSWER_TEXT } from "../constants/sessionFlow.js";
 
 export function ResultPanel({
@@ -38,18 +39,18 @@ export function ResultPanel({
       </article>
 
       <div className="tq-export-actions">
-        <button type="button" className="tq-button tq-button--secondary" onClick={onPrintPdf}>
+        <Button variant="secondary" onClick={onPrintPdf}>
           PDF 저장
-        </button>
-        <button type="button" className="tq-button tq-button--secondary" onClick={onSaveImage}>
+        </Button>
+        <Button variant="secondary" onClick={onSaveImage}>
           이미지 저장
-        </button>
-        <button type="button" className="tq-button tq-button--secondary" onClick={onShare}>
+        </Button>
+        <Button variant="secondary" onClick={onShare}>
           공유하기
-        </button>
-        <button type="button" className="tq-button tq-button--primary" onClick={onReset}>
+        </Button>
+        <Button variant="primary" onClick={onReset}>
           새 문답 시작
-        </button>
+        </Button>
       </div>
     </section>
   );

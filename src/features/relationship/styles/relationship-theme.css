@@ -44,4 +44,25 @@
   --gradient-page: var(--bg);
   --link-color: var(--relationship-red-700);
   --link-color-hover: var(--relationship-red-600);
+  --button-focus: var(--relationship-red-600);
+  --button-primary-bg: var(--primary);
+  --button-primary-border: var(--primary);
+  --button-primary-text: var(--inverse-text);
+  --button-primary-hover-bg: var(--primary-hover);
+  --button-primary-hover-border: var(--primary-hover);
+  --button-secondary-bg: var(--card-bg);
+  --button-secondary-border: var(--border);
+  --button-secondary-text: var(--primary);
+  --button-secondary-hover-bg: var(--primary-soft);
+  --button-secondary-hover-border: var(--primary);
+  --button-secondary-hover-text: var(--primary-hover);
+  --button-ghost-bg: var(--card-bg);
+  --button-ghost-border: var(--border);
+  --button-ghost-text: var(--primary);
+  --button-ghost-hover-bg: var(--primary-soft);
+  --button-ghost-hover-border: var(--primary);
+  --button-ghost-hover-text: var(--primary-hover);
+  --button-disabled-bg: var(--surface-muted);
+  --button-disabled-border: var(--border);
+  --button-disabled-text: var(--muted);
 }

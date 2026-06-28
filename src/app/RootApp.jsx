@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import RelationshipAnalyzer from "../features/relationship/RelationshipApp.jsx";
 import TogetherQuestionsApp from "../features/together-questions/TogetherQuestionsApp.jsx";
 import { AppShell } from "../shared/components/AppShell.jsx";
+import { TextAction } from "../shared/components/TextAction.jsx";
 import { getContentByRoute } from "../data/contentCatalog.js";
 import { HomePage } from "../pages/HomePage.jsx";
 import { getCurrentRoute, ROUTES } from "./routes.js";
@@ -38,13 +39,12 @@ export default function RootApp() {
       <div className="theme-hub">
         <AppShell>
           <div className="coming-soon">
-            <button
-              type="button"
-              className="text-action hub-back-button"
+            <TextAction
+              className="hub-back-button"
               onClick={() => navigate(ROUTES.HOME)}
             >
               ← 다른 콘텐츠 보기
-            </button>
+            </TextAction>
             <section className="coming-soon__card">
               <img
                 className="coming-soon__icon"

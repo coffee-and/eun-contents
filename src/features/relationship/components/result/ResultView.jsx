@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import html2canvas from "html2canvas";
+import { Button } from "../../../../shared/components/Button.jsx";
+import { TextAction } from "../../../../shared/components/TextAction.jsx";
 import {
   APP_COPY,
   CATEGORY_META,
@@ -436,38 +438,25 @@ export function ResultView({
         ) : null}
 
         <div className="button-row">
-          <button
-            type="button"
-            className="button button--ghost"
-            onClick={handleCapture}
-          >
+          <Button variant="ghost" onClick={handleCapture}>
             결과 카드 이미지 저장
-          </button>
+          </Button>
 
-          <button
-            type="button"
-            className="button button--primary"
+          <Button
+            variant="primary"
             onClick={handleOpenShareModal}
             disabled={serverSaveStatus === "saving"}
           >
             {serverSaveStatus === "saving" ? "공유 링크 준비 중..." : "공유하기"}
-          </button>
+          </Button>
 
-          <button
-            type="button"
-            className="text-action"
-            onClick={onRestart}
-          >
+          <TextAction onClick={onRestart}>
             처음으로
-          </button>
+          </TextAction>
 
-          <button
-            type="button"
-            className="text-action"
-            onClick={onChooseAgain}
-          >
+          <TextAction onClick={onChooseAgain}>
             ← 다시 선택하기
-          </button>
+          </TextAction>
         </div>
       </section>
 
@@ -490,42 +479,29 @@ export function ResultView({
                 <p>공유할 방법을 선택해 주세요.</p>
               </div>
 
-              <button
-                type="button"
-                className="text-action share-modal__close"
+              <TextAction
+                className="share-modal__close"
                 onClick={() => setIsShareModalOpen(false)}
                 aria-label="공유 창 닫기"
               >
                 닫기
-              </button>
+              </TextAction>
             </div>
 
             <div className="share-modal__actions">
               {canNativeShare ? (
-                <button
-                  type="button"
-                  className="button button--primary"
-                  onClick={handleNativeShare}
-                >
+                <Button variant="primary" onClick={handleNativeShare}>
                   다른 앱으로 공유
-                </button>
+                </Button>
               ) : null}
 
-              <button
-                type="button"
-                className="button button--primary"
-                onClick={handleCopyShareLink}
-              >
+              <Button variant="primary" onClick={handleCopyShareLink}>
                 링크 복사
-              </button>
+              </Button>
 
-              <button
-                type="button"
-                className="text-action"
-                onClick={() => setIsShareModalOpen(false)}
-              >
+              <TextAction onClick={() => setIsShareModalOpen(false)}>
                 닫기
-              </button>
+              </TextAction>
             </div>
           </section>
         </div>

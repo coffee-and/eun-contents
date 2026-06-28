@@ -17,6 +17,27 @@
   --tq-shadow: 0 1px 2px rgba(79, 58, 12, 0.04);
   --link-color: var(--tq-accent-strong);
   --link-color-hover: var(--tq-accent-hover);
+  --button-focus: var(--tq-accent);
+  --button-primary-bg: var(--tq-accent);
+  --button-primary-border: var(--tq-accent);
+  --button-primary-text: var(--tq-text-on-accent);
+  --button-primary-hover-bg: var(--tq-accent-hover);
+  --button-primary-hover-border: var(--tq-accent-hover);
+  --button-secondary-bg: var(--color-white);
+  --button-secondary-border: var(--tq-accent-border);
+  --button-secondary-text: var(--tq-accent-strong);
+  --button-secondary-hover-bg: var(--tq-accent-soft);
+  --button-secondary-hover-border: var(--tq-accent-border);
+  --button-secondary-hover-text: var(--tq-accent-hover);
+  --button-ghost-bg: transparent;
+  --button-ghost-border: transparent;
+  --button-ghost-text: var(--tq-accent-strong);
+  --button-ghost-hover-bg: var(--tq-accent-soft);
+  --button-ghost-hover-border: var(--tq-accent-border);
+  --button-ghost-hover-text: var(--tq-accent-hover);
+  --button-disabled-bg: var(--color-disabled-bg);
+  --button-disabled-border: var(--tq-border);
+  --button-disabled-text: var(--color-disabled-text);
   min-height: 100vh;
   background: var(--tq-bg);
   color: var(--tq-text);
@@ -170,54 +191,6 @@
   word-break: keep-all;
 }
 
-.tq-button {
-  min-height: 46px;
-  padding: 11px 16px;
-  border: 1px solid transparent;
-  border-radius: var(--radius-lg);
-  font-weight: 700;
-  cursor: pointer;
-  transition:
-    background 0.16s ease,
-    border-color 0.16s ease,
-    color 0.16s ease;
-}
-
-.tq-button--primary {
-  border-color: var(--tq-accent);
-  background: var(--tq-accent);
-  color: var(--tq-text-on-accent);
-}
-
-.tq-button--primary:hover:not(:disabled) {
-  border-color: var(--tq-accent-hover);
-  background: var(--tq-accent-hover);
-}
-
-.tq-button--secondary,
-.tq-button--ghost {
-  border-color: var(--tq-accent-border);
-  background: var(--color-white);
-  color: var(--tq-accent-strong);
-}
-
-.tq-button--secondary:hover:not(:disabled) {
-  background: var(--tq-accent-soft);
-}
-
-.tq-button--danger {
-  border-color: var(--color-danger-border);
-  background: var(--tq-danger-soft);
-  color: var(--tq-danger);
-}
-
-.tq-button:disabled {
-  border-color: var(--tq-border);
-  background: var(--color-disabled-bg);
-  color: var(--color-disabled-text);
-  cursor: not-allowed;
-}
-
 .tq-alert {
   margin: 0 0 12px;
   padding: 12px 14px;
@@ -303,7 +276,7 @@
   margin-top: 18px;
 }
 
-.tq-sheet-actions .tq-button {
+.tq-sheet-actions .button {
   min-width: min(100%, 220px);
 }
 
@@ -344,9 +317,8 @@
     padding: 15px;
   }
 
-  .tq-button {
-    min-height: 44px;
-    padding: 10px;
+  .theme-together-questions .button {
+    padding-inline: 10px;
     font-size: 0.78rem;
   }
 }
