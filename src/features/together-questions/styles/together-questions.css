@@ -148,6 +148,21 @@
   box-shadow: 0 0 0 3px var(--tq-focus-ring);
 }
 
+.tq-name-field {
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  border: 1px solid var(--tq-border);
+  border-radius: var(--radius-lg);
+  background: var(--tq-card-soft);
+}
+
+.tq-field-error {
+  color: var(--tq-danger);
+  font-size: var(--font-caption);
+  font-weight: 700;
+  line-height: var(--line-body);
+}
+
 .tq-card-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

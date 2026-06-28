@@ -1,6 +1,5 @@
 // Together Questions 시작 화면을 표시합니다.
 import { Button } from "../../../shared/components/Button.jsx";
-import { ANSWER_LIMITS } from "../constants/sessionFlow.js";
 import { QUESTION_PACKS, RELATIONSHIP_TYPES } from "../data/index.js";
 
 export function StartPanel({ startForm, canStart, isBusy, onSubmit, onChangeForm, onResetQuestion }) {
@@ -31,17 +30,6 @@ export function StartPanel({ startForm, canStart, isBusy, onSubmit, onChangeForm
           ))}
         </div>
       </div>
-
-      <label className="tq-field">
-        <span>내 이름 또는 닉네임</span>
-        <input
-          required
-          maxLength={ANSWER_LIMITS.displayName}
-          value={startForm.displayName}
-          onChange={(event) => onChangeForm({ displayName: event.target.value })}
-          placeholder="예: 은"
-        />
-      </label>
 
       <div className="tq-flow-note">
         <strong>무료 기본 문답 30문항</strong>

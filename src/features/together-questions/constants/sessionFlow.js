@@ -6,7 +6,7 @@ export const SESSION_STEPS = {
 };
 
 export const ANSWER_LIMITS = {
-  displayName: 24,
+  displayName: 12,
   answer: 1000,
 };
 

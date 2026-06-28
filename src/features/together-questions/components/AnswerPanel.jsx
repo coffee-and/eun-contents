@@ -3,7 +3,19 @@ import { Button } from "../../../shared/components/Button.jsx";
 import { TextAction } from "../../../shared/components/TextAction.jsx";
 import { ANSWER_LIMITS } from "../constants/sessionFlow.js";
 
-export function AnswerPanel({ answers, isSaving, questions, relationship, onAnswerChange, onComplete, onReset }) {
+export function AnswerPanel({
+  answers,
+  displayName,
+  displayNameError,
+  displayNameInputRef,
+  isSaving,
+  questions,
+  relationship,
+  onAnswerChange,
+  onComplete,
+  onDisplayNameChange,
+  onReset,
+}) {
   return (
     <section className="tq-panel tq-answer-panel">
       <div className="tq-sheet-head">
@@ -16,6 +28,24 @@ export function AnswerPanel({ answers, isSaving, questions, relationship, onAnsw
           ← 다시 선택하기
         </TextAction>
       </div>
+
+      <label className="tq-field tq-name-field" htmlFor="tq-display-name">
+        <span>문답에 표시할 이름</span>
+        <input
+          ref={displayNameInputRef}
+          id="tq-display-name"
+          maxLength={ANSWER_LIMITS.displayName}
+          value={displayName}
+          onChange={(event) => onDisplayNameChange(event.target.value)}
+          aria-invalid={displayNameError ? "true" : "false"}
+          aria-describedby={displayNameError ? "tq-display-name-error" : undefined}
+        />
+        {displayNameError ? (
+          <small className="tq-field-error" id="tq-display-name-error">
+            {displayNameError}
+          </small>
+        ) : null}
+      </label>
 
       <div className="tq-question-list">
         {questions.map((question) => (

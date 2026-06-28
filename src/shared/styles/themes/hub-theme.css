@@ -38,17 +38,17 @@
 }
 
 .theme-hub .content-card--relationship {
-  --hub-card-accent-light: #ffe6e8;
-  --hub-card-accent: #ef6672;
-  --hub-card-accent-strong: #c93442;
-  --hub-card-accent-border: #f0b7bd;
+  --hub-card-accent-light: #fff0f1;
+  --hub-card-accent: #ef5260;
+  --hub-card-accent-strong: #c72436;
+  --hub-card-accent-border: #ee9aa3;
 }
 
 .theme-hub .content-card--couple {
-  --hub-card-accent-light: #fff4c2;
-  --hub-card-accent: #f5b800;
-  --hub-card-accent-strong: #b77900;
-  --hub-card-accent-border: #eccb68;
+  --hub-card-accent-light: #fff6cf;
+  --hub-card-accent: #ffbd12;
+  --hub-card-accent-strong: #b96800;
+  --hub-card-accent-border: #f0bc45;
 }
 
 .theme-hub .content-card--saju {

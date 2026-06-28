@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import RelationshipAnalyzer from "../features/relationship/RelationshipApp.jsx";
 import TogetherQuestionsApp from "../features/together-questions/TogetherQuestionsApp.jsx";
+import {
+  clearDraft as clearTogetherQuestionsDraft,
+  clearSavedResult as clearTogetherQuestionsResult,
+} from "../features/together-questions/services/draftStorage.js";
 import { AppShell } from "../shared/components/AppShell.jsx";
 import { TextAction } from "../shared/components/TextAction.jsx";
 import { getContentByRoute } from "../data/contentCatalog.js";
@@ -17,6 +21,11 @@ export default function RootApp() {
   }, []);
 
   function navigate(nextRoute) {
+    if (nextRoute === ROUTES.TOGETHER_QUESTIONS) {
+      clearTogetherQuestionsDraft();
+      clearTogetherQuestionsResult();
+    }
+
     window.location.hash = nextRoute === ROUTES.HOME ? "/" : `/${nextRoute}`;
   }
 

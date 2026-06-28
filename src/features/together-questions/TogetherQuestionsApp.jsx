@@ -24,6 +24,8 @@ const INITIAL_FORM = {
   questionPackId: QUESTION_PACK_IDS.BASIC,
 };
 
+const DISPLAY_NAME_REQUIRED_MESSAGE = "문답에 표시할 이름을 입력해 주세요.";
+
 function getErrorMessage(error) {
   return error?.message || "잠시 문제가 생겼어요. 다시 시도해 주세요.";
 }
@@ -35,15 +37,17 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
   const [completedAt, setCompletedAt] = useState("");
   const [notice, setNotice] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [displayNameError, setDisplayNameError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const reportRef = useRef(null);
+  const displayNameInputRef = useRef(null);
 
   const selectedRelationship = getRelationshipType(startForm.relationshipType);
   const questions = useMemo(
     () => getQuestions(startForm.relationshipType, startForm.questionPackId),
     [startForm.relationshipType, startForm.questionPackId]
   );
-  const canStart = Boolean(startForm.relationshipType && startForm.displayName.trim());
+  const canStart = Boolean(startForm.relationshipType);
 
   useEffect(() => {
     const savedResult = loadSavedResult();
@@ -78,6 +82,11 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
     setStartForm((current) => ({ ...current, ...nextValues }));
   }
 
+  function updateDisplayName(value) {
+    setDisplayNameError("");
+    updateStartForm({ displayName: value });
+  }
+
   function updateAnswer(questionId, value) {
     setAnswers((current) => ({ ...current, [questionId]: value }));
   }
@@ -86,7 +95,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
     event.preventDefault();
 
     if (!canStart) {
-      setErrorMessage("문답 관계를 고르고, 내 이름 또는 닉네임을 입력해 주세요.");
+      setErrorMessage("문답 관계를 골라 주세요.");
       return;
     }
 
@@ -99,13 +108,27 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
   }
 
   function completeQuestionBook() {
+    const trimmedDisplayName = startForm.displayName.trim();
+
+    if (!trimmedDisplayName) {
+      setDisplayNameError(DISPLAY_NAME_REQUIRED_MESSAGE);
+      setErrorMessage(DISPLAY_NAME_REQUIRED_MESSAGE);
+      displayNameInputRef.current?.focus();
+      return;
+    }
+
     const nextCompletedAt = new Date().toISOString();
+    const resultForm = {
+      ...startForm,
+      displayName: trimmedDisplayName,
+    };
     const result = {
-      form: startForm,
+      form: resultForm,
       answers,
       completedAt: nextCompletedAt,
     };
 
+    setStartForm(resultForm);
     setCompletedAt(nextCompletedAt);
     saveResult(result);
     clearDraft();
@@ -167,7 +190,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
     }
   }
 
-  function resetFlow() {
+  function resetTogetherQuestions() {
     clearDraft();
     clearSavedResult();
     setStartForm(INITIAL_FORM);
@@ -175,8 +198,18 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
     setCompletedAt("");
     setNotice("");
     setErrorMessage("");
+    setDisplayNameError("");
     setStep(SESSION_STEPS.START);
+  }
+
+  function resetFlow() {
+    resetTogetherQuestions();
     window.location.hash = "/together-questions";
+  }
+
+  function handleNavigateHome() {
+    resetTogetherQuestions();
+    onNavigateHome();
   }
 
   return (
@@ -188,7 +221,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
             <h1>함께하는 문답</h1>
             <p>내 마음을 차례대로 적고, 완성된 나의 문답집을 저장하거나 공유해요.</p>
           </div>
-          <TextAction className="tq-home-button" onClick={onNavigateHome}>
+          <TextAction className="tq-home-button" onClick={handleNavigateHome}>
             ← 다른 콘텐츠 보기
           </TextAction>
         </header>
@@ -209,11 +242,15 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
         {step === SESSION_STEPS.ANSWER ? (
           <AnswerPanel
             answers={answers}
+            displayName={startForm.displayName}
+            displayNameError={displayNameError}
+            displayNameInputRef={displayNameInputRef}
             isSaving={isSaving}
             questions={questions}
             relationship={selectedRelationship}
             onAnswerChange={updateAnswer}
             onComplete={completeQuestionBook}
+            onDisplayNameChange={updateDisplayName}
             onReset={resetFlow}
           />
         ) : null}
