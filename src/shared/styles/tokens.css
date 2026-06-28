@@ -95,6 +95,21 @@
   --letter-label: var(--letter-spacing-label);
 }
 
+/* Feature theme aliases keep existing variable names while sharing one palette. */
+:root .theme-together-questions {
+  --tq-accent: var(--content-yellow);
+  --tq-accent-strong: var(--content-yellow-strong);
+  --tq-accent-soft: var(--content-yellow-light);
+  --tq-accent-border: var(--content-yellow);
+  --tq-accent-hover: var(--content-yellow-hover);
+  --tq-focus-ring: rgba(255, 211, 79, 0.3);
+  --tq-text-on-accent: var(--content-ink);
+  --tq-bg: var(--content-cream);
+  --tq-card-soft: #fffdf5;
+  --tq-text: var(--content-ink);
+  --tq-text-soft: var(--content-ink-soft);
+}
+
 @media (max-width: 720px) {
   :root {
     --font-size-label: 0.6rem;
