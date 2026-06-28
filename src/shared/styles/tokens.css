@@ -27,6 +27,33 @@
   --color-disabled-bg: #f4efe2;
   --color-disabled-text: #7d725e;
 
+  /* Shared content palette */
+  --content-coral-light: #ffe1d5;
+  --content-coral: #ff7048;
+  --content-coral-hover: #eb5c35;
+  --content-coral-strong: #d84b29;
+
+  --content-yellow-light: #fff0b8;
+  --content-yellow: #ffd34f;
+  --content-yellow-hover: #edb92d;
+  --content-yellow-strong: #925700;
+
+  --content-green-light: #dff2d8;
+  --content-green: #67be78;
+  --content-green-hover: #4eab63;
+  --content-green-strong: #2f8547;
+
+  --content-blue-light: #d9ebfa;
+  --content-blue: #58a6dc;
+  --content-blue-hover: #3e92cb;
+  --content-blue-strong: #286b9d;
+
+  --content-cream: #fff9eb;
+  --content-butter: #ffe29a;
+  --content-ink: #2b2925;
+  --content-ink-soft: #686158;
+  --content-line: #3b3934;
+
   --space-2xs: 4px;
   --space-xs: 6px;
   --space-sm: 10px;
@@ -48,8 +75,8 @@
   --radius-xl: 16px;
   --radius-pill: 999px;
 
-  --shadow-card-soft: 0 10px 28px rgba(27, 31, 35, 0.055);
-  --shadow-card: 0 16px 38px rgba(27, 31, 35, 0.09);
+  --shadow-card-soft: 0 10px 28px rgba(43, 41, 37, 0.055);
+  --shadow-card: 0 16px 38px rgba(43, 41, 37, 0.09);
 
   --font-label: var(--font-size-label);
   --font-caption: var(--font-size-caption);
