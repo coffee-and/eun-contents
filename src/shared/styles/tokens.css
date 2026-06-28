@@ -2,26 +2,26 @@
   font-family: var(--font-sans);
 
   /* Typography */
-  --font-serif: "Cormorant Garamond", "Noto Serif KR", Georgia, "Times New Roman", serif;
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-sans: "Pretendard", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-size-label: 0.68rem;
+  --font-size-label: 0.7rem;
   --font-size-caption: 0.78rem;
-  --font-size-body-small: 0.84rem;
-  --font-size-body: 0.95rem;
-  --font-size-body-large: 1.08rem;
-  --font-size-card-title: clamp(1.38rem, 2.2vw, 2.05rem);
-  --font-size-section-title: clamp(1.9rem, 4.2vw, 3.6rem);
-  --font-size-page-title: clamp(3.4rem, 8vw, 7.4rem);
-  --font-size-question-title: clamp(1.9rem, 4.8vw, 3.8rem);
-  --font-size-result-title: clamp(2.1rem, 4.8vw, 4.2rem);
-  --font-size-value: 1.04rem;
-  --font-size-value-large: 1.42rem;
+  --font-size-body-small: 0.875rem;
+  --font-size-body: 1rem;
+  --font-size-body-large: 1.0625rem;
+  --font-size-card-title: clamp(1.125rem, 1.6vw, 1.4375rem);
+  --font-size-section-title: clamp(1.625rem, 2.6vw, 2.125rem);
+  --font-size-page-title: clamp(2.5rem, 4.2vw, 3.25rem);
+  --font-size-question-title: clamp(1.75rem, 3.4vw, 2.375rem);
+  --font-size-result-title: clamp(1.875rem, 3.5vw, 2.5rem);
+  --font-size-value: 1rem;
+  --font-size-value-large: 1.375rem;
 
-  --line-height-tight: 1.05;
-  --line-height-title: 1.12;
-  --line-height-body: 1.78;
-  --line-height-list: 1.68;
-  --letter-spacing-label: 0.18em;
+  --line-height-tight: 1.08;
+  --line-height-title: 1.18;
+  --line-height-body: 1.7;
+  --line-height-list: 1.62;
+  --letter-spacing-label: 0.14em;
 
   /* Quiet luxury palette */
   --color-white: #ffffff;
@@ -56,34 +56,34 @@
   --editorial-line: var(--editorial-border);
 
   /* Spacing scale */
-  --space-2xs: 8px;
-  --space-xs: 16px;
-  --space-sm: 24px;
-  --space-md: 32px;
-  --space-lg: 48px;
-  --space-xl: 64px;
-  --space-2xl: 96px;
+  --space-2xs: 6px;
+  --space-xs: 12px;
+  --space-sm: 18px;
+  --space-md: 24px;
+  --space-lg: 36px;
+  --space-xl: 48px;
+  --space-2xl: 72px;
 
-  --card-padding: clamp(28px, 4vw, 48px);
-  --card-padding-sm: clamp(20px, 3vw, 32px);
-  --card-padding-lg: clamp(40px, 6vw, 72px);
-  --card-gap: clamp(24px, 4vw, 48px);
-  --section-gap: clamp(32px, 5vw, 64px);
-  --section-gap-lg: clamp(48px, 7vw, 96px);
+  --card-padding: clamp(24px, 3vw, 36px);
+  --card-padding-sm: clamp(20px, 2.4vw, 28px);
+  --card-padding-lg: clamp(28px, 4vw, 36px);
+  --card-gap: clamp(18px, 2.8vw, 32px);
+  --section-gap: clamp(24px, 3.4vw, 44px);
+  --section-gap-lg: clamp(36px, 4.8vw, 60px);
 
   /* Shape and elevation */
-  --radius-sm: 10px;
-  --radius-md: 14px;
-  --radius-lg: 18px;
-  --radius-xl: 24px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 18px;
   --radius-pill: 999px;
-  --button-radius: 999px;
-  --control-radius: 18px;
-  --card-radius: 24px;
+  --button-radius: 18px;
+  --control-radius: 16px;
+  --card-radius: 18px;
 
-  --shadow-card-soft: 0 16px 48px rgba(64, 52, 38, 0.055);
-  --shadow-card: 0 24px 72px rgba(64, 52, 38, 0.08);
-  --shadow-float: 0 34px 90px rgba(64, 52, 38, 0.12);
+  --shadow-card-soft: 0 8px 24px rgba(64, 52, 38, 0.035);
+  --shadow-card: 0 12px 32px rgba(64, 52, 38, 0.05);
+  --shadow-float: 0 16px 40px rgba(64, 52, 38, 0.07);
 
   --font-label: var(--font-size-label);
   --font-caption: var(--font-size-caption);
@@ -113,14 +113,18 @@
 
 @media (max-width: 720px) {
   :root {
-    --font-size-label: 0.62rem;
-    --font-size-caption: 0.72rem;
-    --font-size-body-small: 0.78rem;
-    --font-size-body: 0.88rem;
-    --font-size-body-large: 0.98rem;
-    --font-size-card-title: 1.22rem;
-    --font-size-section-title: clamp(1.56rem, 8vw, 2.5rem);
-    --font-size-page-title: clamp(3.15rem, 17vw, 5rem);
-    --font-size-question-title: clamp(1.54rem, 8vw, 2.55rem);
+    --font-size-label: 0.6875rem;
+    --font-size-caption: 0.75rem;
+    --font-size-body-small: 0.875rem;
+    --font-size-body: 0.9375rem;
+    --font-size-body-large: 1rem;
+    --font-size-card-title: clamp(1.125rem, 4.8vw, 1.3125rem);
+    --font-size-section-title: clamp(1.5rem, 6.4vw, 1.875rem);
+    --font-size-page-title: clamp(1.875rem, 8.8vw, 2.25rem);
+    --font-size-question-title: clamp(1.5rem, 7.2vw, 2rem);
+    --font-size-result-title: clamp(1.625rem, 7.6vw, 2.125rem);
+    --card-padding: 20px;
+    --card-padding-sm: 18px;
+    --card-padding-lg: 22px;
   }
 }
