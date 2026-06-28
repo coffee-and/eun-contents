@@ -42,9 +42,9 @@
   --hub-card-accent-light: var(--content-coral-hover);
   --hub-card-accent: var(--content-coral);
   --hub-card-accent-hover: var(--content-coral-hover);
-  --hub-card-accent-strong: var(--color-white);
+  --hub-card-accent-strong: #ffffff;
   --hub-card-accent-border: var(--content-coral);
-  --hub-card-button-text: var(--color-white);
+  --hub-card-button-text: #ffffff;
   --color-white: var(--content-coral);
 }
 
@@ -64,9 +64,9 @@
   --hub-card-accent-light: var(--content-green-hover);
   --hub-card-accent: var(--content-green);
   --hub-card-accent-hover: var(--content-green-hover);
-  --hub-card-accent-strong: var(--color-white);
+  --hub-card-accent-strong: #ffffff;
   --hub-card-accent-border: var(--content-green);
-  --hub-card-button-text: var(--color-white);
+  --hub-card-button-text: #ffffff;
   --color-white: var(--content-green);
 }
 
@@ -75,8 +75,8 @@
   --hub-card-accent-light: var(--content-blue-hover);
   --hub-card-accent: var(--content-blue);
   --hub-card-accent-hover: var(--content-blue-hover);
-  --hub-card-accent-strong: var(--color-white);
+  --hub-card-accent-strong: #ffffff;
   --hub-card-accent-border: var(--content-blue);
-  --hub-card-button-text: var(--color-white);
+  --hub-card-button-text: #ffffff;
   --color-white: var(--content-blue);
 }
