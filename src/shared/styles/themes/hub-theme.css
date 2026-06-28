@@ -38,37 +38,45 @@
 }
 
 .theme-hub .content-card--relationship {
-  --hub-card-accent-light: var(--content-coral-light);
+  --hub-card-background: var(--content-coral-light);
+  --hub-card-accent-light: var(--content-coral-hover);
   --hub-card-accent: var(--content-coral);
   --hub-card-accent-hover: var(--content-coral-hover);
-  --hub-card-accent-strong: var(--content-coral-strong);
+  --hub-card-accent-strong: var(--color-white);
   --hub-card-accent-border: var(--content-coral);
   --hub-card-button-text: var(--color-white);
+  --color-white: var(--content-coral);
 }
 
 .theme-hub .content-card--couple {
-  --hub-card-accent-light: var(--content-yellow-light);
+  --hub-card-background: var(--content-yellow-light);
+  --hub-card-accent-light: var(--content-yellow-hover);
   --hub-card-accent: var(--content-yellow);
   --hub-card-accent-hover: var(--content-yellow-hover);
-  --hub-card-accent-strong: var(--content-yellow-strong);
+  --hub-card-accent-strong: var(--content-ink);
   --hub-card-accent-border: var(--content-yellow);
   --hub-card-button-text: var(--content-ink);
+  --color-white: var(--content-yellow);
 }
 
 .theme-hub .content-card--saju {
-  --hub-card-accent-light: var(--content-green-light);
+  --hub-card-background: var(--content-green-light);
+  --hub-card-accent-light: var(--content-green-hover);
   --hub-card-accent: var(--content-green);
   --hub-card-accent-hover: var(--content-green-hover);
-  --hub-card-accent-strong: var(--content-green-strong);
+  --hub-card-accent-strong: var(--color-white);
   --hub-card-accent-border: var(--content-green);
   --hub-card-button-text: var(--color-white);
+  --color-white: var(--content-green);
 }
 
 .theme-hub .content-card--game {
-  --hub-card-accent-light: var(--content-blue-light);
+  --hub-card-background: var(--content-blue-light);
+  --hub-card-accent-light: var(--content-blue-hover);
   --hub-card-accent: var(--content-blue);
   --hub-card-accent-hover: var(--content-blue-hover);
-  --hub-card-accent-strong: var(--content-blue-strong);
+  --hub-card-accent-strong: var(--color-white);
   --hub-card-accent-border: var(--content-blue);
   --hub-card-button-text: var(--color-white);
+  --color-white: var(--content-blue);
 }
