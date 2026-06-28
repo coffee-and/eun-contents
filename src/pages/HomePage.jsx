@@ -22,24 +22,30 @@ export function HomePage({ onNavigate }) {
                 isActive ? " content-card--active" : ""
               }`}
             >
-              <img
-                className="content-card__icon"
-                src={content.iconSrc}
-                alt={content.iconAlt}
-              />
+              <div className="content-card__media">
+                <span className="content-card__category">{content.category}</span>
+                <img
+                  className="content-card__icon"
+                  src={content.iconSrc}
+                  alt={content.iconAlt}
+                />
+              </div>
 
-              <p className="content-card__description">{content.description}</p>
+              <div className="content-card__body">
+                <p className="content-card__subtitle">{content.subtitle}</p>
+                <p className="content-card__description">{content.description}</p>
 
-              <button
-                type="button"
-                className={`content-card__button${
-                  isActive ? " content-card__button--active" : ""
-                }`}
-                onClick={() => onNavigate(content.route)}
-                disabled={!isActive}
-              >
-                {content.title}
-              </button>
+                <button
+                  type="button"
+                  className={`content-card__button${
+                    isActive ? " content-card__button--active" : ""
+                  }`}
+                  onClick={() => onNavigate(content.route)}
+                  disabled={!isActive}
+                >
+                  {content.title}
+                </button>
+              </div>
             </article>
           );
         })}

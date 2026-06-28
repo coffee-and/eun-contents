@@ -15,6 +15,7 @@
 .app-shell {
   max-width: 960px;
   margin: 0 auto;
+  --result-card-gap: var(--card-gap);
 }
 
 /* ========================================
@@ -340,32 +341,51 @@
 }
 
 .question-card__previous:not(:disabled) {
-  background: var(--card-bg);
-  color: var(--text-soft);
-  border-color: var(--border-strong);
+  background: var(--secondary-action-bg);
+  color: var(--secondary-action-text);
+  border-color: var(--secondary-action-border);
 }
 
 .question-card__previous:not(:disabled):hover {
-  background: var(--primary-soft);
-  color: var(--text);
-  border-color: var(--primary);
+  background: var(--secondary-action-bg-hover);
+  color: var(--secondary-action-text-hover);
+  border-color: var(--secondary-action-text);
 }
 
 .question-card__previous:disabled {
-  background: var(--surface-muted);
-  color: var(--muted);
+  background: var(--disabled-bg);
+  color: var(--disabled-text);
   border-color: var(--border);
-  opacity: 0.58;
+  opacity: 1;
 }
 
+/* ========================================
+   Question Actions
+======================================== */
 .question-card__actions {
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
   gap: var(--space-sm);
 }
 
 .question-card__actions .button {
   width: 100%;
+  min-height: 44px;
+  padding: 11px 14px;
+  font-size: var(--font-body);
+}
+
+.question-card__previous {
+  background: var(--secondary-action-bg);
+  color: var(--secondary-action-text);
+  border-color: var(--secondary-action-border);
+}
+
+.question-card__next {
+  background: var(--primary);
+  color: var(--inverse-text);
+  border-color: var(--primary);
 }
 
 .question-card__next:not(:disabled) {
@@ -389,15 +409,24 @@
 ======================================== */
 .capture-export {
   display: grid;
-  gap: var(--card-gap);
-  margin-bottom: var(--card-gap);
+  gap: var(--result-card-gap);
+  margin-bottom: var(--result-card-gap);
   padding: 0;
   background: transparent;
   border-radius: 0;
 }
 
+/* ========================================
+   Result Card Spacing
+======================================== */
+.saved-result-notice,
+.capture-export ~ .card {
+  margin-bottom: var(--result-card-gap);
+}
+
 .capture-export > .card,
-.capture-export > .capture-panel {
+.capture-export > .capture-panel,
+.capture-export > div > .premium-report {
   margin: 0;
 }
 
@@ -610,7 +639,7 @@
    Result Sections
 ======================================== */
 .page--result {
-  background: #f58baa;
+  background: var(--relationship-red-100);
 }
 
 .result-overview-card__head {
@@ -1055,8 +1084,14 @@
   }
 
   .question-card__actions {
-    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
+  }
+
+  .question-card__actions .button {
+    min-height: 40px;
+    padding: 9px 10px;
+    font-size: 0.8rem;
   }
 
   .button-row {
@@ -1178,10 +1213,6 @@
   .card,
   .capture-panel {
     padding: 18px;
-  }
-
-  .question-card__actions {
-    grid-template-columns: 1fr;
   }
 
   .hero__title {

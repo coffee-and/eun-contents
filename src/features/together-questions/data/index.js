@@ -44,13 +44,13 @@ export const RELATIONSHIP_TYPES = [
   {
     id: "family-parents",
     title: "부모님",
-    description: "내가 부모님께 전하고 싶은 감사와 마음을 적어요.",
+    description: "나와 내 자녀의 기억, 전하고 싶은 마음을 적어요.",
     questionSet: familyParentsQuestions,
   },
   {
     id: "family-children",
     title: "자녀",
-    description: "내가 우리 아이에게 바라는 것과 전하고 싶은 마음을 적어요.",
+    description: "나와 내 부모님의 기억, 전하고 싶은 마음을 적어요.",
     questionSet: familyChildrenQuestions,
   },
   {
@@ -78,7 +78,8 @@ function toQuestion([id, category, prompt], index) {
 }
 
 export function getRelationshipType(id) {
-  return RELATIONSHIP_TYPES.find((item) => item.id === id) ?? null;
+  const normalizedId = normalizeRelationshipTypeId(id);
+  return RELATIONSHIP_TYPES.find((item) => item.id === normalizedId) ?? null;
 }
 
 export function getQuestionPack(id) {
@@ -90,4 +91,15 @@ export function getQuestions(relationshipType, questionPackId = QUESTION_PACK_ID
   const pack = getQuestionPack(questionPackId);
   const rawQuestions = relationship.questionSet[pack.id] ?? relationship.questionSet.basic;
   return rawQuestions.map(toQuestion);
+}
+
+export function normalizeRelationshipTypeId(id) {
+  const aliases = {
+    parents: "family-parents",
+    familyParents: "family-parents",
+    children: "family-children",
+    familyChildren: "family-children",
+  };
+
+  return aliases[id] ?? id;
 }

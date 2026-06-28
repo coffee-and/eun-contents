@@ -28,31 +28,32 @@
   --color-disabled-text: #7d725e;
 
   /* Shared content palette */
-  --content-coral-light: #ffe1d5;
+  --content-coral-light: #ffe2d5;
   --content-coral: #ff7048;
-  --content-coral-hover: #eb5c35;
-  --content-coral-strong: #d84b29;
+  --content-coral-hover: #ec5a34;
+  --content-coral-strong: #b83e22;
 
-  --content-yellow-light: #fff0b8;
+  --content-yellow-light: #fff1b8;
   --content-yellow: #ffd34f;
-  --content-yellow-hover: #edb92d;
-  --content-yellow-strong: #b86a00;
+  --content-yellow-hover: #efb92e;
+  --content-yellow-strong: #9a5800;
 
   --content-green-light: #dff2d8;
   --content-green: #67be78;
-  --content-green-hover: #4eab63;
-  --content-green-strong: #2f8547;
+  --content-green-hover: #4da963;
+  --content-green-strong: #286f3b;
 
   --content-blue-light: #d9ebfa;
   --content-blue: #58a6dc;
-  --content-blue-hover: #3e92cb;
-  --content-blue-strong: #286b9d;
+  --content-blue-hover: #3e91c9;
+  --content-blue-strong: #245f8d;
 
-  --content-cream: #fff9eb;
-  --content-butter: #ffe29a;
-  --content-ink: #2b2925;
-  --content-ink-soft: #686158;
-  --content-line: #3b3934;
+  --content-cream: #fff7df;
+  --content-butter: #ffdc83;
+  --content-ink: #242321;
+  --content-ink-soft: #5f5b55;
+  --content-ink-muted: #817a70;
+  --content-line: #33312e;
 
   --space-2xs: 4px;
   --space-xs: 6px;
