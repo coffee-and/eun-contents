@@ -10,8 +10,8 @@ export function AnswerPanel({ answers, isSaving, questions, relationship, onAnsw
           <h2>{relationship?.title ?? "나의"} 문답지</h2>
           <p>한 번에 모두 채우지 않아도 괜찮아요. 쓰는 동안 이 기기에 임시 저장됩니다.</p>
         </div>
-        <button type="button" className="tq-button tq-button--ghost" onClick={onReset}>
-          다시 선택하기
+        <button type="button" className="text-action tq-back-link" onClick={onReset}>
+          ← 다시 선택하기
         </button>
       </div>
 

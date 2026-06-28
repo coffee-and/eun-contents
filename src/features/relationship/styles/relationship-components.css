@@ -76,22 +76,11 @@
 
 .hero__home-button {
   flex: 0 0 auto;
-  min-height: 32px;
-  padding: 7px 11px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.76);
-  color: var(--text-soft);
   font-size: var(--font-caption);
-  font-weight: 700;
-  line-height: 1;
-  cursor: pointer;
 }
 
 .hero__home-button:hover {
-  border-color: var(--border-strong);
-  background: var(--card-bg);
-  color: var(--text);
+  color: var(--link-color-hover);
 }
 
 /* ========================================
@@ -188,22 +177,22 @@
 }
 
 .button {
-  padding: 13px 18px;
+  padding: 12px 17px;
   border: 1px solid transparent;
-  border-radius: var(--radius-md);
-  background: var(--accent-soft);
+  border-radius: var(--radius-lg);
+  background: var(--card-bg);
   color: var(--text);
   font-size: var(--font-body);
   font-weight: 700;
   cursor: pointer;
   transition:
-    transform 0.16s ease,
     background 0.16s ease,
-    border-color 0.16s ease;
+    border-color 0.16s ease,
+    color 0.16s ease;
 }
 
 .button:hover {
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .button:disabled {
@@ -220,31 +209,31 @@
 }
 
 .button--primary {
-  background: var(--card-bg);
-  color: var(--text);
-  border-color: var(--border-strong);
+  background: var(--primary);
+  color: var(--inverse-text);
+  border-color: var(--primary);
 }
 
 .button--primary:hover:not(:disabled),
 .button:active {
-  background: var(--primary-soft);
-  border-color: var(--primary);
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
 }
 
 .button--secondary {
-  background: var(--surface-muted);
-  color: var(--text-soft);
+  background: var(--card-bg);
+  color: var(--primary);
   border-color: var(--border);
 }
 
 .button--secondary:hover:not(:disabled) {
   background: var(--primary-soft);
-  border-color: var(--border-strong);
+  border-color: var(--primary);
 }
 
 .button--ghost {
   background: var(--card-bg);
-  color: var(--text);
+  color: var(--primary);
   border-color: var(--border);
 }
 
@@ -944,12 +933,13 @@
 
 .result-card--actions .button {
   width: 100%;
-  background: var(--primary);
-  color: var(--card-bg);
 }
 
-.result-card--actions .button:hover {
-  background: var(--primary-hover);
+.result-card--actions .text-action {
+  align-self: center;
+  justify-self: center;
+  color: var(--link-color);
+  font-size: var(--font-body);
 }
 
 .share-modal {
@@ -995,13 +985,7 @@
 
 .share-modal__close {
   flex: 0 0 auto;
-  min-height: 36px;
-  padding: 0 var(--space-md);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-pill);
-  background: var(--surface-muted);
-  color: var(--text-soft);
-  cursor: pointer;
+  color: var(--link-color);
 }
 
 .share-modal__actions {
@@ -1057,8 +1041,6 @@
   .hero__home-button {
     order: -1;
     align-self: flex-end;
-    min-height: 30px;
-    padding: 6px 10px;
   }
 
   .progress {

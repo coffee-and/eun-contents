@@ -1,22 +1,24 @@
 ﻿.theme-together-questions {
-  --tq-accent: #f5b800;
-  --tq-accent-strong: #b77900;
-  --tq-accent-soft: #fff4c2;
-  --tq-accent-border: #eccb68;
-  --tq-accent-hover: #d99a00;
-  --tq-focus-ring: rgba(245, 184, 0, 0.26);
-  --tq-text-on-accent: #2d2100;
-  --tq-bg: #fffaf0;
+  --tq-accent: #e7ad10;
+  --tq-accent-strong: #996a00;
+  --tq-accent-soft: #fff7d7;
+  --tq-accent-border: #ead391;
+  --tq-accent-hover: #c98e00;
+  --tq-focus-ring: rgba(231, 173, 16, 0.22);
+  --tq-text-on-accent: #2b2105;
+  --tq-bg: #fffaf1;
   --tq-card: var(--color-white);
-  --tq-card-soft: #fffdf7;
-  --tq-text: #29251d;
-  --tq-text-soft: #695f4d;
-  --tq-border: #eadfbd;
+  --tq-card-soft: #fffdf8;
+  --tq-text: #272520;
+  --tq-text-soft: #6f6a5f;
+  --tq-border: #eadfca;
   --tq-danger: var(--color-danger);
   --tq-danger-soft: var(--color-danger-soft);
-  --tq-shadow: 0 12px 30px rgba(79, 58, 12, 0.08);
+  --tq-shadow: 0 1px 2px rgba(79, 58, 12, 0.04);
+  --link-color: var(--tq-accent-strong);
+  --link-color-hover: var(--tq-accent-hover);
   min-height: 100vh;
-  background: linear-gradient(180deg, var(--color-white) 0%, var(--tq-bg) 100%);
+  background: var(--tq-bg);
   color: var(--tq-text);
 }
 
@@ -71,15 +73,7 @@
 
 .tq-home-button {
   flex: 0 0 auto;
-  min-height: 34px;
-  padding: 7px 11px;
-  border: 1px solid var(--tq-border);
-  border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.82);
-  color: var(--tq-text-soft);
   font-size: var(--font-caption);
-  font-weight: 800;
-  cursor: pointer;
 }
 
 .tq-panel,
@@ -148,6 +142,9 @@
   color: var(--tq-text);
   text-align: left;
   cursor: pointer;
+  transition:
+    background 0.16s ease,
+    border-color 0.16s ease;
 }
 
 .tq-select-card:hover,
@@ -175,11 +172,15 @@
 
 .tq-button {
   min-height: 46px;
-  padding: 12px 15px;
+  padding: 11px 16px;
   border: 1px solid transparent;
-  border-radius: var(--radius-md);
-  font-weight: 800;
+  border-radius: var(--radius-lg);
+  font-weight: 700;
   cursor: pointer;
+  transition:
+    background 0.16s ease,
+    border-color 0.16s ease,
+    color 0.16s ease;
 }
 
 .tq-button--primary {
@@ -196,7 +197,7 @@
 .tq-button--secondary,
 .tq-button--ghost {
   border-color: var(--tq-accent-border);
-  background: var(--tq-card);
+  background: var(--color-white);
   color: var(--tq-accent-strong);
 }
 
@@ -240,11 +241,14 @@
 }
 
 .tq-sheet-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 18px;
+  display: grid;
+  gap: 12px;
   margin-bottom: 18px;
+}
+
+.tq-back-link {
+  justify-self: start;
+  order: -1;
 }
 
 .tq-sheet-head h2 {

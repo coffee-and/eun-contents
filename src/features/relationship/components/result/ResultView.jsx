@@ -455,18 +455,18 @@ export function ResultView({
 
           <button
             type="button"
-            className="button button--secondary"
+            className="text-action"
             onClick={onRestart}
           >
-            다시 테스트하기
+            처음으로
           </button>
 
           <button
             type="button"
-            className="button button--secondary"
+            className="text-action"
             onClick={onChooseAgain}
           >
-            다시 선택하기
+            ← 다시 선택하기
           </button>
         </div>
       </section>
@@ -492,7 +492,7 @@ export function ResultView({
 
               <button
                 type="button"
-                className="share-modal__close"
+                className="text-action share-modal__close"
                 onClick={() => setIsShareModalOpen(false)}
                 aria-label="공유 창 닫기"
               >
@@ -521,7 +521,7 @@ export function ResultView({
 
               <button
                 type="button"
-                className="button button--secondary"
+                className="text-action"
                 onClick={() => setIsShareModalOpen(false)}
               >
                 닫기

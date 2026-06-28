@@ -10,18 +10,18 @@
   --relationship-red-800: #7f1d28;
   --relationship-red-900: #4f1720;
 
-  --bg: var(--relationship-red-100);
+  --bg: #fff1f2;
   --bg-soft: var(--relationship-red-50);
   --card-bg: var(--color-white);
   --card-bg-soft: #fffafa;
   --surface-muted: #f8edef;
   --surface-line: #ead0d4;
-  --text: #2d2022;
+  --text: #2a2526;
   --inverse-text: var(--color-white);
-  --text-soft: #6d5559;
-  --muted: #97767c;
-  --border: #e4c7cc;
-  --border-strong: #cb9da5;
+  --text-soft: #6e6265;
+  --muted: #91777d;
+  --border: #ead1d5;
+  --border-strong: #d8aab2;
   --primary: var(--relationship-red-600);
   --primary-hover: var(--relationship-red-700);
   --primary-strong: var(--relationship-red-900);
@@ -37,20 +37,11 @@
   --accent-soft: var(--relationship-red-50);
   --premium-bg: var(--relationship-red-100);
   --premium-text: var(--relationship-red-700);
-  --shadow: 0 2px 8px rgba(117, 29, 42, 0.06);
-  --shadow-soft: 0 1px 3px rgba(117, 29, 42, 0.04);
+  --shadow: 0 1px 2px rgba(117, 29, 42, 0.04);
+  --shadow-soft: 0 1px 2px rgba(117, 29, 42, 0.03);
   --shadow-flat: none;
-  --gradient-main: linear-gradient(
-    90deg,
-    var(--relationship-red-200) 0%,
-    var(--relationship-red-400) 38%,
-    var(--relationship-red-600) 70%,
-    var(--relationship-red-800) 100%
-  );
-  --gradient-page: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    var(--relationship-red-50) 48%,
-    #f8edef 100%
-  );
+  --gradient-main: var(--relationship-red-600);
+  --gradient-page: var(--bg);
+  --link-color: var(--relationship-red-700);
+  --link-color-hover: var(--relationship-red-600);
 }

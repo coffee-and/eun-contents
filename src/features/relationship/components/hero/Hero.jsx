@@ -15,10 +15,10 @@ export function Hero({ eyebrow, title, subtitle, onNavigateHome }) {
       {onNavigateHome ? (
         <button
           type="button"
-          className="hero__home-button"
+          className="text-action hero__home-button"
           onClick={onNavigateHome}
         >
-          콘텐츠 홈으로
+          ← 다른 콘텐츠 보기
         </button>
       ) : null}
     </header>

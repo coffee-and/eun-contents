@@ -187,8 +187,8 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
             <h1>함께하는 문답</h1>
             <p>내 마음을 차례대로 적고, 완성된 나의 문답집을 저장하거나 공유해요.</p>
           </div>
-          <button type="button" className="tq-home-button" onClick={onNavigateHome}>
-            콘텐츠 홈
+          <button type="button" className="text-action tq-home-button" onClick={onNavigateHome}>
+            ← 다른 콘텐츠 보기
           </button>
         </header>
 

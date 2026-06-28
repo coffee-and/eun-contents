@@ -40,10 +40,10 @@ export default function RootApp() {
           <div className="coming-soon">
             <button
               type="button"
-              className="hub-back-button"
+              className="text-action hub-back-button"
               onClick={() => navigate(ROUTES.HOME)}
             >
-              콘텐츠 홈
+              ← 다른 콘텐츠 보기
             </button>
             <section className="coming-soon__card">
               <img
