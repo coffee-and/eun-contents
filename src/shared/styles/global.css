@@ -48,21 +48,18 @@ select,
 [role="button"],
 [tabindex] {
   -webkit-tap-highlight-color: transparent;
-  outline: none;
   -webkit-touch-callout: none;
 }
 
-button:focus,
 button:focus-visible,
-button:active,
-a:focus,
 a:focus-visible,
-a:active,
-[role="button"]:focus,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
 [role="button"]:focus-visible,
-[role="button"]:active {
-  outline: none;
-  box-shadow: none;
+[tabindex]:focus-visible {
+  outline: 2px solid var(--button-focus, currentColor);
+  outline-offset: 3px;
 }
 
 .visually-hidden {
@@ -202,6 +199,83 @@ a:active,
   border-color: var(--button-ghost-hover-border, var(--button-ghost-border, transparent));
   background: var(--button-ghost-hover-bg, var(--button-ghost-bg, transparent));
   color: var(--button-ghost-hover-text, var(--button-ghost-text, currentColor));
+}
+
+/* Korean display typography stays in Pretendard across all feature surfaces. */
+.hub-hero__title,
+.content-section__head span,
+.content-card__title,
+.coming-soon__card h1,
+.hero__title,
+.mode-select__title,
+.mode-card strong,
+.question-card__title,
+.capture-panel__title,
+.result-summary__title,
+.result-section__title,
+.premium-report__title,
+.tq-hero h1,
+.tq-section__head h2,
+.tq-sheet-head h2,
+.tq-complete-card h2,
+.tq-select-card strong,
+.tq-question-item__head h3 {
+  font-family: var(--font-sans) !important;
+  letter-spacing: -0.025em;
+}
+
+/* Cormorant is reserved for small English editorial accents only. */
+.content-card__category,
+.coming-soon__category,
+.hero__eyebrow,
+.mode-select__eyebrow,
+.mode-card__label,
+.tq-hero__eyebrow,
+.tq-section__head > span,
+.tq-sheet-head span,
+.tq-complete-card > span {
+  font-family: var(--font-serif);
+}
+
+/* Hard caps prevent viewport-based title inflation from legacy selectors. */
+.hub-hero__title,
+.hero__title {
+  font-size: var(--font-page-title) !important;
+  line-height: var(--line-title) !important;
+}
+
+.content-section__head span,
+.mode-select__title,
+.tq-hero h1,
+.tq-section__head h2,
+.tq-sheet-head h2,
+.tq-complete-card h2,
+.coming-soon__card h1 {
+  font-size: var(--font-section-title) !important;
+  line-height: var(--line-title) !important;
+}
+
+.question-card__title,
+.tq-question-item__head h3 {
+  font-size: var(--font-question-title) !important;
+  line-height: var(--line-title) !important;
+}
+
+.content-card__title,
+.content-card--portrait .content-card__title,
+.content-card--quiet .content-card__title,
+.mode-card strong,
+.tq-select-card strong {
+  font-size: var(--font-card-title) !important;
+  line-height: 1.28 !important;
+}
+
+.capture-panel__title,
+.result-summary__title,
+.result-section__title,
+.premium-report__title {
+  font-size: var(--font-result-title) !important;
+  line-height: var(--line-title) !important;
 }
 
 @media (max-width: 768px) {
