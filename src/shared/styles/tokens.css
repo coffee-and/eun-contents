@@ -25,35 +25,24 @@
   --color-danger-soft: #fff0f0;
   --color-danger-border: #efb3b3;
   --color-disabled-bg: #f4efe2;
+  --color-disabled-border: #d8cdbf;
   --color-disabled-text: #7d725e;
 
-  /* Shared content palette */
-  --content-coral-light: #ffe2d5;
-  --content-coral: #ff7048;
-  --content-coral-hover: #ec5a34;
-  --content-coral-strong: #b83e22;
-
-  --content-yellow-light: #fff1b8;
-  --content-yellow: #ffd34f;
-  --content-yellow-hover: #efb92e;
-  --content-yellow-strong: #9a5800;
-
-  --content-green-light: #dff2d8;
-  --content-green: #67be78;
-  --content-green-hover: #4da963;
-  --content-green-strong: #286f3b;
-
-  --content-blue-light: #d9ebfa;
-  --content-blue: #58a6dc;
-  --content-blue-hover: #3e91c9;
-  --content-blue-strong: #245f8d;
-
-  --content-cream: #fff7df;
-  --content-butter: #ffdc83;
-  --content-ink: #242321;
-  --content-ink-soft: #5f5b55;
-  --content-ink-muted: #817a70;
-  --content-line: #33312e;
+  /* Editorial palette */
+  --editorial-bg: #f6edef;
+  --editorial-surface: #fffdf9;
+  --editorial-pink: #efcbd5;
+  --editorial-pink-soft: #f8e8ed;
+  --editorial-blue: #cfe3ee;
+  --editorial-blue-soft: #eaf3f7;
+  --editorial-green: #ccdcd3;
+  --editorial-green-soft: #e8f0eb;
+  --editorial-cream: #f2dfca;
+  --editorial-cream-soft: #faf2e8;
+  --editorial-ink: #242321;
+  --editorial-text: #57534f;
+  --editorial-muted: #817b75;
+  --editorial-line: #d7d0cb;
 
   --space-2xs: 4px;
   --space-xs: 6px;
@@ -70,17 +59,21 @@
   --section-gap: 18px;
   --section-gap-lg: 26px;
 
-  --radius-sm: 8px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-pill: 999px;
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --radius-xl: 6px;
+  --radius-pill: 4px;
+  --button-radius: 2px;
+  --control-radius: 2px;
+  --card-radius: 4px;
 
-  --shadow-card-soft: 0 10px 28px rgba(43, 41, 37, 0.055);
-  --shadow-card: 0 16px 38px rgba(43, 41, 37, 0.09);
+  --shadow-card-soft: 0 1px 2px rgba(43, 41, 37, 0.035);
+  --shadow-card: 0 8px 18px rgba(43, 41, 37, 0.06);
 
   --font-label: var(--font-size-label);
   --font-caption: var(--font-size-caption);
+  --font-body-small: var(--font-size-body-small);
   --font-body: var(--font-size-body);
   --font-list: var(--font-size-body);
   --font-section-title: var(--font-size-section-title);
@@ -94,21 +87,10 @@
   --line-body: var(--line-height-body);
   --line-list: var(--line-height-list);
   --letter-label: var(--letter-spacing-label);
-}
 
-/* Feature theme aliases keep existing variable names while sharing one palette. */
-:root .theme-together-questions {
-  --tq-accent: var(--content-yellow);
-  --tq-accent-strong: var(--content-yellow-strong);
-  --tq-accent-soft: var(--content-yellow-light);
-  --tq-accent-border: var(--content-yellow);
-  --tq-accent-hover: var(--content-yellow-hover);
-  --tq-focus-ring: rgba(255, 211, 79, 0.3);
-  --tq-text-on-accent: var(--content-ink);
-  --tq-bg: var(--content-cream);
-  --tq-card-soft: #fffdf5;
-  --tq-text: var(--content-ink);
-  --tq-text-soft: var(--content-ink-soft);
+  --button-bg: var(--color-white);
+  --button-text: inherit;
+  --button-primary-hover-text: var(--color-white);
 }
 
 @media (max-width: 720px) {

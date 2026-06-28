@@ -56,9 +56,9 @@ export default function RootApp() {
             </TextAction>
             <section className="coming-soon__card">
               <img
-                className="coming-soon__icon"
-                src={content?.iconSrc ?? "/eun-icon-v3.svg"}
-                alt={content?.iconAlt ?? "콘텐츠 아이콘"}
+                className="coming-soon__image"
+                src={content?.imageSrc ?? "/eun-icon-v3.svg"}
+                alt={content?.imageAlt ?? "콘텐츠 대표 이미지"}
               />
               <span className="coming-soon__category">
                 {content?.category ?? "새 콘텐츠"}

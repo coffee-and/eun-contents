@@ -14,8 +14,8 @@ body,
 
 body {
   margin: 0;
-  color: #342720;
-  background: #f3eee7;
+  color: var(--editorial-ink);
+  background: var(--editorial-bg);
   font-size: var(--font-body);
   line-height: var(--line-body);
 }
@@ -113,7 +113,7 @@ a:active,
   padding: 11px 16px;
   appearance: none;
   border: 1px solid transparent;
-  border-radius: var(--radius-lg);
+  border-radius: var(--button-radius);
   background: var(--button-bg, var(--color-white));
   color: var(--button-text, inherit);
   font: inherit;
@@ -153,8 +153,8 @@ a:active,
 }
 
 .button--primary {
-  border-color: var(--button-primary-border, var(--button-primary-bg, currentColor));
-  background: var(--button-primary-bg, currentColor);
+  border-color: var(--button-primary-border, var(--button-primary-bg, var(--editorial-ink)));
+  background: var(--button-primary-bg, var(--editorial-ink));
   color: var(--button-primary-text, var(--color-white));
 }
 
@@ -166,9 +166,9 @@ a:active,
 }
 
 .button--secondary {
-  border-color: var(--button-secondary-border, var(--button-primary-border, currentColor));
+  border-color: var(--button-secondary-border, var(--editorial-line));
   background: var(--button-secondary-bg, var(--color-white));
-  color: var(--button-secondary-text, var(--button-primary-bg, currentColor));
+  color: var(--button-secondary-text, var(--editorial-ink));
 }
 
 .button--secondary:hover:not(:disabled),
