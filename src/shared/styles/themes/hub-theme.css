@@ -1,25 +1,25 @@
 .theme-hub {
-  --hub-page-background: #f7f8fa;
+  --hub-page-background: var(--content-cream);
   --hub-page-background-soft: var(--color-white);
   --hub-card-background: var(--color-white);
-  --hub-card-background-muted: rgba(255, 255, 255, 0.9);
-  --hub-text-primary: #222426;
-  --hub-text-secondary: #5f656b;
-  --hub-text-muted: #8b9197;
+  --hub-card-background-muted: rgba(255, 255, 255, 0.92);
+  --hub-text-primary: var(--content-ink);
+  --hub-text-secondary: var(--content-ink-soft);
+  --hub-text-muted: #8a8278;
   --hub-text-inverse: var(--color-white);
-  --hub-border-color: rgba(31, 35, 39, 0.11);
-  --hub-border-color-strong: rgba(31, 35, 39, 0.18);
+  --hub-border-color: rgba(59, 57, 52, 0.12);
+  --hub-border-color-strong: rgba(59, 57, 52, 0.22);
   --hub-content-width: 980px;
   --hub-grid-gap: 18px;
   --hub-card-radius: 24px;
-  --hub-card-padding: 26px;
+  --hub-card-padding: 24px;
   --hub-card-min-height: 300px;
   --hub-button-height: 46px;
-  --hub-shadow-card: var(--shadow-card-soft);
-  --hub-shadow-card-hover: var(--shadow-card);
-  --hub-primary-color: #2f3337;
-  --hub-primary-color-hover: #1f2225;
-  --hub-primary-color-soft: #f1f3f5;
+  --hub-shadow-card: 0 8px 22px rgba(43, 41, 37, 0.055);
+  --hub-shadow-card-hover: 0 13px 30px rgba(43, 41, 37, 0.095);
+  --hub-primary-color: var(--content-ink);
+  --hub-primary-color-hover: #171613;
+  --hub-primary-color-soft: #f4efe3;
   --bg: var(--hub-page-background);
   --card-bg: var(--hub-card-background);
   --card-bg-soft: var(--hub-card-background-muted);
@@ -34,33 +34,49 @@
   --primary-soft: var(--hub-primary-color-soft);
   --shadow: var(--hub-shadow-card-hover);
   --shadow-soft: var(--hub-shadow-card);
-  --gradient-page: linear-gradient(180deg, #ffffff 0%, #f7f8fa 100%);
+  --gradient-page: var(--hub-page-background);
 }
 
 .theme-hub .content-card--relationship {
-  --hub-card-accent-light: #fff0f1;
-  --hub-card-accent: #ef5260;
-  --hub-card-accent-strong: #c72436;
-  --hub-card-accent-border: #ee9aa3;
+  --hub-card-background: var(--content-coral-light);
+  --hub-card-accent-light: var(--content-coral-hover);
+  --hub-card-accent: var(--content-coral);
+  --hub-card-accent-hover: var(--content-coral-hover);
+  --hub-card-accent-strong: #ffffff;
+  --hub-card-accent-border: var(--content-coral);
+  --hub-card-button-text: #ffffff;
+  --color-white: var(--content-coral);
 }
 
 .theme-hub .content-card--couple {
-  --hub-card-accent-light: #fff6cf;
-  --hub-card-accent: #ffbd12;
-  --hub-card-accent-strong: #b96800;
-  --hub-card-accent-border: #f0bc45;
+  --hub-card-background: var(--content-yellow-light);
+  --hub-card-accent-light: var(--content-yellow-hover);
+  --hub-card-accent: var(--content-yellow);
+  --hub-card-accent-hover: var(--content-yellow-hover);
+  --hub-card-accent-strong: var(--content-ink);
+  --hub-card-accent-border: var(--content-yellow);
+  --hub-card-button-text: var(--content-ink);
+  --color-white: var(--content-yellow);
 }
 
 .theme-hub .content-card--saju {
-  --hub-card-accent-light: #e3f5e7;
-  --hub-card-accent: #58b96a;
-  --hub-card-accent-strong: #2f8f43;
-  --hub-card-accent-border: #a9dcb3;
+  --hub-card-background: var(--content-green-light);
+  --hub-card-accent-light: var(--content-green-hover);
+  --hub-card-accent: var(--content-green);
+  --hub-card-accent-hover: var(--content-green-hover);
+  --hub-card-accent-strong: #ffffff;
+  --hub-card-accent-border: var(--content-green);
+  --hub-card-button-text: #ffffff;
+  --color-white: var(--content-green);
 }
 
 .theme-hub .content-card--game {
-  --hub-card-accent-light: #e5f0ff;
-  --hub-card-accent: #5c9cf2;
-  --hub-card-accent-strong: #2f80ed;
-  --hub-card-accent-border: #aacbf7;
+  --hub-card-background: var(--content-blue-light);
+  --hub-card-accent-light: var(--content-blue-hover);
+  --hub-card-accent: var(--content-blue);
+  --hub-card-accent-hover: var(--content-blue-hover);
+  --hub-card-accent-strong: #ffffff;
+  --hub-card-accent-border: var(--content-blue);
+  --hub-card-button-text: #ffffff;
+  --color-white: var(--content-blue);
 }
