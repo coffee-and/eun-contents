@@ -1,0 +1,23 @@
+.theme-relationship.theme-relationship .page {
+  min-height: 100%;
+  padding: 24px 16px 64px;
+  background: #f3f5f7;
+}
+
+.theme-relationship.theme-relationship .app-shell {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.theme-relationship.theme-relationship .hero {
+  margin-bottom: 28px;
+  padding: 30px 0 26px;
+  border-bottom: 6px solid #203854;
+}
+
+.theme-relationship.theme-relationship .card,
+.theme-relationship.theme-relationship .capture-panel,
+.theme-relationship.theme-relationship .share-modal__panel {
+  border-radius: initial;
+  box-shadow: none;
+}
