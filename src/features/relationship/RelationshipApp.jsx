@@ -22,6 +22,7 @@ import { getResultId } from "../../app/routes.js";
 import "./styles/relationship-theme.css";
 import "./styles/relationship-components.css";
 import "./styles/relationship-editorial.css";
+import "../../shared/styles/editorial/relationship-refinements.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
 
