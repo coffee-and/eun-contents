@@ -1,12 +1,12 @@
 .theme-hub {
   --hub-page-background: var(--editorial-bg);
   --hub-surface: var(--editorial-surface);
-  --hub-surface-soft: var(--editorial-cream-soft);
+  --hub-surface-soft: var(--editorial-surface-soft);
   --hub-text-primary: var(--editorial-ink);
   --hub-text-secondary: var(--editorial-text);
   --hub-text-muted: var(--editorial-muted);
   --hub-border-color: var(--editorial-line);
-  --hub-content-width: 1080px;
+  --hub-content-width: 1120px;
   --hub-card-radius: var(--card-radius);
   --hub-shadow-card: var(--shadow-card-soft);
   --bg: var(--hub-page-background);
@@ -16,10 +16,10 @@
   --text-soft: var(--hub-text-secondary);
   --muted: var(--hub-text-muted);
   --border: var(--hub-border-color);
-  --border-strong: #bdb5ae;
+  --border-strong: var(--color-blue);
   --primary: var(--hub-text-primary);
-  --primary-hover: #000000;
-  --primary-soft: var(--editorial-pink-soft);
+  --primary-hover: var(--color-navy);
+  --primary-soft: var(--color-blue-soft);
   --shadow: var(--hub-shadow-card);
   --shadow-soft: var(--hub-shadow-card);
 }

@@ -23,17 +23,49 @@ function formatItem(item) {
   };
 }
 
+function getNumericPercent(value) {
+  const parsedValue = Number.parseInt(String(value), 10);
+
+  if (Number.isNaN(parsedValue)) return null;
+
+  return Math.max(0, Math.min(100, parsedValue));
+}
+
 export function MetricGrid({ items }) {
   const formattedItems = items.map(formatItem);
 
   return (
     <div className="metric-grid">
-      {formattedItems.map((item) => (
-        <div key={item.label} className="metric-card">
-          <div className="metric-card__label">{item.label}</div>
-          <div className="metric-card__value">{item.value}</div>
-        </div>
-      ))}
+      {formattedItems.map((item) => {
+        const percent = getNumericPercent(item.value);
+
+        return (
+          <div
+            key={item.label}
+            className={`metric-card${
+              percent === null ? " metric-card--summary" : ""
+            }`}
+          >
+            <div className="metric-card__head">
+              <div className="metric-card__label">{item.label}</div>
+              <div className="metric-card__value">{item.value}</div>
+            </div>
+
+            {percent === null ? null : (
+              <div
+                className="metric-card__bar"
+                role="meter"
+                aria-label={`${item.label} ${item.value}`}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={percent}
+              >
+                <span style={{ width: `${percent}%` }} />
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
