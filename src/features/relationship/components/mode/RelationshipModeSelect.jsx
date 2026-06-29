@@ -6,11 +6,8 @@ export function RelationshipModeSelect({ onSelectMode }) {
       <div className="mode-select__head">
         <span className="mode-select__eyebrow">START</span>
         <h2 id="mode-select-title" className="mode-select__title">
-          지금 관계에 가까운 쪽을 골라주세요
+          어떤 관계를 살펴볼까요?
         </h2>
-        <p className="mode-select__desc">
-          선택한 유형에 따라 질문의 무게가 달라집니다.
-        </p>
       </div>
 
       <div className="mode-select__grid">

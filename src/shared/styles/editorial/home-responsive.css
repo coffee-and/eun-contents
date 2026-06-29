@@ -1,7 +1,14 @@
 @media (max-width: 900px) {
-  .theme-hub .hub-hero__footer,
   .theme-hub .coming-soon__card {
     grid-template-columns: 1fr;
+  }
+
+  .theme-hub .hub-hero {
+    min-height: 0;
+  }
+
+  .theme-hub .hub-hero__copy {
+    min-height: 180px;
   }
 
   .theme-hub .category-grid {
@@ -27,17 +34,16 @@
     padding: 24px 0 20px;
   }
 
+  .theme-hub .hub-hero__copy {
+    min-height: 140px;
+  }
+
   .theme-hub .hub-hero__title {
     font-size: clamp(2.8rem, 15vw, 4.5rem);
   }
 
-  .theme-hub .hub-hero__footer,
   .theme-hub .content-section__head {
     display: grid;
-  }
-
-  .theme-hub .content-section__head p {
-    text-align: left;
   }
 
   .theme-hub .featured-card,

@@ -52,7 +52,7 @@ textarea:focus-visible,
 select:focus-visible,
 [role="button"]:focus-visible,
 [tabindex]:focus-visible {
-  outline: 3px solid var(--button-focus, #f5c328);
+  outline: 3px solid var(--button-focus, var(--color-blue));
   outline-offset: 3px;
 }
 

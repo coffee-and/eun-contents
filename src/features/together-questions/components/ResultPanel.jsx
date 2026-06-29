@@ -1,6 +1,7 @@
 // Together Questions 나의 문답집 결과 화면을 표시합니다.
 import { Button } from "../../../shared/components/Button.jsx";
 import { EMPTY_ANSWER_TEXT } from "../constants/sessionFlow.js";
+import { getAnswerThemeClass } from "../constants/themeClasses.js";
 
 function formatCompletedDate(value) {
   if (!value) return "날짜 미정";
@@ -36,8 +37,8 @@ export function ResultPanel({
         </p>
 
         <div className="tq-answer-report">
-          {questions.map((question) => (
-            <section key={question.id}>
+          {questions.map((question, index) => (
+            <section className={getAnswerThemeClass(index)} key={question.id}>
               <small>
                 {question.order}. {question.category}
               </small>

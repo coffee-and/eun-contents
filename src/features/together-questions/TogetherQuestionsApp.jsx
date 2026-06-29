@@ -195,7 +195,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
     }
   }
 
-  function resetTogetherQuestions() {
+  function resetState() {
     clearDraft();
     clearSavedResult();
     setStartForm(INITIAL_FORM);
@@ -207,13 +207,17 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
     setStep(SESSION_STEPS.START);
   }
 
-  function resetFlow() {
-    resetTogetherQuestions();
+  function navigateToStart() {
     window.location.hash = "/together-questions";
   }
 
+  function handleRestart() {
+    resetState();
+    navigateToStart();
+  }
+
   function handleNavigateHome() {
-    resetTogetherQuestions();
+    resetState();
     onNavigateHome();
   }
 
@@ -231,7 +235,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
               ← 다른 콘텐츠 보기
             </TextAction>
             {step !== SESSION_STEPS.START ? (
-              <TextAction className="tq-back-link" onClick={resetFlow}>
+              <TextAction className="tq-back-link" onClick={handleRestart}>
                 ← 다시 선택하기
               </TextAction>
             ) : null}
@@ -275,7 +279,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
             relationship={selectedRelationship}
             reportRef={reportRef}
             onPrintPdf={printPdf}
-            onReset={resetFlow}
+            onReset={handleRestart}
             onSaveImage={saveImage}
             onShare={shareQuestionBook}
           />

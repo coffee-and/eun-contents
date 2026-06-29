@@ -20,6 +20,7 @@
   --primary: var(--hub-text-primary);
   --primary-hover: var(--color-navy);
   --primary-soft: var(--color-blue-soft);
+  --button-focus: var(--color-blue);
   --shadow: var(--hub-shadow-card);
   --shadow-soft: var(--hub-shadow-card);
 }
