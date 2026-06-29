@@ -1,3 +1,30 @@
+.theme-relationship .progress {
+  height: 12px;
+  overflow: hidden;
+  border-radius: 0;
+  background: var(--relationship-almond);
+}
+
+.theme-relationship .progress__fill {
+  height: 100%;
+  border-radius: 0;
+  transition:
+    width var(--motion-base) var(--motion-ease),
+    background-color var(--motion-fast) var(--motion-ease);
+}
+
+.theme-relationship .progress__fill--early {
+  background: var(--relationship-steel-blue);
+}
+
+.theme-relationship .progress__fill--middle {
+  background: var(--relationship-slate);
+}
+
+.theme-relationship .progress__fill--late {
+  background: var(--relationship-wine);
+}
+
 .theme-relationship .question-card {
   border-top: 6px solid var(--relationship-burgundy);
 }
@@ -12,12 +39,29 @@
   background: var(--relationship-lavender);
 }
 
+.theme-relationship .option-card {
+  border: 0;
+  border-radius: 0;
+  background: #eef3f6;
+  color: var(--relationship-editorial-navy);
+  box-shadow: none;
+  transition: background-color var(--motion-fast) var(--motion-ease);
+}
+
+.theme-relationship .option-card:hover,
+.theme-relationship .option-card:focus-visible {
+  border: 0;
+  background: #e2eaf1;
+  color: var(--relationship-editorial-navy);
+}
+
 .theme-relationship .option-card--selected,
 .theme-relationship .option-card--selected:hover,
 .theme-relationship .option-card--selected:focus-visible {
-  border-color: var(--relationship-slate);
-  background: #f2f0ec;
+  border: 0;
+  background: #c9d6e3;
   color: var(--relationship-editorial-navy);
+  box-shadow: none;
 }
 
 .theme-relationship .option-card--selected .option-card__text {
