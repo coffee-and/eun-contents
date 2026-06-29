@@ -12,7 +12,6 @@ import { useQuizEngine } from "./hooks/useQuizEngine.js";
 import { clearResultUrl, getStoredResult } from "./utils/resultStorage.js";
 import { AppShell } from "../../shared/components/AppShell.jsx";
 import { Button } from "../../shared/components/Button.jsx";
-import { TextAction } from "../../shared/components/TextAction.jsx";
 import { Hero } from "./components/hero/Hero.jsx";
 import { ProgressBar } from "./components/progress/ProgressBar.jsx";
 import { QuestionCard } from "./components/question/QuestionCard.jsx";
@@ -26,6 +25,7 @@ import "../../shared/styles/editorial/relationship-refinements.css";
 import "../../shared/styles/editorial/relationship-actions-critical.css";
 import "../../shared/styles/editorial/relationship-surfaces.css";
 import "../../shared/styles/editorial/relationship-result-critical.css";
+import "../../shared/styles/editorial/feature-cleanup.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
 
@@ -128,10 +128,6 @@ export default function RelationshipApp({ onNavigateHome }) {
   const activeModeLabel = activeMode
     ? RELATIONSHIP_MODE_META[activeMode]?.shortLabel
     : null;
-  const activeModeName = activeMode ? RELATIONSHIP_MODE_META[activeMode]?.label : null;
-  const heroSubtitle = activeModeName
-    ? `${activeModeName}: 현재 관계의 감정 상태와 안정성, 갈등 패턴, 미래 방향성을 살펴봅니다.`
-    : APP_COPY.subtitle;
   const shouldShowModeSelect =
     !sharedResultId &&
     !isResultLoading &&
@@ -184,10 +180,10 @@ export default function RelationshipApp({ onNavigateHome }) {
   return (
     <AppShell>
       <Hero
-        eyebrow={APP_COPY.eyebrow}
         title={APP_COPY.title}
-        subtitle={heroSubtitle}
+        subtitle={APP_COPY.subtitle}
         onNavigateHome={onNavigateHome}
+        onChooseAgain={shouldShowQuizUtility ? handleChooseAgain : null}
       />
 
       {shouldShowModeSelect ? (
@@ -216,15 +212,6 @@ export default function RelationshipApp({ onNavigateHome }) {
 
       {!savedResult && relationshipMode ? <ProgressBar value={progress} /> : null}
 
-      {shouldShowQuizUtility ? (
-        <div className="quiz-utility">
-          <span>{activeModeLabel}</span>
-          <TextAction onClick={handleChooseAgain}>
-            다시 선택하기
-          </TextAction>
-        </div>
-      ) : null}
-
       {shouldShowQuestion ? (
         <QuestionCard
           question={currentQuestion}
@@ -235,6 +222,7 @@ export default function RelationshipApp({ onNavigateHome }) {
           onSelectOption={handleSelectOption}
           onNext={handleNext}
           onPrevious={handlePrevious}
+          modeLabel={activeModeLabel}
         />
       ) : null}
 

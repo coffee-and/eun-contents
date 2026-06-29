@@ -1,6 +1,5 @@
 // Together Questions 문답지형 작성 화면을 표시합니다.
 import { Button } from "../../../shared/components/Button.jsx";
-import { TextAction } from "../../../shared/components/TextAction.jsx";
 import { ANSWER_LIMITS } from "../constants/sessionFlow.js";
 
 export function AnswerPanel({
@@ -14,7 +13,6 @@ export function AnswerPanel({
   onAnswerChange,
   onComplete,
   onDisplayNameChange,
-  onReset,
 }) {
   return (
     <section className="tq-panel tq-answer-panel">
@@ -24,9 +22,6 @@ export function AnswerPanel({
           <h2>{relationship?.title ?? "나의"} 문답지</h2>
           <p>한 번에 모두 채우지 않아도 괜찮아요. 쓰는 동안 이 기기에 임시 저장됩니다.</p>
         </div>
-        <TextAction className="tq-back-link" onClick={onReset}>
-          ← 다시 선택하기
-        </TextAction>
       </div>
 
       <label className="tq-field tq-name-field" htmlFor="tq-display-name">
