@@ -1,9 +1,11 @@
+@import "./relationship-blue-palette.css";
 @import "./relationship-refinements.css";
+@import "./relationship-flow-blue.css";
 
 .theme-relationship.theme-relationship .page {
   min-height: 100%;
   padding: 24px 16px 64px;
-  background: #f3f5f7;
+  background: #f4f8fc;
 }
 
 .theme-relationship.theme-relationship .app-shell {
@@ -12,9 +14,9 @@
 }
 
 .theme-relationship.theme-relationship .hero {
-  margin-bottom: 28px;
-  padding: 30px 0 26px;
-  border-bottom: 6px solid #203854;
+  margin-bottom: 20px;
+  padding: 30px 0 18px;
+  border-bottom: 0;
 }
 
 .theme-relationship.theme-relationship .card,
