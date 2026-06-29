@@ -1,0 +1,70 @@
+.theme-relationship.theme-relationship .capture-panel::before {
+  background: #e3f2fd !important;
+}
+
+.theme-relationship.theme-relationship .capture-panel::after {
+  background: rgba(187, 222, 251, 0.72) !important;
+}
+
+.theme-relationship.theme-relationship .capture-panel__hero::after {
+  background: rgba(100, 181, 246, 0.3) !important;
+}
+
+.theme-relationship.theme-relationship .capture-panel__type-label,
+.theme-relationship.theme-relationship .capture-panel__block-label,
+.theme-relationship.theme-relationship .capture-panel__summary-label {
+  color: #1976d2;
+}
+
+.theme-relationship.theme-relationship .result-overview-card {
+  background: #1e3a5f !important;
+}
+
+.theme-relationship.theme-relationship .result-overview-card::before {
+  background: rgba(25, 118, 210, 0.3);
+}
+
+.theme-relationship.theme-relationship .result-overview-card::after {
+  background: rgba(100, 181, 246, 0.28);
+}
+
+.theme-relationship.theme-relationship .result-score-ring {
+  border-color: rgba(187, 222, 251, 0.58);
+  background: #1e3a5f !important;
+}
+
+.theme-relationship.theme-relationship .metric-card__bar {
+  background: #e3f2fd;
+}
+
+.theme-relationship.theme-relationship .metric-card__bar span {
+  background: #1976d2;
+}
+
+.theme-relationship.theme-relationship .premium-lock__label {
+  color: #1976d2 !important;
+}
+
+.theme-relationship.theme-relationship .premium-lock__preview-card {
+  border-top-color: #1976d2 !important;
+  background: #f4f8fc !important;
+}
+
+.theme-relationship.theme-relationship .premium-lock__preview-card:nth-child(2) {
+  border-top-color: #64b5f6 !important;
+  background: #eef7fe !important;
+}
+
+.theme-relationship.theme-relationship .premium-lock__preview-card:nth-child(3) {
+  border-top-color: #bbdefb !important;
+  background: #f7fbff !important;
+}
+
+.theme-relationship.theme-relationship .premium-lock__preview-number {
+  color: #1976d2;
+}
+
+.theme-relationship.theme-relationship .badge {
+  background: #e3f2fd;
+  color: #1e3a5f;
+}
