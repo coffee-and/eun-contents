@@ -17,7 +17,7 @@
 .theme-relationship .option-card--selected:focus-visible {
   border-color: var(--relationship-slate);
   background: #f2f0ec;
-  color: var(--relationship-navy);
+  color: var(--relationship-editorial-navy);
 }
 
 .theme-relationship .option-card--selected .option-card__text {
@@ -27,23 +27,61 @@
 .theme-relationship .question-card__previous.button--secondary {
   border: 1px solid transparent;
   background: #ece9e4;
-  color: var(--relationship-navy);
+  color: var(--relationship-editorial-navy);
 }
 
 .theme-relationship .question-card__previous.button--secondary:hover:not(:disabled) {
-  border-color: var(--relationship-mist);
+  border-color: var(--relationship-steel-blue);
   background: #dfdbd4;
 }
 
 .theme-relationship .question-card__previous.button--secondary:disabled {
-  border-color: #efede8;
-  background: #f8f7f4;
-  color: #b7b3ad;
+  border-color: #f0efec;
+  background: #faf9f7;
+  color: #b8b7b3;
   opacity: 1;
 }
 
 .theme-relationship .question-card__next.button--primary:disabled {
-  background: #d2d5d5;
+  background: #d7d9dc;
   color: #f6f6f4;
   opacity: 1;
+}
+
+.theme-relationship .mode-select__grid .mode-card {
+  border: 1px solid transparent;
+  border-top: 6px solid var(--relationship-steel-blue);
+  color: var(--relationship-noir);
+}
+
+.theme-relationship .mode-select__grid .mode-card:nth-child(odd) {
+  background: #eef2f5;
+  border-color: #d8e0e7;
+  border-top-color: var(--relationship-editorial-navy);
+}
+
+.theme-relationship .mode-select__grid .mode-card:nth-child(even) {
+  background: #fbf1f4;
+  border-color: #ecd8de;
+  border-top-color: var(--relationship-wine);
+}
+
+.theme-relationship .mode-select__grid .mode-card:nth-child(odd):hover,
+.theme-relationship .mode-select__grid .mode-card:nth-child(odd):focus-visible {
+  background: #dde5ed;
+  border-color: var(--relationship-editorial-navy);
+}
+
+.theme-relationship .mode-select__grid .mode-card:nth-child(even):hover,
+.theme-relationship .mode-select__grid .mode-card:nth-child(even):focus-visible {
+  background: #f2dde4;
+  border-color: var(--relationship-wine);
+}
+
+.theme-relationship .mode-select__grid .mode-card:nth-child(odd) .mode-card__label {
+  color: var(--relationship-editorial-navy);
+}
+
+.theme-relationship .mode-select__grid .mode-card:nth-child(even) .mode-card__label {
+  color: var(--relationship-wine);
 }
