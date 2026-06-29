@@ -1,8 +1,15 @@
 .feature-header-actions {
-  display: grid;
-  justify-items: end;
-  align-content: start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-self: end;
   gap: 8px;
+  text-align: right;
+}
+
+.feature-header-actions .text-action {
+  margin: 0;
+  text-align: right;
 }
 
 .theme-together-questions .tq-answer-field textarea {
@@ -50,10 +57,10 @@
 }
 
 @media (max-width: 720px) {
-  .theme-together-questions .tq-home-button,
-  .theme-together-questions .tq-back-link {
+  .feature-header-actions {
+    width: 100%;
+    align-items: flex-end;
     justify-self: end;
-    order: initial;
   }
 
   .theme-relationship .hero__title {
