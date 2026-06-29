@@ -1,6 +1,9 @@
+@import "./question-book-theme.css";
+@import "./relationship-surfaces.css";
+@import "./relationship-mode.css";
+
 .theme-hub .page {
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-height: 100%;
   padding: 24px 16px 64px;
   background: #f3f5f7;
 }
