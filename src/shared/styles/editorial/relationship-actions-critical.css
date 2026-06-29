@@ -1,12 +1,15 @@
 .theme-relationship .progress {
   height: 12px;
   overflow: hidden;
+  border: 0;
   border-radius: 0;
-  background: var(--relationship-almond);
+  background: #f0ebea;
+  box-shadow: none;
 }
 
 .theme-relationship .progress__fill {
   height: 100%;
+  border: 0;
   border-radius: 0;
   transition:
     width var(--motion-base) var(--motion-ease),
@@ -14,36 +17,44 @@
 }
 
 .theme-relationship .progress__fill--early {
-  background: var(--relationship-steel-blue);
+  background: var(--relationship-dusty-pink);
 }
 
 .theme-relationship .progress__fill--middle {
-  background: var(--relationship-slate);
+  background: var(--relationship-slate-violet);
 }
 
 .theme-relationship .progress__fill--late {
-  background: var(--relationship-wine);
+  background: var(--relationship-muted-rose);
 }
 
 .theme-relationship .question-card {
-  border-top: 6px solid var(--relationship-burgundy);
+  border-top: 0;
+  background: var(--relationship-white);
 }
 
 .theme-relationship .question-card .badge {
+  border: 0;
   border-radius: 0;
-  background: var(--relationship-wine);
+  background: var(--relationship-muted-rose);
   color: var(--relationship-white);
 }
 
 .theme-relationship .question-card__line {
-  background: var(--relationship-lavender);
+  height: 5px;
+  background: linear-gradient(
+    90deg,
+    var(--relationship-deep-blue) 0 34%,
+    var(--relationship-slate-violet) 34% 67%,
+    var(--relationship-dusty-pink) 67% 100%
+  );
 }
 
 .theme-relationship .option-card {
   border: 0;
   border-radius: 0;
-  background: #eef3f6;
-  color: var(--relationship-editorial-navy);
+  background: #eef1f5;
+  color: var(--relationship-deep-blue);
   box-shadow: none;
   transition: background-color var(--motion-fast) var(--motion-ease);
 }
@@ -51,81 +62,86 @@
 .theme-relationship .option-card:hover,
 .theme-relationship .option-card:focus-visible {
   border: 0;
-  background: #e2eaf1;
-  color: var(--relationship-editorial-navy);
+  background: #e5e0e8;
+  color: var(--relationship-deep-blue);
 }
 
 .theme-relationship .option-card--selected,
 .theme-relationship .option-card--selected:hover,
 .theme-relationship .option-card--selected:focus-visible {
   border: 0;
-  background: #c9d6e3;
-  color: var(--relationship-editorial-navy);
+  background: #dce3eb;
+  color: var(--relationship-deep-blue);
   box-shadow: none;
 }
 
 .theme-relationship .option-card--selected .option-card__text {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .theme-relationship .question-card__previous.button--secondary {
-  border: 1px solid transparent;
-  background: #ece9e4;
-  color: var(--relationship-editorial-navy);
+  border: 0;
+  background: #eee8ec;
+  color: var(--relationship-deep-blue);
 }
 
 .theme-relationship .question-card__previous.button--secondary:hover:not(:disabled) {
-  border-color: var(--relationship-steel-blue);
-  background: #dfdbd4;
+  border: 0;
+  background: #e1d9e1;
 }
 
 .theme-relationship .question-card__previous.button--secondary:disabled {
-  border-color: #f0efec;
-  background: #faf9f7;
-  color: #b8b7b3;
+  border: 0;
+  background: #f4f1f3;
+  color: #b7b1b5;
   opacity: 1;
 }
 
+.theme-relationship .question-card__next.button--primary {
+  border: 0;
+  background: var(--relationship-deep-blue);
+  color: var(--relationship-white);
+}
+
+.theme-relationship .question-card__next.button--primary:hover:not(:disabled) {
+  background: #283d58;
+}
+
 .theme-relationship .question-card__next.button--primary:disabled {
-  background: #d7d9dc;
-  color: #f6f6f4;
+  background: #ddd8dc;
+  color: #f7f5f6;
   opacity: 1;
 }
 
 .theme-relationship .mode-select__grid .mode-card {
-  border: 1px solid transparent;
-  border-top: 6px solid var(--relationship-steel-blue);
+  border: 0;
+  border-radius: 0;
   color: var(--relationship-noir);
+  box-shadow: none;
 }
 
 .theme-relationship .mode-select__grid .mode-card:nth-child(odd) {
-  background: #eef2f5;
-  border-color: #d8e0e7;
-  border-top-color: var(--relationship-editorial-navy);
+  background: #eef1f5;
 }
 
 .theme-relationship .mode-select__grid .mode-card:nth-child(even) {
-  background: #fbf1f4;
-  border-color: #ecd8de;
-  border-top-color: var(--relationship-wine);
+  background: #fbf0f3;
 }
 
 .theme-relationship .mode-select__grid .mode-card:nth-child(odd):hover,
 .theme-relationship .mode-select__grid .mode-card:nth-child(odd):focus-visible {
-  background: #dde5ed;
-  border-color: var(--relationship-editorial-navy);
+  background: #dce3eb;
 }
 
 .theme-relationship .mode-select__grid .mode-card:nth-child(even):hover,
 .theme-relationship .mode-select__grid .mode-card:nth-child(even):focus-visible {
-  background: #f2dde4;
-  border-color: var(--relationship-wine);
+  background: #efd8de;
 }
 
 .theme-relationship .mode-select__grid .mode-card:nth-child(odd) .mode-card__label {
-  color: var(--relationship-editorial-navy);
+  color: var(--relationship-deep-blue);
 }
 
 .theme-relationship .mode-select__grid .mode-card:nth-child(even) .mode-card__label {
-  color: var(--relationship-wine);
+  color: var(--relationship-muted-rose);
 }
