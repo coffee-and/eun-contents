@@ -1,3 +1,8 @@
+@import "./relationship-critical.css";
+@import "./relationship-result-critical.css";
+@import "./relationship-premium-critical.css";
+@import "./relationship-actions-critical.css";
+
 .theme-relationship.theme-relationship .mode-select {
   padding: 32px;
   background: #ffffff;
