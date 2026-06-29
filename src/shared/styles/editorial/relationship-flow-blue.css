@@ -25,6 +25,11 @@
   color: #142c4a;
 }
 
+.theme-relationship.theme-relationship .question-card__previous.button--secondary:disabled {
+  background: #edf4f9;
+  color: #8796a6;
+}
+
 .theme-relationship.theme-relationship .question-card__next.button--primary {
   border: 0;
   border-radius: 0;
