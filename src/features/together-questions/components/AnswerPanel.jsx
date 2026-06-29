@@ -1,6 +1,7 @@
 // Together Questions 문답지형 작성 화면을 표시합니다.
 import { Button } from "../../../shared/components/Button.jsx";
 import { ANSWER_LIMITS } from "../constants/sessionFlow.js";
+import { getQuestionThemeClass } from "../constants/themeClasses.js";
 
 export function AnswerPanel({
   answers,
@@ -43,8 +44,11 @@ export function AnswerPanel({
       </label>
 
       <div className="tq-question-list">
-        {questions.map((question) => (
-          <article className="tq-question-item" key={question.id}>
+        {questions.map((question, index) => (
+          <article
+            className={`tq-question-item ${getQuestionThemeClass(index)}`}
+            key={question.id}
+          >
             <div className="tq-question-item__head">
               <span>
                 {question.order}. {question.category}

@@ -1,5 +1,6 @@
 // Together Questions 시작 화면을 표시합니다.
 import { Button } from "../../../shared/components/Button.jsx";
+import { getSelectionThemeClass } from "../constants/themeClasses.js";
 import { QUESTION_PACKS, RELATIONSHIP_TYPES } from "../data/index.js";
 
 export function StartPanel({ startForm, canStart, isBusy, onSubmit, onChangeForm, onResetQuestion }) {
@@ -8,20 +9,21 @@ export function StartPanel({ startForm, canStart, isBusy, onSubmit, onChangeForm
       <div className="tq-section__head">
         <span>START / 01</span>
         <h2>나의 문답집을 시작해볼까요?</h2>
-        <p>관계를 고르고 한 페이지 문답지에 차근차근 답해요.</p>
       </div>
 
       <div className="tq-choice-group">
         <span>문답 관계</span>
         <div className="tq-card-grid">
-          {RELATIONSHIP_TYPES.map((type) => {
+          {RELATIONSHIP_TYPES.map((type, index) => {
             const isSelected = startForm.relationshipType === type.id;
 
             return (
               <button
                 type="button"
                 key={type.id}
-                className={`tq-select-card ${isSelected ? "is-selected" : ""}`}
+                className={`tq-select-card ${getSelectionThemeClass(index)}${
+                  isSelected ? " is-selected" : ""
+                }`}
                 onClick={() => {
                   onChangeForm({ relationshipType: type.id });
                   onResetQuestion();

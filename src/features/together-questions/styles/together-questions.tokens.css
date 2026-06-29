@@ -1,0 +1,51 @@
+.theme-together-questions {
+  --together-bg: #f8f5ef;
+  --together-surface: #ffffff;
+  --together-surface-warm: #fcfbf8;
+  --together-surface-sage: #e7eee3;
+  --together-surface-peach: #f8e6d7;
+  --together-surface-cream: #f6ead8;
+  --together-surface-almond: #f4eadc;
+  --together-surface-focus: #d8e3d3;
+  --together-forest: #567c57;
+  --together-sage: #a9bda0;
+  --together-olive: #504f30;
+  --together-clay: #b87558;
+  --together-taupe: #b19071;
+  --together-coral: #d24d49;
+  --together-text: #252a27;
+  --together-muted: #69706a;
+  --together-border: #d9d7d0;
+  --together-danger-soft: #fff1ef;
+  --link-color: var(--together-olive);
+  --link-color-hover: var(--together-forest);
+  --button-focus: var(--together-forest);
+  --button-primary-bg: var(--together-forest);
+  --button-primary-border: var(--together-forest);
+  --button-primary-text: #ffffff;
+  --button-primary-hover-bg: #466a49;
+  --button-primary-hover-border: #466a49;
+  --button-secondary-bg: #dde7d9;
+  --button-secondary-border: #dde7d9;
+  --button-secondary-text: #314b34;
+  --button-secondary-hover-bg: #cbdac6;
+  --button-secondary-hover-border: #cbdac6;
+  --button-secondary-hover-text: #253d28;
+  --button-ghost-bg: transparent;
+  --button-ghost-border: transparent;
+  --button-ghost-text: var(--together-olive);
+  --button-ghost-hover-bg: #eef3eb;
+  --button-ghost-hover-border: transparent;
+  --button-ghost-hover-text: var(--together-forest);
+  --button-disabled-bg: #efede8;
+  --button-disabled-border: #efede8;
+  --button-disabled-text: #aaa79f;
+  min-height: 100%;
+  background: var(--together-bg);
+  color: var(--together-text);
+}
+
+.theme-together-questions,
+.theme-together-questions * {
+  box-sizing: border-box;
+}

@@ -1,0 +1,87 @@
+.theme-together-questions .tq-name-field {
+  margin-bottom: 24px;
+  padding: 20px;
+  border: 0;
+  border-radius: 0;
+  background: var(--together-surface-sage);
+}
+
+.theme-together-questions .tq-field-error {
+  color: var(--together-coral);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.theme-together-questions .tq-question-list,
+.theme-together-questions .tq-answer-report {
+  display: grid;
+  gap: 18px;
+}
+
+.theme-together-questions .tq-question-item,
+.theme-together-questions .tq-answer-report section {
+  padding: 22px;
+  border: 0;
+  border-radius: 0;
+  background: var(--together-surface-warm);
+}
+
+.theme-together-questions .tq-question-item--sage,
+.theme-together-questions .tq-answer-section--sage {
+  background: #eef3eb;
+}
+
+.theme-together-questions .tq-question-item--peach,
+.theme-together-questions .tq-answer-section--peach {
+  background: var(--together-surface-peach);
+}
+
+.theme-together-questions .tq-question-item--almond,
+.theme-together-questions .tq-answer-section--almond {
+  background: var(--together-surface-almond);
+}
+
+.theme-together-questions .tq-question-item:focus-within {
+  outline: 2px solid var(--together-sage);
+  outline-offset: 0;
+}
+
+.theme-together-questions .tq-question-item__head {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.theme-together-questions .tq-question-item__head span {
+  color: var(--together-forest);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.theme-together-questions .tq-question-item__head h3,
+.theme-together-questions .tq-answer-report h3 {
+  margin: 0;
+  color: var(--together-text);
+  font-size: clamp(1.02rem, 1.55vw, 1.26rem);
+  line-height: 1.45;
+  word-break: keep-all;
+}
+
+.theme-together-questions .tq-question-item .tq-answer-field {
+  margin-bottom: 0;
+}
+
+.theme-together-questions .tq-question-item textarea {
+  min-height: 132px;
+  background: #ffffff;
+}
+
+.theme-together-questions .tq-sheet-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.theme-together-questions .tq-sheet-actions .button {
+  min-width: min(100%, 260px);
+}

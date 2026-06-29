@@ -1,0 +1,120 @@
+@media (max-width: 1024px) {
+  .theme-together-questions .page {
+    padding-inline: 28px;
+  }
+
+  .theme-together-questions .tq-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .theme-together-questions .page {
+    padding: 22px 18px 48px;
+  }
+
+  .theme-together-questions .app-shell {
+    width: 100%;
+  }
+
+  .theme-together-questions .tq-hero {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 8px 0 26px;
+  }
+
+  .theme-together-questions .tq-home-button {
+    justify-self: start;
+    order: 2;
+  }
+
+  .theme-together-questions .tq-panel,
+  .theme-together-questions .tq-complete-card {
+    padding: 20px;
+  }
+
+  .theme-together-questions .tq-sheet-head {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .theme-together-questions .tq-back-link {
+    justify-self: start;
+    order: -1;
+  }
+
+  .theme-together-questions .tq-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-together-questions .tq-select-card {
+    min-height: 0;
+  }
+
+  .theme-together-questions .tq-question-item,
+  .theme-together-questions .tq-answer-report section {
+    padding: 18px;
+  }
+
+  .theme-together-questions .tq-sheet-actions,
+  .theme-together-questions .tq-sheet-actions .button {
+    width: 100%;
+  }
+
+  .theme-together-questions .tq-export-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .theme-together-questions .page {
+    padding-inline: 16px;
+  }
+
+  .theme-together-questions .tq-panel,
+  .theme-together-questions .tq-complete-card {
+    padding: 18px;
+  }
+
+  .theme-together-questions .tq-name-field,
+  .theme-together-questions .tq-question-item,
+  .theme-together-questions .tq-answer-report section {
+    padding: 16px;
+  }
+}
+
+@media print {
+  body {
+    background: #ffffff;
+  }
+
+  .theme-together-questions .page {
+    padding: 0;
+    background: #ffffff;
+  }
+
+  .theme-together-questions .app-shell {
+    width: 100%;
+    max-width: none;
+  }
+
+  .theme-together-questions .tq-hero,
+  .theme-together-questions .tq-alert,
+  .theme-together-questions .tq-export-actions,
+  .theme-together-questions .tq-home-button {
+    display: none;
+  }
+
+  .theme-together-questions .tq-complete-wrap {
+    padding: 0;
+  }
+
+  .theme-together-questions .tq-journal-report {
+    margin: 0;
+    border: 0;
+  }
+
+  .theme-together-questions .tq-answer-report section {
+    break-inside: avoid;
+  }
+}

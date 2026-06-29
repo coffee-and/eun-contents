@@ -155,13 +155,6 @@
   word-break: keep-all;
 }
 
-.theme-relationship .mode-select__desc {
-  margin: 0;
-  color: var(--text-soft);
-  font-size: var(--font-body);
-  line-height: var(--line-body);
-}
-
 .theme-relationship .mode-select__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

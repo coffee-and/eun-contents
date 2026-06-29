@@ -22,7 +22,7 @@ function ContentAction({
 
 function CategoryCard({ content, index, onNavigate }) {
   const isActive = content.status === CONTENT_STATUS.ACTIVE;
-  const issueNumber = String(index + 2).padStart(2, "0");
+  const contentNumber = String(index + 2).padStart(2, "0");
 
   return (
     <article
@@ -31,7 +31,7 @@ function CategoryCard({ content, index, onNavigate }) {
       }`}
     >
       <div className="category-card__meta">
-        <span className="category-card__number">{issueNumber}</span>
+        <span className="content-card__number">{contentNumber}</span>
         <p className="category-card__category">{content.category}</p>
       </div>
       <h3 className="category-card__title">{content.title}</h3>
@@ -53,13 +53,15 @@ export function HomePage({ onNavigate }) {
   return (
     <div className="hub-page">
       <header className="hub-hero">
-        <p className="hub-hero__issue">DIGITAL EDITORIAL / MOMENT 01</p>
-        <h1 className="hub-hero__title">moment ON</h1>
-        <div className="hub-hero__footer">
+        <div className="hub-hero__copy">
           <p className="hub-hero__tagline">오늘도, 당신의 순간을 켜세요.</p>
-          <p className="hub-hero__lede">
-            관계, 문답, 감정 기록을 가볍게 시작하고 나답게 남기는 콘텐츠 플랫폼
-          </p>
+          <h1 className="hub-hero__title">moment ON</h1>
+        </div>
+
+        <div className="hub-on-object" aria-hidden="true">
+          <span className="hub-on-object__circle" />
+          <span className="hub-on-object__diagonal" />
+          <span className="hub-on-object__field" />
         </div>
       </header>
 
@@ -67,8 +69,10 @@ export function HomePage({ onNavigate }) {
         {featuredContent ? (
           <article className="featured-card">
             <div className="featured-card__body">
-              <p className="featured-card__issue">FEATURE / 01</p>
-              <p className="content-card__category">{featuredContent.category}</p>
+              <div className="featured-card__meta">
+                <span className="content-card__number">01</span>
+                <p className="content-card__category">{featuredContent.category}</p>
+              </div>
               <h2 className="featured-card__title">{featuredContent.title}</h2>
               <p className="featured-card__description">
                 {featuredContent.description}
@@ -87,7 +91,6 @@ export function HomePage({ onNavigate }) {
       <section className="content-section" aria-label="콘텐츠 카테고리">
         <div className="content-section__head">
           <span>CONTENTS INDEX</span>
-          <p>지금 열려 있는 콘텐츠와 준비 중인 콘텐츠를 한눈에 볼 수 있어요.</p>
         </div>
 
         <div className="category-grid">

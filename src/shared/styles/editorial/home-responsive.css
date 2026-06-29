@@ -1,7 +1,15 @@
 @media (max-width: 900px) {
-  .theme-hub .hub-hero__footer,
+  .theme-hub .hub-hero,
   .theme-hub .coming-soon__card {
     grid-template-columns: 1fr;
+  }
+
+  .theme-hub .hub-hero {
+    min-height: 0;
+  }
+
+  .theme-hub .hub-on-object {
+    min-height: 160px;
   }
 
   .theme-hub .category-grid {
@@ -31,13 +39,30 @@
     font-size: clamp(2.8rem, 15vw, 4.5rem);
   }
 
-  .theme-hub .hub-hero__footer,
   .theme-hub .content-section__head {
     display: grid;
   }
 
-  .theme-hub .content-section__head p {
-    text-align: left;
+  .theme-hub .hub-on-object {
+    max-height: 130px;
+    min-height: 130px;
+  }
+
+  .theme-hub .hub-on-object__circle {
+    right: 76px;
+    width: 112px;
+    border-width: 22px;
+  }
+
+  .theme-hub .hub-on-object__diagonal {
+    right: 46px;
+    width: 96px;
+    height: 132px;
+  }
+
+  .theme-hub .hub-on-object__field {
+    width: 58px;
+    height: 136px;
   }
 
   .theme-hub .featured-card,
