@@ -60,12 +60,15 @@ export default function RootApp() {
                 src={content?.imageSrc ?? "/eun-icon-v3.svg"}
                 alt={content?.imageAlt ?? "콘텐츠 대표 이미지"}
               />
-              <span className="coming-soon__category">
-                {content?.category ?? "새 콘텐츠"}
-              </span>
-              <h1>{content?.title ?? "준비 중인 콘텐츠"}</h1>
-              <p>{content?.description ?? "새로운 콘텐츠를 준비하고 있어요."}</p>
-              <strong>COMING SOON</strong>
+              <div className="coming-soon__content">
+                <span className="coming-soon__issue">COMING ISSUE</span>
+                <span className="coming-soon__category">
+                  {content?.category ?? "새 콘텐츠"}
+                </span>
+                <h1>{content?.title ?? "준비 중인 콘텐츠"}</h1>
+                <p>{content?.description ?? "새로운 콘텐츠를 준비하고 있어요."}</p>
+                <strong>COMING SOON</strong>
+              </div>
             </section>
           </div>
         </AppShell>
