@@ -22,7 +22,7 @@ function ContentAction({
 
 function CategoryCard({ content, index, onNavigate }) {
   const isActive = content.status === CONTENT_STATUS.ACTIVE;
-  const issueNumber = String(index + 1).padStart(2, "0");
+  const issueNumber = String(index + 2).padStart(2, "0");
 
   return (
     <article
