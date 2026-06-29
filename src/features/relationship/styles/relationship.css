@@ -1,6 +1,4 @@
-@import "./relationship-theme.css";
-@import "./relationship-components.css";
-@import "./relationship-editorial.css";
-@import "./relationship-actions-critical.css";
-@import "../../../shared/styles/editorial/relationship-surfaces.css";
-@import "../../../shared/styles/editorial/relationship-result-critical.css";
+@import "./relationship.tokens.css";
+@import "./relationship.flow.css";
+@import "./relationship.result.css";
+@import "./relationship.responsive.css";

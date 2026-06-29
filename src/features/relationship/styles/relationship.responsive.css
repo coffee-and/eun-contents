@@ -1,0 +1,36 @@
+@media (max-width: 768px) {
+  .theme-relationship .page {
+    padding-top: 16px;
+    padding-bottom: 36px;
+  }
+
+  .theme-relationship .hero {
+    margin-bottom: 12px;
+    padding-top: 18px;
+  }
+
+  .theme-relationship .hero__title {
+    font-size: clamp(1.9rem, 9vw, 2.55rem);
+  }
+
+  .theme-relationship .hero__subtitle {
+    font-size: 0.96rem;
+  }
+
+  .theme-relationship .progress {
+    margin-bottom: 16px;
+  }
+
+  .theme-relationship .question-card {
+    padding: 20px 18px;
+  }
+
+  .theme-relationship .question-card__title {
+    font-size: clamp(1.42rem, 6.7vw, 1.9rem);
+  }
+
+  .theme-relationship .question-card__hint {
+    margin-bottom: 18px;
+    font-size: 0.92rem;
+  }
+}
