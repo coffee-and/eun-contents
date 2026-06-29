@@ -1,0 +1,37 @@
+.theme-relationship.theme-relationship .hero {
+  border-bottom: 0;
+}
+
+.theme-relationship.theme-relationship .progress {
+  height: 7px;
+  border-radius: 0;
+  background: #e3f2fd;
+}
+
+.theme-relationship.theme-relationship .progress__fill {
+  border-radius: 0;
+  background: #1976d2;
+}
+
+.theme-relationship.theme-relationship .question-card__previous.button--secondary {
+  border: 0;
+  border-radius: 0;
+  background: #e3f2fd;
+  color: #1e3a5f;
+}
+
+.theme-relationship.theme-relationship .question-card__previous.button--secondary:hover:not(:disabled) {
+  background: #bbdefb;
+  color: #142c4a;
+}
+
+.theme-relationship.theme-relationship .question-card__next.button--primary {
+  border: 0;
+  border-radius: 0;
+  background: #1e3a5f;
+  color: #ffffff;
+}
+
+.theme-relationship.theme-relationship .question-card__next.button--primary:hover:not(:disabled) {
+  background: #142c4a;
+}
