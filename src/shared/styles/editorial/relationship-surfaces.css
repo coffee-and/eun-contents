@@ -1,48 +1,77 @@
+.theme-relationship .capture-panel {
+  background: var(--relationship-white);
+}
+
 .theme-relationship .capture-panel::before {
-  top: -170px;
-  left: -150px;
+  top: 0;
+  left: 0;
   right: auto;
-  width: 430px;
-  height: 430px;
-  background: rgba(231, 183, 198, 0.4);
+  width: 34%;
+  height: 42%;
+  border-radius: 0;
+  background: rgba(214, 167, 178, 0.42);
+  clip-path: polygon(0 0, 100% 0, 74% 100%, 0 100%);
 }
 
 .theme-relationship .capture-panel::after {
-  right: -120px;
-  bottom: -72px;
-  width: 600px;
-  height: 470px;
-  background: rgba(110, 135, 166, 0.4);
-  clip-path: polygon(100% 0, 100% 100%, 0 100%, 32% 24%);
+  right: 0;
+  bottom: 0;
+  width: 42%;
+  height: 48%;
+  border-radius: 0;
+  background: rgba(109, 89, 122, 0.32);
+  clip-path: polygon(28% 0, 100% 0, 100% 100%, 0 100%);
 }
 
 .theme-relationship .capture-panel__hero::after {
-  display: none;
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 8%;
+  right: 0;
+  display: block;
+  width: 20%;
+  height: 24%;
+  background: rgba(181, 101, 118, 0.34);
+  clip-path: polygon(30% 0, 100% 0, 100% 100%, 0 74%);
+  pointer-events: none;
 }
 
 .theme-relationship .capture-panel__hero-main,
-.theme-relationship .capture-panel__type-box {
+.theme-relationship .capture-panel__type-box,
+.theme-relationship .capture-panel__summary-box,
+.theme-relationship .capture-panel__grid,
+.theme-relationship .capture-panel__footer {
   position: relative;
   z-index: 1;
 }
 
 .theme-relationship .capture-panel__summary-label,
 .theme-relationship .capture-panel__block-label {
-  color: var(--relationship-wine);
+  color: var(--relationship-muted-rose);
 }
 
 @media (max-width: 768px) {
   .theme-relationship .capture-panel::before {
-    top: -112px;
-    left: -154px;
-    width: 290px;
-    height: 290px;
+    top: 0;
+    left: 0;
+    width: 46%;
+    height: 26%;
+    clip-path: polygon(0 0, 100% 0, 72% 100%, 0 100%);
   }
 
   .theme-relationship .capture-panel::after {
-    right: -154px;
-    bottom: 96px;
-    width: 390px;
-    height: 330px;
+    right: 0;
+    bottom: 0;
+    width: 54%;
+    height: 28%;
+    clip-path: polygon(34% 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .theme-relationship .capture-panel__hero::after {
+    top: 18%;
+    right: 0;
+    width: 28%;
+    height: 18%;
   }
 }
