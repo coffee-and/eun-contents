@@ -19,10 +19,7 @@
 
 .theme-hub .hub-hero {
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(180px, 320px);
-  align-items: end;
-  gap: 14px;
+  display: block;
   min-height: 260px;
   padding: 40px 0 28px;
   border-bottom: 6px solid #203854;
@@ -51,6 +48,8 @@
 .theme-hub .hub-hero__copy {
   display: grid;
   gap: 12px;
+  align-content: end;
+  min-height: 192px;
 }
 
 .theme-hub .hub-hero__tagline {
@@ -59,47 +58,6 @@
   font-size: var(--font-body-large);
   font-weight: 700;
   line-height: var(--line-body);
-}
-
-.theme-hub .hub-on-object {
-  position: relative;
-  min-height: 210px;
-  overflow: hidden;
-}
-
-.theme-hub .hub-on-object__circle,
-.theme-hub .hub-on-object__diagonal,
-.theme-hub .hub-on-object__field {
-  position: absolute;
-  pointer-events: none;
-}
-
-.theme-hub .hub-on-object__circle {
-  right: 112px;
-  bottom: 22px;
-  width: 158px;
-  aspect-ratio: 1;
-  border: 28px solid #d9dee6;
-  border-left-color: #1d2734;
-  border-radius: 50%;
-}
-
-.theme-hub .hub-on-object__diagonal {
-  right: 74px;
-  bottom: 14px;
-  width: 132px;
-  height: 178px;
-  background: #6d7f96;
-  clip-path: polygon(44% 0, 100% 0, 56% 100%, 0 100%);
-  opacity: 0.92;
-}
-
-.theme-hub .hub-on-object__field {
-  right: 0;
-  bottom: 0;
-  width: 82px;
-  height: 210px;
-  background: #172232;
 }
 
 .theme-hub .content-section {
