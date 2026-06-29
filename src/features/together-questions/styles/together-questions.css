@@ -1,65 +1,73 @@
 .theme-together-questions {
-  --tq-accent: var(--color-yellow);
-  --tq-accent-strong: var(--color-olive);
-  --tq-accent-soft: var(--color-yellow-soft);
-  --tq-accent-border: #d8c87f;
-  --tq-accent-hover: #d9ac23;
-  --tq-green: var(--color-olive-soft);
-  --tq-focus-ring: rgba(242, 194, 48, 0.28);
-  --tq-text-on-accent: var(--color-ink);
-  --tq-bg: #fbf7ea;
-  --tq-card: var(--color-white);
-  --tq-card-soft: #fffdf4;
-  --tq-text: var(--color-ink);
-  --tq-text-soft: var(--color-text);
-  --tq-border: #ded4ac;
-  --tq-danger: var(--color-danger);
-  --tq-danger-soft: var(--color-danger-soft);
-  --tq-shadow: 0 4px 16px rgba(79, 58, 12, 0.045);
-  --link-color: var(--tq-accent-strong);
-  --link-color-hover: var(--tq-accent-hover);
-  --button-focus: var(--tq-accent);
-  --button-primary-bg: var(--tq-accent);
-  --button-primary-border: var(--tq-accent);
-  --button-primary-text: var(--tq-text-on-accent);
-  --button-primary-hover-bg: var(--tq-accent-hover);
-  --button-primary-hover-border: var(--tq-accent-hover);
-  --button-secondary-bg: var(--color-white);
-  --button-secondary-border: var(--tq-accent-border);
-  --button-secondary-text: var(--tq-accent-strong);
-  --button-secondary-hover-bg: var(--tq-accent-soft);
-  --button-secondary-hover-border: var(--tq-accent-border);
-  --button-secondary-hover-text: var(--tq-accent-strong);
+  --together-bg: #f8f5ef;
+  --together-surface: #ffffff;
+  --together-surface-warm: #fcfbf8;
+  --together-surface-sage: #e7eee3;
+  --together-surface-peach: #f8e6d7;
+  --together-surface-cream: #f6ead8;
+  --together-forest: #567c57;
+  --together-sage: #a9bda0;
+  --together-olive: #504f30;
+  --together-amber: #df9238;
+  --together-burnt-orange: #9a3f13;
+  --together-terracotta: #dd9c7c;
+  --together-coral: #d24d49;
+  --together-taupe: #b19071;
+  --together-text: #252a27;
+  --together-muted: #69706a;
+  --together-border: #d9d7d0;
+  --together-danger-soft: #fff1ef;
+  --link-color: var(--together-olive);
+  --link-color-hover: var(--together-burnt-orange);
+  --button-focus: var(--together-amber);
+  --button-primary-bg: var(--together-forest);
+  --button-primary-border: var(--together-forest);
+  --button-primary-text: #ffffff;
+  --button-primary-hover-bg: #466a49;
+  --button-primary-hover-border: #466a49;
+  --button-secondary-bg: #dde7d9;
+  --button-secondary-border: #dde7d9;
+  --button-secondary-text: #314b34;
+  --button-secondary-hover-bg: #cbdac6;
+  --button-secondary-hover-border: #cbdac6;
+  --button-secondary-hover-text: #253d28;
   --button-ghost-bg: transparent;
   --button-ghost-border: transparent;
-  --button-ghost-text: var(--tq-accent-strong);
-  --button-ghost-hover-bg: var(--tq-accent-soft);
-  --button-ghost-hover-border: var(--tq-accent-border);
-  --button-ghost-hover-text: var(--tq-accent-strong);
-  --button-disabled-bg: var(--color-disabled-bg);
-  --button-disabled-border: var(--tq-border);
-  --button-disabled-text: var(--color-disabled-text);
+  --button-ghost-text: var(--together-olive);
+  --button-ghost-hover-bg: #f1e5d5;
+  --button-ghost-hover-border: transparent;
+  --button-ghost-hover-text: var(--together-burnt-orange);
+  --button-disabled-bg: #efede8;
+  --button-disabled-border: #efede8;
+  --button-disabled-text: #aaa79f;
   min-height: 100%;
-  background: var(--tq-bg);
-  color: var(--tq-text);
+  background: var(--together-bg);
+  color: var(--together-text);
+}
+
+.theme-together-questions,
+.theme-together-questions * {
+  box-sizing: border-box;
 }
 
 .theme-together-questions .page {
-  min-height: 100%;
-  padding: 24px 16px 56px;
-  background: var(--tq-bg);
+  min-height: 100vh;
+  padding: 32px 24px 64px;
+  background: var(--together-bg);
 }
 
 .theme-together-questions .app-shell {
-  max-width: 900px;
+  width: min(100%, 1180px);
+  max-width: 1180px;
+  margin-inline: auto;
 }
 
 .theme-together-questions .tq-hero {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-xl);
-  padding: var(--space-lg) 0 var(--space-xl);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 28px;
+  padding: 18px 0 34px;
 }
 
 .theme-together-questions .tq-hero__eyebrow,
@@ -67,12 +75,12 @@
 .theme-together-questions .tq-sheet-head span,
 .theme-together-questions .tq-complete-card > span,
 .theme-together-questions .tq-answer-report small {
-  display: inline-flex;
-  margin-bottom: var(--space-xs);
-  color: var(--tq-accent-strong);
-  font-size: var(--font-label);
+  display: block;
+  margin: 0 0 8px;
+  color: var(--together-forest);
+  font-size: 0.76rem;
   font-weight: 700;
-  letter-spacing: var(--letter-label);
+  letter-spacing: 0.12em;
 }
 
 .theme-together-questions .tq-hero h1,
@@ -80,20 +88,20 @@
 .theme-together-questions .tq-sheet-head h2,
 .theme-together-questions .tq-complete-card h2 {
   margin: 0;
-  color: var(--tq-text);
+  color: var(--together-text);
   font-weight: 700;
-  line-height: var(--line-title);
+  line-height: 1.18;
   word-break: keep-all;
 }
 
 .theme-together-questions .tq-hero h1 {
-  font-size: var(--font-page-title);
+  font-size: clamp(2.2rem, 4.2vw, 3.65rem);
 }
 
 .theme-together-questions .tq-section__head h2,
 .theme-together-questions .tq-sheet-head h2,
 .theme-together-questions .tq-complete-card h2 {
-  font-size: var(--font-section-title);
+  font-size: clamp(1.45rem, 2.4vw, 2.05rem);
 }
 
 .theme-together-questions .tq-hero p,
@@ -101,112 +109,163 @@
 .theme-together-questions .tq-sheet-head p,
 .theme-together-questions .tq-flow-note p,
 .theme-together-questions .tq-answer-report p {
-  margin: var(--space-xs) 0 0;
-  color: var(--tq-text-soft);
-  font-size: var(--font-body);
-  line-height: var(--line-body);
+  margin: 10px 0 0;
+  color: var(--together-muted);
+  font-size: clamp(0.94rem, 1.35vw, 1.05rem);
+  line-height: 1.7;
   word-break: keep-all;
 }
 
 .theme-together-questions .tq-home-button {
-  flex: 0 0 auto;
+  align-self: start;
+  justify-self: end;
 }
 
 .theme-together-questions .tq-panel,
 .theme-together-questions .tq-complete-card {
-  padding: var(--card-padding);
-  border: 1px solid var(--tq-border);
-  border-radius: var(--card-radius);
-  background: var(--tq-card);
-  box-shadow: var(--tq-shadow);
+  width: 100%;
+  padding: clamp(24px, 3.4vw, 40px);
+  border: 1px solid var(--together-border);
+  border-radius: 0;
+  background: var(--together-surface);
+  box-shadow: none;
+}
+
+.theme-together-questions .tq-start {
+  border-top: 18px solid var(--together-forest);
 }
 
 .theme-together-questions .tq-section__head,
 .theme-together-questions .tq-sheet-head {
   display: grid;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-lg);
+  gap: 4px;
+  margin-bottom: 26px;
+}
+
+.theme-together-questions .tq-sheet-head {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: 24px;
+}
+
+.theme-together-questions .tq-back-link {
+  justify-self: end;
+  order: 0;
 }
 
 .theme-together-questions .tq-field,
 .theme-together-questions .tq-answer-field,
 .theme-together-questions .tq-choice-group {
   display: grid;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-md);
+  gap: 8px;
+  margin-bottom: 22px;
 }
 
 .theme-together-questions .tq-field > span,
 .theme-together-questions .tq-answer-field > span,
 .theme-together-questions .tq-choice-group > span {
-  color: var(--tq-text);
-  font-size: var(--font-body-small);
+  color: var(--together-text);
+  font-size: 0.9rem;
   font-weight: 700;
 }
 
 .theme-together-questions .tq-field input,
 .theme-together-questions .tq-answer-field textarea {
   width: 100%;
-  padding: 12px 13px;
-  border: 1px solid var(--tq-border);
-  border-radius: var(--control-radius);
-  background: var(--tq-card);
-  color: var(--tq-text);
+  padding: 13px 14px;
+  border: 1px solid var(--together-border);
+  border-radius: 0;
+  background: #ffffff;
+  color: var(--together-text);
+  font: inherit;
   resize: vertical;
 }
 
 .theme-together-questions .tq-field input:focus,
 .theme-together-questions .tq-answer-field textarea:focus {
-  border-color: var(--tq-accent);
-  box-shadow: 0 0 0 3px var(--tq-focus-ring);
-}
-
-.theme-together-questions .tq-field input:focus-visible,
-.theme-together-questions .tq-answer-field textarea:focus-visible {
-  outline: 2px solid var(--tq-accent);
-  outline-offset: 2px;
+  border-color: var(--together-forest);
+  box-shadow: none;
+  outline: 2px solid rgba(86, 124, 87, 0.2);
+  outline-offset: 1px;
 }
 
 .theme-together-questions .tq-name-field {
-  margin-bottom: var(--space-lg);
-  padding: var(--space-md);
-  border: 1px solid var(--tq-accent-border);
-  border-radius: var(--card-radius);
-  background: var(--tq-card-soft);
+  margin-bottom: 24px;
+  padding: 20px;
+  border: 0;
+  border-radius: 0;
+  background: var(--together-surface-sage);
 }
 
 .theme-together-questions .tq-field-error {
-  color: var(--tq-danger);
-  font-size: var(--font-caption);
+  color: var(--together-coral);
+  font-size: 0.82rem;
   font-weight: 700;
 }
 
 .theme-together-questions .tq-card-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-sm);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
 }
 
 .theme-together-questions .tq-select-card {
-  min-height: 112px;
-  padding: var(--space-md);
-  border: 1px solid var(--tq-border);
-  border-radius: var(--card-radius);
-  background: var(--tq-card-soft);
-  color: var(--tq-text);
+  min-height: 126px;
+  padding: 20px;
+  border: 0;
+  border-radius: 0;
+  background: var(--together-surface-sage);
+  color: var(--together-text);
   text-align: left;
   cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.theme-together-questions .tq-select-card:nth-child(3n + 2) {
+  background: var(--together-surface-peach);
+}
+
+.theme-together-questions .tq-select-card:nth-child(3n) {
+  background: var(--together-surface-cream);
 }
 
 .theme-together-questions .tq-select-card:hover,
-.theme-together-questions .tq-select-card:focus-visible,
-.theme-together-questions .tq-select-card.is-selected {
-  border-color: var(--tq-accent-border);
-  background: var(--tq-green);
+.theme-together-questions .tq-select-card:focus-visible {
+  background: #d8e3d3;
+  outline: 2px solid var(--together-forest);
+  outline-offset: 0;
+}
+
+.theme-together-questions .tq-select-card:nth-child(3n + 2):hover,
+.theme-together-questions .tq-select-card:nth-child(3n + 2):focus-visible {
+  background: #efd3c0;
+  outline-color: var(--together-terracotta);
+}
+
+.theme-together-questions .tq-select-card:nth-child(3n):hover,
+.theme-together-questions .tq-select-card:nth-child(3n):focus-visible {
+  background: #f0ddb9;
+  outline-color: var(--together-amber);
 }
 
 .theme-together-questions .tq-select-card.is-selected {
-  box-shadow: inset 4px 0 0 var(--tq-accent-strong);
+  background: var(--together-sage);
+  color: #1f2b20;
+  outline: 3px solid var(--together-forest);
+  outline-offset: -3px;
+  box-shadow: none;
+}
+
+.theme-together-questions .tq-select-card:nth-child(3n + 2).is-selected {
+  background: var(--together-terracotta);
+  color: #38261f;
+  outline-color: var(--together-burnt-orange);
+}
+
+.theme-together-questions .tq-select-card:nth-child(3n).is-selected {
+  background: #f2cf91;
+  color: #3f321c;
+  outline-color: var(--together-amber);
 }
 
 .theme-together-questions .tq-select-card strong,
@@ -215,80 +274,105 @@
 }
 
 .theme-together-questions .tq-select-card strong {
-  margin-bottom: var(--space-xs);
-  font-size: var(--font-card-title);
+  margin-bottom: 8px;
+  font-size: clamp(1.04rem, 1.5vw, 1.22rem);
+  line-height: 1.35;
 }
 
 .theme-together-questions .tq-select-card small {
-  color: var(--tq-text-soft);
-  font-size: var(--font-body-small);
-  line-height: var(--line-body);
+  color: inherit;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.theme-together-questions .tq-flow-note {
+  padding: 18px 20px;
+  border: 0;
+  border-radius: 0;
+  background: #eef3eb;
+}
+
+.theme-together-questions .tq-flow-note strong {
+  color: var(--together-forest);
+  font-size: 0.94rem;
+}
+
+.theme-together-questions .tq-start__actions {
+  margin-top: 22px;
 }
 
 .theme-together-questions .tq-alert {
-  margin: 0 0 var(--space-md);
-  padding: 12px 14px;
-  border: 1px solid var(--tq-border);
-  border-radius: var(--card-radius);
-  background: var(--tq-card);
-  color: var(--tq-text-soft);
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: 0;
+  background: var(--together-surface-warm);
+  color: var(--together-text);
   font-weight: 700;
 }
 
 .theme-together-questions .tq-alert--success {
-  border-color: var(--tq-accent-border);
-  background: var(--tq-accent-soft);
-  color: var(--tq-accent-strong);
+  background: var(--together-surface-sage);
+  color: var(--together-forest);
 }
 
 .theme-together-questions .tq-alert--error {
-  border-color: var(--color-danger-border);
-  background: var(--tq-danger-soft);
-  color: var(--tq-danger);
-}
-
-.theme-together-questions .tq-back-link {
-  justify-self: start;
-  order: -1;
+  background: var(--together-danger-soft);
+  color: var(--together-coral);
 }
 
 .theme-together-questions .tq-question-list,
 .theme-together-questions .tq-answer-report {
   display: grid;
-  gap: var(--space-md);
+  gap: 18px;
 }
 
 .theme-together-questions .tq-question-item,
-.theme-together-questions .tq-answer-report section,
-.theme-together-questions .tq-flow-note {
-  padding: var(--space-md);
-  border: 1px solid var(--tq-border);
-  border-radius: var(--card-radius);
-  background: var(--tq-card-soft);
+.theme-together-questions .tq-answer-report section {
+  padding: 22px;
+  border: 0;
+  border-radius: 0;
+  background: var(--together-surface-warm);
+}
+
+.theme-together-questions .tq-question-item:nth-child(4n + 2),
+.theme-together-questions .tq-answer-report section:nth-child(4n + 2) {
+  background: #eef3eb;
+}
+
+.theme-together-questions .tq-question-item:nth-child(4n + 3),
+.theme-together-questions .tq-answer-report section:nth-child(4n + 3) {
+  background: #fbede3;
+}
+
+.theme-together-questions .tq-question-item:nth-child(4n),
+.theme-together-questions .tq-answer-report section:nth-child(4n) {
+  background: #f4eadc;
 }
 
 .theme-together-questions .tq-question-item:focus-within {
-  border-color: var(--tq-accent-border);
+  outline: 2px solid var(--together-sage);
+  outline-offset: 0;
 }
 
 .theme-together-questions .tq-question-item__head {
   display: grid;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-sm);
+  gap: 8px;
+  margin-bottom: 14px;
 }
 
 .theme-together-questions .tq-question-item__head span {
-  color: var(--tq-accent-strong);
-  font-size: var(--font-caption);
+  color: var(--together-forest);
+  font-size: 0.78rem;
   font-weight: 700;
 }
 
 .theme-together-questions .tq-question-item__head h3,
 .theme-together-questions .tq-answer-report h3 {
   margin: 0;
-  color: var(--tq-text);
-  font-size: var(--font-card-title);
-  line-height: var(--line-title);
+  color: var(--together-text);
+  font-size: clamp(1.02rem, 1.55vw, 1.26rem);
+  line-height: 1.45;
   word-break: keep-all;
 }
 
@@ -297,26 +381,26 @@
 }
 
 .theme-together-questions .tq-question-item textarea {
-  min-height: 128px;
-  background: var(--color-white);
+  min-height: 132px;
+  background: #ffffff;
 }
 
 .theme-together-questions .tq-sheet-actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: var(--space-lg);
+  margin-top: 24px;
 }
 
 .theme-together-questions .tq-sheet-actions .button {
-  min-width: min(100%, 220px);
+  min-width: min(100%, 260px);
 }
 
 .theme-together-questions .tq-complete-wrap {
-  padding-bottom: var(--space-4xl);
+  padding-bottom: 48px;
 }
 
 .theme-together-questions .tq-journal-report {
-  margin: 0 0 var(--space-md);
+  margin: 0 0 20px;
   text-align: left;
 }
 
@@ -326,7 +410,7 @@
 }
 
 .theme-together-questions .tq-answer-report {
-  margin-top: var(--space-lg);
+  margin-top: 26px;
 }
 
 .theme-together-questions .tq-answer-report p {
@@ -337,30 +421,70 @@
 .theme-together-questions .tq-export-actions {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--space-sm);
+  gap: 12px;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 1024px) {
+  .theme-together-questions .page {
+    padding-inline: 28px;
+  }
+
   .theme-together-questions .tq-card-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 720px) {
   .theme-together-questions .page {
-    padding: 18px 14px 44px;
+    padding: 22px 18px 48px;
+  }
+
+  .theme-together-questions .app-shell {
+    width: 100%;
   }
 
   .theme-together-questions .tq-hero {
-    display: grid;
-    gap: var(--space-sm);
-    padding-top: var(--space-sm);
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 8px 0 26px;
+  }
+
+  .theme-together-questions .tq-home-button {
+    justify-self: start;
+    order: 2;
   }
 
   .theme-together-questions .tq-panel,
-  .theme-together-questions .tq-complete-card,
-  .theme-together-questions .tq-question-item {
+  .theme-together-questions .tq-complete-card {
+    padding: 20px;
+  }
+
+  .theme-together-questions .tq-sheet-head {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .theme-together-questions .tq-back-link {
+    justify-self: start;
+    order: -1;
+  }
+
+  .theme-together-questions .tq-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-together-questions .tq-select-card {
+    min-height: 0;
+  }
+
+  .theme-together-questions .tq-question-item,
+  .theme-together-questions .tq-answer-report section {
     padding: 18px;
+  }
+
+  .theme-together-questions .tq-sheet-actions,
+  .theme-together-questions .tq-sheet-actions .button {
+    width: 100%;
   }
 
   .theme-together-questions .tq-export-actions {
@@ -369,8 +493,19 @@
 }
 
 @media (max-width: 420px) {
-  .theme-together-questions .tq-card-grid {
-    grid-template-columns: 1fr;
+  .theme-together-questions .page {
+    padding-inline: 16px;
+  }
+
+  .theme-together-questions .tq-panel,
+  .theme-together-questions .tq-complete-card {
+    padding: 18px;
+  }
+
+  .theme-together-questions .tq-name-field,
+  .theme-together-questions .tq-question-item,
+  .theme-together-questions .tq-answer-report section {
+    padding: 16px;
   }
 }
 
@@ -385,6 +520,7 @@
   }
 
   .theme-together-questions .app-shell {
+    width: 100%;
     max-width: none;
   }
 
@@ -402,7 +538,6 @@
   .theme-together-questions .tq-journal-report {
     margin: 0;
     border: 0;
-    box-shadow: none;
   }
 
   .theme-together-questions .tq-answer-report section {
