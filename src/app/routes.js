@@ -1,7 +1,10 @@
+import { getContentById } from "./contentRegistry.jsx";
+
 export const ROUTES = {
   HOME: "home",
-  RELATIONSHIP: "relationship",
-  TOGETHER_QUESTIONS: "together-questions",
+  RELATIONSHIP: getContentById("relationship")?.route ?? "relationship",
+  TOGETHER_QUESTIONS:
+    getContentById("together-questions")?.route ?? "together-questions",
 };
 
 export function getResultId() {
