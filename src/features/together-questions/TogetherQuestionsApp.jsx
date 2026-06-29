@@ -17,6 +17,7 @@ import {
   saveResult,
 } from "./services/draftStorage.js";
 import "./styles/together-questions.css";
+import "../../shared/styles/editorial/feature-cleanup.css";
 
 const INITIAL_FORM = {
   displayName: "",
@@ -83,7 +84,11 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
   }
 
   function updateDisplayName(value) {
+    const isValid = Boolean(value.trim());
     setDisplayNameError("");
+    if (isValid && errorMessage === DISPLAY_NAME_REQUIRED_MESSAGE) {
+      setErrorMessage("");
+    }
     updateStartForm({ displayName: value });
   }
 
@@ -117,6 +122,9 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
       return;
     }
 
+    setDisplayNameError("");
+    setErrorMessage("");
+
     const nextCompletedAt = new Date().toISOString();
     const resultForm = {
       ...startForm,
@@ -143,11 +151,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
 
     if (navigator.share) {
       try {
-        await navigator.share({
-          title: "함께하는 문답",
-          text: shareText,
-          url: shareUrl,
-        });
+        await navigator.share({ title: "함께하는 문답", text: shareText, url: shareUrl });
         setNotice("공유 화면을 열었어요.");
         return;
       } catch {
@@ -164,7 +168,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
   }
 
   async function saveImage() {
-    if (!reportRef.current) return;
+    if (!reportRef.current || isSaving) return;
 
     setIsSaving(true);
     setErrorMessage("");
@@ -175,6 +179,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
       link.download = `나의-문답집-${new Date().toISOString().slice(0, 10)}.png`;
       link.href = canvas.toDataURL("image/png");
       link.click();
+      setNotice("문답집 이미지를 저장했어요.");
     } catch (error) {
       setErrorMessage(getErrorMessage(error));
     } finally {
@@ -221,9 +226,16 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
             <h1>함께하는 문답</h1>
             <p>내 마음을 차례대로 적고, 완성된 나의 문답집을 저장하거나 공유해요.</p>
           </div>
-          <TextAction className="tq-home-button" onClick={handleNavigateHome}>
-            ← 다른 콘텐츠 보기
-          </TextAction>
+          <div className="feature-header-actions">
+            <TextAction className="tq-home-button" onClick={handleNavigateHome}>
+              ← 다른 콘텐츠 보기
+            </TextAction>
+            {step !== SESSION_STEPS.START ? (
+              <TextAction className="tq-back-link" onClick={resetFlow}>
+                ← 다시 선택하기
+              </TextAction>
+            ) : null}
+          </div>
         </header>
 
         <StatusMessage notice={notice} errorMessage={errorMessage} />
@@ -232,7 +244,6 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
           <StartPanel
             startForm={startForm}
             canStart={canStart}
-            isBusy={false}
             onSubmit={handleCreateSession}
             onChangeForm={updateStartForm}
             onResetQuestion={() => setAnswers({})}
@@ -251,7 +262,6 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
             onAnswerChange={updateAnswer}
             onComplete={completeQuestionBook}
             onDisplayNameChange={updateDisplayName}
-            onReset={resetFlow}
           />
         ) : null}
 
@@ -260,6 +270,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
             answers={answers}
             completedAt={completedAt}
             displayName={startForm.displayName}
+            isSaving={isSaving}
             questions={questions}
             relationship={selectedRelationship}
             reportRef={reportRef}
