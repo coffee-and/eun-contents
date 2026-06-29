@@ -1,11 +1,18 @@
-.theme-relationship {
+html:has(.theme-relationship),
+body:has(.theme-relationship),
+#root:has(.theme-relationship) {
   min-height: 100%;
+  background: #f9f8f7;
+}
+
+.theme-relationship {
+  min-height: 100vh;
   background: var(--bg);
   color: var(--text);
 }
 
 .theme-relationship .page {
-  min-height: 100%;
+  min-height: 100vh;
   padding: 24px 16px 64px;
   background: var(--bg);
 }
@@ -22,7 +29,7 @@
 }
 
 .theme-relationship .hero__title {
-  font-size: clamp(2.1rem, 4.2vw, 3.5rem);
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
 }
 
 .theme-relationship .progress,
@@ -32,11 +39,11 @@
 
 .theme-relationship .progress {
   height: 7px;
-  background: #f1e8ed;
+  background: var(--relationship-almond);
 }
 
 .theme-relationship .progress__fill {
-  background: var(--relationship-steel-blue);
+  background: var(--relationship-mist);
 }
 
 .theme-relationship .card,
@@ -54,44 +61,51 @@
 .theme-relationship .saved-result-link-box,
 .theme-relationship .answer-toggle-card,
 .theme-relationship .result-card--actions,
-.theme-relationship .share-modal__panel {
+.theme-relationship .share-modal__panel,
+.theme-relationship .capture-export.capture-export--saving {
   border-radius: 0;
   box-shadow: none;
 }
 
 .theme-relationship .mode-select {
   padding: 32px;
-  background: var(--card-bg);
+  background: var(--relationship-white);
 }
 
 .theme-relationship .mode-card {
   border: 0;
-  border-top: 8px solid var(--relationship-steel-blue);
-  background: #fbf7f9;
+  border-top: 6px solid var(--relationship-mist);
+  background: var(--relationship-surface);
 }
 
 .theme-relationship .mode-card:hover,
 .theme-relationship .mode-card:focus-visible {
   border-top-color: var(--relationship-wine);
-  background: #f6eef2;
+  background: var(--relationship-almond);
+  transform: none;
 }
 
 .theme-relationship .question-card {
-  border-top: 8px solid var(--relationship-editorial-navy);
-  background: var(--card-bg);
+  border-top: 6px solid var(--relationship-navy);
+  background: var(--relationship-white);
 }
 
-.theme-relationship .badge {
+.theme-relationship .badge,
+.theme-relationship .answer-toggle-card__button em {
   border-radius: 0;
-  background: #f3edf2;
-  color: var(--relationship-editorial-navy);
+  background: var(--relationship-almond);
+  color: var(--relationship-navy);
+}
+
+.theme-relationship .question-card__line {
+  background: var(--relationship-line);
 }
 
 .theme-relationship .option-card {
   border: 1px solid var(--relationship-line);
   border-radius: 0;
   background: var(--relationship-white);
-  color: var(--relationship-editorial-navy);
+  color: var(--relationship-navy);
   box-shadow: none;
   transition:
     background var(--motion-fast) var(--motion-ease),
@@ -101,18 +115,22 @@
 
 .theme-relationship .option-card:hover,
 .theme-relationship .option-card:focus-visible {
-  border-color: var(--relationship-lavender);
-  background: #faf5f8;
-  color: var(--relationship-editorial-navy);
+  border-color: var(--relationship-mist);
+  background: #f7f5f1;
+  color: var(--relationship-navy);
 }
 
 .theme-relationship .option-card--selected,
 .theme-relationship .option-card--selected:hover,
 .theme-relationship .option-card--selected:focus-visible {
-  border: 1px solid var(--relationship-steel-blue);
+  border: 1px solid var(--relationship-navy);
   background: var(--relationship-selected);
-  color: var(--relationship-ink-navy);
+  color: var(--relationship-navy);
   box-shadow: none;
+}
+
+.theme-relationship .option-card--selected .option-card__text {
+  font-weight: 700;
 }
 
 .theme-relationship .question-card__actions .button {
@@ -123,27 +141,27 @@
 
 .theme-relationship .question-card__previous.button--secondary {
   background: var(--relationship-secondary);
-  color: var(--relationship-editorial-navy);
+  color: var(--relationship-navy);
 }
 
 .theme-relationship .question-card__previous.button--secondary:hover:not(:disabled) {
-  background: #e3e6ee;
-  color: var(--relationship-ink-navy);
+  background: #e2ded7;
+  color: var(--relationship-deep-navy);
 }
 
 .theme-relationship .question-card__previous.button--secondary:disabled,
 .theme-relationship .question-card__next.button--primary:disabled {
   background: var(--relationship-disabled);
-  color: #8b8f9c;
+  color: #8b8c8c;
 }
 
 .theme-relationship .question-card__next.button--primary {
-  background: var(--relationship-editorial-navy);
+  background: var(--relationship-navy);
   color: var(--relationship-white);
 }
 
 .theme-relationship .question-card__next.button--primary:hover:not(:disabled) {
-  background: var(--relationship-ink-navy);
+  background: var(--relationship-deep-navy);
 }
 
 .theme-relationship .capture-panel {
@@ -163,20 +181,20 @@
 }
 
 .theme-relationship .capture-panel::before {
-  top: -128px;
+  top: -132px;
   right: 48px;
   width: 310px;
   height: 310px;
   border-radius: 50%;
-  background: rgba(231, 183, 198, 0.32);
+  background: rgba(237, 234, 228, 0.88);
 }
 
 .theme-relationship .capture-panel::after {
-  right: -34px;
+  right: -36px;
   bottom: 48px;
   width: 410px;
   height: 300px;
-  background: rgba(110, 135, 166, 0.12);
+  background: rgba(173, 184, 187, 0.2);
   clip-path: polygon(100% 0, 100% 100%, 0 100%);
 }
 
@@ -197,8 +215,8 @@
 }
 
 .theme-relationship .capture-panel__title {
-  max-width: 740px;
-  font-size: clamp(1.8rem, 3.25vw, 2.9rem);
+  max-width: 720px;
+  font-size: clamp(1.75rem, 3vw, 2.65rem);
   line-height: 1.1;
 }
 
@@ -220,7 +238,7 @@
 .theme-relationship .capture-panel__type-label,
 .theme-relationship .capture-panel__summary-label,
 .theme-relationship .capture-panel__block-label {
-  color: var(--relationship-steel-blue);
+  color: var(--relationship-slate);
 }
 
 .theme-relationship .capture-panel__type-label {
@@ -229,7 +247,7 @@
 }
 
 .theme-relationship .capture-panel__type-value {
-  color: var(--relationship-editorial-navy);
+  color: var(--relationship-navy);
   font-size: 0.92rem;
   line-height: 1.25;
 }
@@ -239,8 +257,8 @@
   isolation: isolate;
   overflow: hidden;
   border: 0;
-  border-top: 7px solid var(--relationship-rose);
-  background: var(--relationship-ink-navy);
+  border-top: 7px solid var(--relationship-mist);
+  background: var(--relationship-navy);
   color: var(--relationship-white);
 }
 
@@ -250,8 +268,8 @@
   z-index: 0;
   inset: 0 0 0 auto;
   width: 32%;
-  background: var(--relationship-editorial-navy);
-  clip-path: polygon(18% 0, 100% 0, 100% 100%, 0 100%);
+  background: var(--relationship-noir);
+  clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
   pointer-events: none;
 }
 
@@ -259,13 +277,13 @@
   content: "";
   position: absolute;
   z-index: 0;
-  top: 22px;
-  right: -34px;
-  width: 260px;
-  height: 220px;
-  background: rgba(231, 183, 198, 0.18);
-  clip-path: polygon(64% 0, 100% 100%, 0 76%);
-  transform: rotate(-8deg);
+  top: 14%;
+  right: 31.2%;
+  width: 1px;
+  height: 72%;
+  background: rgba(173, 184, 187, 0.65);
+  transform: rotate(8deg);
+  transform-origin: center;
   pointer-events: none;
 }
 
@@ -277,15 +295,15 @@
 
 .theme-relationship .result-overview-card__head {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 210px;
+  grid-template-columns: minmax(0, 1fr) minmax(170px, 210px);
   align-items: center;
-  gap: 38px;
+  gap: 36px;
 }
 
 .theme-relationship .result-overview-card__title {
-  max-width: 720px;
-  font-size: clamp(1.75rem, 3vw, 2.75rem);
-  line-height: 1.1;
+  max-width: 700px;
+  font-size: clamp(1.65rem, 2.75vw, 2.45rem);
+  line-height: 1.12;
 }
 
 .theme-relationship .result-overview-card__desc {
@@ -295,21 +313,21 @@
 .theme-relationship .result-overview-card__score {
   position: relative;
   display: grid;
-  justify-items: end;
   align-items: center;
-  min-height: 180px;
+  justify-items: start;
+  min-height: 150px;
+  padding-left: 26px;
 }
 
 .theme-relationship .result-score-ring {
-  position: relative;
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: auto auto;
-  place-content: center end;
+  place-content: center start;
   column-gap: 5px;
-  width: 200px;
-  min-height: 150px;
-  padding: 24px 18px 20px;
+  width: auto;
+  min-height: 0;
+  padding: 0;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -317,43 +335,18 @@
   box-shadow: none;
 }
 
-.theme-relationship .result-score-ring::before {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  inset: 4px -28px 2px 22px;
-  border-left: 1px solid rgba(255, 255, 255, 0.32);
-  background: rgba(110, 135, 166, 0.18);
-  clip-path: polygon(26% 0, 100% 0, 100% 100%, 0 100%);
-}
-
+.theme-relationship .result-score-ring::before,
 .theme-relationship .result-score-ring::after {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  top: -14px;
-  right: -14px;
-  width: 174px;
-  height: 154px;
-  background: rgba(231, 183, 198, 0.18);
-  clip-path: polygon(58% 0, 100% 100%, 0 78%);
-  transform: rotate(4deg);
-}
-
-.theme-relationship .result-score-ring span,
-.theme-relationship .result-score-ring strong,
-.theme-relationship .result-score-ring em {
-  position: relative;
-  z-index: 1;
+  display: none;
 }
 
 .theme-relationship .result-score-ring span {
   grid-column: 1 / -1;
-  justify-self: end;
-  align-self: end;
+  justify-self: start;
   margin-bottom: 8px;
-  color: #e9edf5;
+  color: var(--relationship-mist);
   font-size: 0.72rem;
+  letter-spacing: 0.08em;
 }
 
 .theme-relationship .result-score-ring strong {
@@ -361,7 +354,7 @@
   grid-row: 2;
   align-self: end;
   color: var(--relationship-white);
-  font-size: clamp(2.5rem, 4.8vw, 3.65rem);
+  font-size: clamp(2.35rem, 4.2vw, 3.3rem);
   line-height: 0.92;
 }
 
@@ -369,20 +362,20 @@
   grid-column: 2;
   grid-row: 2;
   align-self: end;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
   color: var(--relationship-white);
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   line-height: 1;
 }
 
 .theme-relationship .result-card__title,
 .theme-relationship .premium-report__title {
-  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
   line-height: 1.25;
 }
 
 .theme-relationship .premium-report__section h4 {
-  font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
 }
 
 .theme-relationship .metric-card,
@@ -398,11 +391,11 @@
 }
 
 .theme-relationship .metric-card__bar {
-  background: #f0e9ed;
+  background: var(--relationship-almond);
 }
 
 .theme-relationship .metric-card__bar span {
-  background: var(--relationship-steel-blue);
+  background: var(--relationship-slate);
 }
 
 .theme-relationship .premium-lock__label {
@@ -428,22 +421,22 @@
   min-height: 180px;
   padding: 20px;
   border: 0;
-  border-top: 8px solid var(--relationship-editorial-navy);
-  background: #fffafb;
+  border-top: 7px solid var(--relationship-navy);
+  background: #fcfbf9;
 }
 
 .theme-relationship .premium-lock__preview-card:nth-child(2) {
   border-top-color: var(--relationship-slate);
-  background: #fbf8fa;
+  background: #f8f6f3;
 }
 
 .theme-relationship .premium-lock__preview-card:nth-child(3) {
   border-top-color: var(--relationship-wine);
-  background: #fcf5f6;
+  background: #fbf7f8;
 }
 
 .theme-relationship .premium-lock__preview-number {
-  color: var(--relationship-steel-blue);
+  color: var(--relationship-mist);
   font-size: 2rem;
   font-weight: 700;
   line-height: 1;
@@ -468,13 +461,13 @@
   border-bottom: 4px solid var(--relationship-wine);
   border-radius: 0;
   background: transparent;
-  color: var(--relationship-editorial-navy);
+  color: var(--relationship-navy);
 }
 
 .theme-relationship .premium-report__summary div {
   padding: 18px;
   border: 1px solid var(--relationship-line);
-  border-top: 6px solid var(--relationship-editorial-navy);
+  border-top: 6px solid var(--relationship-navy);
   background: var(--relationship-white);
 }
 
@@ -483,7 +476,7 @@
 }
 
 .theme-relationship .premium-report__summary div:nth-child(3n) {
-  border-top-color: var(--relationship-lavender);
+  border-top-color: var(--relationship-mist);
 }
 
 .theme-relationship .premium-report__summary div:nth-child(4n) {
@@ -493,7 +486,7 @@
 .theme-relationship .premium-report__section {
   padding: 24px;
   border: 1px solid var(--relationship-line);
-  border-left: 6px solid var(--relationship-editorial-navy);
+  border-left: 6px solid var(--relationship-navy);
   background: var(--relationship-white);
 }
 
@@ -503,12 +496,6 @@
 
 .theme-relationship .premium-report__section:nth-child(3n) {
   border-left-color: var(--relationship-wine);
-}
-
-.theme-relationship .answer-toggle-card__button em {
-  border-radius: 0;
-  background: var(--relationship-secondary);
-  color: var(--relationship-editorial-navy);
 }
 
 .theme-relationship .result-card--actions .button-row {
@@ -528,7 +515,7 @@
   border: 0;
   border-radius: 0;
   background: var(--relationship-secondary);
-  color: var(--relationship-editorial-navy);
+  color: var(--relationship-navy);
   font-size: var(--font-body-small);
   font-weight: 700;
   line-height: 1.2;
@@ -537,18 +524,18 @@
 }
 
 .theme-relationship .result-card--actions .button--primary {
-  background: var(--relationship-editorial-navy);
+  background: var(--relationship-navy);
   color: var(--relationship-white);
 }
 
 .theme-relationship .result-card--actions .button:hover:not(:disabled),
 .theme-relationship .result-card--actions .text-action:hover {
-  background: #e3e6ee;
-  color: var(--relationship-ink-navy);
+  background: #e2ded7;
+  color: var(--relationship-deep-navy);
 }
 
 .theme-relationship .result-card--actions .button--primary:hover:not(:disabled) {
-  background: var(--relationship-ink-navy);
+  background: var(--relationship-deep-navy);
   color: var(--relationship-white);
 }
 
@@ -587,16 +574,12 @@
   .theme-relationship .result-overview-card::before {
     inset: auto 0 0;
     width: 100%;
-    height: 42%;
+    height: 36%;
     clip-path: none;
   }
 
   .theme-relationship .result-overview-card::after {
-    top: auto;
-    right: -46px;
-    bottom: -24px;
-    width: 220px;
-    height: 180px;
+    display: none;
   }
 
   .theme-relationship .result-overview-card__head {
@@ -604,11 +587,9 @@
   }
 
   .theme-relationship .result-overview-card__score {
-    justify-self: stretch;
-  }
-
-  .theme-relationship .result-score-ring {
-    justify-self: end;
+    justify-items: start;
+    min-height: 112px;
+    padding: 20px 0 0;
   }
 
   .theme-relationship .result-overview-card__desc {
@@ -620,10 +601,5 @@
   .theme-relationship .premium-lock__preview-grid,
   .theme-relationship .result-card--actions .button-row {
     grid-template-columns: 1fr;
-  }
-
-  .theme-relationship .result-score-ring {
-    width: 176px;
-    min-height: 138px;
   }
 }
