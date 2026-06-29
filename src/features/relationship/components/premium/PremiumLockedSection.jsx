@@ -1,41 +1,49 @@
 import { Button } from "../../../../shared/components/Button.jsx";
-import { PREMIUM_PRICE, premiumBenefits } from "../../data/premiumContent.js";
+import { PREMIUM_PRICE } from "../../data/premiumContent.js";
+
+const premiumSamples = [
+  {
+    number: "01",
+    title: "관계를 지탱하는 보호 요인",
+    description:
+      "갈등 뒤에도 다시 연결하려는 시도처럼, 현재 관계 안에서 회복을 돕는 강점을 답변 근거와 함께 보여줍니다.",
+  },
+  {
+    number: "02",
+    title: "반복되는 취약 지점",
+    description:
+      "서운함이 커지는 순간과 방어가 먼저 시작되는 흐름을 구분해, 무엇을 먼저 조율해야 하는지 정리합니다.",
+  },
+  {
+    number: "03",
+    title: "상황별 대화 가이드",
+    description:
+      "설득보다 감정을 먼저 전달할 수 있도록 실제로 꺼내 쓸 수 있는 대화 문장과 14일 관찰 포인트를 제안합니다.",
+  },
+];
 
 export function PremiumLockedSection({ onClickPayment }) {
   return (
     <section className="card premium-lock">
-      <div className="premium-lock__label">PREMIUM REPORT</div>
+      <div className="premium-lock__label">PREMIUM REPORT PREVIEW</div>
 
       <h3 className="premium-lock__title">
-        연인과 부부의 관계 과제를 구분해 상담 관점으로 깊이 분석해요
+        프리미엄 리포트에서는 이런 방식으로 관계를 더 깊이 읽어요
       </h3>
 
       <p className="premium-lock__desc">
-        무료 결과가 현재 관계의 전체적인 흐름을 보여준다면, 프리미엄
-        리포트는 선택한 모드와 답변을 근거로 관계의 보호 요인, 취약 지점,
-        갈등 구조, 회복 조건과 실제 행동 계획까지 단계별로 정리합니다.
+        실제 리포트에서 만나게 될 분석 형태를 먼저 보여드려요. 아래 내용은
+        구성 예시이며, 실제 결과는 선택한 관계 모드와 답변에 맞춰 달라집니다.
       </p>
 
-      <ul className="premium-lock__list">
-        {premiumBenefits.map((benefit) => (
-          <li key={benefit}>{benefit}</li>
+      <div className="premium-lock__preview-grid">
+        {premiumSamples.map((sample) => (
+          <article className="premium-lock__preview-card" key={sample.number}>
+            <span className="premium-lock__preview-number">{sample.number}</span>
+            <h4>{sample.title}</h4>
+            <p>{sample.description}</p>
+          </article>
         ))}
-      </ul>
-
-      <div className="premium-lock__sample">
-        <div className="premium-lock__sample-label">PREMIUM PREVIEW</div>
-        <p>
-          연인은 상호성·신뢰 경계·애착 안정감·결혼 전환 준비도를 중심으로
-          분석합니다.
-        </p>
-        <p>
-          부부는 보이지 않는 노동·배우자 친밀감·경제와 양가 경계·장기
-          공동체를 중심으로 분석합니다.
-        </p>
-        <p>
-          근거 응답 → 상담적 의미 → 관계 영향 → 대화 목표 → 14일 관찰
-          계획 순서로 실제 변화 가능성을 점검합니다.
-        </p>
       </div>
 
       <Button

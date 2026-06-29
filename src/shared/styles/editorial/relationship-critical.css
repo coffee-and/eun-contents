@@ -1,0 +1,11 @@
+.theme-relationship .option-card {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.theme-relationship .option-card--selected {
+  border: 1px solid #203854 !important;
+  background: #203854 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}

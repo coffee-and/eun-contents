@@ -21,6 +21,11 @@ import { RelationshipModeSelect } from "./components/mode/RelationshipModeSelect
 import { getResultId } from "../../app/routes.js";
 import "./styles/relationship-theme.css";
 import "./styles/relationship-components.css";
+import "./styles/relationship-editorial.css";
+import "../../shared/styles/editorial/relationship-refinements.css";
+import "../../shared/styles/editorial/relationship-actions-critical.css";
+import "../../shared/styles/editorial/relationship-surfaces.css";
+import "../../shared/styles/editorial/relationship-result-critical.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
 
