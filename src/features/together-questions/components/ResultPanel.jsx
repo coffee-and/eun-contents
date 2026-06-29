@@ -2,10 +2,20 @@
 import { Button } from "../../../shared/components/Button.jsx";
 import { EMPTY_ANSWER_TEXT } from "../constants/sessionFlow.js";
 
+function formatCompletedDate(value) {
+  if (!value) return "날짜 미정";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "날짜 미정";
+
+  return date.toLocaleDateString("ko-KR");
+}
+
 export function ResultPanel({
   answers,
   completedAt,
   displayName,
+  isSaving,
   questions,
   relationship,
   reportRef,
@@ -14,7 +24,7 @@ export function ResultPanel({
   onSaveImage,
   onShare,
 }) {
-  const formattedDate = new Date(completedAt ?? Date.now()).toLocaleDateString("ko-KR");
+  const formattedDate = formatCompletedDate(completedAt);
 
   return (
     <section className="tq-complete-wrap">
@@ -39,16 +49,16 @@ export function ResultPanel({
       </article>
 
       <div className="tq-export-actions">
-        <Button variant="secondary" onClick={onPrintPdf}>
+        <Button variant="secondary" onClick={onPrintPdf} disabled={isSaving}>
           PDF 저장
         </Button>
-        <Button variant="secondary" onClick={onSaveImage}>
-          이미지 저장
+        <Button variant="secondary" onClick={onSaveImage} disabled={isSaving}>
+          {isSaving ? "이미지 저장 중…" : "이미지 저장"}
         </Button>
-        <Button variant="secondary" onClick={onShare}>
+        <Button variant="secondary" onClick={onShare} disabled={isSaving}>
           공유하기
         </Button>
-        <Button variant="primary" onClick={onReset}>
+        <Button variant="primary" onClick={onReset} disabled={isSaving}>
           새 문답 시작
         </Button>
       </div>
