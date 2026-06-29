@@ -1,59 +1,49 @@
-.theme-relationship .result-card--actions,
-.theme-relationship .saved-result-link-box,
-.theme-relationship .answer-toggle-card {
-  border-radius: 0 !important;
-  box-shadow: none !important;
+.theme-relationship .question-card {
+  border-top: 6px solid var(--relationship-burgundy);
 }
 
-.theme-relationship .result-card--actions .button-row {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
+.theme-relationship .question-card .badge {
+  border-radius: 0;
+  background: var(--relationship-wine);
+  color: var(--relationship-white);
 }
 
-.theme-relationship .result-card--actions .button,
-.theme-relationship .result-card--actions .text-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: 48px;
-  padding: 12px 16px;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: #e9edf2;
-  color: #203854;
-  font-size: var(--font-body-small);
-  font-weight: 700;
-  line-height: 1.2;
-  text-align: center;
-  text-decoration: none;
+.theme-relationship .question-card__line {
+  background: var(--relationship-lavender);
 }
 
-.theme-relationship .result-card--actions .button--primary {
-  background: #203854;
-  color: #ffffff;
+.theme-relationship .option-card--selected,
+.theme-relationship .option-card--selected:hover,
+.theme-relationship .option-card--selected:focus-visible {
+  border-color: var(--relationship-slate);
+  background: #f2f0ec;
+  color: var(--relationship-navy);
 }
 
-.theme-relationship .result-card--actions .button:hover:not(:disabled),
-.theme-relationship .result-card--actions .text-action:hover {
-  background: #dce3eb;
-  color: #152a44;
+.theme-relationship .option-card--selected .option-card__text {
+  font-weight: 600;
 }
 
-.theme-relationship .result-card--actions .button--primary:hover:not(:disabled) {
-  background: #152a44;
-  color: #ffffff;
+.theme-relationship .question-card__previous.button--secondary {
+  border: 1px solid transparent;
+  background: #ece9e4;
+  color: var(--relationship-navy);
 }
 
-@media (max-width: 900px) {
-  .theme-relationship .result-card--actions .button-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+.theme-relationship .question-card__previous.button--secondary:hover:not(:disabled) {
+  border-color: var(--relationship-mist);
+  background: #dfdbd4;
 }
 
-@media (max-width: 520px) {
-  .theme-relationship .result-card--actions .button-row {
-    grid-template-columns: 1fr;
-  }
+.theme-relationship .question-card__previous.button--secondary:disabled {
+  border-color: #efede8;
+  background: #f8f7f4;
+  color: #b7b3ad;
+  opacity: 1;
+}
+
+.theme-relationship .question-card__next.button--primary:disabled {
+  background: #d2d5d5;
+  color: #f6f6f4;
+  opacity: 1;
 }
