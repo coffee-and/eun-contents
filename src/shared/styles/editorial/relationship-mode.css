@@ -3,6 +3,7 @@
 @import "./relationship-premium-critical.css";
 @import "./relationship-actions-critical.css";
 @import "./relationship-blue-accents.css";
+@import "./relationship-blue-controls.css";
 
 .theme-relationship.theme-relationship .mode-select {
   padding: 32px;
