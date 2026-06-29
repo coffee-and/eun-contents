@@ -57,12 +57,6 @@ export function HomePage({ onNavigate }) {
           <p className="hub-hero__tagline">오늘도, 당신의 순간을 켜세요.</p>
           <h1 className="hub-hero__title">moment ON</h1>
         </div>
-
-        <div className="hub-on-object" aria-hidden="true">
-          <span className="hub-on-object__circle" />
-          <span className="hub-on-object__diagonal" />
-          <span className="hub-on-object__field" />
-        </div>
       </header>
 
       <section className="featured-content" aria-label="추천 콘텐츠">
