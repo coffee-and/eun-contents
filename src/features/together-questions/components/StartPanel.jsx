@@ -8,7 +8,7 @@ export function StartPanel({ startForm, canStart, isBusy, onSubmit, onChangeForm
     <form className="tq-panel tq-start" onSubmit={onSubmit}>
       <div className="tq-section__head">
         <span>START / 01</span>
-        <h2>나의 문답집을 시작해볼까요?</h2>
+        <h2>누구와의 문답을 시작할까요?</h2>
       </div>
 
       <div className="tq-choice-group">
