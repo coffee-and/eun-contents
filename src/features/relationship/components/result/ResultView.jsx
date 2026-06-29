@@ -329,8 +329,16 @@ export function ResultView({
             </div>
 
             <div className="result-overview-card__score">
-              <span>RELATIONSHIP INDEX</span>
-              <strong>{analysis.finalValue} / 100</strong>
+              <div
+                className="result-score-ring"
+                role="img"
+                aria-label={`관계 지수 ${analysis.finalValue}점`}
+                style={{ "--score-value": `${analysis.finalValue}%` }}
+              >
+                <span>관계 지수</span>
+                <strong>{analysis.finalValue}</strong>
+                <em>/100</em>
+              </div>
             </div>
           </div>
 

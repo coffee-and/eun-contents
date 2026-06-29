@@ -1,50 +1,113 @@
 import { CONTENT_CATALOG, CONTENT_STATUS } from "../data/contentCatalog.js";
 
+const FEATURED_CONTENT_ID = "relationship";
+
+function ContentAction({
+  content,
+  isActive,
+  className = "content-card__link",
+  onNavigate,
+}) {
+  return (
+    <button
+      type="button"
+      className={className}
+      onClick={() => onNavigate(content.route)}
+      disabled={!isActive}
+    >
+      {content.actionLabel}
+    </button>
+  );
+}
+
+function CategoryCard({ content, onNavigate }) {
+  const isActive = content.status === CONTENT_STATUS.ACTIVE;
+
+  return (
+    <article
+      className={`category-card category-card--${content.id}${
+        isActive ? " category-card--active" : " category-card--disabled"
+      }`}
+    >
+      <div className="category-card__shape" aria-hidden="true" />
+      <p className="category-card__category">{content.category}</p>
+      <h3 className="category-card__title">{content.title}</h3>
+      <p className="category-card__description">{content.description}</p>
+      <ContentAction content={content} isActive={isActive} onNavigate={onNavigate} />
+    </article>
+  );
+}
+
 export function HomePage({ onNavigate }) {
+  const featuredContent =
+    CONTENT_CATALOG.find((content) => content.id === FEATURED_CONTENT_ID) ??
+    CONTENT_CATALOG.find((content) => content.status === CONTENT_STATUS.ACTIVE);
+  const categoryContents = CONTENT_CATALOG.filter(
+    (content) => content.id !== featuredContent?.id
+  );
+  const isFeaturedActive = featuredContent?.status === CONTENT_STATUS.ACTIVE;
+
   return (
     <div className="hub-page">
       <header className="hub-hero">
-        <p className="hub-hero__tagline">[: 오늘의 나와 우리]</p>
-        <h1 className="hub-hero__title">moment ON</h1>
+        <div>
+          <p className="hub-hero__tagline">오늘도, 당신의 순간을 켜세요.</p>
+          <h1 className="hub-hero__title">moment ON</h1>
+          <p className="hub-hero__lede">
+            관계, 문답, 감정 기록을 가볍게 시작하고 나답게 남기는 콘텐츠 플랫폼
+          </p>
+        </div>
+
+        <div className="hub-hero__graphic" aria-hidden="true">
+          <span className="hub-hero__arch" />
+          <span className="hub-hero__sun" />
+          <span className="hub-hero__stairs" />
+        </div>
       </header>
 
-      <section className="content-grid" aria-label="콘텐츠 목록">
-        {CONTENT_CATALOG.map((content) => {
-          const isActive = content.status === CONTENT_STATUS.ACTIVE;
+      <section className="featured-content" aria-label="추천 콘텐츠">
+        {featuredContent ? (
+          <article className="featured-card">
+            <div className="featured-card__body">
+              <p className="content-card__category">{featuredContent.category}</p>
+              <h2 className="featured-card__title">{featuredContent.title}</h2>
+              <p className="featured-card__description">
+                {featuredContent.description}
+              </p>
+              <ContentAction
+                content={featuredContent}
+                isActive={isFeaturedActive}
+                className="featured-card__button"
+                onNavigate={onNavigate}
+              />
+            </div>
 
-          return (
-            <article
-              key={content.id}
-              className={`content-card content-card--${content.layout}${
-                isActive ? " content-card--active" : ""
-              }`}
-            >
-              <div className="content-card__media">
-                <img
-                  className="content-card__image"
-                  src={content.imageSrc}
-                  alt={content.imageAlt}
-                  loading="lazy"
-                />
-              </div>
+            <div className="featured-card__visual" aria-hidden="true">
+              <img
+                className="featured-card__image"
+                src={featuredContent.imageSrc}
+                alt=""
+                loading="eager"
+              />
+              <span className="featured-card__circle" />
+              <span className="featured-card__arch" />
+              <span className="featured-card__stairs" />
+            </div>
+          </article>
+        ) : null}
+      </section>
 
-              <div className="content-card__body">
-                <p className="content-card__category">{content.category}</p>
-                <h2 className="content-card__title">{content.title}</h2>
-                <p className="content-card__description">{content.description}</p>
+      <section className="content-section" aria-label="콘텐츠 카테고리">
+        <div className="content-section__head">
+          <span>콘텐츠 카테고리</span>
+          <p>지금 열려 있는 콘텐츠와 준비 중인 콘텐츠를 한눈에 볼 수 있어요.</p>
+        </div>
 
-                <button
-                  type="button"
-                  className="content-card__link"
-                  onClick={() => onNavigate(content.route)}
-                  disabled={!isActive}
-                >
-                  {content.actionLabel}
-                </button>
-              </div>
-            </article>
-          );
-        })}
+        <div className="category-grid">
+          {categoryContents.map((content) => (
+            <CategoryCard key={content.id} content={content} onNavigate={onNavigate} />
+          ))}
+        </div>
       </section>
     </div>
   );
