@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import { AppShell } from "../../shared/components/AppShell.jsx";
-import { TextAction } from "../../shared/components/TextAction.jsx";
+import { FeatureHeader } from "../../shared/components/FeatureHeader.jsx";
 import { AnswerPanel } from "./components/AnswerPanel.jsx";
 import { ResultPanel } from "./components/ResultPanel.jsx";
 import { StartPanel } from "./components/StartPanel.jsx";
@@ -126,15 +126,8 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
     setErrorMessage("");
 
     const nextCompletedAt = new Date().toISOString();
-    const resultForm = {
-      ...startForm,
-      displayName: trimmedDisplayName,
-    };
-    const result = {
-      form: resultForm,
-      answers,
-      completedAt: nextCompletedAt,
-    };
+    const resultForm = { ...startForm, displayName: trimmedDisplayName };
+    const result = { form: resultForm, answers, completedAt: nextCompletedAt };
 
     setStartForm(resultForm);
     setCompletedAt(nextCompletedAt);
@@ -169,7 +162,6 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
 
   async function saveImage() {
     if (!reportRef.current || isSaving) return;
-
     setIsSaving(true);
     setErrorMessage("");
 
@@ -222,69 +214,62 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
   }
 
   return (
-    <div className="theme-together-questions">
-      <AppShell>
-        <header className="tq-hero">
-          <div>
-            <span className="tq-hero__eyebrow">QUESTIONS TOGETHER</span>
-            <h1>함께하는 문답</h1>
-            <p>내 마음을 차례대로 적고, 완성된 나의 문답집을 저장하거나 공유해요.</p>
-          </div>
-          <div className="feature-header-actions">
-            <TextAction className="tq-home-button" onClick={handleNavigateHome}>
-              ← 다른 콘텐츠 보기
-            </TextAction>
-            {step !== SESSION_STEPS.START ? (
-              <TextAction className="tq-back-link" onClick={handleRestart}>
-                ← 다시 선택하기
-              </TextAction>
-            ) : null}
-          </div>
-        </header>
+    <AppShell>
+      <FeatureHeader
+        className="tq-hero"
+        copyClassName="tq-hero__copy"
+        eyebrow="QUESTIONS TOGETHER"
+        eyebrowClassName="tq-hero__eyebrow"
+        title="함께하는 문답"
+        titleClassName="tq-hero__title"
+        subtitle="내 마음을 차례대로 적고, 완성된 나의 문답집을 저장하거나 공유해요."
+        subtitleClassName="tq-hero__subtitle"
+        onNavigateHome={handleNavigateHome}
+        onRestart={step !== SESSION_STEPS.START ? handleRestart : null}
+      />
 
-        <StatusMessage notice={notice} errorMessage={errorMessage} />
+      <StatusMessage notice={notice} errorMessage={errorMessage} />
 
-        {step === SESSION_STEPS.START ? (
-          <StartPanel
-            startForm={startForm}
-            canStart={canStart}
-            onSubmit={handleCreateSession}
-            onChangeForm={updateStartForm}
-            onResetQuestion={() => setAnswers({})}
-          />
-        ) : null}
+      {step === SESSION_STEPS.START ? (
+        <StartPanel
+          startForm={startForm}
+          canStart={canStart}
+          onSubmit={handleCreateSession}
+          onChangeForm={updateStartForm}
+          onResetQuestion={() => setAnswers({})}
+        />
+      ) : null}
 
-        {step === SESSION_STEPS.ANSWER ? (
-          <AnswerPanel
-            answers={answers}
-            displayName={startForm.displayName}
-            displayNameError={displayNameError}
-            displayNameInputRef={displayNameInputRef}
-            isSaving={isSaving}
-            questions={questions}
-            relationship={selectedRelationship}
-            onAnswerChange={updateAnswer}
-            onComplete={completeQuestionBook}
-            onDisplayNameChange={updateDisplayName}
-          />
-        ) : null}
+      {step === SESSION_STEPS.ANSWER ? (
+        <AnswerPanel
+          answers={answers}
+          displayName={startForm.displayName}
+          displayNameError={displayNameError}
+          displayNameInputRef={displayNameInputRef}
+          isSaving={isSaving}
+          questions={questions}
+          relationship={selectedRelationship}
+          onAnswerChange={updateAnswer}
+          onComplete={completeQuestionBook}
+          onDisplayNameChange={updateDisplayName}
+        />
+      ) : null}
 
-        {step === SESSION_STEPS.RESULT ? (
-          <ResultPanel
-            answers={answers}
-            completedAt={completedAt}
-            displayName={startForm.displayName}
-            isSaving={isSaving}
-            questions={questions}
-            relationship={selectedRelationship}
-            reportRef={reportRef}
-            onPrintPdf={printPdf}
-            onReset={handleRestart}
-            onSaveImage={saveImage}
-            onShare={shareQuestionBook}
-          />
-        ) : null}
-      </AppShell>
-    </div>
+      {step === SESSION_STEPS.RESULT ? (
+        <ResultPanel
+          answers={answers}
+          completedAt={completedAt}
+          displayName={startForm.displayName}
+          isSaving={isSaving}
+          questions={questions}
+          relationship={selectedRelationship}
+          reportRef={reportRef}
+          onPrintPdf={printPdf}
+          onReset={handleRestart}
+          onSaveImage={saveImage}
+          onShare={shareQuestionBook}
+        />
+      ) : null}
+    </AppShell>
   );
 }

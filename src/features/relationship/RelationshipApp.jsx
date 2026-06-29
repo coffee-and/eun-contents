@@ -18,14 +18,7 @@ import { QuestionCard } from "./components/question/QuestionCard.jsx";
 import { ResultView } from "./components/result/ResultView.jsx";
 import { RelationshipModeSelect } from "./components/mode/RelationshipModeSelect.jsx";
 import { getResultId } from "../../app/routes.js";
-import "./styles/relationship-theme.css";
-import "./styles/relationship-components.css";
-import "./styles/relationship-editorial.css";
-import "../../shared/styles/editorial/relationship-refinements.css";
-import "../../shared/styles/editorial/relationship-actions-critical.css";
-import "../../shared/styles/editorial/relationship-surfaces.css";
-import "../../shared/styles/editorial/relationship-result-critical.css";
-import "../../shared/styles/editorial/feature-cleanup.css";
+import "./styles/relationship.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
 
@@ -199,11 +192,9 @@ export default function RelationshipApp({ onNavigateHome }) {
       {resultLoadError ? (
         <section className="card result-card">
           <h3 className="result-card__title">결과를 불러오지 못했어요</h3>
-
           <p className="result-card__desc">
             링크가 올바른지 확인하거나 새 테스트를 시작해 주세요.
           </p>
-
           <Button variant="primary" onClick={handleChooseAgain}>
             새 테스트 시작하기
           </Button>
