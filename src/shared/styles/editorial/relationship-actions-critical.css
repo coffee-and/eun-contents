@@ -1,0 +1,59 @@
+.theme-relationship .result-card--actions,
+.theme-relationship .saved-result-link-box,
+.theme-relationship .answer-toggle-card {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.theme-relationship .result-card--actions .button-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.theme-relationship .result-card--actions .button,
+.theme-relationship .result-card--actions .text-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #e9edf2;
+  color: #203854;
+  font-size: var(--font-body-small);
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+}
+
+.theme-relationship .result-card--actions .button--primary {
+  background: #203854;
+  color: #ffffff;
+}
+
+.theme-relationship .result-card--actions .button:hover:not(:disabled),
+.theme-relationship .result-card--actions .text-action:hover {
+  background: #dce3eb;
+  color: #152a44;
+}
+
+.theme-relationship .result-card--actions .button--primary:hover:not(:disabled) {
+  background: #152a44;
+  color: #ffffff;
+}
+
+@media (max-width: 900px) {
+  .theme-relationship .result-card--actions .button-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .theme-relationship .result-card--actions .button-row {
+    grid-template-columns: 1fr;
+  }
+}
