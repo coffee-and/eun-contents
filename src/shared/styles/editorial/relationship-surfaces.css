@@ -1,28 +1,36 @@
-@import "./relationship-blue-palette.css";
-@import "./relationship-refinements.css";
-@import "./relationship-flow-blue.css";
-@import "./relationship-frosted-final.css";
-
-.theme-relationship.theme-relationship .page {
-  min-height: 100%;
-  padding: 24px 16px 64px;
-  background: #f4f8fc;
+.theme-relationship .capture-panel::before {
+  top: -156px;
+  right: 34px;
+  width: 360px;
+  height: 360px;
+  background: rgba(237, 234, 228, 0.94);
 }
 
-.theme-relationship.theme-relationship .app-shell {
-  max-width: 1120px;
-  margin: 0 auto;
+.theme-relationship .capture-panel::after {
+  right: -52px;
+  bottom: 10px;
+  width: 470px;
+  height: 360px;
+  background: rgba(173, 184, 187, 0.32);
 }
 
-.theme-relationship.theme-relationship .hero {
-  margin-bottom: 20px;
-  padding: 30px 0 18px;
-  border-bottom: 0;
+.theme-relationship .capture-panel__summary-label,
+.theme-relationship .capture-panel__block-label {
+  color: var(--relationship-wine);
 }
 
-.theme-relationship.theme-relationship .card,
-.theme-relationship.theme-relationship .capture-panel,
-.theme-relationship.theme-relationship .share-modal__panel {
-  border-radius: initial;
-  box-shadow: none;
+@media (max-width: 768px) {
+  .theme-relationship .capture-panel::before {
+    top: -90px;
+    right: -72px;
+    width: 220px;
+    height: 220px;
+  }
+
+  .theme-relationship .capture-panel::after {
+    right: -98px;
+    bottom: 58px;
+    width: 300px;
+    height: 220px;
+  }
 }
