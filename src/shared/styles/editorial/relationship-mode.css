@@ -1,0 +1,11 @@
+.theme-relationship.theme-relationship .mode-select {
+  padding: 32px;
+  background: #ffffff;
+}
+
+.theme-relationship.theme-relationship .mode-card {
+  border: 0;
+  border-top: 8px solid #5d7da5;
+  border-radius: initial;
+  background: #e9edf2;
+}
