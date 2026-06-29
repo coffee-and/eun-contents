@@ -1,154 +1,60 @@
-.theme-relationship .capture-panel,
-.theme-relationship .result-overview-card,
-.theme-relationship .metric-card,
-.theme-relationship .metric-card__bar,
-.theme-relationship .metric-card__bar span {
-  border-radius: 0 !important;
-  box-shadow: none !important;
-}
-
-.theme-relationship .capture-panel {
-  isolation: isolate;
-}
-
-.theme-relationship .capture-panel::before,
-.theme-relationship .capture-panel::after {
-  content: "" !important;
-  position: absolute;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.theme-relationship .capture-panel::before {
-  top: -92px;
-  right: 78px;
-  width: 190px;
-  height: 300px;
-  border-radius: 100% 0 100% 0 !important;
-  background: #e7edf4 !important;
-  transform: rotate(22deg);
-}
-
-.theme-relationship .capture-panel::after {
-  top: 96px !important;
-  right: -78px !important;
-  width: 238px !important;
-  height: 144px !important;
-  aspect-ratio: auto !important;
-  border-radius: 100% 0 100% 0 !important;
-  background: rgba(245, 195, 40, 0.22) !important;
-  transform: rotate(-18deg);
-}
-
-.theme-relationship .capture-panel__hero,
-.theme-relationship .capture-panel__summary-box,
-.theme-relationship .capture-panel__grid,
-.theme-relationship .capture-panel__footer {
-  position: relative;
-  z-index: 1;
-}
-
-.theme-relationship .capture-panel__hero-main {
-  padding-right: 230px;
-}
-
-.theme-relationship .capture-panel__type-box {
-  position: absolute !important;
-  top: 0;
-  right: 0;
-  width: auto !important;
-  min-width: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  text-align: right;
-}
-
-.theme-relationship .capture-panel__type-label {
-  font-size: 0.65rem !important;
-}
-
-.theme-relationship .capture-panel__type-value {
-  font-size: 0.9rem !important;
-}
-
 .theme-relationship .result-overview-card {
-  isolation: isolate;
-  overflow: hidden;
-  background: #152a44 !important;
-}
-
-.theme-relationship .result-overview-card::before,
-.theme-relationship .result-overview-card::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  pointer-events: none;
+  border-top: 7px solid var(--relationship-mist);
+  background: var(--relationship-navy);
 }
 
 .theme-relationship .result-overview-card::before {
-  top: -116px;
-  right: 112px;
-  width: 210px;
-  height: 340px;
-  border-radius: 100% 0 100% 0;
-  background: rgba(93, 125, 165, 0.42);
-  transform: rotate(24deg);
+  inset: 0 0 0 auto;
+  width: 33%;
+  height: 100%;
+  border-radius: 0;
+  background: var(--relationship-burgundy);
+  transform: none;
+  clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
 }
 
 .theme-relationship .result-overview-card::after {
-  right: -76px;
-  bottom: -112px;
-  width: 250px;
-  height: 300px;
-  border-radius: 100% 0 100% 0;
-  background: rgba(245, 195, 40, 0.2);
-  transform: rotate(-32deg);
+  display: none;
+}
+
+.theme-relationship .result-overview-card__score {
+  padding-left: 32px;
 }
 
 .theme-relationship .result-score-ring {
-  display: grid !important;
-  grid-template-columns: auto auto;
-  grid-template-rows: auto auto;
-  place-content: center;
-  column-gap: 6px;
-  border: 16px solid rgba(184, 199, 218, 0.5);
-  background: #152a44 !important;
+  border: 0;
+  background: transparent;
 }
 
 .theme-relationship .result-score-ring span {
-  grid-column: 1 / -1;
-  justify-self: center;
-  align-self: auto !important;
-  margin-bottom: 8px;
+  color: var(--relationship-almond);
 }
 
-.theme-relationship .result-score-ring strong {
-  grid-column: 1;
-  grid-row: 2;
-  align-self: end !important;
-  line-height: 0.9;
+.theme-relationship .metric-card:nth-child(4n + 1) .metric-card__bar span {
+  background: var(--relationship-navy);
 }
 
-.theme-relationship .result-score-ring em {
-  grid-column: 2;
-  grid-row: 2;
-  align-self: end !important;
-  margin-bottom: 5px;
-  color: #ffffff !important;
-  font-size: 0.95rem;
-  line-height: 1;
+.theme-relationship .metric-card:nth-child(4n + 2) .metric-card__bar span {
+  background: var(--relationship-wine);
+}
+
+.theme-relationship .metric-card:nth-child(4n + 3) .metric-card__bar span {
+  background: var(--relationship-slate);
+}
+
+.theme-relationship .metric-card:nth-child(4n) .metric-card__bar span {
+  background: var(--relationship-burgundy);
 }
 
 @media (max-width: 768px) {
-  .theme-relationship .capture-panel__hero-main {
-    padding-right: 0;
+  .theme-relationship .result-overview-card::before {
+    inset: auto 0 0;
+    width: 100%;
+    height: 38%;
+    clip-path: none;
   }
 
-  .theme-relationship .capture-panel__type-box {
-    position: relative !important;
-    margin-top: 18px;
-    text-align: left;
+  .theme-relationship .result-overview-card__score {
+    padding-left: 0;
   }
 }
