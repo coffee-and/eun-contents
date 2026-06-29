@@ -1,0 +1,9 @@
+.theme-relationship.theme-relationship .question-card {
+  border-top: 10px solid #f28c28;
+  border-radius: initial;
+}
+
+.theme-relationship.theme-relationship .option-card {
+  border-radius: initial;
+  background: #e9edf2;
+}
