@@ -23,11 +23,6 @@
     padding: 8px 0 26px;
   }
 
-  .theme-together-questions .tq-home-button {
-    justify-self: start;
-    order: 2;
-  }
-
   .theme-together-questions .tq-panel,
   .theme-together-questions .tq-complete-card {
     padding: 20px;
@@ -36,11 +31,6 @@
   .theme-together-questions .tq-sheet-head {
     grid-template-columns: 1fr;
     gap: 14px;
-  }
-
-  .theme-together-questions .tq-back-link {
-    justify-self: start;
-    order: -1;
   }
 
   .theme-together-questions .tq-card-grid {
