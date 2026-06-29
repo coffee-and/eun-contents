@@ -1,3 +1,5 @@
+@import "./relationship-refinements.css";
+
 .theme-relationship.theme-relationship .page {
   min-height: 100%;
   padding: 24px 16px 64px;
