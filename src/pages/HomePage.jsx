@@ -20,8 +20,9 @@ function ContentAction({
   );
 }
 
-function CategoryCard({ content, onNavigate }) {
+function CategoryCard({ content, index, onNavigate }) {
   const isActive = content.status === CONTENT_STATUS.ACTIVE;
+  const issueNumber = String(index + 1).padStart(2, "0");
 
   return (
     <article
@@ -29,8 +30,10 @@ function CategoryCard({ content, onNavigate }) {
         isActive ? " category-card--active" : " category-card--disabled"
       }`}
     >
-      <div className="category-card__shape" aria-hidden="true" />
-      <p className="category-card__category">{content.category}</p>
+      <div className="category-card__meta">
+        <span className="category-card__number">{issueNumber}</span>
+        <p className="category-card__category">{content.category}</p>
+      </div>
       <h3 className="category-card__title">{content.title}</h3>
       <p className="category-card__description">{content.description}</p>
       <ContentAction content={content} isActive={isActive} onNavigate={onNavigate} />
@@ -50,18 +53,13 @@ export function HomePage({ onNavigate }) {
   return (
     <div className="hub-page">
       <header className="hub-hero">
-        <div>
+        <p className="hub-hero__issue">DIGITAL EDITORIAL / MOMENT 01</p>
+        <h1 className="hub-hero__title">moment ON</h1>
+        <div className="hub-hero__footer">
           <p className="hub-hero__tagline">오늘도, 당신의 순간을 켜세요.</p>
-          <h1 className="hub-hero__title">moment ON</h1>
           <p className="hub-hero__lede">
             관계, 문답, 감정 기록을 가볍게 시작하고 나답게 남기는 콘텐츠 플랫폼
           </p>
-        </div>
-
-        <div className="hub-hero__graphic" aria-hidden="true">
-          <span className="hub-hero__arch" />
-          <span className="hub-hero__sun" />
-          <span className="hub-hero__stairs" />
         </div>
       </header>
 
@@ -69,6 +67,7 @@ export function HomePage({ onNavigate }) {
         {featuredContent ? (
           <article className="featured-card">
             <div className="featured-card__body">
+              <p className="featured-card__issue">FEATURE / 01</p>
               <p className="content-card__category">{featuredContent.category}</p>
               <h2 className="featured-card__title">{featuredContent.title}</h2>
               <p className="featured-card__description">
@@ -81,31 +80,24 @@ export function HomePage({ onNavigate }) {
                 onNavigate={onNavigate}
               />
             </div>
-
-            <div className="featured-card__visual" aria-hidden="true">
-              <img
-                className="featured-card__image"
-                src={featuredContent.imageSrc}
-                alt=""
-                loading="eager"
-              />
-              <span className="featured-card__circle" />
-              <span className="featured-card__arch" />
-              <span className="featured-card__stairs" />
-            </div>
           </article>
         ) : null}
       </section>
 
       <section className="content-section" aria-label="콘텐츠 카테고리">
         <div className="content-section__head">
-          <span>콘텐츠 카테고리</span>
+          <span>CONTENTS INDEX</span>
           <p>지금 열려 있는 콘텐츠와 준비 중인 콘텐츠를 한눈에 볼 수 있어요.</p>
         </div>
 
         <div className="category-grid">
-          {categoryContents.map((content) => (
-            <CategoryCard key={content.id} content={content} onNavigate={onNavigate} />
+          {categoryContents.map((content, index) => (
+            <CategoryCard
+              key={content.id}
+              content={content}
+              index={index}
+              onNavigate={onNavigate}
+            />
           ))}
         </div>
       </section>
