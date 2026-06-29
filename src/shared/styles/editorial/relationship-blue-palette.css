@@ -1,1 +1,20 @@
-.theme-relationship { --relationship-navy: #1e3a5f; --relationship-royal: #1976d2; }
+.theme-relationship {
+  --relationship-navy: #1e3a5f;
+  --relationship-navy-deep: #142c4a;
+  --relationship-royal: #1976d2;
+  --relationship-sky: #64b5f6;
+  --relationship-baby: #bbdefb;
+  --relationship-ice: #e3f2fd;
+  --bg: #f4f8fc;
+  --bg-soft: var(--relationship-ice);
+  --surface-muted: var(--relationship-ice);
+  --surface-line: #c8d9e8;
+  --border: #c8d9e8;
+  --border-strong: var(--relationship-sky);
+  --primary: var(--relationship-navy);
+  --primary-hover: var(--relationship-navy-deep);
+  --primary-soft: var(--relationship-ice);
+  --accent: var(--relationship-royal);
+  --accent-soft: var(--relationship-ice);
+  --gradient-main: var(--relationship-royal);
+}
