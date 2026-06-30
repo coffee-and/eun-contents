@@ -1,9 +1,7 @@
 // Together Questions 관계별 질문 데이터와 질문팩 정보를 관리합니다.
-import { coupleQuestions } from "./coupleQuestions.js";
-import { marriedQuestions } from "./marriedQuestions.js";
-import { familyParentsQuestions } from "./familyParentsQuestions.js";
-import { familyChildrenQuestions } from "./familyChildrenQuestions.js";
-import { familySiblingQuestions } from "./familySiblingQuestions.js";
+import { partnerQuestions } from "./partnerQuestions.js";
+import { parentQuestions } from "./parentQuestions.js";
+import { childQuestions } from "./childQuestions.js";
 import { friendQuestions } from "./friendQuestions.js";
 
 export const QUESTION_PACK_IDS = {
@@ -30,39 +28,31 @@ export const QUESTION_PACKS = [
 
 export const RELATIONSHIP_TYPES = [
   {
-    id: "couple",
-    title: "연인",
-    description: "내가 연인에게 바라는 점과 고마운 마음을 적어요.",
-    questionSet: coupleQuestions,
+    id: "partner",
+    title: "커플/부부",
+    description: "서로의 마음과 함께해 온 시간, 앞으로의 이야기를 기록해요.",
+    writingGuide: "상대와 함께한 기억과 지금 내 마음을 기준으로 적는 문답이에요.",
+    questionSet: partnerQuestions,
   },
   {
-    id: "married",
-    title: "부부",
-    description: "내가 배우자와 함께 지키고 싶은 생활과 마음을 정리해요.",
-    questionSet: marriedQuestions,
+    id: "parent",
+    title: "부모",
+    description: "내가 살아온 이야기와 자녀에게 전하고 싶은 마음을 기록해요.",
+    writingGuide: "내가 살아온 이야기와 자녀와의 기억을 적는 문답이에요.",
+    questionSet: parentQuestions,
   },
   {
-    id: "family-parents",
-    title: "부모님",
-    description: "나와 내 자녀의 기억, 전하고 싶은 마음을 적어요.",
-    questionSet: familyParentsQuestions,
-  },
-  {
-    id: "family-children",
+    id: "child",
     title: "자녀",
-    description: "나와 내 부모님의 기억, 전하고 싶은 마음을 적어요.",
-    questionSet: familyChildrenQuestions,
-  },
-  {
-    id: "family-siblings",
-    title: "형제자매",
-    description: "내가 형제자매에게 느끼는 기억과 마음을 정리해요.",
-    questionSet: familySiblingQuestions,
+    description: "내가 살아온 이야기와 부모님께 전하고 싶은 마음을 기록해요.",
+    writingGuide: "내가 살아온 이야기와 부모님과의 기억을 적는 문답이에요.",
+    questionSet: childQuestions,
   },
   {
     id: "friends",
     title: "친구",
-    description: "내가 친구에게 고마웠던 순간과 앞으로 함께하고 싶은 일을 나눠요.",
+    description: "함께한 추억과 서로에게 전하고 싶은 마음을 기록해요.",
+    writingGuide: "친구와 함께한 기억과 지금 전하고 싶은 마음을 적는 문답이에요.",
     questionSet: friendQuestions,
   },
 ];
@@ -78,8 +68,7 @@ function toQuestion([id, category, prompt], index) {
 }
 
 export function getRelationshipType(id) {
-  const normalizedId = normalizeRelationshipTypeId(id);
-  return RELATIONSHIP_TYPES.find((item) => item.id === normalizedId) ?? null;
+  return RELATIONSHIP_TYPES.find((item) => item.id === id) ?? null;
 }
 
 export function getQuestionPack(id) {
@@ -91,15 +80,4 @@ export function getQuestions(relationshipType, questionPackId = QUESTION_PACK_ID
   const pack = getQuestionPack(questionPackId);
   const rawQuestions = relationship.questionSet[pack.id] ?? relationship.questionSet.basic;
   return rawQuestions.map(toQuestion);
-}
-
-export function normalizeRelationshipTypeId(id) {
-  const aliases = {
-    parents: "family-parents",
-    familyParents: "family-parents",
-    children: "family-children",
-    familyChildren: "family-children",
-  };
-
-  return aliases[id] ?? id;
 }
