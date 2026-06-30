@@ -17,7 +17,6 @@ import {
   saveResult,
 } from "./services/draftStorage.js";
 import "./styles/together-questions.css";
-import "../../shared/styles/editorial/feature-cleanup.css";
 
 const INITIAL_FORM = {
   displayName: "",

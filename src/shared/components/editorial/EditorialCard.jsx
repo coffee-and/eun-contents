@@ -1,3 +1,5 @@
+import { forwardRef } from "react";
+
 const CARD_VARIANTS = new Set([
   "default",
   "question",
@@ -12,13 +14,10 @@ function joinClassNames(values) {
   return values.filter(Boolean).join(" ");
 }
 
-export function EditorialCard({
-  as: Component = "section",
-  children,
-  className = "",
-  variant = "default",
-  ...props
-}) {
+export const EditorialCard = forwardRef(function EditorialCard(
+  { as: Component = "section", children, className = "", variant = "default", ...props },
+  ref
+) {
   const safeVariant = CARD_VARIANTS.has(variant) ? variant : "default";
 
   return (
@@ -28,9 +27,10 @@ export function EditorialCard({
         `editorial-card--${safeVariant}`,
         className,
       ])}
+      ref={ref}
       {...props}
     >
       {children}
     </Component>
   );
-}
+});

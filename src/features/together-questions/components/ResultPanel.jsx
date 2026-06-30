@@ -1,5 +1,11 @@
 // Together Questions 나의 문답집 결과 화면을 표시합니다.
 import { Button } from "../../../shared/components/Button.jsx";
+import { EditorialCard } from "../../../shared/components/editorial/EditorialCard.jsx";
+import { EditorialLabel } from "../../../shared/components/editorial/EditorialLabel.jsx";
+import {
+  EditorialResultActions,
+  EditorialResultLayout,
+} from "../../../shared/components/editorial/EditorialResultLayout.jsx";
 import { EMPTY_ANSWER_TEXT } from "../constants/sessionFlow.js";
 import { getAnswerThemeClass } from "../constants/themeClasses.js";
 
@@ -28,9 +34,14 @@ export function ResultPanel({
   const formattedDate = formatCompletedDate(completedAt);
 
   return (
-    <section className="tq-complete-wrap">
-      <article className="tq-complete-card tq-journal-report" ref={reportRef}>
-        <span>MY QUESTION BOOK</span>
+    <EditorialResultLayout className="tq-complete-wrap">
+      <EditorialCard
+        as="article"
+        className="tq-complete-card tq-journal-report"
+        ref={reportRef}
+        variant="result"
+      >
+        <EditorialLabel variant="section">MY QUESTION BOOK</EditorialLabel>
         <h2>{displayName ? `${displayName}님의 문답집` : "나의 문답집"}</h2>
         <p>
           {formattedDate} · {relationship?.title ?? "문답"} · 기본 문답 {questions.length}문항
@@ -47,9 +58,9 @@ export function ResultPanel({
             </section>
           ))}
         </div>
-      </article>
+      </EditorialCard>
 
-      <div className="tq-export-actions">
+      <EditorialResultActions className="tq-export-actions">
         <Button variant="secondary" onClick={onPrintPdf} disabled={isSaving}>
           PDF 저장
         </Button>
@@ -62,7 +73,7 @@ export function ResultPanel({
         <Button variant="primary" onClick={onReset} disabled={isSaving}>
           새 문답 시작
         </Button>
-      </div>
-    </section>
+      </EditorialResultActions>
+    </EditorialResultLayout>
   );
 }
