@@ -1,6 +1,8 @@
+import { EditorialCard } from "../../../../shared/components/editorial/EditorialCard.jsx";
+
 export function SectionCard({ title, desc, points }) {
   return (
-    <section className="card result-card">
+    <EditorialCard className="card result-card" variant="result">
       <div className="result-card__head">
         <h3 className="result-card__title">{title}</h3>
       </div>
@@ -14,6 +16,6 @@ export function SectionCard({ title, desc, points }) {
           ))}
         </ul>
       ) : null}
-    </section>
+    </EditorialCard>
   );
 }

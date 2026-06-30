@@ -27,7 +27,10 @@
   background: #ffffff;
   color: var(--together-text);
   font: inherit;
-  resize: vertical;
+}
+
+.theme-together-questions .tq-answer-field textarea {
+  resize: none;
 }
 
 .theme-together-questions .tq-field input:focus,
@@ -40,7 +43,7 @@
 
 .theme-together-questions .tq-card-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
 }
 
@@ -66,20 +69,38 @@
 
 .theme-together-questions .tq-select-card:hover {
   border: 0;
-  background: color-mix(in srgb, var(--together-surface-focus) 58%, var(--together-surface-sage));
+  background: var(--together-selection-sage-hover);
   outline: 0;
 }
 
 .theme-together-questions .tq-select-card--peach:hover {
   border: 0;
-  background: color-mix(in srgb, #efd3c0 52%, var(--together-surface-peach));
+  background: var(--together-selection-peach-hover);
   outline: 0;
 }
 
 .theme-together-questions .tq-select-card--cream:hover {
   border: 0;
-  background: color-mix(in srgb, #f0ddb9 52%, var(--together-surface-cream));
+  background: var(--together-selection-cream-hover);
   outline: 0;
+}
+
+.theme-together-questions .tq-select-card.is-selected {
+  border: 0;
+  background: var(--together-selection-sage);
+  color: #1f2b20;
+  outline: 0;
+  box-shadow: none;
+}
+
+.theme-together-questions .tq-select-card--peach.is-selected {
+  background: var(--together-selection-peach);
+  color: #38261f;
+}
+
+.theme-together-questions .tq-select-card--cream.is-selected {
+  background: var(--together-selection-cream);
+  color: #3f321c;
 }
 
 .theme-together-questions .tq-select-card:focus-visible {
@@ -92,26 +113,6 @@
 }
 
 .theme-together-questions .tq-select-card--cream:focus-visible {
-  outline-color: var(--together-taupe);
-}
-
-.theme-together-questions .tq-select-card.is-selected {
-  background: var(--together-sage);
-  color: #1f2b20;
-  outline: 3px solid var(--together-forest);
-  outline-offset: -3px;
-  box-shadow: none;
-}
-
-.theme-together-questions .tq-select-card--peach.is-selected {
-  background: var(--together-clay);
-  color: #38261f;
-  outline-color: #7e4d39;
-}
-
-.theme-together-questions .tq-select-card--cream.is-selected {
-  background: #ead4a4;
-  color: #3f321c;
   outline-color: var(--together-taupe);
 }
 

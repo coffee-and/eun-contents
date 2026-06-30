@@ -1,5 +1,7 @@
 // Together Questions 문답지형 작성 화면을 표시합니다.
 import { Button } from "../../../shared/components/Button.jsx";
+import { EditorialCard } from "../../../shared/components/editorial/EditorialCard.jsx";
+import { EditorialLabel } from "../../../shared/components/editorial/EditorialLabel.jsx";
 import { ANSWER_LIMITS } from "../constants/sessionFlow.js";
 import { getQuestionThemeClass } from "../constants/themeClasses.js";
 
@@ -16,12 +18,15 @@ export function AnswerPanel({
   onDisplayNameChange,
 }) {
   return (
-    <section className="tq-panel tq-answer-panel">
+    <EditorialCard className="tq-panel tq-answer-panel">
       <div className="tq-sheet-head">
         <div>
-          <span>QUESTION BOOK</span>
+          <EditorialLabel variant="section">QUESTION BOOK</EditorialLabel>
           <h2>{relationship?.title ?? "나의"} 문답지</h2>
-          <p>한 번에 모두 채우지 않아도 괜찮아요. 쓰는 동안 이 기기에 임시 저장됩니다.</p>
+          <p>
+            {relationship?.writingGuide ?? "지금 내 마음과 기억을 기준으로 적는 문답이에요."}{" "}
+            한 번에 모두 채우지 않아도 괜찮아요. 쓰는 동안 이 기기에 임시 저장됩니다.
+          </p>
         </div>
       </div>
 
@@ -45,9 +50,11 @@ export function AnswerPanel({
 
       <div className="tq-question-list">
         {questions.map((question, index) => (
-          <article
+          <EditorialCard
+            as="article"
             className={`tq-question-item ${getQuestionThemeClass(index)}`}
             key={question.id}
+            variant="question"
           >
             <div className="tq-question-item__head">
               <h3>
@@ -65,7 +72,7 @@ export function AnswerPanel({
                 placeholder="지금 떠오르는 마음을 편하게 적어주세요."
               />
             </label>
-          </article>
+          </EditorialCard>
         ))}
       </div>
 
@@ -74,6 +81,6 @@ export function AnswerPanel({
           문답 완성하기
         </Button>
       </div>
-    </section>
+    </EditorialCard>
   );
 }

@@ -1,13 +1,15 @@
 // Together Questions 시작 화면을 표시합니다.
 import { Button } from "../../../shared/components/Button.jsx";
+import { EditorialCard } from "../../../shared/components/editorial/EditorialCard.jsx";
+import { EditorialLabel } from "../../../shared/components/editorial/EditorialLabel.jsx";
 import { getSelectionThemeClass } from "../constants/themeClasses.js";
 import { RELATIONSHIP_TYPES } from "../data/index.js";
 
 export function StartPanel({ startForm, canStart, isBusy, onSubmit, onChangeForm, onResetQuestion }) {
   return (
-    <form className="tq-panel tq-start" onSubmit={onSubmit}>
+    <EditorialCard as="form" className="tq-panel tq-start" onSubmit={onSubmit}>
       <div className="tq-section__head">
-        <span>START / 01</span>
+        <EditorialLabel variant="section">START / 01</EditorialLabel>
         <h2>누구와의 문답을 시작할까요?</h2>
       </div>
 
@@ -42,6 +44,6 @@ export function StartPanel({ startForm, canStart, isBusy, onSubmit, onChangeForm
           문답 시작하기
         </Button>
       </div>
-    </form>
+    </EditorialCard>
   );
 }

@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import { Button } from "../../../../shared/components/Button.jsx";
 import { TextAction } from "../../../../shared/components/TextAction.jsx";
+import { EditorialCard } from "../../../../shared/components/editorial/EditorialCard.jsx";
+import { EditorialResultActions } from "../../../../shared/components/editorial/EditorialResultLayout.jsx";
 import {
   APP_COPY,
   CATEGORY_META,
@@ -250,7 +252,7 @@ export function ResultView({
   return (
     <>
       {isSavedResult ? (
-        <section className="card saved-result-notice">
+        <EditorialCard className="card saved-result-notice" variant="notice">
           <span className="saved-result-notice__label">SAVED RESULT</span>
           <h3 className="result-card__title">저장된 결과를 다시 보고 있어요</h3>
           <p className="result-card__desc">
@@ -258,7 +260,7 @@ export function ResultView({
               ? `${new Date(savedAt).toLocaleString("ko-KR")}에 저장된 결과입니다.`
               : "이전에 저장한 결과입니다."}
           </p>
-        </section>
+        </EditorialCard>
       ) : null}
 
       <div ref={captureRef} className="capture-export">
@@ -317,7 +319,7 @@ export function ResultView({
           </div>
         </section>
 
-        <section className="card result-overview-card">
+        <EditorialCard className="card result-overview-card" variant="result">
           <div className="result-overview-card__head">
             <div>
               <span className="result-overview-card__eyebrow">
@@ -345,7 +347,7 @@ export function ResultView({
           <p className="result-overview-card__desc">
             {analysis.relationshipLevel.desc}
           </p>
-        </section>
+        </EditorialCard>
 
         <SectionCard
           title="한눈에 보는 관계 보고서"
@@ -353,7 +355,7 @@ export function ResultView({
           points={analysis.summaryLines}
         />
 
-        <section className="card result-card">
+        <EditorialCard className="card result-card" variant="result">
           <h3 className="result-card__title">영역별 참고 지수</h3>
           <p className="result-card__desc">
             낮은 점수는 사람이나 관계의 가치를 뜻하지 않고, 어느 영역을 먼저 대화해야 하는지 보여주는 신호입니다.
@@ -376,7 +378,7 @@ export function ResultView({
               },
             ]}
           />
-        </section>
+        </EditorialCard>
 
         {detailedSections.map((section) => (
           <SectionCard
@@ -401,7 +403,7 @@ export function ResultView({
         />
       ) : null}
 
-      <section className="card result-card answer-toggle-card">
+      <EditorialCard className="card result-card answer-toggle-card" variant="action">
         <button
           type="button"
           className="answer-toggle-card__button"
@@ -430,9 +432,9 @@ export function ResultView({
             ))}
           </ul>
         ) : null}
-      </section>
+      </EditorialCard>
 
-      <section className="card result-card result-card--actions">
+      <EditorialCard className="card result-card result-card--actions" variant="action">
         <h3 className="result-card__title">결과 저장 / 공유</h3>
         <p className="result-card__desc">
           결과 카드 이미지를 저장하거나, 결과 링크를 바로 공유할 수 있어요.
@@ -445,7 +447,7 @@ export function ResultView({
           </div>
         ) : null}
 
-        <div className="button-row">
+        <EditorialResultActions className="button-row">
           <Button variant="ghost" onClick={handleCapture}>
             결과 카드 이미지 저장
           </Button>
@@ -465,8 +467,8 @@ export function ResultView({
           <TextAction onClick={onChooseAgain}>
             ← 다시 선택하기
           </TextAction>
-        </div>
-      </section>
+        </EditorialResultActions>
+      </EditorialCard>
 
       {isShareModalOpen ? (
         <div

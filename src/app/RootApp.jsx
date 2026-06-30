@@ -12,7 +12,10 @@ function RouteLoading() {
   return (
     <div className="theme-hub">
       <AppShell>
-        <section className="route-state" aria-live="polite">
+        <section
+          className="route-state editorial-state editorial-state--loading"
+          aria-live="polite"
+        >
           <span>LOADING</span>
           <h1>콘텐츠를 불러오고 있어요</h1>
         </section>
@@ -29,7 +32,7 @@ function ComingSoon({ content, onNavigateHome }) {
           <TextAction className="hub-back-button" onClick={onNavigateHome}>
             ← 다른 콘텐츠 보기
           </TextAction>
-          <section className="coming-soon__card">
+          <section className="coming-soon__card editorial-state editorial-state--coming-soon">
             <img
               className="coming-soon__image"
               src={content.imageSrc}
@@ -53,7 +56,7 @@ function NotFound({ onNavigateHome }) {
   return (
     <div className="theme-hub">
       <AppShell>
-        <section className="route-state">
+        <section className="route-state editorial-state editorial-state--not-found">
           <span>NOT FOUND</span>
           <h1>찾으시는 콘텐츠가 없어요</h1>
           <p>주소를 다시 확인하거나 다른 콘텐츠를 둘러봐 주세요.</p>

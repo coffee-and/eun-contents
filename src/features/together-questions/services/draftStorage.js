@@ -1,7 +1,14 @@
 // Together Questions 작성 중 임시 저장과 최근 결과 복구를 관리합니다.
-const DRAFT_KEY = "eun:together-questions:v3:draft";
-const RESULT_KEY = "eun:together-questions:v3:result";
-const STORAGE_SCHEMA_VERSION = 1;
+const DRAFT_KEY = "eun:together-questions:v4:draft";
+const RESULT_KEY = "eun:together-questions:v4:result";
+const LEGACY_KEYS = [
+  "eun:together-questions:v3:draft",
+  "eun:together-questions:v3:result",
+];
+const STORAGE_SCHEMA_VERSION = 2;
+const ACTIVE_RELATIONSHIP_IDS = new Set(["partner", "parent", "child", "friends"]);
+
+let didClearLegacyStorage = false;
 
 function safeJsonParse(raw) {
   if (!raw) return null;
@@ -17,23 +24,28 @@ function isRecord(value) {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
 
+function clearLegacyStorage() {
+  if (didClearLegacyStorage) return;
+
+  LEGACY_KEYS.forEach((key) => window.localStorage.removeItem(key));
+  didClearLegacyStorage = true;
+}
+
 function isValidForm(form) {
   return (
     isRecord(form) &&
-    typeof form.relationshipType === "string" &&
+    ACTIVE_RELATIONSHIP_IDS.has(form.relationshipType) &&
     typeof form.displayName === "string" &&
     typeof form.questionPackId === "string"
   );
 }
 
 function normalizeStoredData(value, { requireCompletedAt = false } = {}) {
-  if (!isRecord(value) || !isValidForm(value.form) || !isRecord(value.answers)) {
-    return null;
-  }
-
   if (
-    value.schemaVersion !== undefined &&
-    value.schemaVersion !== STORAGE_SCHEMA_VERSION
+    !isRecord(value) ||
+    value.schemaVersion !== STORAGE_SCHEMA_VERSION ||
+    !isValidForm(value.form) ||
+    !isRecord(value.answers)
   ) {
     return null;
   }
@@ -46,13 +58,12 @@ function normalizeStoredData(value, { requireCompletedAt = false } = {}) {
 }
 
 function readStoredData(key, options) {
-  return normalizeStoredData(
-    safeJsonParse(window.localStorage.getItem(key)),
-    options
-  );
+  clearLegacyStorage();
+  return normalizeStoredData(safeJsonParse(window.localStorage.getItem(key)), options);
 }
 
 function writeStoredData(key, value) {
+  clearLegacyStorage();
   window.localStorage.setItem(
     key,
     JSON.stringify({

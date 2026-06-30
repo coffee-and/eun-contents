@@ -41,11 +41,6 @@
   background: var(--together-surface-almond);
 }
 
-.theme-together-questions .tq-question-item:focus-within {
-  outline: 2px solid var(--together-sage);
-  outline-offset: 0;
-}
-
 .theme-together-questions .tq-question-item__head {
   display: grid;
   gap: 8px;

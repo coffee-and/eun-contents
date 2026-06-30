@@ -1,31 +1,17 @@
 .theme-relationship .result-overview-card {
   border: 0;
-  background: var(--relationship-deep-blue);
+  background: linear-gradient(
+    108deg,
+    var(--relationship-capture-strong-1) 0 54%,
+    var(--relationship-capture-strong-2) 54% 76%,
+    var(--relationship-capture-strong-3) 76% 100%
+  );
   color: var(--relationship-white);
 }
 
-.theme-relationship .result-overview-card::before {
-  inset: 0 0 0 auto;
-  width: 30%;
-  height: 100%;
-  border-radius: 0;
-  background: var(--relationship-muted-rose);
-  transform: none;
-  clip-path: none;
-}
-
+.theme-relationship .result-overview-card::before,
 .theme-relationship .result-overview-card::after {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  top: 0;
-  right: 30%;
-  display: block;
-  width: 20%;
-  height: 100%;
-  background: var(--relationship-slate-violet);
-  clip-path: none;
-  pointer-events: none;
+  display: none;
 }
 
 .theme-relationship .result-overview-card__head,
@@ -52,18 +38,50 @@
 .theme-relationship .result-overview-card__score {
   position: relative;
   z-index: 2;
+  display: grid;
+  align-items: center;
+  justify-items: end;
+  min-height: 150px;
   padding-left: 24px;
+  text-align: right;
 }
 
 .theme-relationship .result-score-ring {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: end;
+  justify-content: end;
+  gap: 4px 6px;
   border: 0;
   background: transparent;
+  text-align: right;
 }
 
-.theme-relationship .result-score-ring span,
-.theme-relationship .result-score-ring strong,
-.theme-relationship .result-score-ring em {
+.theme-relationship .result-score-ring span {
+  grid-column: 1 / -1;
+  justify-self: end;
+  margin-bottom: 8px;
   color: var(--relationship-white);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.theme-relationship .result-score-ring strong {
+  align-self: end;
+  color: var(--relationship-white);
+  font-size: clamp(2.35rem, 4.2vw, 3.3rem);
+  line-height: 0.92;
+}
+
+.theme-relationship .result-score-ring em {
+  align-self: end;
+  margin-bottom: 3px;
+  color: var(--relationship-white);
+  font-size: 0.86rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .theme-relationship .result-card,
@@ -88,45 +106,59 @@
   line-height: 1.68;
 }
 
+.theme-relationship .result-card--actions .button:not(.button--primary),
+.theme-relationship .result-card--actions .text-action {
+  background: var(--relationship-secondary-action-bg);
+  color: var(--relationship-secondary-action-text);
+}
+
+.theme-relationship .result-card--actions .button:not(.button--primary):hover:not(:disabled),
+.theme-relationship .result-card--actions .text-action:hover {
+  background: var(--relationship-secondary-action-hover);
+  color: var(--relationship-secondary-action-text);
+}
+
 .theme-relationship .metric-card {
+  --metric-accent: var(--relationship-metric-blue);
+  --metric-surface: var(--relationship-metric-blue-soft);
   border: 0;
-  background: var(--relationship-soft-white);
+  background: var(--metric-surface);
 }
 
 .theme-relationship .metric-card:nth-child(4n + 1) {
-  background: #f2f4f7;
+  --metric-accent: var(--relationship-metric-blue);
+  --metric-surface: var(--relationship-metric-blue-soft);
 }
 
 .theme-relationship .metric-card:nth-child(4n + 2) {
-  background: #f3eef5;
+  --metric-accent: var(--relationship-metric-violet);
+  --metric-surface: var(--relationship-metric-violet-soft);
 }
 
 .theme-relationship .metric-card:nth-child(4n + 3) {
-  background: #fbf2f5;
+  --metric-accent: var(--relationship-metric-rose);
+  --metric-surface: var(--relationship-metric-rose-soft);
 }
 
 .theme-relationship .metric-card:nth-child(4n) {
-  background: #f8ecef;
+  --metric-accent: var(--relationship-metric-plum);
+  --metric-surface: var(--relationship-metric-plum-soft);
+}
+
+.theme-relationship .metric-card__label {
+  color: var(--metric-accent);
+}
+
+.theme-relationship .metric-card__value {
+  color: var(--relationship-noir);
 }
 
 .theme-relationship .metric-card__bar {
-  background: #eee8eb;
+  background: var(--relationship-metric-track);
 }
 
-.theme-relationship .metric-card:nth-child(4n + 1) .metric-card__bar span {
-  background: var(--relationship-deep-blue);
-}
-
-.theme-relationship .metric-card:nth-child(4n + 2) .metric-card__bar span {
-  background: var(--relationship-slate-violet);
-}
-
-.theme-relationship .metric-card:nth-child(4n + 3) .metric-card__bar span {
-  background: var(--relationship-dusty-pink);
-}
-
-.theme-relationship .metric-card:nth-child(4n) .metric-card__bar span {
-  background: var(--relationship-muted-rose);
+.theme-relationship .metric-card__bar span {
+  background: var(--metric-accent);
 }
 
 .theme-relationship .premium-lock__preview-card {
@@ -138,17 +170,17 @@
 .theme-relationship .premium-lock__preview-card::before {
   content: "";
   display: block;
-  height: 72px;
-  margin: -20px -20px 12px;
-  background: var(--relationship-deep-blue);
+  height: 10px;
+  margin: -20px -20px 16px;
+  background: var(--relationship-premium-band-1);
 }
 
 .theme-relationship .premium-lock__preview-card:nth-child(2)::before {
-  background: var(--relationship-slate-violet);
+  background: var(--relationship-premium-band-2);
 }
 
 .theme-relationship .premium-lock__preview-card:nth-child(3)::before {
-  background: var(--relationship-muted-rose);
+  background: var(--relationship-premium-band-3);
 }
 
 .theme-relationship .premium-lock__preview-card:nth-child(1) {
@@ -164,11 +196,7 @@
 }
 
 .theme-relationship .premium-lock__preview-number {
-  color: var(--relationship-slate-violet);
-}
-
-.theme-relationship .premium-lock__preview-card:nth-child(3) .premium-lock__preview-number {
-  color: var(--relationship-muted-rose);
+  color: var(--relationship-premium-number);
 }
 
 .theme-relationship .premium-report__label {

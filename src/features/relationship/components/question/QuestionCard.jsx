@@ -1,4 +1,7 @@
 import { Button } from "../../../../shared/components/Button.jsx";
+import { EditorialCard } from "../../../../shared/components/editorial/EditorialCard.jsx";
+import { EditorialLabel } from "../../../../shared/components/editorial/EditorialLabel.jsx";
+import { EditorialMeta } from "../../../../shared/components/editorial/EditorialMeta.jsx";
 import { CATEGORY_META } from "../../data/config.js";
 
 export function QuestionCard({
@@ -15,18 +18,26 @@ export function QuestionCard({
   const categoryLabel = CATEGORY_META[question.category]?.label ?? question.category;
 
   return (
-    <section className="card question-card">
+    <EditorialCard className="card question-card" variant="question">
       <div className="question-card__top">
         <div className="question-card__badge-wrap">
-          <div className="question-card__badge-group">
-            <span className="badge badge--soft">{categoryLabel}</span>
-            {modeLabel ? (
-              <span className="question-card__mode-label">{modeLabel}</span>
-            ) : null}
-            <span className="question-card__index">
+          <EditorialMeta className="question-card__badge-group">
+            <span className="question-card__labels editorial-meta__group">
+              <EditorialLabel className="badge badge--soft" variant="badge">
+                {categoryLabel}
+              </EditorialLabel>
+
+              {modeLabel ? (
+                <EditorialLabel className="question-card__mode-label" variant="muted">
+                  {modeLabel}
+                </EditorialLabel>
+              ) : null}
+            </span>
+
+            <span className="question-card__index editorial-meta__text">
               Q {String(questionNumber).padStart(2, "0")} / {totalQuestions}
             </span>
-          </div>
+          </EditorialMeta>
         </div>
 
         <div className="question-card__line" />
@@ -77,6 +88,6 @@ export function QuestionCard({
           다음 질문으로
         </Button>
       </div>
-    </section>
+    </EditorialCard>
   );
 }

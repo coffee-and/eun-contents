@@ -1,4 +1,5 @@
 import { TextAction } from "./TextAction.jsx";
+import { EditorialLabel } from "./editorial/EditorialLabel.jsx";
 
 export function FeatureHeader({
   className = "",
@@ -18,9 +19,12 @@ export function FeatureHeader({
     <header className={`feature-header ${className}`.trim()}>
       <div className={`feature-header__copy ${copyClassName}`.trim()}>
         {eyebrow ? (
-          <span className={`feature-header__eyebrow ${eyebrowClassName}`.trim()}>
+          <EditorialLabel
+            className={`feature-header__eyebrow ${eyebrowClassName}`.trim()}
+            variant="eyebrow"
+          >
             {eyebrow}
-          </span>
+          </EditorialLabel>
         ) : null}
         <h1 className={`feature-header__title ${titleClassName}`.trim()}>{title}</h1>
         {subtitle ? (
