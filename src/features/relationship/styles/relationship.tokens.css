@@ -40,6 +40,21 @@
     var(--relationship-deep-blue) 42%,
     var(--relationship-selected)
   );
+  --relationship-question-title-color: var(--relationship-noir);
+  --relationship-question-font-size: clamp(1.18rem, 1.8vw, 1.55rem);
+  --relationship-option-font-size: var(--font-body);
+  --relationship-mode-badge-bg: color-mix(
+    in srgb,
+    var(--relationship-mist) 38%,
+    var(--relationship-white)
+  );
+  --relationship-mode-badge-text: var(--relationship-burgundy);
+  --relationship-secondary-button-text: var(--relationship-burgundy);
+  --relationship-secondary-button-disabled-text: color-mix(
+    in srgb,
+    var(--relationship-burgundy) 52%,
+    var(--relationship-white)
+  );
 
   --bg: var(--relationship-ivory);
   --bg-soft: var(--relationship-soft-white);
@@ -60,8 +75,8 @@
   --secondary-action-bg: var(--relationship-secondary);
   --secondary-action-bg-hover: #e2dce1;
   --secondary-action-border: transparent;
-  --secondary-action-text: var(--relationship-deep-blue);
-  --secondary-action-text-hover: var(--relationship-deep-navy);
+  --secondary-action-text: var(--relationship-secondary-button-text);
+  --secondary-action-text-hover: var(--relationship-burgundy);
   --disabled-bg: var(--relationship-disabled);
   --disabled-text: #aaa5a9;
   --accent: var(--relationship-slate-violet);
@@ -83,16 +98,16 @@
   --button-primary-hover-border: transparent;
   --button-secondary-bg: var(--relationship-secondary);
   --button-secondary-border: transparent;
-  --button-secondary-text: var(--relationship-deep-blue);
+  --button-secondary-text: var(--relationship-secondary-button-text);
   --button-secondary-hover-bg: #e2dce1;
   --button-secondary-hover-border: transparent;
-  --button-secondary-hover-text: var(--relationship-deep-navy);
+  --button-secondary-hover-text: var(--relationship-burgundy);
   --button-ghost-bg: var(--relationship-secondary);
   --button-ghost-border: transparent;
-  --button-ghost-text: var(--relationship-deep-blue);
+  --button-ghost-text: var(--relationship-secondary-button-text);
   --button-ghost-hover-bg: #e2dce1;
   --button-ghost-hover-border: transparent;
-  --button-ghost-hover-text: var(--relationship-deep-navy);
+  --button-ghost-hover-text: var(--relationship-burgundy);
   --button-disabled-bg: var(--relationship-disabled);
   --button-disabled-border: transparent;
   --button-disabled-text: var(--disabled-text);
