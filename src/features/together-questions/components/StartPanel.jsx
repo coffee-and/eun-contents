@@ -1,7 +1,7 @@
 // Together Questions 시작 화면을 표시합니다.
 import { Button } from "../../../shared/components/Button.jsx";
 import { getSelectionThemeClass } from "../constants/themeClasses.js";
-import { QUESTION_PACKS, RELATIONSHIP_TYPES } from "../data/index.js";
+import { RELATIONSHIP_TYPES } from "../data/index.js";
 
 export function StartPanel({ startForm, canStart, isBusy, onSubmit, onChangeForm, onResetQuestion }) {
   return (
@@ -35,14 +35,6 @@ export function StartPanel({ startForm, canStart, isBusy, onSubmit, onChangeForm
             );
           })}
         </div>
-      </div>
-
-      <div className="tq-flow-note">
-        <strong>무료 기본 문답 30문항</strong>
-        <p>
-          {QUESTION_PACKS[1].title} {QUESTION_PACKS[1].questionCount}문항은 프리미엄으로 준비 중이에요.
-          작성 중인 내용은 이 기기에 임시 저장됩니다.
-        </p>
       </div>
 
       <div className="tq-start__actions">
