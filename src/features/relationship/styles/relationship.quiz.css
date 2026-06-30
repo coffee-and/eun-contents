@@ -61,6 +61,19 @@
   color: var(--relationship-white);
 }
 
+.theme-relationship .question-card__mode-label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 7px 10px;
+  background: var(--relationship-selected);
+  color: var(--relationship-deep-blue);
+  font-size: var(--font-label);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
 .theme-relationship .question-card__top,
 .theme-relationship .question-card__badge-wrap {
   margin-bottom: 18px;
@@ -99,7 +112,7 @@
 .theme-relationship .option-card:hover,
 .theme-relationship .option-card:focus-visible {
   border: 0;
-  background: #e5e0e8;
+  background: var(--relationship-option-hover);
   color: var(--relationship-deep-blue);
 }
 
@@ -107,13 +120,13 @@
 .theme-relationship .option-card--selected:hover,
 .theme-relationship .option-card--selected:focus-visible {
   border: 0;
-  background: #dce3eb;
+  background: var(--relationship-option-selected);
   color: var(--relationship-deep-blue);
   box-shadow: none;
 }
 
 .theme-relationship .option-card--selected .option-card__text {
-  font-weight: 700;
+  font-weight: inherit;
 }
 
 .theme-relationship .option-card__text {
@@ -127,19 +140,19 @@
 
 .theme-relationship .question-card__previous.button--secondary {
   border: 0;
-  background: #eee8ec;
+  background: var(--relationship-secondary-active);
   color: var(--relationship-deep-blue);
 }
 
 .theme-relationship .question-card__previous.button--secondary:hover:not(:disabled) {
   border: 0;
-  background: #e1d9e1;
+  background: var(--relationship-mist);
 }
 
 .theme-relationship .question-card__previous.button--secondary:disabled {
   border: 0;
-  background: #f4f1f3;
-  color: #b7b1b5;
+  background: var(--relationship-secondary-disabled);
+  color: #aaa5a9;
   opacity: 1;
 }
 
@@ -154,8 +167,8 @@
 }
 
 .theme-relationship .question-card__next.button--primary:disabled {
-  background: #ddd8dc;
-  color: #f7f5f6;
+  background: var(--relationship-next-disabled);
+  color: var(--relationship-white);
   opacity: 1;
 }
 

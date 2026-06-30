@@ -50,10 +50,10 @@ export function AnswerPanel({
             key={question.id}
           >
             <div className="tq-question-item__head">
-              <span>
-                {question.order}. {question.category}
-              </span>
-              <h3>{question.prompt}</h3>
+              <h3>
+                <span className="tq-question-item__number">{question.order}.</span>{" "}
+                {question.prompt}
+              </h3>
             </div>
             <label className="tq-answer-field">
               <span className="visually-hidden">{question.order}번 답변</span>
