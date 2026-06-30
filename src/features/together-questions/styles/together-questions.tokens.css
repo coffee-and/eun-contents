@@ -14,6 +14,9 @@
   --together-taupe: #b19071;
   --together-coral: #d24d49;
   --together-text: #252a27;
+  --together-heading-text: color-mix(in srgb, var(--together-text) 92%, var(--together-olive));
+  --together-question-title-color: var(--together-heading-text);
+  --together-question-number-color: var(--together-heading-text);
   --together-muted: #69706a;
   --together-border: #d9d7d0;
   --together-danger-soft: #fff1ef;
