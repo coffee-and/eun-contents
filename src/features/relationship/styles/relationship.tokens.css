@@ -25,8 +25,21 @@
   --relationship-surface: var(--relationship-soft-white);
   --relationship-line: #ddd7da;
   --relationship-selected: #dce3eb;
+  --relationship-option-hover: var(--relationship-selected);
+  --relationship-option-selected: color-mix(
+    in srgb,
+    var(--relationship-selected) 78%,
+    var(--relationship-deep-blue)
+  );
   --relationship-secondary: #eee8ec;
+  --relationship-secondary-active: #e2dce1;
+  --relationship-secondary-disabled: #ebe5e9;
   --relationship-disabled: #e8e4e6;
+  --relationship-next-disabled: color-mix(
+    in srgb,
+    var(--relationship-deep-blue) 42%,
+    var(--relationship-selected)
+  );
 
   --bg: var(--relationship-ivory);
   --bg-soft: var(--relationship-soft-white);
