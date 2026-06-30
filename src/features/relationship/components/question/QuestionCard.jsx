@@ -22,14 +22,18 @@ export function QuestionCard({
       <div className="question-card__top">
         <div className="question-card__badge-wrap">
           <EditorialMeta className="question-card__badge-group">
-            <EditorialLabel className="badge badge--soft" variant="badge">
-              {categoryLabel}
-            </EditorialLabel>
-            {modeLabel ? (
-              <EditorialLabel className="question-card__mode-label" variant="muted">
-                {modeLabel}
+            <span className="question-card__labels editorial-meta__group">
+              <EditorialLabel className="badge badge--soft" variant="badge">
+                {categoryLabel}
               </EditorialLabel>
-            ) : null}
+
+              {modeLabel ? (
+                <EditorialLabel className="question-card__mode-label" variant="muted">
+                  {modeLabel}
+                </EditorialLabel>
+              ) : null}
+            </span>
+
             <span className="question-card__index editorial-meta__text">
               Q {String(questionNumber).padStart(2, "0")} / {totalQuestions}
             </span>

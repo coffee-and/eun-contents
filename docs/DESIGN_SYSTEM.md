@@ -144,6 +144,8 @@ Shared roles:
 
 Relationship Analysis maps its rose and deep blue palette to these roles. Together Questions maps its forest, sage, clay, and warm surfaces to the same roles. The features share role names, not colors.
 
+Feature palette values belong in feature token files, while shared primitives consume semantic roles. Separate state colors into default, hover, selected, and disabled roles. Reuse role tokens for metric, capture, and premium surfaces within a feature, including hard-stop diagonal bands. Do not repeat raw hex values across visible surfaces.
+
 Do:
 
 ```css
@@ -216,6 +218,22 @@ Feature-specific responsibilities:
 - premium visual identity
 
 Do not turn `EditorialCard` into a data renderer.
+
+### `focusable` presentation opt-in
+
+`focusable` defaults to `false`. It opts a card into the shared `:focus-within` outline when an element inside the card receives focus.
+
+```jsx
+<EditorialCard focusable>
+  <input aria-label="이름" />
+</EditorialCard>
+```
+
+`focusable` does not add `tabIndex`, click behavior, keyboard behavior, or interactive semantics to the card itself. Actual interaction remains on native controls such as `button`, `input`, and `a`. Use the prop only when the containing card should visually respond to focus inside it. Do not apply it when a feature already owns its focus design, and do not use it for Together Questions question wrappers where a card-level outline is unnecessary.
+
+### Selected state and keyboard focus
+
+A selected state communicates the currently chosen value. `:focus-visible` communicates the keyboard user's current navigation position. Removing a selected border or outline must not remove the keyboard-only `:focus-visible` indicator from the actual interactive control.
 
 ## Button System
 

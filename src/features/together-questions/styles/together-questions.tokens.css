@@ -7,6 +7,12 @@
   --together-surface-cream: #f6ead8;
   --together-surface-almond: #f4eadc;
   --together-surface-focus: #d8e3d3;
+  --together-selection-sage-hover: color-mix(in srgb, var(--together-surface-focus) 58%, var(--together-surface-sage));
+  --together-selection-peach-hover: color-mix(in srgb, #efd3c0 52%, var(--together-surface-peach));
+  --together-selection-cream-hover: color-mix(in srgb, #f0ddb9 52%, var(--together-surface-cream));
+  --together-selection-sage: #a9bda0;
+  --together-selection-peach: #b87558;
+  --together-selection-cream: #ead4a4;
   --together-forest: #567c57;
   --together-sage: #a9bda0;
   --together-olive: #504f30;

@@ -66,6 +66,10 @@
     padding: 20px 18px;
   }
 
+  .theme-relationship .question-card__badge-group {
+    align-items: flex-start;
+  }
+
   .theme-relationship .question-card__title {
     font-size: clamp(1.42rem, 6.7vw, 1.9rem);
   }
@@ -76,6 +80,7 @@
   }
 
   .theme-relationship .capture-panel__hero-main {
+    width: 100%;
     padding-right: 0;
   }
 
@@ -84,12 +89,14 @@
     width: 100%;
     min-width: 0;
     margin-top: 18px;
-    text-align: left;
+    justify-items: end;
+    text-align: right;
   }
 
   .theme-relationship .capture-panel__hero {
     margin: -20px -18px 20px;
     padding: 26px 18px 42px;
+    background: linear-gradient(108deg, var(--relationship-capture-soft-1) 0 64%, var(--relationship-capture-soft-2) 64% 82%, var(--relationship-capture-soft-3) 82% 100%);
   }
 
   .theme-relationship .capture-panel__title {
@@ -101,12 +108,7 @@
   }
 
   .theme-relationship .result-overview-card {
-    background: linear-gradient(
-      to bottom,
-      var(--relationship-deep-blue) 0 52%,
-      var(--relationship-slate-violet) 52% 68%,
-      var(--relationship-muted-rose) 68% 100%
-    );
+    background: linear-gradient(108deg, var(--relationship-capture-strong-1) 0 62%, var(--relationship-capture-strong-2) 62% 80%, var(--relationship-capture-strong-3) 80% 100%);
   }
 
   .theme-relationship .result-overview-card::before,
@@ -115,12 +117,12 @@
   }
 
   .theme-relationship .result-overview-card__head {
-    display: block;
+    display: grid;
     grid-template-columns: 1fr;
   }
 
   .theme-relationship .result-overview-card__score {
-    justify-items: start;
+    justify-items: end;
     min-height: 0;
     padding: 28px 0 22px;
   }
@@ -135,13 +137,19 @@
   }
 
   .theme-relationship .premium-lock__preview-card::before {
-    height: 58px;
+    height: 10px;
   }
 
   .theme-relationship .result-card,
   .theme-relationship .premium-lock,
   .theme-relationship .premium-report {
     margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 560px) {
+  .theme-relationship .question-card__labels {
+    flex: 1 1 auto;
   }
 }
 
@@ -155,6 +163,12 @@
 @media (max-width: 420px) {
   .theme-relationship .page {
     padding-inline: 12px;
+  }
+
+  .theme-relationship .question-card__index {
+    flex-basis: 100%;
+    width: 100%;
+    text-align: right;
   }
 
   .theme-relationship .metric-card__head {
