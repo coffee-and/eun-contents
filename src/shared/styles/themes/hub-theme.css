@@ -1,14 +1,45 @@
 .theme-hub {
-  --hub-page-background: var(--editorial-bg);
-  --hub-surface: var(--editorial-surface);
-  --hub-surface-soft: var(--editorial-surface-soft);
-  --hub-text-primary: var(--editorial-ink);
-  --hub-text-secondary: var(--editorial-text);
-  --hub-text-muted: var(--editorial-muted);
-  --hub-border-color: var(--editorial-line);
+  --hub-white: #ffffff;
+  --hub-page-background: #faf9f7;
+  --hub-surface: var(--hub-white);
+  --hub-surface-soft: #f5f1ee;
+  --hub-surface-muted: #eee8e3;
+
+  --hub-ink: #29291d;
+  --hub-olive: #424436;
+  --hub-moss: #5c573a;
+  --hub-rose: #9c6763;
+  --hub-wine: #7b444a;
+  --hub-taupe: #9c7a5e;
+  --hub-mauve: #a28077;
+  --hub-clay: #ab7769;
+  --hub-blush: #c89c8f;
+  --hub-peach: #d6b2a6;
+  --hub-stone: #c5b7ae;
+
+  --hub-text-primary: var(--hub-ink);
+  --hub-text-secondary: #5f5b55;
+  --hub-text-muted: #746c67;
+  --hub-border-color: #ddd5cf;
+  --hub-border-strong: var(--hub-rose);
+
+  --hub-primary: var(--hub-olive);
+  --hub-primary-hover: var(--hub-ink);
+  --hub-primary-soft: var(--hub-surface-soft);
+  --hub-focus: var(--hub-wine);
+
+  --hub-featured-bg: var(--hub-ink);
+  --hub-featured-text: var(--hub-white);
+  --hub-featured-text-soft: #eee5df;
+  --hub-featured-label: var(--hub-peach);
+  --hub-featured-button-bg: var(--hub-white);
+  --hub-featured-button-text: var(--hub-ink);
+  --hub-featured-button-hover-bg: var(--hub-peach);
+
   --hub-content-width: 1120px;
   --hub-card-radius: var(--card-radius);
   --hub-shadow-card: var(--shadow-card-soft);
+
   --bg: var(--hub-page-background);
   --card-bg: var(--hub-surface);
   --card-bg-soft: var(--hub-surface-soft);
@@ -16,11 +47,13 @@
   --text-soft: var(--hub-text-secondary);
   --muted: var(--hub-text-muted);
   --border: var(--hub-border-color);
-  --border-strong: var(--color-blue);
-  --primary: var(--hub-text-primary);
-  --primary-hover: var(--color-navy);
-  --primary-soft: var(--color-blue-soft);
-  --button-focus: var(--color-blue);
+  --border-strong: var(--hub-border-strong);
+  --primary: var(--hub-primary);
+  --primary-hover: var(--hub-primary-hover);
+  --primary-soft: var(--hub-primary-soft);
+  --button-focus: var(--hub-focus);
+  --link-color: var(--hub-olive);
+  --link-color-hover: var(--hub-wine);
   --shadow: var(--hub-shadow-card);
   --shadow-soft: var(--hub-shadow-card);
 }

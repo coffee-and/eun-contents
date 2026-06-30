@@ -9,6 +9,8 @@ const RelationshipApp = lazy(() => import("../features/relationship/Relationship
 const TogetherQuestionsApp = lazy(() =>
   import("../features/together-questions/TogetherQuestionsApp.jsx")
 );
+const SajuApp = lazy(() => import("../features/saju/SajuApp.jsx"));
+const MiniGamesApp = lazy(() => import("../features/mini-games/MiniGamesApp.jsx"));
 
 export const CONTENT_REGISTRY = [
   {
@@ -44,13 +46,14 @@ export const CONTENT_REGISTRY = [
     route: "saju",
     category: "SAJU & INSIGHT",
     title: "나를 읽는 사주",
-    description: "타고난 기질과 삶의 흐름 속에서\n나만의 이야기를 발견해요",
+    description: "사주와 타로를 통해\n나의 기질과 지금의 흐름을 살펴봐요",
     imageSrc: "/images/content/saju-cover.png",
     imageAlt: "초록 잎 그림자 아래 놓인 사주 명식과 붓",
     layout: "quiet",
-    status: CONTENT_STATUS.COMING_SOON,
-    actionLabel: "곧 만나보세요",
-    themeClass: "theme-hub",
+    status: CONTENT_STATUS.ACTIVE,
+    actionLabel: "사주와 타로 보기 →",
+    component: SajuApp,
+    themeClass: "theme-saju",
   },
   {
     id: "mini-games",
@@ -61,9 +64,10 @@ export const CONTENT_REGISTRY = [
     imageSrc: "/images/content/game-cover.png",
     imageAlt: "파란 하늘 아래 퍼즐 조각을 맞대는 두 손",
     layout: "wide",
-    status: CONTENT_STATUS.COMING_SOON,
-    actionLabel: "곧 만나보세요",
-    themeClass: "theme-hub",
+    status: CONTENT_STATUS.ACTIVE,
+    actionLabel: "게임 둘러보기 →",
+    component: MiniGamesApp,
+    themeClass: "theme-mini-games",
   },
 ];
 
