@@ -1,0 +1,172 @@
+.theme-relationship {
+  --relationship-white: #ffffff;
+  --relationship-ivory: #f9f8f7;
+  --relationship-soft-white: #fcfbfa;
+  --relationship-soft-blush: #f5e1da;
+  --relationship-dusty-pink: #d6a7b2;
+  --relationship-muted-rose: #b56576;
+  --relationship-slate-violet: #6d597a;
+  --relationship-deep-blue: #355070;
+  --relationship-noir: #232a2f;
+
+  --relationship-blush: var(--relationship-soft-blush);
+  --relationship-almond: #f0ebea;
+  --relationship-ink-navy: var(--relationship-deep-blue);
+  --relationship-editorial-navy: var(--relationship-deep-blue);
+  --relationship-steel-blue: var(--relationship-slate-violet);
+  --relationship-soft-rose: var(--relationship-dusty-pink);
+  --relationship-lavender: var(--relationship-dusty-pink);
+  --relationship-slate: var(--relationship-slate-violet);
+  --relationship-burgundy: #8f4f60;
+  --relationship-wine: var(--relationship-muted-rose);
+  --relationship-mist: #c8bcc5;
+  --relationship-navy: var(--relationship-deep-blue);
+  --relationship-deep-navy: #283d58;
+  --relationship-surface: var(--relationship-soft-white);
+  --relationship-line: #ddd7da;
+  --relationship-selected: #dce3eb;
+  --relationship-option-hover: var(--relationship-selected);
+  --relationship-option-selected: color-mix(
+    in srgb,
+    var(--relationship-selected) 78%,
+    var(--relationship-deep-blue)
+  );
+
+  --relationship-mode-badge-bg: #ead0d8;
+  --relationship-mode-badge-text: #7f4053;
+  --relationship-secondary-action-bg: #eadde4;
+  --relationship-secondary-action-hover: #dfc6d1;
+  --relationship-secondary-action-text: #793e52;
+  --relationship-secondary: var(--relationship-secondary-action-bg);
+  --relationship-secondary-active: var(--relationship-secondary-action-bg);
+  --relationship-secondary-disabled: #f0e9ed;
+  --relationship-disabled: #e8e4e6;
+  --relationship-next-disabled: color-mix(
+    in srgb,
+    var(--relationship-deep-blue) 42%,
+    var(--relationship-selected)
+  );
+  --relationship-question-title-color: var(--relationship-noir);
+  --relationship-question-font-size: clamp(1.18rem, 1.8vw, 1.55rem);
+  --relationship-option-font-size: var(--font-body);
+  --relationship-secondary-button-text: var(--relationship-secondary-action-text);
+  --relationship-secondary-button-disabled-text: color-mix(
+    in srgb,
+    var(--relationship-secondary-action-text) 58%,
+    var(--relationship-white)
+  );
+
+  --relationship-metric-blue: #52779b;
+  --relationship-metric-blue-soft: #eff4f8;
+  --relationship-metric-violet: #75658a;
+  --relationship-metric-violet-soft: #f3eff6;
+  --relationship-metric-rose: #b57082;
+  --relationship-metric-rose-soft: #faeff2;
+  --relationship-metric-plum: #866479;
+  --relationship-metric-plum-soft: #f6eff3;
+  --relationship-metric-track: #ebe6e9;
+
+  --relationship-capture-soft-1: #f1dce2;
+  --relationship-capture-soft-2: #ddd4e3;
+  --relationship-capture-soft-3: #cbd8e4;
+
+  --relationship-premium-band-1: #b8c6d5;
+  --relationship-premium-band-2: #c9bed2;
+  --relationship-premium-band-3: #ddb9c2;
+  --relationship-premium-number: var(--relationship-deep-blue);
+
+  --bg: var(--relationship-ivory);
+  --bg-soft: var(--relationship-soft-white);
+  --card-bg: var(--relationship-white);
+  --card-bg-soft: var(--relationship-soft-white);
+  --surface-muted: var(--relationship-soft-blush);
+  --surface-line: var(--relationship-line);
+  --text: var(--relationship-noir);
+  --inverse-text: var(--relationship-white);
+  --text-soft: #626167;
+  --muted: var(--relationship-slate-violet);
+  --border: var(--relationship-line);
+  --border-strong: var(--relationship-slate-violet);
+  --primary: var(--relationship-deep-blue);
+  --primary-hover: var(--relationship-deep-navy);
+  --primary-strong: var(--relationship-deep-navy);
+  --primary-soft: var(--relationship-selected);
+  --secondary-action-bg: var(--relationship-secondary-action-bg);
+  --secondary-action-bg-hover: var(--relationship-secondary-action-hover);
+  --secondary-action-border: transparent;
+  --secondary-action-text: var(--relationship-secondary-action-text);
+  --secondary-action-text-hover: var(--relationship-secondary-action-text);
+  --disabled-bg: var(--relationship-disabled);
+  --disabled-text: #aaa5a9;
+  --accent: var(--relationship-slate-violet);
+  --accent-soft: var(--relationship-dusty-pink);
+  --premium-bg: #fbf3f5;
+  --premium-text: var(--relationship-muted-rose);
+  --shadow: none;
+  --shadow-soft: none;
+  --shadow-flat: none;
+  --gradient-main: var(--relationship-slate-violet);
+  --gradient-page: var(--relationship-ivory);
+  --link-color: var(--relationship-deep-blue);
+  --link-color-hover: var(--relationship-muted-rose);
+  --button-focus: var(--relationship-slate-violet);
+  --button-primary-bg: var(--relationship-deep-blue);
+  --button-primary-border: transparent;
+  --button-primary-text: var(--relationship-white);
+  --button-primary-hover-bg: var(--relationship-deep-navy);
+  --button-primary-hover-border: transparent;
+  --button-secondary-bg: var(--relationship-secondary-action-bg);
+  --button-secondary-border: transparent;
+  --button-secondary-text: var(--relationship-secondary-action-text);
+  --button-secondary-hover-bg: var(--relationship-secondary-action-hover);
+  --button-secondary-hover-border: transparent;
+  --button-secondary-hover-text: var(--relationship-secondary-action-text);
+  --button-ghost-bg: var(--relationship-secondary-action-bg);
+  --button-ghost-border: transparent;
+  --button-ghost-text: var(--relationship-secondary-action-text);
+  --button-ghost-hover-bg: var(--relationship-secondary-action-hover);
+  --button-ghost-hover-border: transparent;
+  --button-ghost-hover-text: var(--relationship-secondary-action-text);
+  --button-disabled-bg: var(--relationship-disabled);
+  --button-disabled-border: transparent;
+  --button-disabled-text: var(--disabled-text);
+
+  --feature-bg: var(--relationship-ivory);
+  --feature-bg-soft: var(--relationship-soft-white);
+  --feature-surface: var(--relationship-white);
+  --feature-surface-muted: var(--relationship-soft-white);
+  --feature-surface-strong: var(--relationship-white);
+  --feature-text: var(--relationship-noir);
+  --feature-text-soft: var(--text-soft);
+  --feature-text-muted: var(--relationship-slate-violet);
+  --feature-text-inverse: var(--relationship-white);
+  --feature-border: var(--relationship-line);
+  --feature-border-strong: var(--relationship-slate-violet);
+  --feature-primary: var(--relationship-deep-blue);
+  --feature-primary-hover: var(--relationship-deep-navy);
+  --feature-primary-soft: var(--relationship-selected);
+  --feature-accent: var(--relationship-muted-rose);
+  --feature-accent-soft: var(--relationship-dusty-pink);
+  --feature-label-bg: var(--relationship-mode-badge-bg);
+  --feature-label-text: var(--relationship-burgundy);
+  --feature-label-muted-bg: var(--relationship-mode-badge-bg);
+  --feature-label-muted-text: var(--relationship-mode-badge-text);
+  --feature-badge-bg: var(--relationship-muted-rose);
+  --feature-badge-text: var(--relationship-white);
+  --feature-card-bg: var(--relationship-white);
+  --feature-card-border: var(--relationship-line);
+  --feature-card-accent: var(--relationship-deep-blue);
+  --feature-button-primary-bg: var(--button-primary-bg);
+  --feature-button-primary-hover-bg: var(--button-primary-hover-bg);
+  --feature-button-primary-text: var(--button-primary-text);
+  --feature-button-secondary-bg: var(--button-secondary-bg);
+  --feature-button-secondary-hover-bg: var(--button-secondary-hover-bg);
+  --feature-button-secondary-text: var(--button-secondary-text);
+  --feature-button-disabled-bg: var(--button-disabled-bg);
+  --feature-button-disabled-text: var(--button-disabled-text);
+  --feature-focus: var(--button-focus);
+  --feature-danger: var(--color-danger);
+  --feature-danger-soft: var(--color-danger-soft);
+  --feature-success: var(--color-olive);
+  --feature-success-soft: var(--color-olive-soft);
+}

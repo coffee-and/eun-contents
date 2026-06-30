@@ -1,0 +1,28 @@
+.theme-relationship.theme-relationship .option-card--selected,
+.theme-relationship.theme-relationship .option-card--selected:hover,
+.theme-relationship.theme-relationship .option-card--selected:focus-visible {
+  border-color: #1e3a5f !important;
+  background: #1e3a5f !important;
+}
+
+.theme-relationship.theme-relationship .result-card--actions .button,
+.theme-relationship.theme-relationship .result-card--actions .text-action {
+  background: #e3f2fd;
+  color: #1e3a5f;
+}
+
+.theme-relationship.theme-relationship .result-card--actions .button--primary {
+  background: #1e3a5f;
+  color: #ffffff;
+}
+
+.theme-relationship.theme-relationship .result-card--actions .button:hover:not(:disabled),
+.theme-relationship.theme-relationship .result-card--actions .text-action:hover {
+  background: #bbdefb;
+  color: #142c4a;
+}
+
+.theme-relationship.theme-relationship .result-card--actions .button--primary:hover:not(:disabled) {
+  background: #142c4a;
+  color: #ffffff;
+}

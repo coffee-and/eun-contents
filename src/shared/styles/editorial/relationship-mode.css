@@ -1,0 +1,18 @@
+@import "./relationship-critical.css";
+@import "./relationship-result-critical.css";
+@import "./relationship-premium-critical.css";
+@import "./relationship-actions-critical.css";
+@import "./relationship-blue-accents.css";
+@import "./relationship-blue-controls.css";
+
+.theme-relationship.theme-relationship .mode-select {
+  padding: 32px;
+  background: #ffffff;
+}
+
+.theme-relationship.theme-relationship .mode-card {
+  border: 0;
+  border-top: 8px solid #1976d2;
+  border-radius: initial;
+  background: #e3f2fd;
+}

@@ -1,0 +1,60 @@
+.theme-mini-games {
+  --mini-plum: #392933;
+  --mini-green-deep: #385249;
+  --mini-green: #519872;
+  --mini-moss: #6d8b74;
+  --mini-moss-deep: #5f7163;
+  --mini-sage: #a6b494;
+  --mini-warm-gray: #d6c9c0;
+  --mini-cream: #efead8;
+  --mini-paper: #f7f3e8;
+  --mini-white: #ffffff;
+
+  --feature-bg: var(--mini-cream);
+  --feature-bg-soft: var(--mini-paper);
+  --feature-surface: var(--mini-paper);
+  --feature-surface-muted: var(--mini-warm-gray);
+  --feature-surface-strong: var(--mini-green-deep);
+
+  --feature-text: var(--mini-plum);
+  --feature-text-soft: var(--mini-green-deep);
+  --feature-text-muted: var(--mini-moss-deep);
+  --feature-text-inverse: var(--mini-white);
+
+  --feature-border: var(--mini-sage);
+  --feature-border-strong: var(--mini-green-deep);
+
+  --feature-primary: var(--mini-green-deep);
+  --feature-primary-hover: var(--mini-plum);
+  --feature-primary-soft: var(--mini-warm-gray);
+  --feature-accent: var(--mini-green);
+  --feature-accent-soft: var(--mini-sage);
+
+  --feature-label-bg: var(--mini-warm-gray);
+  --feature-label-text: var(--mini-green-deep);
+  --feature-label-muted-bg: var(--mini-warm-gray);
+  --feature-label-muted-text: var(--mini-moss-deep);
+  --feature-badge-bg: var(--mini-green-deep);
+  --feature-badge-text: var(--mini-white);
+
+  --feature-card-bg: var(--mini-paper);
+  --feature-card-border: var(--mini-sage);
+  --feature-card-accent: var(--mini-green);
+
+  --feature-button-primary-bg: var(--mini-green-deep);
+  --feature-button-primary-hover-bg: var(--mini-plum);
+  --feature-button-primary-text: var(--mini-white);
+  --feature-button-secondary-bg: var(--mini-warm-gray);
+  --feature-button-secondary-hover-bg: var(--mini-sage);
+  --feature-button-secondary-text: var(--mini-plum);
+  --feature-focus: var(--mini-plum);
+
+  --mini-game-card-bg: var(--mini-paper);
+  --mini-game-card-hover-bg: var(--mini-sage);
+  --mini-game-card-selected-bg: var(--mini-green-deep);
+  --mini-game-card-selected-text: var(--mini-white);
+
+  --button-focus: var(--mini-plum);
+  --link-color: var(--mini-green-deep);
+  --link-color-hover: var(--mini-plum);
+}

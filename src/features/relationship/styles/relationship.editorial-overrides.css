@@ -1,0 +1,16 @@
+.theme-relationship .mode-select__title,
+.theme-relationship .question-card__title,
+.theme-relationship .question-card h2 {
+  font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+  line-height: 1.28;
+  font-weight: 700;
+  word-break: keep-all;
+}
+
+@media (max-width: 720px) {
+  .theme-relationship .mode-select__title,
+  .theme-relationship .question-card__title,
+  .theme-relationship .question-card h2 {
+    font-size: 1.75rem;
+  }
+}

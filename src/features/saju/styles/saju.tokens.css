@@ -1,0 +1,60 @@
+.theme-saju {
+  --saju-ink: #2b2927;
+  --saju-brown: #7a5a49;
+  --saju-terracotta: #c47a5a;
+  --saju-terracotta-deep: #a35a40;
+  --saju-surface: #efe6db;
+  --saju-surface-soft: #f7efe7;
+  --saju-paper: #f8f5f0;
+  --saju-plum: #5b3b4b;
+  --saju-sand: #d7c2a8;
+  --saju-white: #ffffff;
+
+  --feature-bg: var(--saju-paper);
+  --feature-bg-soft: var(--saju-surface-soft);
+  --feature-surface: var(--saju-surface);
+  --feature-surface-muted: var(--saju-surface-soft);
+  --feature-surface-strong: var(--saju-plum);
+
+  --feature-text: var(--saju-ink);
+  --feature-text-soft: var(--saju-brown);
+  --feature-text-muted: var(--saju-brown);
+  --feature-text-inverse: var(--saju-white);
+
+  --feature-border: var(--saju-sand);
+  --feature-border-strong: var(--saju-plum);
+
+  --feature-primary: var(--saju-terracotta-deep);
+  --feature-primary-hover: var(--saju-plum);
+  --feature-primary-soft: var(--saju-surface-soft);
+  --feature-accent: var(--saju-terracotta);
+  --feature-accent-soft: var(--saju-surface-soft);
+
+  --feature-label-bg: var(--saju-surface-soft);
+  --feature-label-text: var(--saju-terracotta-deep);
+  --feature-label-muted-bg: var(--saju-surface-soft);
+  --feature-label-muted-text: var(--saju-brown);
+  --feature-badge-bg: var(--saju-plum);
+  --feature-badge-text: var(--saju-white);
+
+  --feature-card-bg: var(--saju-surface);
+  --feature-card-border: var(--saju-sand);
+  --feature-card-accent: var(--saju-terracotta);
+
+  --feature-button-primary-bg: var(--saju-plum);
+  --feature-button-primary-hover-bg: var(--saju-terracotta-deep);
+  --feature-button-primary-text: var(--saju-white);
+  --feature-button-secondary-bg: var(--saju-surface-soft);
+  --feature-button-secondary-hover-bg: var(--saju-surface);
+  --feature-button-secondary-text: var(--saju-plum);
+  --feature-focus: var(--saju-plum);
+
+  --saju-card-bg: var(--saju-surface-soft);
+  --saju-card-hover-bg: var(--saju-terracotta);
+  --saju-card-selected-bg: var(--saju-plum);
+  --saju-card-selected-text: var(--saju-white);
+
+  --button-focus: var(--saju-plum);
+  --link-color: var(--saju-plum);
+  --link-color-hover: var(--saju-terracotta-deep);
+}

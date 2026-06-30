@@ -1,0 +1,66 @@
+.theme-hub {
+  --hub-white: #ffffff;
+  --hub-page-background: #fcfaf8;
+  --hub-surface: var(--hub-white);
+  --hub-surface-soft: #f7f1ee;
+  --hub-surface-muted: #f1e4df;
+
+  --hub-ink: #2d2927;
+  --hub-deep-rose: #7b444a;
+  --hub-rose: #9c6763;
+  --hub-clay: #ab7769;
+  --hub-blush: #c89c8f;
+  --hub-peach: #d6b2a6;
+  --hub-taupe: #a28077;
+  --hub-stone: #c5b7ae;
+
+  --hub-text-primary: var(--hub-ink);
+  --hub-text-secondary: #4f4642;
+  --hub-text-muted: #8b7e78;
+  --hub-border-color: #e2d8d2;
+  --hub-border-strong: var(--hub-rose);
+
+  --hub-primary: var(--hub-deep-rose);
+  --hub-primary-hover: #63363c;
+  --hub-primary-soft: var(--hub-surface-soft);
+  --hub-focus: var(--hub-deep-rose);
+
+  --hub-featured-bg: #f3e7e2;
+  --hub-featured-text: var(--hub-ink);
+  --hub-featured-text-soft: #6d5c57;
+  --hub-featured-label: var(--hub-deep-rose);
+  --hub-featured-button-bg: var(--hub-deep-rose);
+  --hub-featured-button-text: var(--hub-white);
+  --hub-featured-button-hover-bg: #63363c;
+
+  --hub-on-circle: var(--hub-peach);
+  --hub-on-circle-deep: var(--hub-blush);
+  --hub-on-triangle: var(--hub-deep-rose);
+  --hub-on-overlap: var(--hub-rose);
+
+  --hub-olive: var(--hub-deep-rose);
+  --hub-moss: var(--hub-blush);
+  --hub-\77 ine: var(--hub-deep-rose);
+  --hub-mauve: var(--hub-taupe);
+
+  --hub-content-width: 1120px;
+  --hub-card-radius: var(--card-radius);
+  --hub-shadow-card: var(--shadow-card-soft);
+
+  --bg: var(--hub-page-background);
+  --card-bg: var(--hub-surface);
+  --card-bg-soft: var(--hub-surface-soft);
+  --text: var(--hub-text-primary);
+  --text-soft: var(--hub-text-secondary);
+  --muted: var(--hub-text-muted);
+  --border: var(--hub-border-color);
+  --border-strong: var(--hub-border-strong);
+  --primary: var(--hub-primary);
+  --primary-hover: var(--hub-primary-hover);
+  --primary-soft: var(--hub-primary-soft);
+  --button-focus: var(--hub-focus);
+  --link-color: var(--hub-deep-rose);
+  --link-color-hover: var(--hub-primary-hover);
+  --shadow: var(--hub-shadow-card);
+  --shadow-soft: var(--hub-shadow-card);
+}

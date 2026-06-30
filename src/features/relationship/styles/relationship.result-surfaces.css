@@ -1,0 +1,81 @@
+.theme-relationship .capture-panel {
+  background: var(--relationship-white);
+}
+
+.theme-relationship .capture-panel::before,
+.theme-relationship .capture-panel::after,
+.theme-relationship .capture-panel__hero::before,
+.theme-relationship .capture-panel__hero::after {
+  display: none;
+}
+
+.theme-relationship .capture-panel__hero {
+  position: relative;
+  isolation: isolate;
+  margin: calc(-1 * clamp(22px, 3vw, 36px)) calc(-1 * clamp(22px, 3vw, 36px)) 24px;
+  padding: clamp(28px, 4vw, 48px) clamp(22px, 3vw, 36px) clamp(34px, 5vw, 56px);
+  overflow: hidden;
+  background: linear-gradient(
+    108deg,
+    var(--relationship-capture-soft-1) 0 52%,
+    var(--relationship-capture-soft-2) 52% 76%,
+    var(--relationship-capture-soft-3) 76% 100%
+  );
+}
+
+.theme-relationship .capture-panel__hero-main,
+.theme-relationship .capture-panel__type-box {
+  position: relative;
+  z-index: 1;
+}
+
+.theme-relationship .capture-panel__type-box {
+  display: grid;
+  align-content: center;
+  justify-items: end;
+  gap: 10px;
+  min-width: 150px;
+  text-align: right;
+}
+
+.theme-relationship .capture-panel__type-label {
+  color: var(--relationship-slate-violet);
+  font-size: var(--font-label);
+  font-weight: 700;
+  letter-spacing: var(--letter-label);
+  line-height: 1.2;
+}
+
+.theme-relationship .capture-panel__type-value {
+  color: var(--relationship-deep-blue);
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.theme-relationship .capture-panel__hero .capture-panel__summary-label,
+.theme-relationship .capture-panel__title {
+  color: var(--relationship-noir);
+}
+
+.theme-relationship .capture-panel__desc {
+  color: color-mix(in srgb, var(--relationship-noir) 82%, var(--relationship-slate-violet));
+}
+
+.theme-relationship .capture-panel__summary-label {
+  color: var(--relationship-muted-rose);
+}
+
+.theme-relationship .capture-panel__footer {
+  position: relative;
+  z-index: 1;
+}
+
+.theme-relationship .capture-panel__title {
+  font-size: clamp(1.7rem, 2.7vw, 2.35rem);
+}
+
+.theme-relationship .capture-panel__desc {
+  font-size: clamp(0.94rem, 1.3vw, 1rem);
+  line-height: 1.65;
+}
