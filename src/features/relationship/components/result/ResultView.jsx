@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import html2canvas from "html2canvas";
 import { Button } from "../../../../shared/components/Button.jsx";
 import { TextAction } from "../../../../shared/components/TextAction.jsx";
 import { EditorialCard } from "../../../../shared/components/editorial/EditorialCard.jsx";
@@ -8,14 +7,13 @@ import {
   CATEGORY_META,
   RELATIONSHIP_MODE_META,
 } from "../../data/config.js";
-import { buildResultUrl, saveResult } from "../../utils/resultStorage.js";
 import { MetricGrid } from "./MetricGrid.jsx";
 import { ResultSummaryCard } from "./ResultSummaryCard.jsx";
 import { SectionCard } from "./SectionCard.jsx";
 import { PremiumLockedSection } from "../premium/PremiumLockedSection.jsx";
 import { PremiumReport } from "../premium/PremiumReport.jsx";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
+import { useResultCapture } from "./useResultCapture.js";
+import { useResultSharing } from "./useResultSharing.js";
 
 export function ResultView({
   analysis,
@@ -30,23 +28,38 @@ export function ResultView({
 }) {
   const captureRef = useRef(null);
   const premiumReportRef = useRef(null);
-  const saveRequestRef = useRef(null);
   const [isPremium, setIsPremium] = useState(false);
   const [isAnswerOpen, setIsAnswerOpen] = useState(false);
   const [showComingSoon, setShowComingSoon] = useState(false);
-  const [savedResultUrl, setSavedResultUrl] = useState(() =>
-    isSavedResult && savedResultId ? buildResultUrl(savedResultId) : ""
-  );
-  const [serverResultId, setServerResultId] = useState(() =>
-    isSavedResult && savedResultId ? savedResultId : ""
-  );
-  const [serverSaveStatus, setServerSaveStatus] = useState("idle");
-  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
-  const canNativeShare =
-    typeof navigator !== "undefined" && Boolean(navigator.share);
   const modeLabel = relationshipMode
     ? RELATIONSHIP_MODE_META[relationshipMode]?.shortLabel
     : analysis.relationshipLabel;
+
+  const {
+    savedResultUrl,
+    serverSaveStatus,
+    isShareModalOpen,
+    setIsShareModalOpen,
+    canNativeShare,
+    handleOpenShareModal,
+    handleNativeShare,
+    handleCopyShareLink,
+    handleShareModalBackdrop,
+  } = useResultSharing({
+    analysis,
+    answers,
+    relationshipMode,
+    shareConfig,
+    modeLabel,
+    isSavedResult,
+    savedResultId,
+  });
+
+  const { handleCapture } = useResultCapture({
+    captureRef,
+    isPremium,
+    fileName: shareConfig.fileName,
+  });
 
   const detailedSections = [
     {
@@ -82,20 +95,6 @@ export function ResultView({
     });
   }, [isPremium]);
 
-  useEffect(() => {
-    if (!isShareModalOpen) return;
-
-    function handleEscape(event) {
-      if (event.key === "Escape") {
-        setIsShareModalOpen(false);
-      }
-    }
-
-    window.addEventListener("keydown", handleEscape);
-
-    return () => window.removeEventListener("keydown", handleEscape);
-  }, [isShareModalOpen]);
-
   function handlePaymentClick() {
     const isConfirmed = window.confirm(
       "테스트 모드로 프리미엄 리포트를 열까요? 실제 결제 금액은 청구되지 않습니다."
@@ -105,148 +104,6 @@ export function ResultView({
 
     setShowComingSoon(false);
     setIsPremium(true);
-  }
-
-  async function prepareSavedResultUrl() {
-    if (savedResultUrl) return savedResultUrl;
-    if (saveRequestRef.current) return saveRequestRef.current;
-
-    saveRequestRef.current = saveAndBuildResultUrl();
-
-    try {
-      return await saveRequestRef.current;
-    } finally {
-      saveRequestRef.current = null;
-    }
-  }
-
-  async function saveAndBuildResultUrl() {
-    let remoteResultId = serverResultId;
-
-    if (!remoteResultId) {
-      setServerSaveStatus("saving");
-
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/results`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            mode: relationshipMode ?? "relationship",
-            answers: {
-              items: answers,
-            },
-            scores: {
-              finalValue: analysis.finalValue,
-              conflictRisk: analysis.conflictRisk,
-              categoryScores: analysis.categoryScores,
-            },
-            analysis,
-            resultType: analysis.relationshipLevel.title,
-          }),
-        });
-        const payload = await response.json();
-
-        if (!response.ok || !payload.ok || !payload.result?.id) {
-          throw new Error("Result server save failed.");
-        }
-
-        remoteResultId = payload.result.id;
-        setServerResultId(remoteResultId);
-        setServerSaveStatus("saved");
-      } catch (error) {
-        setServerSaveStatus("error");
-        console.error("Failed to save result on server.", error);
-        window.alert("서버 저장에 실패했어요. 잠시 후 다시 시도해 주세요.");
-        return;
-      }
-    }
-
-    saveResult({ analysis, answers, relationshipMode });
-    const nextUrl = buildResultUrl(remoteResultId);
-
-    setSavedResultUrl(nextUrl);
-    return nextUrl;
-  }
-
-  async function handleOpenShareModal() {
-    if (serverSaveStatus === "saving") return;
-
-    const nextUrl = savedResultUrl || (await prepareSavedResultUrl());
-
-    if (!nextUrl) return;
-
-    setIsShareModalOpen(true);
-  }
-
-  async function handleNativeShare() {
-    if (!canNativeShare) return;
-
-    try {
-      await navigator.share({
-        title: shareConfig.title,
-        text: `내 ${modeLabel ?? "관계"} 테스트 결과: ${analysis.relationshipLevel.title}`,
-        url: savedResultUrl,
-      });
-    } catch (error) {
-      if (error.name === "AbortError") return;
-
-      console.error("Failed to share result.", error);
-    }
-  }
-
-  async function handleCopyShareLink() {
-    try {
-      await navigator.clipboard.writeText(savedResultUrl);
-      window.alert("결과 링크를 클립보드에 복사했어요.");
-      setIsShareModalOpen(false);
-    } catch (error) {
-      window.alert("링크 복사에 실패했어요. 다시 시도해 주세요.");
-    }
-  }
-
-  function handleShareModalBackdrop() {
-    setIsShareModalOpen(false);
-  }
-
-  async function handleCapture() {
-    const node = captureRef.current;
-
-    if (!node) return;
-
-    const shouldIncludePremium =
-      isPremium &&
-      window.confirm("프리미엄 리포트 내용도 결과 이미지에 포함할까요?");
-
-    node.classList.add("capture-export--saving");
-
-    if (isPremium && !shouldIncludePremium) {
-      node.classList.add("capture-export--hide-premium");
-    }
-
-    await new Promise((resolve) => {
-      requestAnimationFrame(() => {
-        requestAnimationFrame(resolve);
-      });
-    });
-
-    try {
-      const canvas = await html2canvas(node, {
-        backgroundColor: "#f7eef3",
-        scale: 2,
-        useCORS: true,
-        scrollY: -window.scrollY,
-      });
-
-      const link = document.createElement("a");
-      link.download = shareConfig.fileName;
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-    } finally {
-      node.classList.remove("capture-export--saving");
-      node.classList.remove("capture-export--hide-premium");
-    }
   }
 
   return (
@@ -267,7 +124,8 @@ export function ResultView({
         <ResultSummaryCard analysis={analysis} modeLabel={modeLabel} />
 
         <SectionCard
-          title="한눈에 보는 관계 보고서"
+          variant="core-analysis"
+          title="핵심 분석"
           desc="선택한 답변을 바탕으로 현재 관계의 강점과 조율이 필요한 영역을 요약했습니다. 아래 지표는 각 영역의 서로 다른 배점 범위를 0~100으로 환산한 앱 내부 참고값이며, 임상 진단이나 표준화 검사 점수가 아닙니다."
           points={analysis.summaryLines}
         />
