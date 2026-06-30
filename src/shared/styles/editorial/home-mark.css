@@ -1,6 +1,54 @@
-.home-mark {
+.theme-hub .featured-card::before,
+.theme-hub .featured-card::after {
+  content: none;
+}
+
+.theme-hub .home-mark {
   position: absolute;
   inset: 0 0 0 auto;
-  width: 42%;
+  width: clamp(220px, 42%, 500px);
+  overflow: hidden;
   pointer-events: none;
+}
+
+.theme-hub .home-mark::before {
+  content: "";
+  position: absolute;
+  left: -8%;
+  bottom: -34%;
+  width: 82%;
+  aspect-ratio: 1;
+  border: clamp(36px, 4.8vw, 62px) solid var(--hub-on-circle);
+  border-left-color: var(--hub-on-circle-deep);
+  border-radius: 50%;
+}
+
+.theme-hub .home-mark::after {
+  content: "";
+  position: absolute;
+  right: -12%;
+  bottom: -8%;
+  width: 58%;
+  height: 118%;
+  background: var(--hub-on-triangle);
+  transform: skewX(30deg);
+  transform-origin: bottom right;
+}
+
+@media (max-width: 620px) {
+  .theme-hub .home-mark {
+    width: 150px;
+  }
+
+  .theme-hub .home-mark::before {
+    left: -2%;
+    bottom: -22%;
+    width: 92%;
+    border-width: 28px;
+  }
+
+  .theme-hub .home-mark::after {
+    right: -28%;
+    width: 64%;
+  }
 }
