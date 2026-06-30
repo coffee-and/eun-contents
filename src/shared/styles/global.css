@@ -1,4 +1,5 @@
 @import "./tokens.css";
+@import "./editorial/editorial.css";
 @import "./themes/hub-theme.css";
 @import "./home.css";
 @import "./editorial/feature-cleanup.css";
@@ -103,21 +104,22 @@ select:focus-visible,
   align-items: center;
   justify-content: center;
   min-height: 48px;
-  padding: 12px 18px;
+  padding: var(--editorial-control-padding-block)
+    var(--editorial-control-padding-inline);
   appearance: none;
   border: 0;
   border-radius: 0;
   background: var(--button-bg, var(--color-white));
   color: var(--button-text, inherit);
-  font-size: var(--font-body);
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: var(--editorial-button-size);
+  font-weight: var(--editorial-button-weight);
+  line-height: var(--editorial-compact-line-height);
   text-align: center;
   text-decoration: none;
   cursor: pointer;
   transition:
-    background var(--motion-fast) var(--motion-ease),
-    color var(--motion-fast) var(--motion-ease);
+    background var(--editorial-motion-fast) var(--editorial-ease-standard),
+    color var(--editorial-motion-fast) var(--editorial-ease-standard);
 }
 
 .button:hover {
@@ -136,36 +138,36 @@ select:focus-visible,
 }
 
 .button--primary {
-  background: var(--button-primary-bg, #203854);
-  color: var(--button-primary-text, var(--color-white));
+  background: var(--feature-button-primary-bg);
+  color: var(--feature-button-primary-text);
 }
 
 .button--primary:hover:not(:disabled),
 .button--primary:active:not(:disabled) {
-  background: var(--button-primary-hover-bg, #152a44);
-  color: var(--button-primary-hover-text, var(--color-white));
+  background: var(--feature-button-primary-hover-bg);
+  color: var(--button-primary-hover-text, var(--feature-button-primary-text));
 }
 
 .button--secondary {
-  background: var(--button-secondary-bg, #e8edf2);
-  color: var(--button-secondary-text, #203854);
+  background: var(--feature-button-secondary-bg);
+  color: var(--feature-button-secondary-text);
 }
 
 .button--secondary:hover:not(:disabled),
 .button--secondary:active:not(:disabled) {
-  background: var(--button-secondary-hover-bg, #dce3eb);
-  color: var(--button-secondary-hover-text, #152a44);
+  background: var(--feature-button-secondary-hover-bg);
+  color: var(--button-secondary-hover-text, var(--feature-button-secondary-text));
 }
 
 .button--ghost {
-  background: var(--button-ghost-bg, #e8edf2);
-  color: var(--button-ghost-text, #203854);
+  background: var(--button-ghost-bg, var(--feature-button-secondary-bg));
+  color: var(--button-ghost-text, var(--feature-button-secondary-text));
 }
 
 .button--ghost:hover:not(:disabled),
 .button--ghost:active:not(:disabled) {
-  background: var(--button-ghost-hover-bg, #dce3eb);
-  color: var(--button-ghost-hover-text, #152a44);
+  background: var(--button-ghost-hover-bg, var(--feature-button-secondary-hover-bg));
+  color: var(--button-ghost-hover-text, var(--feature-button-secondary-text));
 }
 
 @media (max-width: 768px) {
