@@ -121,6 +121,7 @@ export default function RelationshipApp({ onNavigateHome }) {
   const activeModeLabel = activeMode
     ? RELATIONSHIP_MODE_META[activeMode]?.shortLabel
     : null;
+  const activeModeVersionLabel = activeMode ? `ver. ${activeMode}` : null;
   const shouldShowModeSelect =
     !sharedResultId &&
     !isResultLoading &&
@@ -213,7 +214,7 @@ export default function RelationshipApp({ onNavigateHome }) {
           onSelectOption={handleSelectOption}
           onNext={handleNext}
           onPrevious={handlePrevious}
-          modeLabel={activeModeLabel}
+          modeLabel={activeModeVersionLabel}
         />
       ) : null}
 
