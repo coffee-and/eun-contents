@@ -1,5 +1,24 @@
 // Relationship Analyzer 결과 저장 API입니다.
 import { applyCors, getSupabaseClient } from "../lib/server/results.js";
+import {
+  isRelationshipMode,
+  normalizeRelationshipMode,
+} from "../lib/shared/relationshipModes.js";
+
+const MAX_SERIALIZED_PAYLOAD_LENGTH = 250_000;
+const MAX_RESULT_TYPE_LENGTH = 120;
+
+function isPlainObject(value) {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+function isPayloadSizeAllowed(value) {
+  try {
+    return JSON.stringify(value).length <= MAX_SERIALIZED_PAYLOAD_LENGTH;
+  } catch {
+    return false;
+  }
+}
 
 export default async function handler(request, response) {
   applyCors(request, response, ["POST", "OPTIONS"]);
@@ -18,51 +37,58 @@ export default async function handler(request, response) {
   }
 
   try {
+    const body = isPlainObject(request.body) ? request.body : {};
     const {
       mode,
       answers = {},
       scores = {},
       analysis = null,
       resultType = null,
-    } = request.body ?? {};
+    } = body;
+    const normalizedMode = normalizeRelationshipMode(mode);
 
-    if (!["relationship", "couple", "marriage"].includes(mode)) {
+    if (!normalizedMode || !isRelationshipMode(normalizedMode)) {
       return response.status(400).json({
         ok: false,
         error: "Invalid mode.",
       });
     }
 
-    if (
-      typeof answers !== "object" ||
-      answers === null ||
-      Array.isArray(answers)
-    ) {
+    if (!isPlainObject(answers)) {
       return response.status(400).json({
         ok: false,
         error: "Answers must be an object.",
       });
     }
 
-    if (
-      typeof scores !== "object" ||
-      scores === null ||
-      Array.isArray(scores)
-    ) {
+    if (!isPlainObject(scores)) {
       return response.status(400).json({
         ok: false,
         error: "Scores must be an object.",
       });
     }
 
-    if (
-      typeof analysis !== "object" ||
-      analysis === null ||
-      Array.isArray(analysis)
-    ) {
+    if (!isPlainObject(analysis)) {
       return response.status(400).json({
         ok: false,
         error: "Analysis must be an object.",
+      });
+    }
+
+    if (
+      resultType !== null &&
+      (typeof resultType !== "string" || resultType.length > MAX_RESULT_TYPE_LENGTH)
+    ) {
+      return response.status(400).json({
+        ok: false,
+        error: "Invalid result type.",
+      });
+    }
+
+    if (!isPayloadSizeAllowed({ answers, scores, analysis, resultType })) {
+      return response.status(413).json({
+        ok: false,
+        error: "Result payload is too large.",
       });
     }
 
@@ -71,7 +97,7 @@ export default async function handler(request, response) {
     const { data, error } = await supabase
       .from("results")
       .insert({
-        mode,
+        mode: normalizedMode,
         answers,
         scores,
         analysis,
@@ -89,7 +115,7 @@ export default async function handler(request, response) {
       ok: true,
       result: {
         id: data.id,
-        mode: data.mode,
+        mode: normalizedMode,
         resultType: data.result_type,
         reportStatus: data.report_status,
         createdAt: data.created_at,

@@ -208,11 +208,6 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
     navigateToStart();
   }
 
-  function handleNavigateHome() {
-    resetState();
-    onNavigateHome();
-  }
-
   return (
     <AppShell>
       <FeatureHeader
@@ -224,7 +219,7 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
         titleClassName="tq-hero__title"
         subtitle="내 마음을 차례대로 적고, 완성된 나의 문답집을 저장하거나 공유해요."
         subtitleClassName="tq-hero__subtitle"
-        onNavigateHome={handleNavigateHome}
+        onNavigateHome={onNavigateHome}
         onRestart={step !== SESSION_STEPS.START ? handleRestart : null}
       />
 

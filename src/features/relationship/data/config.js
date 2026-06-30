@@ -1,11 +1,10 @@
+import { RELATIONSHIP_MODE } from "../../../../lib/shared/relationshipModes.js";
+
+export { RELATIONSHIP_MODE };
+
 export const PLAN = {
   FREE: "FREE",
   PREMIUM: "PREMIUM",
-};
-
-export const RELATIONSHIP_MODE = {
-  COUPLE: "couple",
-  MARRIED: "married",
 };
 
 export const RELATIONSHIP_MODE_META = {

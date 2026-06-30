@@ -1,4 +1,5 @@
 import { buildResultUrl } from "../../../app/routes.js";
+import { normalizeRelationshipMode } from "../../../../lib/shared/relationshipModes.js";
 
 const RESULT_STORAGE_KEY = "eun-contents-relationship-results";
 const LEGACY_RESULT_STORAGE_KEY = "relationship-analyzer-results";
@@ -11,10 +12,28 @@ function parseStoredResults(storageKey) {
   if (!rawData) return {};
 
   try {
-    return JSON.parse(rawData);
+    const parsed = JSON.parse(rawData);
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed)
+      ? parsed
+      : {};
   } catch {
     return {};
   }
+}
+
+function normalizeStoredResult(result) {
+  if (!result || typeof result !== "object" || Array.isArray(result)) {
+    return null;
+  }
+
+  const relationshipMode = normalizeRelationshipMode(result.relationshipMode);
+
+  if (!relationshipMode) return null;
+
+  return {
+    ...result,
+    relationshipMode,
+  };
 }
 
 function readStoredResults() {
@@ -24,12 +43,20 @@ function readStoredResults() {
     ...legacyResults,
     ...currentResults,
   };
+  const normalizedResults = Object.fromEntries(
+    Object.entries(mergedResults)
+      .map(([id, result]) => [id, normalizeStoredResult(result)])
+      .filter(([, result]) => Boolean(result))
+  );
 
-  if (Object.keys(legacyResults).length > 0) {
-    writeStoredResults(mergedResults);
+  if (
+    Object.keys(legacyResults).length > 0 ||
+    Object.keys(normalizedResults).length !== Object.keys(currentResults).length
+  ) {
+    writeStoredResults(normalizedResults);
   }
 
-  return mergedResults;
+  return normalizedResults;
 }
 
 function writeStoredResults(results) {
@@ -52,6 +79,10 @@ export function getStoredResult(resultId) {
 }
 
 export function saveResult({ analysis, answers, relationshipMode }) {
+  const normalizedMode = normalizeRelationshipMode(relationshipMode);
+
+  if (!normalizedMode) return null;
+
   const id = createResultId();
   const results = readStoredResults();
   const savedAt = new Date().toISOString();
@@ -60,7 +91,7 @@ export function saveResult({ analysis, answers, relationshipMode }) {
     id,
     analysis,
     answers,
-    relationshipMode,
+    relationshipMode: normalizedMode,
     savedAt,
   };
 
