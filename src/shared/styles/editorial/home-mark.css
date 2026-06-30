@@ -4,13 +4,13 @@
 }
 
 .theme-hub .featured-card__body {
-  padding-right: clamp(260px, 40vw, 520px);
+  padding-right: clamp(270px, 41vw, 530px);
 }
 
 .theme-hub .home-mark {
   position: absolute;
   inset: 0 0 0 auto;
-  width: clamp(220px, 42%, 500px);
+  width: clamp(240px, 43%, 520px);
   overflow: hidden;
   pointer-events: none;
 }
@@ -18,45 +18,44 @@
 .theme-hub .home-mark::before {
   content: "";
   position: absolute;
-  left: -8%;
-  bottom: -34%;
-  width: 82%;
+  left: -14%;
+  bottom: -30%;
+  width: 88%;
   aspect-ratio: 1;
-  border: clamp(36px, 4.8vw, 62px) solid var(--hub-on-circle);
-  border-left-color: var(--hub-on-circle-deep);
   border-radius: 50%;
+  background: var(--hub-on-circle);
 }
 
 .theme-hub .home-mark::after {
   content: "";
   position: absolute;
-  right: -12%;
-  bottom: -8%;
-  width: 58%;
-  height: 118%;
+  right: -16%;
+  bottom: -2%;
+  width: 54%;
+  height: 92%;
   background: var(--hub-on-triangle);
-  transform: skewX(30deg);
-  transform-origin: bottom right;
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
 }
 
 @media (max-width: 620px) {
   .theme-hub .featured-card__body {
-    padding-right: 132px;
+    padding-right: 126px;
   }
 
   .theme-hub .home-mark {
-    width: 150px;
+    width: 160px;
   }
 
   .theme-hub .home-mark::before {
-    left: -2%;
-    bottom: -22%;
-    width: 92%;
-    border-width: 28px;
+    left: -20%;
+    bottom: -24%;
+    width: 108%;
   }
 
   .theme-hub .home-mark::after {
-    right: -28%;
-    width: 64%;
+    right: -30%;
+    bottom: 3%;
+    width: 68%;
+    height: 76%;
   }
 }
