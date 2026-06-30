@@ -2,6 +2,7 @@
 @import "./editorial/home-cards.css";
 @import "./editorial/home-responsive.css";
 @import "./editorial/home-mark.css";
+@import "./editorial/home-polish.css";
 
 .theme-hub .hub-hero__tagline {
   color: var(--hub-deep-rose);
