@@ -37,4 +37,25 @@
   --hub-on-circle-deep: var(--hub-blush);
   --hub-on-triangle: var(--hub-deep-rose);
   --hub-on-overlap: var(--hub-rose);
+
+  --hub-content-width: 1120px;
+  --hub-card-radius: var(--card-radius);
+  --hub-shadow-card: var(--shadow-card-soft);
+
+  --bg: var(--hub-page-background);
+  --card-bg: var(--hub-surface);
+  --card-bg-soft: var(--hub-surface-soft);
+  --text: var(--hub-text-primary);
+  --text-soft: var(--hub-text-secondary);
+  --muted: var(--hub-text-muted);
+  --border: var(--hub-border-color);
+  --border-strong: var(--hub-border-strong);
+  --primary: var(--hub-primary);
+  --primary-hover: var(--hub-primary-hover);
+  --primary-soft: var(--hub-primary-soft);
+  --button-focus: var(--hub-focus);
+  --link-color: var(--hub-deep-rose);
+  --link-color-hover: var(--hub-primary-hover);
+  --shadow: var(--hub-shadow-card);
+  --shadow-soft: var(--hub-shadow-card);
 }
