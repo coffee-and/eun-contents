@@ -169,8 +169,6 @@
 }
 
 .theme-hub .coming-soon__card {
-  display: grid;
-  grid-template-columns: 1fr;
   min-height: 520px;
   overflow: hidden;
   border: 1px solid var(--hub-border-color);
