@@ -1,3 +1,7 @@
 .theme-hub {
+  --hub-white: #ffffff;
   --hub-page-background: #fcfaf8;
+  --hub-surface: var(--hub-white);
+  --hub-surface-soft: #f7f1ee;
+  --hub-surface-muted: #f1e4df;
 }
