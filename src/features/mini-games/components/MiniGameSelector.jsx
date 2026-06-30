@@ -6,7 +6,7 @@ export function MiniGameSelector({ selectedId, onSelect }) {
   const selectedGame = MINI_GAMES.find((game) => game.id === selectedId) ?? null;
 
   return (
-    <EditorialCard className="mini-game-selector" variant="selection">
+    <EditorialCard className="mini-game-selector">
       <div className="mini-game-selector__head">
         <EditorialLabel variant="section">SELECT / 01</EditorialLabel>
         <h2 id="mini-game-heading">어떤 게임으로 잠깐 쉬어갈까요?</h2>
