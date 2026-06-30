@@ -5,3 +5,12 @@
 .theme-hub .hub-hero__tagline {
   color: var(--hub-deep-rose);
 }
+
+.theme-hub .hub-back-button.text-action {
+  color: var(--hub-deep-rose);
+}
+
+.theme-hub .hub-back-button.text-action:hover,
+.theme-hub .hub-back-button.text-action:focus-visible {
+  color: var(--hub-primary-hover);
+}
