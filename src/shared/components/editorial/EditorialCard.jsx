@@ -15,7 +15,14 @@ function joinClassNames(values) {
 }
 
 export const EditorialCard = forwardRef(function EditorialCard(
-  { as: Component = "section", children, className = "", variant = "default", ...props },
+  {
+    as: Component = "section",
+    children,
+    className = "",
+    focusable = false,
+    variant = "default",
+    ...props
+  },
   ref
 ) {
   const safeVariant = CARD_VARIANTS.has(variant) ? variant : "default";
@@ -25,6 +32,7 @@ export const EditorialCard = forwardRef(function EditorialCard(
       className={joinClassNames([
         "editorial-card",
         `editorial-card--${safeVariant}`,
+        focusable ? "editorial-card--focusable" : "",
         className,
       ])}
       ref={ref}

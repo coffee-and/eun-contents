@@ -2,9 +2,12 @@ function joinClassNames(values) {
   return values.filter(Boolean).join(" ");
 }
 
-export function EditorialResultLayout({ children, className = "" }) {
+export function EditorialResultLayout({ children, className = "", ...props }) {
   return (
-    <div className={joinClassNames(["editorial-result-layout", className])}>
+    <div
+      className={joinClassNames(["editorial-result-layout", className])}
+      {...props}
+    >
       {children}
     </div>
   );
@@ -26,9 +29,12 @@ export function EditorialResultSection({
   );
 }
 
-export function EditorialResultActions({ children, className = "" }) {
+export function EditorialResultActions({ children, className = "", ...props }) {
   return (
-    <div className={joinClassNames(["editorial-result-actions", className])}>
+    <div
+      className={joinClassNames(["editorial-result-actions", className])}
+      {...props}
+    >
       {children}
     </div>
   );

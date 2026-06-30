@@ -2,7 +2,13 @@ function joinClassNames(values) {
   return values.filter(Boolean).join(" ");
 }
 
-export function EditorialMeta({ align, as: Component = "div", children, className = "" }) {
+export function EditorialMeta({
+  align,
+  as: Component = "div",
+  children,
+  className = "",
+  ...props
+}) {
   return (
     <Component
       className={joinClassNames([
@@ -10,6 +16,7 @@ export function EditorialMeta({ align, as: Component = "div", children, classNam
         align ? `editorial-meta--${align}` : "",
         className,
       ])}
+      {...props}
     >
       {children}
     </Component>

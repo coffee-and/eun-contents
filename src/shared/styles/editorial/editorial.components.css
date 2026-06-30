@@ -97,14 +97,21 @@
 
 .editorial-card--selection,
 .editorial-card--action {
-  cursor: pointer;
   transition:
     background var(--editorial-motion-fast) var(--editorial-ease-standard),
     border-color var(--editorial-motion-fast) var(--editorial-ease-standard),
     color var(--editorial-motion-fast) var(--editorial-ease-standard);
 }
 
-.editorial-card:focus-within {
+.editorial-card--selection {
+  cursor: pointer;
+}
+
+.editorial-card--action {
+  cursor: default;
+}
+
+.editorial-card--focusable:focus-within {
   outline: 2px solid var(--feature-focus);
   outline-offset: 3px;
 }

@@ -14,6 +14,7 @@ export function EditorialState({
   media,
   title,
   variant = "empty",
+  ...props
 }) {
   const safeVariant = STATE_VARIANTS.has(variant) ? variant : "empty";
 
@@ -25,6 +26,7 @@ export function EditorialState({
         className,
       ])}
       aria-live={safeVariant === "loading" ? "polite" : undefined}
+      {...props}
     >
       {media ? <div className="editorial-state__media">{media}</div> : null}
       {eyebrow ? <EditorialLabel variant="metadata">{eyebrow}</EditorialLabel> : null}
