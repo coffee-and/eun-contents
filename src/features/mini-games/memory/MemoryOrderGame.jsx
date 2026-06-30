@@ -4,34 +4,31 @@ import { EditorialLabel } from "../../../shared/components/editorial/EditorialLa
 
 const MEMORY_IMAGE_BASE_PATH = "/images/mini-games/memory";
 const BEST_ROUND_STORAGE_KEY = "eunContents.memoryOrderGame.bestRound";
-const ROUND_REACHED_STORAGE_KEY = "eunContents.memoryOrderGame.roundReached";
 
 const CAT_IMAGES = [
-  { id: "cat-01", name: "고양이 1", src: `${MEMORY_IMAGE_BASE_PATH}/cat-01.png` },
-  { id: "cat-02", name: "고양이 2", src: `${MEMORY_IMAGE_BASE_PATH}/cat-02.png` },
-  { id: "cat-03", name: "고양이 3", src: `${MEMORY_IMAGE_BASE_PATH}/cat-03.png` },
-  { id: "cat-04", name: "고양이 4", src: `${MEMORY_IMAGE_BASE_PATH}/cat-04.png` },
-  { id: "cat-05", name: "고양이 5", src: `${MEMORY_IMAGE_BASE_PATH}/cat-05.png` },
-  { id: "cat-06", name: "고양이 6", src: `${MEMORY_IMAGE_BASE_PATH}/cat-06.png` },
-  { id: "cat-07", name: "고양이 7", src: `${MEMORY_IMAGE_BASE_PATH}/cat-07.png` },
-  { id: "cat-08", name: "고양이 8", src: `${MEMORY_IMAGE_BASE_PATH}/cat-08.png` },
+  { id: "cat-01", name: "빨간 나비넥타이를 한 샴 고양이", src: `${MEMORY_IMAGE_BASE_PATH}/cat-01.png` },
+  { id: "cat-02", name: "초록 안경을 쓴 회색 고양이", src: `${MEMORY_IMAGE_BASE_PATH}/cat-02.png` },
+  { id: "cat-03", name: "금색 방울 목걸이를 한 턱시도 고양이", src: `${MEMORY_IMAGE_BASE_PATH}/cat-03.png` },
+  { id: "cat-04", name: "데이지 꽃을 단 삼색 고양이", src: `${MEMORY_IMAGE_BASE_PATH}/cat-04.png` },
+  { id: "cat-05", name: "남색 나비넥타이를 한 은색 태비 고양이", src: `${MEMORY_IMAGE_BASE_PATH}/cat-05.png` },
+  { id: "cat-06", name: "분홍 리본을 단 흰 고양이", src: `${MEMORY_IMAGE_BASE_PATH}/cat-06.png` },
+  { id: "cat-07", name: "금색 안경을 쓴 검은 고양이", src: `${MEMORY_IMAGE_BASE_PATH}/cat-07.png` },
+  { id: "cat-08", name: "초록 나비넥타이를 한 주황 태비 고양이", src: `${MEMORY_IMAGE_BASE_PATH}/cat-08.png` },
 ];
 
-function readStoredRound(key) {
+function readBestRound() {
   if (typeof window === "undefined") {
     return 0;
   }
 
-  const value = Number(window.localStorage.getItem(key));
+  const value = Number(window.localStorage.getItem(BEST_ROUND_STORAGE_KEY));
   return Number.isFinite(value) && value > 0 ? value : 0;
 }
 
-function writeStoredRound(key, round) {
-  if (typeof window === "undefined") {
-    return;
+function writeBestRound(round) {
+  if (typeof window !== "undefined") {
+    window.localStorage.setItem(BEST_ROUND_STORAGE_KEY, String(round));
   }
-
-  window.localStorage.setItem(key, String(round));
 }
 
 function shuffle(items) {
@@ -61,26 +58,29 @@ function createCardsFromSequence(sequence, round) {
     sequence.map((image, index) => ({
       ...image,
       cardId: `${round}-${image.id}-${index}`,
-      sequenceIndex: index,
     }))
   );
 }
 
 function getRoundConfig(round) {
+  if (round >= 17) {
+    return { cardCount: 20, previewSeconds: 2, allowDuplicates: true };
+  }
+
+  if (round >= 14) {
+    return { cardCount: 15, previewSeconds: 2, allowDuplicates: true };
+  }
+
+  if (round >= 11) {
+    return { cardCount: 12, previewSeconds: 3, allowDuplicates: true };
+  }
+
   if (round >= 8) {
-    return {
-      cardCount: 10,
-      previewSeconds: 3,
-      allowDuplicates: true,
-    };
+    return { cardCount: 10, previewSeconds: 3, allowDuplicates: true };
   }
 
   if (round >= 6) {
-    return {
-      cardCount: 8,
-      previewSeconds: 3,
-      allowDuplicates: false,
-    };
+    return { cardCount: 8, previewSeconds: 3, allowDuplicates: false };
   }
 
   return {
@@ -110,19 +110,22 @@ export function MemoryOrderGame({ onBack }) {
   const [step, setStep] = useState(0);
   const [selectedCardIds, setSelectedCardIds] = useState([]);
   const [message, setMessage] = useState("순서를 천천히 기억해 주세요.");
-  const [bestRound, setBestRound] = useState(() => readStoredRound(BEST_ROUND_STORAGE_KEY));
+  const [bestRound, setBestRound] = useState(readBestRound);
+  const [previousBestRound, setPreviousBestRound] = useState(readBestRound);
+  const [isNewRecord, setIsNewRecord] = useState(false);
 
   const selectedCardSet = useMemo(() => new Set(selectedCardIds), [selectedCardIds]);
-  const remainingPreviewSeconds = roundData.previewSeconds;
 
   useEffect(() => {
-    setBestRound((currentBestRound) => {
-      const nextBestRound = Math.max(currentBestRound, round);
-      writeStoredRound(BEST_ROUND_STORAGE_KEY, nextBestRound);
-      writeStoredRound(ROUND_REACHED_STORAGE_KEY, round);
-      return nextBestRound;
-    });
-  }, [round]);
+    if (round <= bestRound) {
+      setIsNewRecord(false);
+      return;
+    }
+
+    setBestRound(round);
+    writeBestRound(round);
+    setIsNewRecord(previousBestRound > 0 && round > previousBestRound);
+  }, [bestRound, previousBestRound, round]);
 
   useEffect(() => {
     if (phase !== "preview") {
@@ -147,7 +150,11 @@ export function MemoryOrderGame({ onBack }) {
   }
 
   function restartCurrentRound() {
-    startRound(round);
+    setRoundData(createRound(round));
+    setPhase("preview");
+    setStep(0);
+    setSelectedCardIds([]);
+    setMessage("순서를 천천히 기억해 주세요.");
   }
 
   function resetGame() {
@@ -157,10 +164,11 @@ export function MemoryOrderGame({ onBack }) {
   function resetRecord() {
     if (typeof window !== "undefined") {
       window.localStorage.removeItem(BEST_ROUND_STORAGE_KEY);
-      window.localStorage.removeItem(ROUND_REACHED_STORAGE_KEY);
     }
 
     setBestRound(0);
+    setPreviousBestRound(0);
+    setIsNewRecord(false);
     resetGame();
   }
 
@@ -190,13 +198,29 @@ export function MemoryOrderGame({ onBack }) {
     setMessage(`${nextStep + 1}번째 고양이를 골라 주세요.`);
   }
 
+  const recordMessage = previousBestRound > 0
+    ? `이 기기에서 ${previousBestRound}라운드까지 기록했어요!`
+    : "아직 저장된 기록이 없어요. 첫 기록을 만들어 봐요!";
+
   return (
     <div className="memory-game">
       <button type="button" className="memory-game__back" onClick={onBack}>
         ← 게임 고르기
       </button>
 
-      <EditorialCard className="memory-game__panel">
+      <EditorialCard className={`memory-game__panel${isNewRecord ? " is-new-record" : ""}`}>
+        <div className={`memory-game__record-note${isNewRecord ? " is-celebrating" : ""}`} aria-live="polite">
+          {isNewRecord ? (
+            <>
+              <span aria-hidden="true">✦</span>
+              <strong>새로운 최고 기록! {round}라운드에 도착했어요!</strong>
+              <span aria-hidden="true">✦</span>
+            </>
+          ) : (
+            <span>{recordMessage}</span>
+          )}
+        </div>
+
         <div className="memory-game__header">
           <div>
             <EditorialLabel variant="section">MEMORY / ORDER</EditorialLabel>
@@ -207,13 +231,13 @@ export function MemoryOrderGame({ onBack }) {
             <span>현재 라운드</span>
             <strong>{round}</strong>
             <span>최고 기록</span>
-            <strong>{bestRound || 1}</strong>
+            <strong>{bestRound || "-"}</strong>
           </div>
         </div>
 
         <div className="memory-game__rules" aria-label="현재 라운드 규칙">
           <span>{roundData.cardCount}장</span>
-          <span>{remainingPreviewSeconds}초 기억</span>
+          <span>{roundData.previewSeconds}초 기억</span>
           <span>{roundData.allowDuplicates ? "중복 카드 있음" : "중복 카드 없음"}</span>
         </div>
 
@@ -224,7 +248,7 @@ export function MemoryOrderGame({ onBack }) {
               {roundData.sequence.map((image, index) => (
                 <div className="memory-sequence__item" key={`${image.id}-${index}`}>
                   <span>{index + 1}</span>
-                  <img src={image.src} alt={`${image.name} 순서 ${index + 1}`} />
+                  <img src={image.src} alt={`${image.name}, 순서 ${index + 1}`} />
                 </div>
               ))}
             </div>
