@@ -1,5 +1,8 @@
 // Relationship Analyzer 저장 결과 조회 API입니다.
 import { applyCors, getSupabaseClient } from "../../lib/server/results.js";
+import { normalizeRelationshipMode } from "../../lib/shared/relationshipModes.js";
+
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function getResultId(request) {
   const { id } = request.query ?? {};
@@ -7,9 +10,13 @@ function getResultId(request) {
   if (Array.isArray(id)) return id[0];
   if (id) return id;
 
-  const pathname = new URL(request.url, "http://localhost").pathname;
-  const pathParts = pathname.split("/").filter(Boolean);
-  return pathParts[pathParts.length - 1];
+  try {
+    const pathname = new URL(request.url, "http://localhost").pathname;
+    const pathParts = pathname.split("/").filter(Boolean);
+    return pathParts[pathParts.length - 1] ?? "";
+  } catch {
+    return "";
+  }
 }
 
 export default async function handler(request, response) {
@@ -31,7 +38,7 @@ export default async function handler(request, response) {
   try {
     const id = getResultId(request);
 
-    if (!id) {
+    if (!id || !UUID_PATTERN.test(id)) {
       return response.status(404).json({
         ok: false,
         error: "Result not found.",
@@ -46,6 +53,7 @@ export default async function handler(request, response) {
         "id, mode, answers, scores, analysis, result_type, report_status, created_at"
       )
       .eq("id", id)
+      .is("deleted_at", null)
       .single();
 
     if (error) {
@@ -59,13 +67,22 @@ export default async function handler(request, response) {
       throw error;
     }
 
+    const relationshipMode = normalizeRelationshipMode(data.mode);
+
+    if (!relationshipMode || !data.analysis || typeof data.analysis !== "object") {
+      return response.status(404).json({
+        ok: false,
+        error: "Result not found.",
+      });
+    }
+
     return response.status(200).json({
       ok: true,
       result: {
         id: data.id,
-        relationshipMode: data.mode,
-        answers: data.answers?.items ?? [],
-        scores: data.scores,
+        relationshipMode,
+        answers: Array.isArray(data.answers?.items) ? data.answers.items : [],
+        scores: data.scores && typeof data.scores === "object" ? data.scores : {},
         analysis: data.analysis,
         resultType: data.result_type,
         reportStatus: data.report_status,
