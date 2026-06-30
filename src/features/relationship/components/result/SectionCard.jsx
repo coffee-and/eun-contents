@@ -1,10 +1,7 @@
 import { EditorialCard } from "../../../../shared/components/editorial/EditorialCard.jsx";
 
-const CORE_ANALYSIS_TITLE = "한눈에 보는 관계 보고서";
-
-export function SectionCard({ title, desc, points }) {
-  const isCoreAnalysis = title === CORE_ANALYSIS_TITLE;
-  const displayTitle = isCoreAnalysis ? "핵심 분석" : title;
+export function SectionCard({ title, desc, points, variant }) {
+  const isCoreAnalysis = variant === "core-analysis";
 
   return (
     <EditorialCard
@@ -12,7 +9,7 @@ export function SectionCard({ title, desc, points }) {
       variant="result"
     >
       <div className="result-card__head">
-        <h3 className="result-card__title">{displayTitle}</h3>
+        <h3 className="result-card__title">{title}</h3>
       </div>
 
       {!isCoreAnalysis && desc ? <p className="result-card__desc">{desc}</p> : null}
