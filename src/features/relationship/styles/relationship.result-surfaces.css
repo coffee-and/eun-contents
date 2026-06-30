@@ -62,19 +62,10 @@
   color: color-mix(in srgb, var(--relationship-noir) 82%, var(--relationship-slate-violet));
 }
 
-.theme-relationship .capture-panel__summary-box {
-  margin-top: 0;
-  padding-top: 0;
-  border-top: 0;
-}
-
-.theme-relationship .capture-panel__summary-label,
-.theme-relationship .capture-panel__block-label {
+.theme-relationship .capture-panel__summary-label {
   color: var(--relationship-muted-rose);
 }
 
-.theme-relationship .capture-panel__summary-box,
-.theme-relationship .capture-panel__grid,
 .theme-relationship .capture-panel__footer {
   position: relative;
   z-index: 1;
