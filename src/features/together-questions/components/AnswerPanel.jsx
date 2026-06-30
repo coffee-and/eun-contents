@@ -23,7 +23,10 @@ export function AnswerPanel({
         <div>
           <EditorialLabel variant="section">QUESTION BOOK</EditorialLabel>
           <h2>{relationship?.title ?? "나의"} 문답지</h2>
-          <p>한 번에 모두 채우지 않아도 괜찮아요. 쓰는 동안 이 기기에 임시 저장됩니다.</p>
+          <p>
+            {relationship?.writingGuide ?? "지금 내 마음과 기억을 기준으로 적는 문답이에요."}{" "}
+            한 번에 모두 채우지 않아도 괜찮아요. 쓰는 동안 이 기기에 임시 저장됩니다.
+          </p>
         </div>
       </div>
 
