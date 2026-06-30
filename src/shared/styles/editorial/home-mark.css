@@ -3,6 +3,10 @@
   content: none;
 }
 
+.theme-hub .featured-card__body {
+  padding-right: clamp(260px, 40vw, 520px);
+}
+
 .theme-hub .home-mark {
   position: absolute;
   inset: 0 0 0 auto;
@@ -36,6 +40,10 @@
 }
 
 @media (max-width: 620px) {
+  .theme-hub .featured-card__body {
+    padding-right: 132px;
+  }
+
   .theme-hub .home-mark {
     width: 150px;
   }
