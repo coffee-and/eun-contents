@@ -13,4 +13,10 @@
   --hub-peach: #d6b2a6;
   --hub-taupe: #a28077;
   --hub-stone: #c5b7ae;
+
+  --hub-text-primary: var(--hub-ink);
+  --hub-text-secondary: #4f4642;
+  --hub-text-muted: #8b7e78;
+  --hub-border-color: #e2d8d2;
+  --hub-border-strong: var(--hub-rose);
 }
