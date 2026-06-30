@@ -14,10 +14,8 @@ export default function SajuApp({ onNavigateHome }) {
         copyClassName="saju-hero__copy"
         eyebrow="SAJU & INSIGHT"
         eyebrowClassName="saju-hero__eyebrow"
-        title="나를 읽는 시간"
+        title="사주·타로"
         titleClassName="saju-hero__title"
-        subtitle="사주와 타로를 통해 나의 기질과 지금의 흐름을 차분히 살펴봐요."
-        subtitleClassName="saju-hero__subtitle"
         onNavigateHome={onNavigateHome}
       />
 
