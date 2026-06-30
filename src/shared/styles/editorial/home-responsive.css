@@ -1,8 +1,4 @@
 @media (max-width: 900px) {
-  .theme-hub .coming-soon__card {
-    grid-template-columns: 1fr;
-  }
-
   .theme-hub .hub-hero {
     min-height: 0;
   }
