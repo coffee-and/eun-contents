@@ -7,7 +7,7 @@ export function SajuContentSelector({ selectedId, onSelect }) {
     SAJU_CONTENT_TYPES.find((content) => content.id === selectedId) ?? null;
 
   return (
-    <EditorialCard className="saju-selector" variant="selection">
+    <EditorialCard className="saju-selector">
       <div className="saju-selector__head">
         <EditorialLabel variant="section">SELECT / 01</EditorialLabel>
         <h2 id="saju-content-heading">어떤 방식으로 나를 들여다볼까요?</h2>
