@@ -35,7 +35,6 @@ function CategoryCard({ content, index, onNavigate }) {
         <p className="category-card__category">{content.category}</p>
       </div>
       <h3 className="category-card__title">{content.title}</h3>
-      <p className="category-card__description">{content.description}</p>
       <ContentAction content={content} isActive={isActive} onNavigate={onNavigate} />
     </article>
   );
@@ -62,15 +61,13 @@ export function HomePage({ onNavigate }) {
       <section className="featured-content" aria-label="추천 콘텐츠">
         {featuredContent ? (
           <article className="featured-card">
+            <div className="home-mark" />
             <div className="featured-card__body">
               <div className="featured-card__meta">
                 <span className="content-card__number">01</span>
                 <p className="content-card__category">{featuredContent.category}</p>
               </div>
               <h2 className="featured-card__title">{featuredContent.title}</h2>
-              <p className="featured-card__description">
-                {featuredContent.description}
-              </p>
               <ContentAction
                 content={featuredContent}
                 isActive={isFeaturedActive}

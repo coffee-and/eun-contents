@@ -1,6 +1,6 @@
 import { FeatureHeader } from "../../../../shared/components/FeatureHeader.jsx";
 
-export function Hero({ title, subtitle, onNavigateHome, onChooseAgain }) {
+export function Hero({ title, onNavigateHome, onChooseAgain }) {
   return (
     <FeatureHeader
       className="hero"
@@ -9,8 +9,6 @@ export function Hero({ title, subtitle, onNavigateHome, onChooseAgain }) {
       eyebrowClassName="hero__eyebrow"
       title={title}
       titleClassName="hero__title"
-      subtitle={subtitle}
-      subtitleClassName="hero__subtitle"
       onNavigateHome={onNavigateHome}
       onRestart={onChooseAgain}
     />

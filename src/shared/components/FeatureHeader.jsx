@@ -8,8 +8,6 @@ export function FeatureHeader({
   eyebrowClassName = "",
   title,
   titleClassName = "",
-  subtitle,
-  subtitleClassName = "",
   onNavigateHome,
   onRestart,
   restartLabel = "← 다시 선택하기",
@@ -27,11 +25,6 @@ export function FeatureHeader({
           </EditorialLabel>
         ) : null}
         <h1 className={`feature-header__title ${titleClassName}`.trim()}>{title}</h1>
-        {subtitle ? (
-          <p className={`feature-header__subtitle ${subtitleClassName}`.trim()}>
-            {subtitle}
-          </p>
-        ) : null}
       </div>
 
       <div className="feature-header-actions">
