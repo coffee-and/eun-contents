@@ -1,4 +1,5 @@
 @import "./relationship.tokens.css";
+@import "./relationship.primitives.css";
 @import "./relationship.flow.css";
 @import "./relationship.result.css";
 @import "./relationship.responsive.css";
