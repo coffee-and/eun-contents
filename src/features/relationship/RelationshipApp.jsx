@@ -1,10 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import {
-  APP_COPY,
-  PLAN,
-  RELATIONSHIP_MODE_META,
-  SHARE,
-} from "./data/config.js";
+import { APP_COPY, PLAN, SHARE } from "./data/config.js";
 import { getModeContextQuestions } from "./data/modeQuestions.js";
 import { getQuestionsByMode } from "./data/questions.js";
 import { analyzeRelationship } from "./domain/analyzeRelationship.js";
@@ -118,9 +113,6 @@ export default function RelationshipApp({ onNavigateHome }) {
   const activeAnalysis = savedResult?.analysis ?? analysis;
   const activeAnswers = savedResult?.answers ?? answers;
   const activeMode = savedResult?.relationshipMode ?? relationshipMode;
-  const activeModeLabel = activeMode
-    ? RELATIONSHIP_MODE_META[activeMode]?.shortLabel
-    : null;
   const activeModeVersionLabel = activeMode ? `ver. ${activeMode}` : null;
   const shouldShowModeSelect =
     !sharedResultId &&
