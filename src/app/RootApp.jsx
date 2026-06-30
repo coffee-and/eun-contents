@@ -62,17 +62,36 @@ function NotFound({ onNavigateHome }) {
   );
 }
 
+function buildHomeUrl() {
+  const url = new URL(window.location.href);
+  url.searchParams.delete("resultId");
+  url.hash = "/";
+  return url;
+}
+
 export default function RootApp() {
   const [route, setRoute] = useState(getCurrentRoute);
 
   useEffect(() => {
-    const handleHashChange = () => setRoute(getCurrentRoute());
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
+    const handleLocationChange = () => setRoute(getCurrentRoute());
+
+    window.addEventListener("hashchange", handleLocationChange);
+    window.addEventListener("popstate", handleLocationChange);
+
+    return () => {
+      window.removeEventListener("hashchange", handleLocationChange);
+      window.removeEventListener("popstate", handleLocationChange);
+    };
   }, []);
 
   function navigate(nextRoute) {
-    window.location.hash = nextRoute === ROUTES.HOME ? "/" : `/${nextRoute}`;
+    if (nextRoute === ROUTES.HOME) {
+      window.history.pushState({}, "", buildHomeUrl());
+      setRoute(ROUTES.HOME);
+      return;
+    }
+
+    window.location.hash = `/${nextRoute}`;
   }
 
   if (route === ROUTES.HOME) {
