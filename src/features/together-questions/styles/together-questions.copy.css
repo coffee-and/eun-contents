@@ -1,0 +1,6 @@
+.theme-together-questions .tq-hero__subtitle {
+  max-height: 0;
+  margin: 0;
+  overflow: hidden;
+  opacity: 0;
+}
