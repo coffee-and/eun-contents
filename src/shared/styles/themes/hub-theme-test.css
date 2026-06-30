@@ -4,4 +4,8 @@
   --hub-surface: var(--hub-white);
   --hub-surface-soft: #f7f1ee;
   --hub-surface-muted: #f1e4df;
+
+  --hub-ink: #2d2927;
+  --hub-deep-rose: #7b444a;
+  --hub-rose: #9c6763;
 }
