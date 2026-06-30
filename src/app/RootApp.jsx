@@ -33,11 +33,6 @@ function ComingSoon({ content, onNavigateHome }) {
             ← 다른 콘텐츠 보기
           </TextAction>
           <section className="coming-soon__card editorial-state editorial-state--coming-soon">
-            <img
-              className="coming-soon__image"
-              src={content.imageSrc}
-              alt={content.imageAlt}
-            />
             <div className="coming-soon__content">
               <span className="coming-soon__issue">COMING ISSUE</span>
               <span className="coming-soon__category">{content.category}</span>
