@@ -54,7 +54,7 @@
 
 .theme-hub .hub-hero__tagline {
   margin: 0;
-  color: var(--hub-olive);
+  color: var(--hub-deep-rose);
   font-size: var(--font-body-large);
   font-weight: 700;
   line-height: var(--line-body);
@@ -86,10 +86,10 @@
 
 .theme-hub .hub-back-button.text-action {
   justify-self: start;
-  color: var(--hub-olive);
+  color: var(--hub-deep-rose);
 }
 
 .theme-hub .hub-back-button.text-action:hover,
 .theme-hub .hub-back-button.text-action:focus-visible {
-  color: var(--hub-wine);
+  color: var(--hub-primary-hover);
 }
