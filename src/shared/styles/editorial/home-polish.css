@@ -77,8 +77,3 @@
   filter: brightness(0.88);
   color: var(--hub-white);
 }
-
-.theme-hub .featured-card__description,
-.theme-hub .category-card__description {
-  display: none;
-}
