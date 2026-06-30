@@ -53,18 +53,22 @@
 }
 
 .theme-together-questions .tq-question-item__head span {
-  color: var(--together-forest);
-  font-size: 0.78rem;
-  font-weight: 700;
+  color: var(--together-question-number-color);
 }
 
 .theme-together-questions .tq-question-item__head h3,
 .theme-together-questions .tq-answer-report h3 {
   margin: 0;
-  color: var(--together-text);
+  color: var(--together-question-title-color);
   font-size: clamp(1.02rem, 1.55vw, 1.26rem);
   line-height: 1.45;
   word-break: keep-all;
+}
+
+.theme-together-questions .tq-question-item__number {
+  color: var(--together-question-number-color);
+  font: inherit;
+  letter-spacing: inherit;
 }
 
 .theme-together-questions .tq-question-item .tq-answer-field {
