@@ -3,7 +3,6 @@ import { applyCors, getSupabaseClient } from "../lib/server/results.js";
 import {
   isRelationshipMode,
   normalizeRelationshipMode,
-  toDatabaseRelationshipMode,
 } from "../lib/shared/relationshipModes.js";
 
 const MAX_SERIALIZED_PAYLOAD_LENGTH = 250_000;
@@ -93,13 +92,12 @@ export default async function handler(request, response) {
       });
     }
 
-    const databaseMode = toDatabaseRelationshipMode(normalizedMode);
     const supabase = getSupabaseClient();
 
     const { data, error } = await supabase
       .from("results")
       .insert({
-        mode: databaseMode,
+        mode: normalizedMode,
         answers,
         scores,
         analysis,
@@ -117,7 +115,7 @@ export default async function handler(request, response) {
       ok: true,
       result: {
         id: data.id,
-        mode: normalizeRelationshipMode(data.mode),
+        mode: normalizedMode,
         resultType: data.result_type,
         reportStatus: data.report_status,
         createdAt: data.created_at,
