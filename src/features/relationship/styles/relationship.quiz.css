@@ -33,6 +33,11 @@
   padding-bottom: 12px;
 }
 
+.theme-relationship .hero__eyebrow {
+  display: inline-flex;
+  margin-bottom: var(--space-xs);
+}
+
 .theme-relationship .hero__title {
   font-size: clamp(2rem, 3.4vw, 3rem);
 }
@@ -66,8 +71,8 @@
   align-items: center;
   min-height: 28px;
   padding: 7px 10px;
-  background: var(--relationship-selected);
-  color: var(--relationship-deep-blue);
+  background: var(--relationship-mode-badge-bg);
+  color: var(--relationship-mode-badge-text);
   font-size: var(--font-label);
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -85,8 +90,9 @@
 
 .theme-relationship .question-card__title {
   margin-bottom: 10px;
-  font-size: clamp(1.55rem, 2.5vw, 2.2rem);
-  line-height: 1.24;
+  color: var(--relationship-question-title-color);
+  font-size: var(--relationship-question-font-size);
+  line-height: 1.35;
 }
 
 .theme-relationship .question-card__hint {
@@ -130,7 +136,7 @@
 }
 
 .theme-relationship .option-card__text {
-  font-size: clamp(0.96rem, 1.3vw, 1.04rem);
+  font-size: var(--relationship-option-font-size);
   line-height: 1.55;
 }
 
@@ -141,18 +147,19 @@
 .theme-relationship .question-card__previous.button--secondary {
   border: 0;
   background: var(--relationship-secondary-active);
-  color: var(--relationship-deep-blue);
+  color: var(--relationship-secondary-button-text);
 }
 
 .theme-relationship .question-card__previous.button--secondary:hover:not(:disabled) {
   border: 0;
   background: var(--relationship-mist);
+  color: var(--relationship-secondary-button-text);
 }
 
 .theme-relationship .question-card__previous.button--secondary:disabled {
   border: 0;
   background: var(--relationship-secondary-disabled);
-  color: #aaa5a9;
+  color: var(--relationship-secondary-button-disabled-text);
   opacity: 1;
 }
 
