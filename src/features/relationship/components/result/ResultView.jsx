@@ -5,12 +5,12 @@ import { TextAction } from "../../../../shared/components/TextAction.jsx";
 import { EditorialCard } from "../../../../shared/components/editorial/EditorialCard.jsx";
 import { EditorialResultActions } from "../../../../shared/components/editorial/EditorialResultLayout.jsx";
 import {
-  APP_COPY,
   CATEGORY_META,
   RELATIONSHIP_MODE_META,
 } from "../../data/config.js";
 import { buildResultUrl, saveResult } from "../../utils/resultStorage.js";
 import { MetricGrid } from "./MetricGrid.jsx";
+import { ResultSummaryCard } from "./ResultSummaryCard.jsx";
 import { SectionCard } from "./SectionCard.jsx";
 import { PremiumLockedSection } from "../premium/PremiumLockedSection.jsx";
 import { PremiumReport } from "../premium/PremiumReport.jsx";
@@ -264,90 +264,7 @@ export function ResultView({
       ) : null}
 
       <div ref={captureRef} className="capture-export">
-        <section className="capture-panel capture-panel--cozy">
-          <div className="capture-panel__hero">
-            <div className="capture-panel__hero-main">
-              <span className="capture-panel__summary-label">
-                {modeLabel ?? "관계 리포트"}
-              </span>
-              <h2 className="capture-panel__title">
-                {analysis.relationshipLevel.title}
-              </h2>
-              <p className="capture-panel__desc">
-                {analysis.relationshipLevel.desc}
-              </p>
-            </div>
-
-            <div className="capture-panel__type-box">
-              <span className="capture-panel__type-label">주요 갈등 반응</span>
-              <strong className="capture-panel__type-value">
-                {analysis.topTypeLabel}
-              </strong>
-            </div>
-          </div>
-
-          <div className="capture-panel__summary-box">
-            <span className="capture-panel__summary-label">핵심 분석</span>
-            <p className="capture-panel__summary-text">
-              {analysis.summaryLines[0]}
-            </p>
-            <p className="capture-panel__summary-sub">
-              {analysis.summaryLines[1]}
-            </p>
-          </div>
-
-          <div className="capture-panel__grid">
-            <div className="capture-panel__block">
-              <span className="capture-panel__block-label">핵심 지표</span>
-              <MetricGrid
-                items={[
-                  { label: "종합 관계 지수", value: `${analysis.finalValue}/100` },
-                  { label: "주요 갈등 반응", value: analysis.topTypeLabel },
-                  {
-                    label: "현실적 안정성",
-                    value: `${analysis.categoryScores.stability}/100`,
-                  },
-                  { label: "갈등 부담 지수", value: `${analysis.conflictRisk}/100` },
-                ]}
-              />
-            </div>
-          </div>
-
-          <div className="capture-panel__footer">
-            <p>{APP_COPY.footer}</p>
-            <span>EUN CONTENTS · 우리 관계 진단</span>
-          </div>
-        </section>
-
-        <EditorialCard className="card result-overview-card" variant="result">
-          <div className="result-overview-card__head">
-            <div>
-              <span className="result-overview-card__eyebrow">
-                {modeLabel ?? "OVERVIEW"}
-              </span>
-              <h3 className="result-overview-card__title">
-                {analysis.relationshipLevel.title}
-              </h3>
-            </div>
-
-            <div className="result-overview-card__score">
-              <div
-                className="result-score-ring"
-                role="img"
-                aria-label={`관계 지수 ${analysis.finalValue}점`}
-                style={{ "--score-value": `${analysis.finalValue}%` }}
-              >
-                <span>관계 지수</span>
-                <strong>{analysis.finalValue}</strong>
-                <em>/100</em>
-              </div>
-            </div>
-          </div>
-
-          <p className="result-overview-card__desc">
-            {analysis.relationshipLevel.desc}
-          </p>
-        </EditorialCard>
+        <ResultSummaryCard analysis={analysis} modeLabel={modeLabel} />
 
         <SectionCard
           title="한눈에 보는 관계 보고서"
