@@ -1,0 +1,265 @@
+.theme-mini-games .memory-game {
+  display: grid;
+  gap: var(--editorial-space-4);
+}
+
+.theme-mini-games .memory-game__back {
+  justify-self: start;
+  border: 0;
+  background: transparent;
+  color: var(--feature-primary);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.theme-mini-games .memory-game__back:hover {
+  color: var(--feature-primary-hover);
+}
+
+.theme-mini-games .memory-game__back:focus-visible,
+.theme-mini-games .memory-game__primary:focus-visible,
+.theme-mini-games .memory-game__secondary:focus-visible,
+.theme-mini-games .memory-game__ghost:focus-visible,
+.theme-mini-games .memory-card:focus-visible {
+  outline: 3px solid var(--feature-focus);
+  outline-offset: 3px;
+}
+
+.theme-mini-games .memory-game__panel {
+  display: grid;
+  gap: var(--editorial-space-5);
+  padding: clamp(22px, 3.6vw, 42px);
+  border-top: 12px solid var(--feature-accent);
+  background: var(--feature-surface);
+}
+
+.theme-mini-games .memory-game__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--editorial-space-5);
+  align-items: start;
+}
+
+.theme-mini-games .memory-game__header h2,
+.theme-mini-games .memory-game__header p {
+  margin: 0;
+}
+
+.theme-mini-games .memory-game__header h2 {
+  margin-top: var(--editorial-space-2);
+  color: var(--feature-text);
+  font-size: var(--editorial-section-title-size);
+  line-height: var(--editorial-title-line-height);
+}
+
+.theme-mini-games .memory-game__header p {
+  margin-top: var(--editorial-space-2);
+  max-width: 620px;
+  color: var(--feature-text-soft);
+  line-height: var(--editorial-body-line-height);
+}
+
+.theme-mini-games .memory-game__record {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 8px 14px;
+  min-width: 150px;
+  padding: 16px 18px;
+  background: var(--feature-surface-muted);
+  color: var(--feature-text);
+}
+
+.theme-mini-games .memory-game__record span {
+  color: var(--feature-text-soft);
+  font-size: 0.82rem;
+}
+
+.theme-mini-games .memory-game__record strong {
+  text-align: right;
+  font-size: 1.1rem;
+}
+
+.theme-mini-games .memory-game__rules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.theme-mini-games .memory-game__rules span {
+  padding: 8px 12px;
+  background: var(--feature-label-bg);
+  color: var(--feature-label-text);
+  font-size: var(--editorial-label-size);
+  font-weight: var(--editorial-label-weight);
+  letter-spacing: var(--editorial-label-letter-spacing);
+}
+
+.theme-mini-games .memory-game__preview,
+.theme-mini-games .memory-game__board {
+  display: grid;
+  gap: var(--editorial-space-4);
+}
+
+.theme-mini-games .memory-game__preview p {
+  margin: 0;
+  color: var(--feature-text-soft);
+  font-weight: 700;
+}
+
+.theme-mini-games .memory-sequence,
+.theme-mini-games .memory-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+  gap: clamp(10px, 2vw, 16px);
+}
+
+.theme-mini-games .memory-sequence__item,
+.theme-mini-games .memory-card {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 132px;
+  border: 1px solid var(--feature-border);
+  background: var(--mini-white);
+  overflow: hidden;
+}
+
+.theme-mini-games .memory-sequence__item span {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  background: var(--feature-badge-bg);
+  color: var(--feature-badge-text);
+  font-size: 0.82rem;
+  font-weight: 800;
+  z-index: 1;
+}
+
+.theme-mini-games .memory-sequence__item img,
+.theme-mini-games .memory-card img {
+  width: min(82%, 118px);
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.theme-mini-games .memory-card {
+  gap: 10px;
+  padding: 14px;
+  color: var(--feature-text);
+  cursor: pointer;
+  transition: background-color var(--editorial-motion-fast) var(--editorial-ease-standard),
+    transform var(--editorial-motion-fast) var(--editorial-ease-standard);
+}
+
+.theme-mini-games .memory-card:hover:not(:disabled) {
+  background: var(--mini-cream);
+  transform: translateY(-2px);
+}
+
+.theme-mini-games .memory-card:disabled {
+  cursor: default;
+}
+
+.theme-mini-games .memory-card.is-selected {
+  border-color: var(--feature-primary);
+  background: var(--feature-surface-muted);
+  opacity: 0.78;
+}
+
+.theme-mini-games .memory-card span {
+  color: var(--feature-text-soft);
+  font-size: var(--editorial-label-size);
+  font-weight: var(--editorial-label-weight);
+  letter-spacing: var(--editorial-label-letter-spacing);
+}
+
+.theme-mini-games .memory-game__status {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--editorial-space-3);
+  padding: 16px 18px;
+  border-left: 5px solid var(--feature-accent);
+  background: var(--feature-surface-muted);
+  color: var(--feature-text);
+}
+
+.theme-mini-games .memory-game__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.theme-mini-games .memory-game__primary,
+.theme-mini-games .memory-game__secondary,
+.theme-mini-games .memory-game__ghost {
+  min-height: 46px;
+  border: 0;
+  padding: 0 18px;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.theme-mini-games .memory-game__primary {
+  background: var(--feature-button-primary-bg);
+  color: var(--feature-button-primary-text);
+}
+
+.theme-mini-games .memory-game__primary:hover {
+  background: var(--feature-button-primary-hover-bg);
+}
+
+.theme-mini-games .memory-game__secondary {
+  background: var(--feature-button-secondary-bg);
+  color: var(--feature-button-secondary-text);
+}
+
+.theme-mini-games .memory-game__secondary:hover {
+  background: var(--feature-button-secondary-hover-bg);
+}
+
+.theme-mini-games .memory-game__ghost {
+  background: transparent;
+  color: var(--feature-primary);
+}
+
+.theme-mini-games .memory-game__ghost:hover {
+  color: var(--feature-primary-hover);
+}
+
+@media (max-width: 720px) {
+  .theme-mini-games .memory-game__header {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-mini-games .memory-game__record {
+    width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .theme-mini-games .memory-sequence,
+  .theme-mini-games .memory-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .theme-mini-games .memory-sequence__item,
+  .theme-mini-games .memory-card {
+    min-height: 116px;
+  }
+
+  .theme-mini-games .memory-game__actions {
+    display: grid;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-mini-games .memory-card {
+    transition-duration: 0.01ms;
+  }
+}
