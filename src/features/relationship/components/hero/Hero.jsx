@@ -5,6 +5,8 @@ export function Hero({ title, subtitle, onNavigateHome, onChooseAgain }) {
     <FeatureHeader
       className="hero"
       copyClassName="hero__copy"
+      eyebrow="RELATIONSHIP REPORT"
+      eyebrowClassName="hero__eyebrow"
       title={title}
       titleClassName="hero__title"
       subtitle={subtitle}
