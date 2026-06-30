@@ -10,6 +10,7 @@ export function QuestionCard({
   onSelectOption,
   onNext,
   onPrevious,
+  modeLabel,
 }) {
   const categoryLabel = CATEGORY_META[question.category]?.label ?? question.category;
 
@@ -19,6 +20,9 @@ export function QuestionCard({
         <div className="question-card__badge-wrap">
           <div className="question-card__badge-group">
             <span className="badge badge--soft">{categoryLabel}</span>
+            {modeLabel ? (
+              <span className="question-card__mode-label">{modeLabel}</span>
+            ) : null}
             <span className="question-card__index">
               Q {String(questionNumber).padStart(2, "0")} / {totalQuestions}
             </span>
