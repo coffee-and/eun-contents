@@ -1,7 +1,14 @@
 @import "./question-book-theme.css";
 
+.theme-hub {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--hub-page-background);
+}
+
 .theme-hub .page {
-  min-height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
   padding: 24px 16px 64px;
   background: var(--hub-page-background);
 }
