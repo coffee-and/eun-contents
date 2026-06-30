@@ -1,0 +1,76 @@
+.theme-mini-games .memory-game { display: grid; gap: var(--editorial-space-4); }
+.theme-mini-games .memory-game__back { justify-self: start; border: 0; background: transparent; color: var(--feature-primary); font: inherit; font-weight: 700; cursor: pointer; }
+.theme-mini-games .memory-game__back:hover { color: var(--feature-primary-hover); }
+.theme-mini-games .memory-game__back:focus-visible,
+.theme-mini-games .memory-game__primary:focus-visible,
+.theme-mini-games .memory-game__secondary:focus-visible,
+.theme-mini-games .memory-game__ghost:focus-visible,
+.theme-mini-games .memory-card:focus-visible { outline: 3px solid var(--feature-focus); outline-offset: 3px; }
+
+.theme-mini-games .memory-game__panel { display: grid; gap: var(--editorial-space-5); padding: clamp(22px, 3.6vw, 42px); border-top: 12px solid var(--feature-accent); background: var(--feature-surface); transition: box-shadow 320ms ease, border-color 320ms ease; }
+.theme-mini-games .memory-game__panel.is-new-record { border-top-color: #c58a37; box-shadow: 0 18px 48px rgb(100 61 20 / 18%); }
+.theme-mini-games .memory-game__record-note { display: flex; justify-content: center; align-items: center; gap: 10px; min-height: 44px; padding: 11px 16px; background: var(--feature-bg-soft); color: var(--feature-text-soft); text-align: center; font-weight: 700; }
+.theme-mini-games .memory-game__record-note.is-celebrating { background: #f7e7bd; color: #6b4313; animation: memory-record-glow 1.4s ease-in-out infinite alternate; }
+.theme-mini-games .memory-game__record-note.is-celebrating span { font-size: 1.15rem; animation: memory-record-sparkle 900ms ease-in-out infinite alternate; }
+
+.theme-mini-games .memory-game__header { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--editorial-space-5); align-items: start; }
+.theme-mini-games .memory-game__header h2,
+.theme-mini-games .memory-game__header p { margin: 0; }
+.theme-mini-games .memory-game__header h2 { margin-top: var(--editorial-space-2); color: var(--feature-text); font-size: var(--editorial-section-title-size); line-height: var(--editorial-title-line-height); }
+.theme-mini-games .memory-game__header p { margin-top: var(--editorial-space-2); max-width: 620px; color: var(--feature-text-soft); line-height: var(--editorial-body-line-height); }
+.theme-mini-games .memory-game__record { display: grid; grid-template-columns: auto auto; gap: 8px 14px; min-width: 150px; padding: 16px 18px; background: var(--feature-surface-muted); color: var(--feature-text); }
+.theme-mini-games .memory-game__record span { color: var(--feature-text-soft); font-size: .82rem; }
+.theme-mini-games .memory-game__record strong { text-align: right; font-size: 1.1rem; }
+.theme-mini-games .memory-game__rules { display: flex; flex-wrap: wrap; gap: 10px; }
+.theme-mini-games .memory-game__rules span { padding: 8px 12px; background: var(--feature-label-bg); color: var(--feature-label-text); font-size: var(--editorial-label-size); font-weight: var(--editorial-label-weight); letter-spacing: var(--editorial-label-letter-spacing); }
+
+.theme-mini-games .memory-game__preview,
+.theme-mini-games .memory-game__board { display: grid; gap: var(--editorial-space-4); }
+.theme-mini-games .memory-game__preview p { margin: 0; color: var(--feature-text-soft); font-weight: 700; }
+.theme-mini-games .memory-sequence,
+.theme-mini-games .memory-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: clamp(8px, 1.6vw, 14px); }
+.theme-mini-games .memory-sequence__item,
+.theme-mini-games .memory-card { position: relative; display: grid; place-items: center; min-height: 126px; border: 1px solid var(--feature-border); background: #050505; overflow: hidden; }
+.theme-mini-games .memory-sequence__item span { position: absolute; top: 8px; left: 8px; display: grid; place-items: center; width: 28px; height: 28px; background: var(--feature-badge-bg); color: var(--feature-badge-text); font-size: .82rem; font-weight: 800; z-index: 1; }
+.theme-mini-games .memory-sequence__item img,
+.theme-mini-games .memory-card img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+.theme-mini-games .memory-card { gap: 0; padding: 0; color: var(--feature-text-inverse); cursor: pointer; transition: transform var(--editorial-motion-fast) var(--editorial-ease-standard), opacity var(--editorial-motion-fast) var(--editorial-ease-standard); }
+.theme-mini-games .memory-card:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--feature-primary); }
+.theme-mini-games .memory-card:disabled { cursor: default; }
+.theme-mini-games .memory-card.is-selected { border-color: var(--feature-primary); opacity: .5; }
+.theme-mini-games .memory-card span { position: absolute; right: 8px; bottom: 8px; padding: 5px 8px; background: rgb(0 0 0 / 66%); color: #fff; font-size: .7rem; font-weight: 800; letter-spacing: .06em; }
+
+.theme-mini-games .memory-game__status { display: flex; justify-content: space-between; gap: var(--editorial-space-3); padding: 16px 18px; border-left: 5px solid var(--feature-accent); background: var(--feature-surface-muted); color: var(--feature-text); }
+.theme-mini-games .memory-game__actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.theme-mini-games .memory-game__primary,
+.theme-mini-games .memory-game__secondary,
+.theme-mini-games .memory-game__ghost { min-height: 46px; border: 0; padding: 0 18px; font: inherit; font-weight: 800; cursor: pointer; }
+.theme-mini-games .memory-game__primary { background: var(--feature-button-primary-bg); color: var(--feature-button-primary-text); }
+.theme-mini-games .memory-game__primary:hover { background: var(--feature-button-primary-hover-bg); }
+.theme-mini-games .memory-game__secondary { background: var(--feature-button-secondary-bg); color: var(--feature-button-secondary-text); }
+.theme-mini-games .memory-game__secondary:hover { background: var(--feature-button-secondary-hover-bg); }
+.theme-mini-games .memory-game__ghost { background: transparent; color: var(--feature-primary); }
+.theme-mini-games .memory-game__ghost:hover { color: var(--feature-primary-hover); }
+
+@keyframes memory-record-glow { from { box-shadow: 0 0 0 rgb(197 138 55 / 0%); } to { box-shadow: 0 0 24px rgb(197 138 55 / 24%); } }
+@keyframes memory-record-sparkle { from { transform: scale(.85) rotate(-8deg); opacity: .65; } to { transform: scale(1.15) rotate(8deg); opacity: 1; } }
+
+@media (max-width: 720px) {
+  .theme-mini-games .memory-game__header { grid-template-columns: 1fr; }
+  .theme-mini-games .memory-game__record { width: 100%; }
+  .theme-mini-games .memory-sequence,
+  .theme-mini-games .memory-card-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  .theme-mini-games .memory-sequence,
+  .theme-mini-games .memory-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .theme-mini-games .memory-sequence__item,
+  .theme-mini-games .memory-card { min-height: 112px; }
+  .theme-mini-games .memory-game__record-note { font-size: .86rem; }
+  .theme-mini-games .memory-game__actions { display: grid; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-mini-games .memory-card,
+  .theme-mini-games .memory-game__record-note.is-celebrating,
+  .theme-mini-games .memory-game__record-note.is-celebrating span { animation: none; transition-duration: .01ms; }
+}

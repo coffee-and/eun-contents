@@ -4,10 +4,28 @@ import { FeatureHeader } from "../../shared/components/FeatureHeader.jsx";
 import { EditorialCard } from "../../shared/components/editorial/EditorialCard.jsx";
 import { EditorialLabel } from "../../shared/components/editorial/EditorialLabel.jsx";
 import { MINI_GAMES } from "./data/games.js";
+import { MemoryOrderGame } from "./memory/MemoryOrderGame.jsx";
 import "./styles/mini-games.css";
 
 export default function MiniGamesApp({ onNavigateHome }) {
   const [selectedGameId, setSelectedGameId] = useState("");
+
+  if (selectedGameId === "memory") {
+    return (
+      <AppShell>
+        <FeatureHeader
+          className="mini-games-hero"
+          copyClassName="mini-games-hero__copy"
+          eyebrow="PLAY & MOMENT"
+          eyebrowClassName="mini-games-hero__eyebrow"
+          title="미니 게임"
+          titleClassName="mini-games-hero__title"
+          onNavigateHome={onNavigateHome}
+        />
+        <MemoryOrderGame onBack={() => setSelectedGameId("")} />
+      </AppShell>
+    );
+  }
 
   return (
     <AppShell>
