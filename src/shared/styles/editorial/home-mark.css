@@ -1,0 +1,6 @@
+.home-mark {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 42%;
+  pointer-events: none;
+}
