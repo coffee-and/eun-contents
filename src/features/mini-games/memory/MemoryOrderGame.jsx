@@ -140,7 +140,7 @@ export function MemoryOrderGame({ onBack }) {
   return (
     <div className="memory-game">
       <button type="button" className="memory-game__back" onClick={onBack}>
-        ← 게임 고르기
+        ← 다른 게임하기
       </button>
 
       <EditorialCard className={`memory-game__panel${isNewRecord ? " is-new-record" : ""}`}>
@@ -216,8 +216,8 @@ export function MemoryOrderGame({ onBack }) {
 
         <div className="memory-game__actions">
           {phase === "cleared" ? <button type="button" className="memory-game__primary" onClick={() => start(round + 1)}>다음 라운드</button> : null}
-          {phase === "failed" ? <button type="button" className="memory-game__primary" onClick={() => start(round)}>다시 도전</button> : null}
-          {phase === "playing" || phase === "preview" ? <button type="button" className="memory-game__secondary" onClick={() => start(round)}>라운드 새로 시작</button> : null}
+          {phase === "failed" ? <button type="button" className="memory-game__primary" onClick={() => start(round)}>재도전</button> : null}
+          {phase === "playing" || phase === "preview" ? <button type="button" className="memory-game__secondary" onClick={() => start(round)}>재도전</button> : null}
           <button type="button" className="memory-game__secondary" onClick={() => start(1)}>1라운드부터</button>
         </div>
       </EditorialCard>
