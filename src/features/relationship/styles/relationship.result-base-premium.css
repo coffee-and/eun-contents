@@ -47,16 +47,14 @@
 .theme-relationship .premium-report__section {
   padding: 24px;
   border: 1px solid var(--relationship-line);
-  border-left: 6px solid var(--relationship-navy);
-  background: var(--relationship-white);
+  border-left: 6px solid var(--relationship-result-blue);
+  background: var(--relationship-result-blue-soft);
 }
 
-.theme-relationship .premium-report__section:nth-child(2n) {
-  border-left-color: var(--relationship-slate);
-}
-
+.theme-relationship .premium-report__section:nth-child(2n),
 .theme-relationship .premium-report__section:nth-child(3n) {
-  border-left-color: var(--relationship-wine);
+  border-left-color: var(--relationship-result-blue);
+  background: var(--relationship-result-blue-soft);
 }
 
 .theme-relationship .premium-report__section h4 {
