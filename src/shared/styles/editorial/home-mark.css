@@ -8,7 +8,7 @@
   z-index: 10;
   grid-template-rows: auto 1fr auto auto;
   align-content: stretch;
-  padding-right: clamp(270px, 41vw, 530px);
+  padding-right: clamp(240px, 34vw, 430px);
 }
 
 .theme-hub .featured-card__meta,
@@ -30,8 +30,9 @@
   position: absolute;
   inset: 0 0 0 auto;
   z-index: 1;
-  width: clamp(340px, 54%, 640px);
+  width: clamp(430px, 58%, 700px);
   overflow: hidden;
+  pointer-events: none;
 }
 
 .theme-hub .home-mark__circle,
@@ -41,9 +42,10 @@
 }
 
 .theme-hub .home-mark__circle {
-  left: 4%;
-  bottom: -34%;
-  width: 70%;
+  left: 3%;
+  bottom: -31%;
+  width: 78%;
+  min-width: 300px;
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--hub-on-circle);
@@ -51,60 +53,88 @@
 }
 
 .theme-hub .home-mark__triangle {
-  right: -4%;
+  right: -3%;
   bottom: 0;
-  width: 56%;
-  height: 88%;
+  width: 57%;
+  height: 89%;
   background: var(--hub-on-triangle);
   clip-path: polygon(100% 0, 100% 100%, 0 100%);
   z-index: 2;
 }
 
 .theme-hub .home-mark__intersection {
-  visibility: hidden;
+  display: none;
 }
 
 @media (max-width: 920px) {
   .theme-hub .featured-card__body {
-    padding-right: clamp(210px, 38vw, 340px);
+    padding-right: clamp(150px, 25vw, 260px);
   }
 
   .theme-hub .home-mark {
-    width: clamp(300px, 52%, 500px);
+    right: -2%;
+    width: clamp(360px, 62%, 540px);
   }
 
   .theme-hub .home-mark__circle {
     left: 4%;
-    bottom: -31%;
-    width: 72%;
+    bottom: -28%;
+    width: 80%;
+    min-width: 280px;
   }
 
   .theme-hub .home-mark__triangle {
-    right: -7%;
-    width: 58%;
-    height: 84%;
+    right: -8%;
+    width: 61%;
+    height: 86%;
   }
 }
 
 @media (max-width: 620px) {
   .theme-hub .featured-card__body {
-    padding-right: 138px;
+    padding-right: 48px;
   }
 
   .theme-hub .home-mark {
-    width: 184px;
+    right: -12%;
+    width: clamp(300px, 78vw, 380px);
   }
 
   .theme-hub .home-mark__circle {
-    left: -2%;
-    bottom: -23%;
-    width: 82%;
+    left: 8%;
+    bottom: -24%;
+    width: 80%;
+    min-width: 250px;
   }
 
   .theme-hub .home-mark__triangle {
-    right: -24%;
+    right: -15%;
     bottom: 0;
+    width: 68%;
+    height: 80%;
+  }
+}
+
+@media (max-width: 420px) {
+  .theme-hub .featured-card__body {
+    padding-right: 24px;
+  }
+
+  .theme-hub .home-mark {
+    right: -16%;
+    width: 320px;
+  }
+
+  .theme-hub .home-mark__circle {
+    left: 10%;
+    bottom: -22%;
     width: 78%;
+    min-width: 250px;
+  }
+
+  .theme-hub .home-mark__triangle {
+    right: -18%;
+    width: 70%;
     height: 78%;
   }
 }

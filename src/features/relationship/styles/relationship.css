@@ -5,3 +5,4 @@
 @import "./relationship.responsive.css";
 @import "./relationship.editorial-overrides.css";
 @import "./relationship.polish.css";
+@import "../../../shared/styles/editorial/editorial-type-scale.css";
