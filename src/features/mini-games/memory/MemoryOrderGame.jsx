@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { TextAction } from "../../../shared/components/TextAction.jsx";
 import { EditorialCard } from "../../../shared/components/editorial/EditorialCard.jsx";
 import { EditorialLabel } from "../../../shared/components/editorial/EditorialLabel.jsx";
 import "./memory-game.css";
@@ -139,9 +140,9 @@ export function MemoryOrderGame({ onBack }) {
 
   return (
     <div className="memory-game">
-      <button type="button" className="memory-game__back" onClick={onBack}>
+      <TextAction className="memory-game__back" onClick={onBack}>
         ← 다른 게임하기
-      </button>
+      </TextAction>
 
       <EditorialCard className={`memory-game__panel${isNewRecord ? " is-new-record" : ""}`}>
         <div className="memory-game__header">
