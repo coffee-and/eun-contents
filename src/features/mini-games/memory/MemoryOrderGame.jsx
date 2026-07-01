@@ -56,7 +56,7 @@ function makeRound(round) {
 }
 
 function formatCountdown(milliseconds) {
-  return `${Math.max(0, milliseconds / 1000).toFixed(2)}초`;
+  return `${Math.max(0, milliseconds / 1000).toFixed(2)} sec`;
 }
 
 export function MemoryOrderGame({ onBack }) {
@@ -67,7 +67,6 @@ export function MemoryOrderGame({ onBack }) {
   const [step, setStep] = useState(0);
   const [selected, setSelected] = useState([]);
   const [best, setBest] = useState(() => getBest());
-  const [message, setMessage] = useState("순서를 천천히 기억해 주세요.");
   const [remainingMs, setRemainingMs] = useState(initialData.seconds * 1000);
   const [feedback, setFeedback] = useState("");
   const deadlineRef = useRef(0);
@@ -94,7 +93,6 @@ export function MemoryOrderGame({ onBack }) {
       if (next <= 0) {
         window.clearInterval(timer);
         setPhase("playing");
-        setMessage("기억한 순서대로 아래 고양이를 눌러 주세요.");
       }
     }, 10);
 
@@ -116,7 +114,6 @@ export function MemoryOrderGame({ onBack }) {
     setSelected([]);
     setRemainingMs(nextData.seconds * 1000);
     setFeedback("");
-    setMessage("순서를 천천히 기억해 주세요.");
   }
 
   function choose(card) {
@@ -125,7 +122,6 @@ export function MemoryOrderGame({ onBack }) {
     if (card.id !== data.sequence[step].id) {
       setFeedback("FALSE");
       setPhase("failed");
-      setMessage("순서가 달라요. 이번 라운드를 다시 도전해 보세요.");
       return;
     }
 
@@ -136,9 +132,6 @@ export function MemoryOrderGame({ onBack }) {
 
     if (nextStep === data.sequence.length) {
       setPhase("cleared");
-      setMessage("좋아요! 순서를 모두 맞췄어요.");
-    } else {
-      setMessage(`${nextStep + 1}번째 고양이를 골라 주세요.`);
     }
   }
 
@@ -151,14 +144,6 @@ export function MemoryOrderGame({ onBack }) {
       </button>
 
       <EditorialCard className={`memory-game__panel${isNewRecord ? " is-new-record" : ""}`}>
-        <div className={`memory-game__record-note${isNewRecord ? " is-celebrating" : ""}`} aria-live="polite">
-          {isNewRecord ? (
-            <strong>✦ 새로운 최고 기록! {round}라운드에 도착했어요! ✦</strong>
-          ) : (
-            <span>{best ? `이 기기에서 ${best}라운드까지 기록했어요!` : "아직 저장된 기록이 없어요. 첫 기록을 만들어 봐요!"}</span>
-          )}
-        </div>
-
         <div className="memory-game__header">
           <div>
             <EditorialLabel variant="section">MEMORY / ORDER</EditorialLabel>
@@ -166,22 +151,22 @@ export function MemoryOrderGame({ onBack }) {
             <p>제한시간 동안 고양이 순서를 기억한 뒤, 아래 아이콘을 같은 순서로 눌러요.</p>
           </div>
           <div className="memory-game__record" aria-label="기억력 게임 기록">
-            <span>현재 라운드</span><strong>{round}</strong>
-            <span>최고 기록</span><strong>{best || "-"}</strong>
+            <div className="memory-game__record-pill">
+              <span>현재 라운드</span>
+              <strong>{round}</strong>
+            </div>
+            <div className="memory-game__record-pill">
+              <span>최고 기록</span>
+              <strong>{best || "-"}</strong>
+            </div>
           </div>
-        </div>
-
-        <div className="memory-game__rules" aria-label="현재 라운드 규칙">
-          <span>{data.count}장</span>
-          <span>{data.seconds}초 기억</span>
-          <span>{data.duplicates ? "중복 카드 있음" : "중복 카드 없음"}</span>
         </div>
 
         <section className="memory-game__challenge" aria-live="polite">
           <div className="memory-game__challenge-head">
             <p>{phase === "preview" ? "이 순서를 기억해 주세요." : "가려진 순서를 맞혀 주세요."}</p>
             <strong className={`memory-game__timer${phase !== "preview" ? " is-finished" : ""}`}>
-              {phase === "preview" ? formatCountdown(remainingMs) : "00.00초"}
+              {phase === "preview" ? formatCountdown(remainingMs) : "00.00 sec"}
             </strong>
           </div>
 
@@ -229,17 +214,11 @@ export function MemoryOrderGame({ onBack }) {
           </div>
         </section>
 
-        <div className="memory-game__status" aria-live="polite">
-          <span>{message}</span>
-          {phase === "playing" ? <strong>{step + 1} / {data.sequence.length}</strong> : null}
-        </div>
-
         <div className="memory-game__actions">
           {phase === "cleared" ? <button type="button" className="memory-game__primary" onClick={() => start(round + 1)}>다음 라운드</button> : null}
           {phase === "failed" ? <button type="button" className="memory-game__primary" onClick={() => start(round)}>다시 도전</button> : null}
           {phase === "playing" || phase === "preview" ? <button type="button" className="memory-game__secondary" onClick={() => start(round)}>라운드 새로 시작</button> : null}
           <button type="button" className="memory-game__secondary" onClick={() => start(1)}>1라운드부터</button>
-          <button type="button" className="memory-game__ghost" onClick={() => { window.localStorage.removeItem(KEY); setBest(0); start(1); }}>기록 초기화</button>
         </div>
       </EditorialCard>
     </div>
