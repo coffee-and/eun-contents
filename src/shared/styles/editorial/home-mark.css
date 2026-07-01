@@ -4,58 +4,87 @@
 }
 
 .theme-hub .featured-card__body {
+  grid-template-rows: auto 1fr auto auto;
+  align-content: stretch;
   padding-right: clamp(270px, 41vw, 530px);
+}
+
+.theme-hub .featured-card__meta {
+  align-self: start;
+}
+
+.theme-hub .featured-card__title {
+  align-self: end;
 }
 
 .theme-hub .home-mark {
   position: absolute;
   inset: 0 0 0 auto;
-  width: clamp(240px, 43%, 520px);
+  width: clamp(280px, 46%, 560px);
   overflow: hidden;
   pointer-events: none;
 }
 
-.theme-hub .home-mark::before {
-  content: "";
+.theme-hub .home-mark__circle,
+.theme-hub .home-mark__triangle,
+.theme-hub .home-mark__intersection {
   position: absolute;
-  left: -14%;
-  bottom: -30%;
-  width: 88%;
+  display: block;
+}
+
+.theme-hub .home-mark__circle {
+  left: -8%;
+  bottom: -14%;
+  width: 90%;
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--hub-on-circle);
 }
 
-.theme-hub .home-mark::after {
-  content: "";
-  position: absolute;
-  right: -16%;
+.theme-hub .home-mark__triangle {
+  right: -10%;
   bottom: -2%;
-  width: 54%;
-  height: 92%;
+  width: 72%;
+  height: 104%;
   background: var(--hub-on-triangle);
   clip-path: polygon(100% 0, 100% 100%, 0 100%);
 }
 
+.theme-hub .home-mark__intersection {
+  right: 8%;
+  bottom: -2%;
+  width: 43%;
+  height: 58%;
+  background: var(--hub-on-intersection);
+  clip-path: polygon(100% 0, 100% 100%, 0 100%, 26% 61%);
+}
+
 @media (max-width: 620px) {
   .theme-hub .featured-card__body {
-    padding-right: 126px;
+    padding-right: 138px;
   }
 
   .theme-hub .home-mark {
-    width: 160px;
+    width: 176px;
   }
 
-  .theme-hub .home-mark::before {
-    left: -20%;
-    bottom: -24%;
-    width: 108%;
+  .theme-hub .home-mark__circle {
+    left: -18%;
+    bottom: -12%;
+    width: 112%;
   }
 
-  .theme-hub .home-mark::after {
-    right: -30%;
-    bottom: 3%;
-    width: 68%;
-    height: 76%;
+  .theme-hub .home-mark__triangle {
+    right: -26%;
+    bottom: 0;
+    width: 84%;
+    height: 82%;
+  }
+
+  .theme-hub .home-mark__intersection {
+    right: -1%;
+    bottom: 0;
+    width: 48%;
+    height: 46%;
   }
 }
