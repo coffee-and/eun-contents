@@ -4,13 +4,23 @@
 }
 
 .theme-hub .featured-card__body {
+  position: relative;
+  z-index: 5;
   grid-template-rows: auto 1fr auto auto;
   align-content: stretch;
   padding-right: clamp(270px, 41vw, 530px);
 }
 
 .theme-hub .featured-card__meta {
+  position: relative;
+  z-index: 6;
   align-self: start;
+}
+
+.theme-hub .featured-card__title,
+.theme-hub .featured-card__button {
+  position: relative;
+  z-index: 6;
 }
 
 .theme-hub .featured-card__title {
@@ -20,6 +30,7 @@
 .theme-hub .home-mark {
   position: absolute;
   inset: 0 0 0 auto;
+  z-index: 1;
   width: clamp(360px, 62%, 760px);
   overflow: hidden;
   pointer-events: none;
@@ -54,11 +65,12 @@
 
 .theme-hub .home-mark__intersection {
   right: 5%;
-  bottom: -1%;
-  width: 31%;
-  height: 42%;
+  bottom: 0;
+  width: 42%;
+  height: 52%;
   background: var(--hub-on-intersection);
-  clip-path: polygon(100% 0, 100% 100%, 0 100%, 23% 58%);
+  clip-path: polygon(100% 0, 100% 100%, 0 100%, 20% 56%);
+  opacity: 0.88;
   z-index: 3;
 }
 
@@ -81,6 +93,13 @@
     right: -12%;
     width: 60%;
     height: 92%;
+  }
+
+  .theme-hub .home-mark__intersection {
+    right: 2%;
+    bottom: 0;
+    width: 43%;
+    height: 50%;
   }
 }
 
@@ -107,9 +126,9 @@
   }
 
   .theme-hub .home-mark__intersection {
-    right: -1%;
+    right: -2%;
     bottom: 0;
-    width: 47%;
-    height: 43%;
+    width: 52%;
+    height: 46%;
   }
 }
