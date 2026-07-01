@@ -1,6 +1,7 @@
 .theme-relationship .capture-panel {
   border: 0;
   background: var(--relationship-result-pink-soft);
+  background-image: none;
 }
 
 .theme-relationship .capture-panel::before,
@@ -8,24 +9,34 @@
 .theme-relationship .capture-panel__hero::before,
 .theme-relationship .capture-panel__hero::after {
   display: none;
+  content: none;
 }
 
 .theme-relationship .capture-panel__hero {
   background: var(--relationship-result-pink-soft);
+  background-image: none;
 }
 
 .theme-relationship .result-card--core-analysis {
   border: 0;
   background: var(--relationship-result-blue-soft);
+  background-image: none;
   color: var(--relationship-noir);
 }
 
 .theme-relationship .result-card--core-analysis::before,
 .theme-relationship .result-card--core-analysis::after {
   display: none;
+  content: none;
 }
 
+.theme-relationship .result-card--core-analysis,
 .theme-relationship .result-card--core-analysis .result-card__title,
-.theme-relationship .result-card--core-analysis .bullet-list {
+.theme-relationship .result-card--core-analysis .result-card__desc,
+.theme-relationship .result-card--core-analysis .bullet-list,
+.theme-relationship .result-card--core-analysis .bullet-list li,
+.theme-relationship .result-card--core-analysis strong,
+.theme-relationship .result-card--core-analysis span,
+.theme-relationship .result-card--core-analysis p {
   color: var(--relationship-noir);
 }
