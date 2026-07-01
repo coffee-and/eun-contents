@@ -14,6 +14,16 @@
   background: var(--relationship-white);
 }
 
+.theme-relationship .metric-card:nth-child(1),
+.theme-relationship .metric-card:nth-child(2) {
+  background: var(--relationship-result-blue-soft);
+}
+
+.theme-relationship .metric-card:nth-child(3),
+.theme-relationship .metric-card:nth-child(4) {
+  background: var(--relationship-result-pink-soft);
+}
+
 .theme-relationship .metric-card__head {
   display: flex;
   align-items: center;
@@ -25,14 +35,19 @@
   height: 7px;
   overflow: hidden;
   border-radius: 0;
-  background: var(--relationship-almond);
+  background: var(--relationship-metric-track);
 }
 
 .theme-relationship .metric-card__bar span {
   display: block;
   height: 100%;
   border-radius: 0;
-  background: var(--relationship-slate);
+  background: var(--relationship-result-blue);
+}
+
+.theme-relationship .metric-card:nth-child(3) .metric-card__bar span,
+.theme-relationship .metric-card:nth-child(4) .metric-card__bar span {
+  background: var(--relationship-result-pink);
 }
 
 .theme-relationship .metric-card--summary {
@@ -133,22 +148,18 @@
   min-height: 180px;
   padding: 20px;
   border: 0;
-  border-top: 7px solid var(--relationship-navy);
-  background: #fcfbf9;
+  border-top: 7px solid var(--relationship-result-blue);
+  background: var(--relationship-result-blue-soft);
 }
 
-.theme-relationship .premium-lock__preview-card:nth-child(2) {
-  border-top-color: var(--relationship-slate);
-  background: #f8f6f3;
-}
-
+.theme-relationship .premium-lock__preview-card:nth-child(2),
 .theme-relationship .premium-lock__preview-card:nth-child(3) {
-  border-top-color: var(--relationship-wine);
-  background: #fbf7f8;
+  border-top-color: var(--relationship-result-blue);
+  background: var(--relationship-result-blue-soft);
 }
 
 .theme-relationship .premium-lock__preview-number {
-  color: var(--relationship-mist);
+  color: var(--relationship-deep-blue);
   font-size: 2rem;
   font-weight: 700;
   line-height: 1;
