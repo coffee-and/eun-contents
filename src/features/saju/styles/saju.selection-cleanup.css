@@ -4,27 +4,30 @@
 
 .theme-saju .saju-select-card {
   border: 0;
-  background: var(--saju-surface-soft);
+  background: var(--color-blue-soft);
   color: var(--saju-ink);
 }
 
 .theme-saju .saju-select-card:hover:not(.is-selected) {
   border: 0;
-  background: var(--saju-surface);
+  background: color-mix(in srgb, var(--color-blue-soft) 72%, var(--color-blue));
   color: var(--saju-ink);
 }
 
 .theme-saju .saju-select-card.is-selected {
   border: 0;
-  background: var(--saju-sand);
-  color: var(--saju-ink);
+  background: var(--color-blue);
+  color: var(--saju-white);
 }
 
 .theme-saju .saju-select-card:hover:not(.is-selected) .saju-select-card__eyebrow,
 .theme-saju .saju-select-card:hover:not(.is-selected) .saju-select-card__description,
-.theme-saju .saju-select-card:hover:not(.is-selected) .saju-select-card__status,
+.theme-saju .saju-select-card:hover:not(.is-selected) .saju-select-card__status {
+  color: var(--color-navy);
+}
+
 .theme-saju .saju-select-card.is-selected .saju-select-card__eyebrow,
 .theme-saju .saju-select-card.is-selected .saju-select-card__description,
 .theme-saju .saju-select-card.is-selected .saju-select-card__status {
-  color: var(--saju-brown);
+  color: var(--saju-white);
 }
