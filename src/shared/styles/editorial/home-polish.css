@@ -13,8 +13,8 @@
   --hub-featured-bg: #f1e4df;
   --hub-featured-label: var(--hub-brown);
   --hub-on-circle: var(--hub-peach);
-  --hub-on-circle-deep: var(--hub-blush);
-  --hub-on-triangle: var(--hub-deep-rose);
+  --hub-on-triangle: #aebfd8;
+  --hub-on-intersection: #7f83ad;
 }
 
 .theme-hub .hub-hero {
@@ -56,7 +56,7 @@
 
 .theme-hub .category-card--mini-games {
   --category-accent: var(--hub-clay);
-  --category-button: var(--hub-clay);
+  --category-button: var(--hub-deep-ink);
 }
 
 .theme-hub .category-card .content-card__number,
