@@ -5,9 +5,36 @@ import { EditorialLabel } from "../../../shared/components/editorial/EditorialLa
 import { getSelectionThemeClass } from "../constants/themeClasses.js";
 import { RELATIONSHIP_TYPES } from "../data/index.js";
 
-export function StartPanel({ startForm, canStart, isBusy, onSubmit, onChangeForm, onResetQuestion }) {
+export function StartPanel({
+  startForm,
+  canStart,
+  hasDraft,
+  isBusy,
+  onSubmit,
+  onChangeForm,
+  onResetQuestion,
+  onResumeDraft,
+  onStartFresh,
+}) {
   return (
     <EditorialCard as="form" className="tq-panel tq-start" onSubmit={onSubmit}>
+      {hasDraft ? (
+        <section className="tq-draft-notice" aria-label="작성 중인 문답 안내">
+          <div>
+            <strong>작성 중인 문답이 있어요.</strong>
+            <p>이어서 작성하거나, 관계를 다시 선택해 새 문답을 시작할 수 있어요.</p>
+          </div>
+          <div className="tq-draft-notice__actions">
+            <Button type="button" variant="primary" onClick={onResumeDraft}>
+              이어서 작성하기 →
+            </Button>
+            <Button type="button" variant="secondary" onClick={onStartFresh}>
+              새로 시작하기 →
+            </Button>
+          </div>
+        </section>
+      ) : null}
+
       <div className="tq-section__head">
         <EditorialLabel variant="section">START / 01</EditorialLabel>
         <h2>누구와의 문답을 시작할까요?</h2>
