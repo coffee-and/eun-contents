@@ -1,0 +1,57 @@
+.theme-together-questions .tq-hero h1,
+.theme-relationship .hero__title,
+.theme-mini-games .mini-games-hero__title,
+.theme-saju .saju-hero__title {
+  font-size: var(--editorial-page-title-size);
+  line-height: var(--editorial-title-line-height);
+  font-weight: var(--editorial-title-weight);
+}
+
+.theme-together-questions .tq-hero__eyebrow,
+.theme-together-questions .tq-section__head > span,
+.theme-together-questions .tq-sheet-head span,
+.theme-relationship .hero__eyebrow,
+.theme-relationship .mode-select__eyebrow,
+.theme-mini-games .mini-games-hero__eyebrow,
+.theme-mini-games .mini-game-card__eyebrow,
+.theme-saju .saju-hero__eyebrow,
+.theme-saju .saju-select-card__eyebrow {
+  font-size: var(--editorial-label-size);
+  font-weight: var(--editorial-label-weight);
+  letter-spacing: var(--editorial-label-letter-spacing);
+  line-height: 1;
+}
+
+.theme-together-questions .tq-section__head h2,
+.theme-together-questions .tq-sheet-head h2,
+.theme-relationship .mode-select__title,
+.theme-relationship .question-card__title,
+.theme-mini-games .mini-game-selector__head h2,
+.theme-mini-games .memory-game__header h2,
+.theme-saju .saju-selector__head h2 {
+  font-size: var(--editorial-section-title-size);
+  line-height: var(--editorial-title-line-height);
+  font-weight: var(--editorial-title-weight);
+}
+
+.theme-together-questions .tq-select-card strong,
+.theme-relationship .mode-card strong,
+.theme-mini-games .mini-game-card__title,
+.theme-saju .saju-select-card__title {
+  font-size: var(--editorial-card-title-size);
+  line-height: var(--editorial-title-line-height);
+  font-weight: var(--editorial-title-weight);
+}
+
+.theme-together-questions .tq-hero p,
+.theme-together-questions .tq-sheet-head p,
+.theme-relationship .hero__subtitle,
+.theme-relationship .question-card__hint,
+.theme-mini-games .mini-games-hero__subtitle,
+.theme-mini-games .mini-game-selector__head p,
+.theme-mini-games .memory-game__header p,
+.theme-saju .saju-hero__subtitle,
+.theme-saju .saju-selector__head p {
+  font-size: var(--editorial-body-size);
+  line-height: var(--editorial-body-line-height);
+}
