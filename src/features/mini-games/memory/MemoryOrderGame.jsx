@@ -5,7 +5,6 @@ import { EditorialCard } from "../../../shared/components/editorial/EditorialCar
 import { EditorialLabel } from "../../../shared/components/editorial/EditorialLabel.jsx";
 import "./memory-game.css";
 
-const BASE = "/images/mini-games/memory";
 const KEY = "eunContents.memoryOrderGame.bestRound";
 const COUNTDOWN_LABELS = ["3", "2", "1", "시작"];
 const COUNTDOWN_STEP_MS = 1000;
@@ -23,16 +22,16 @@ const PHASE = {
   FAILED: "failed",
 };
 
-const CATS = [
-  ["cat-01", "빨간 나비넥타이를 한 샴 고양이"],
-  ["cat-02", "초록 안경을 쓴 회색 고양이"],
-  ["cat-03", "금색 방울 목걸이를 한 턱시도 고양이"],
-  ["cat-04", "데이지 꽃을 단 삼색 고양이"],
-  ["cat-05", "남색 나비넥타이를 한 은색 태비 고양이"],
-  ["cat-06", "분홍 리본을 단 흰 고양이"],
-  ["cat-07", "금색 안경을 쓴 검은 고양이"],
-  ["cat-08", "초록 나비넥타이를 한 주황 태비 고양이"],
-].map(([id, name]) => ({ id, name, src: `${BASE}/${id}.webp` }));
+const SYMBOLS = [
+  { id: "tulip", symbol: "🌷", name: "튤립" },
+  { id: "sunflower", symbol: "🌻", name: "해바라기" },
+  { id: "clover", symbol: "🍀", name: "네잎클로버" },
+  { id: "cherry", symbol: "🍒", name: "체리" },
+  { id: "cloud", symbol: "☁️", name: "구름" },
+  { id: "moon", symbol: "🌙", name: "초승달" },
+  { id: "star", symbol: "⭐", name: "별" },
+  { id: "heart", symbol: "❤️", name: "하트" },
+];
 
 function shuffle(items) {
   const next = [...items];
@@ -60,12 +59,12 @@ function config(round) {
 function makeRound(round) {
   const rule = config(round);
   const sequence = rule.duplicates
-    ? Array.from({ length: rule.count }, () => CATS[Math.floor(Math.random() * CATS.length)])
-    : shuffle(CATS).slice(0, rule.count);
+    ? Array.from({ length: rule.count }, () => SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)])
+    : shuffle(SYMBOLS).slice(0, rule.count);
   const cards = shuffle(
-    sequence.map((cat, index) => ({
-      ...cat,
-      cardId: `${round}-${cat.id}-${index}`,
+    sequence.map((item, index) => ({
+      ...item,
+      cardId: `${round}-${item.id}-${index}`,
     }))
   );
 
@@ -88,6 +87,14 @@ function getFeedbackKind(message) {
   if (message === "TRUE") return "true";
   if (message === "FALSE") return "false";
   return "timeout";
+}
+
+function MemorySymbol({ value }) {
+  return (
+    <span className="memory-symbol" aria-hidden="true">
+      {value}
+    </span>
+  );
 }
 
 export function MemoryOrderGame({ onBack }) {
@@ -414,7 +421,7 @@ export function MemoryOrderGame({ onBack }) {
 
   function getChallengeText() {
     if (phase === PHASE.COUNTDOWN) return "곧 라운드가 시작됩니다.";
-    if (phase === PHASE.PREVIEW) return "이 순서를 기억해 주세요.";
+    if (phase === PHASE.PREVIEW) return "이모지 순서를 기억해 주세요.";
     if (phase === PHASE.PLAYING) return "가려진 순서를 맞혀 주세요.";
     if (phase === PHASE.CLEARED) return "라운드를 완료했어요. 다음 라운드를 준비합니다.";
     if (phase === PHASE.FAILED) return "이번 라운드는 다시 도전해 주세요.";
@@ -445,7 +452,7 @@ export function MemoryOrderGame({ onBack }) {
           <div>
             <EditorialLabel variant="section">MEMORY / ORDER</EditorialLabel>
             <h2>기억력 게임</h2>
-            <p>제한시간 동안 고양이 순서를 기억한 뒤, 아래 아이콘을 같은 순서로 눌러요.</p>
+            <p>제한시간 동안 이모지 순서를 기억한 뒤, 아래 이모지를 같은 순서로 눌러요.</p>
           </div>
           <div className="memory-game__header-side">
             <div className="memory-game__record" aria-label="기억력 게임 기록">
@@ -473,7 +480,7 @@ export function MemoryOrderGame({ onBack }) {
 
         {phase === PHASE.IDLE ? (
           <section className="memory-game__idle" aria-labelledby="memory-game-start-title">
-            <h3 id="memory-game-start-title">고양이 순서를 기억해 보세요.</h3>
+            <h3 id="memory-game-start-title">이모지 순서를 기억해 보세요.</h3>
             <p>게임 시작을 누르면 3, 2, 1 카운트다운 뒤 첫 라운드가 시작됩니다.</p>
             <Button className="memory-game__primary" type="button" onClick={startGame}>
               게임 시작
@@ -493,16 +500,16 @@ export function MemoryOrderGame({ onBack }) {
                 </strong>
               </div>
 
-              <div className="memory-sequence" aria-label="기억해야 할 고양이 순서">
-                {data.sequence.map((cat, index) => {
+              <div className="memory-sequence" aria-label="기억해야 할 이모지 순서">
+                {data.sequence.map((item, index) => {
                   const revealed = shouldReveal(index);
                   return (
                     <div
                       className={`memory-sequence__item${revealed ? " is-revealed" : " is-covered"}`}
-                      key={`${cat.id}-${index}`}
-                      aria-label={revealed ? `${cat.name}, 순서 ${index + 1}` : `${index + 1}번째 순서 가려짐`}
+                      key={`${item.id}-${index}`}
+                      aria-label={revealed ? `${item.name}, 순서 ${index + 1}` : `${index + 1}번째 순서 가려짐`}
                     >
-                      {revealed ? <img src={cat.src} alt="" /> : <span className="memory-sequence__cover" />}
+                      {revealed ? <MemorySymbol value={item.symbol} /> : <span className="memory-sequence__cover" />}
                     </div>
                   );
                 })}
@@ -511,8 +518,8 @@ export function MemoryOrderGame({ onBack }) {
               {feedback ? <div className={`memory-game__feedback is-${getFeedbackKind(feedback)}`}>{feedback}</div> : null}
             </section>
 
-            <section className="memory-game__board" aria-label="선택할 고양이 아이콘">
-              <p>아이콘을 순서대로 선택하세요.</p>
+            <section className="memory-game__board" aria-label="선택할 이모지">
+              <p>이모지를 순서대로 선택하세요.</p>
               <div className="memory-card-grid">
                 {data.cards.map((card) => {
                   const picked = selectedSet.has(card.cardId);
@@ -525,7 +532,7 @@ export function MemoryOrderGame({ onBack }) {
                       disabled={phase !== PHASE.PLAYING || picked}
                       aria-label={`${card.name}${picked ? ", 선택됨" : ""}`}
                     >
-                      <img src={card.src} alt="" />
+                      <MemorySymbol value={card.symbol} />
                     </button>
                   );
                 })}

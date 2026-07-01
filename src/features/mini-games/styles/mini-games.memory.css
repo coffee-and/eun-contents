@@ -24,18 +24,15 @@
 .theme-mini-games .memory-card-grid { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: clamp(10px, 1.8vw, 16px); }
 .theme-mini-games .memory-sequence__item,
 .theme-mini-games .memory-card { position: relative; display: grid; place-items: center; width: clamp(86px, 12vw, 126px); aspect-ratio: 1; border: 0; background: transparent; box-shadow: none; }
-.theme-mini-games .memory-sequence__item img,
-.theme-mini-games .memory-card img { display: block; width: 88%; height: 88%; object-fit: contain; transition: transform var(--editorial-motion-fast) var(--editorial-ease-standard), opacity var(--editorial-motion-fast) var(--editorial-ease-standard); }
-.theme-mini-games .memory-sequence__number { position: absolute; top: 7px; left: 7px; z-index: 2; display: grid; place-items: center; width: 26px; height: 26px; background: var(--feature-badge-bg); color: var(--feature-badge-text); font-size: .78rem; font-weight: 800; }
+.theme-mini-games .memory-symbol { display: grid; place-items: center; font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 400; line-height: 1; user-select: none; transition: transform var(--editorial-motion-fast) var(--editorial-ease-standard), opacity var(--editorial-motion-fast) var(--editorial-ease-standard); }
 .theme-mini-games .memory-sequence__item.is-covered { background: var(--memory-card-hidden-bg); }
 .theme-mini-games .memory-sequence__cover { display: block; width: 100%; height: 100%; }
 .theme-mini-games .memory-sequence__item.is-revealed { animation: memory-reveal 260ms ease-out; }
 
 .theme-mini-games .memory-card { appearance: none; padding: 0; cursor: pointer; }
-.theme-mini-games .memory-card:hover:not(:disabled) img { transform: translateY(-3px) scale(1.06); }
+.theme-mini-games .memory-card:hover:not(:disabled) .memory-symbol { transform: translateY(-3px) scale(1.06); }
 .theme-mini-games .memory-card:disabled { cursor: default; }
-.theme-mini-games .memory-card.is-selected img { opacity: .42; }
-.theme-mini-games .memory-card span { position: absolute; right: 7px; bottom: 7px; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 999px; background: var(--feature-primary); color: var(--feature-text-inverse); font-size: .75rem; font-weight: 900; }
+.theme-mini-games .memory-card.is-selected .memory-symbol { opacity: 1; }
 
 .theme-mini-games .memory-game__idle { display: grid; justify-items: center; gap: var(--editorial-space-4); padding: clamp(32px, 7vw, 80px) var(--editorial-space-3); text-align: center; }
 .theme-mini-games .memory-game__idle h3,
