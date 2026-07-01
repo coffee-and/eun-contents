@@ -89,3 +89,84 @@
   .theme-mini-games .memory-game__feedback,
   .theme-mini-games .memory-game__record-note.is-celebrating { animation: none; transition-duration: .01ms; }
 }
+
+.theme-mini-games .memory-game__back {
+  justify-self: end;
+}
+
+.theme-mini-games .memory-game__record {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  min-width: 260px;
+  padding: 0;
+  background: transparent;
+}
+
+.theme-mini-games .memory-game__record-pill {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 8px 14px;
+  min-width: 126px;
+  padding: 10px 13px;
+  background: var(--feature-label-bg);
+  color: var(--feature-label-text);
+}
+
+.theme-mini-games .memory-game__record-pill span {
+  color: var(--feature-label-text);
+  font-size: var(--editorial-label-size);
+  font-weight: var(--editorial-label-weight);
+  letter-spacing: var(--editorial-label-letter-spacing);
+}
+
+.theme-mini-games .memory-game__record-pill strong {
+  color: var(--feature-text);
+  text-align: right;
+  font-size: 1.18rem;
+}
+
+.theme-mini-games .memory-game__timer {
+  min-width: 148px;
+  padding: 12px 18px;
+  background: var(--feature-button-primary-bg);
+  color: var(--feature-button-primary-text);
+  font-size: clamp(1.18rem, 2.6vw, 1.72rem);
+  font-weight: 900;
+  letter-spacing: .02em;
+}
+
+.theme-mini-games .memory-game__timer.is-finished {
+  background: var(--feature-label-bg);
+  color: var(--feature-primary);
+}
+
+.theme-mini-games .memory-game__actions {
+  justify-content: center;
+}
+
+.theme-mini-games .memory-game__primary,
+.theme-mini-games .memory-game__secondary {
+  min-width: clamp(132px, 18vw, 180px);
+  padding: 0 26px;
+}
+
+@media (max-width: 720px) {
+  .theme-mini-games .memory-game__record {
+    justify-content: flex-start;
+    min-width: 0;
+  }
+
+  .theme-mini-games .memory-game__record-pill {
+    min-width: 118px;
+  }
+}
+
+@media (max-width: 520px) {
+  .theme-mini-games .memory-game__primary,
+  .theme-mini-games .memory-game__secondary {
+    width: 100%;
+  }
+}
