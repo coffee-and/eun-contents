@@ -55,3 +55,89 @@
   font-size: var(--editorial-body-size);
   line-height: var(--editorial-body-line-height);
 }
+
+.theme-relationship .capture-panel,
+.theme-relationship .result-card--core-analysis {
+  border: 0;
+  background: var(--relationship-result-pink-soft);
+}
+
+.theme-relationship .capture-panel {
+  padding: clamp(28px, 4vw, 48px);
+}
+
+.theme-relationship .capture-panel__hero-main {
+  padding-right: clamp(210px, 24vw, 330px);
+}
+
+.theme-relationship .capture-panel__title {
+  max-width: min(100%, 700px);
+  font-size: var(--editorial-section-title-size);
+  line-height: var(--editorial-title-line-height);
+}
+
+.theme-relationship .capture-panel__footer {
+  display: none;
+}
+
+.theme-relationship .result-card--core-analysis {
+  position: relative;
+  overflow: hidden;
+  color: var(--text);
+}
+
+.theme-relationship .result-card--core-analysis::before,
+.theme-relationship .result-card--core-analysis::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  z-index: 0;
+  transform: skewX(-16deg);
+  pointer-events: none;
+}
+
+.theme-relationship .result-card--core-analysis::before {
+  right: 13%;
+  width: 24%;
+  background: rgba(214, 167, 178, 0.78);
+}
+
+.theme-relationship .result-card--core-analysis::after {
+  right: -4%;
+  width: 24%;
+  background: rgba(181, 101, 118, 0.68);
+}
+
+.theme-relationship .result-card--core-analysis > * {
+  position: relative;
+  z-index: 1;
+}
+
+.theme-relationship .result-card--core-analysis .result-card__title,
+.theme-relationship .result-card--core-analysis .bullet-list {
+  max-width: min(100%, 760px);
+  color: var(--text);
+}
+
+.theme-relationship .result-card--core-analysis .bullet-list {
+  line-height: 1.72;
+}
+
+@media (max-width: 820px) {
+  .theme-relationship .capture-panel__hero-main {
+    padding-right: 0;
+  }
+
+  .theme-relationship .capture-panel__type-box {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-top: var(--space-md);
+    text-align: left;
+  }
+
+  .theme-relationship .result-card--core-analysis::before,
+  .theme-relationship .result-card--core-analysis::after {
+    opacity: 0.36;
+  }
+}
