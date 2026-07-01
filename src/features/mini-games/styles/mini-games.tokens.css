@@ -53,6 +53,8 @@
   --feature-option-text: var(--feature-text);
   --feature-option-hover-text: var(--feature-text);
   --feature-option-selected-text: var(--mini-white);
+  --memory-card-hidden-bg: var(--feature-primary-soft);
+  --memory-overlay-bg: var(--feature-surface);
 
   --button-focus: var(--mini-plum);
   --link-color: var(--mini-green-deep);
