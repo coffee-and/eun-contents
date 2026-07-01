@@ -1,6 +1,7 @@
 // Together Questions 작성 중 임시 저장과 최근 결과 복구를 관리합니다.
 const DRAFT_KEY = "eun:together-questions:v4:draft";
 const RESULT_KEY = "eun:together-questions:v4:result";
+const RESUME_DRAFT_KEY = "eun:together-questions:resume-draft";
 const LEGACY_KEYS = [
   "eun:together-questions:v3:draft",
   "eun:together-questions:v3:result",
@@ -74,8 +75,18 @@ function writeStoredData(key, value) {
   );
 }
 
-export function loadDraft() {
+export function peekDraft() {
   return readStoredData(DRAFT_KEY);
+}
+
+export function requestDraftResume() {
+  window.sessionStorage.setItem(RESUME_DRAFT_KEY, "true");
+}
+
+export function loadDraft() {
+  const shouldResume = window.sessionStorage.getItem(RESUME_DRAFT_KEY) === "true";
+  window.sessionStorage.removeItem(RESUME_DRAFT_KEY);
+  return shouldResume ? peekDraft() : null;
 }
 
 export function saveDraft(draft) {
@@ -84,6 +95,7 @@ export function saveDraft(draft) {
 
 export function clearDraft() {
   window.localStorage.removeItem(DRAFT_KEY);
+  window.sessionStorage.removeItem(RESUME_DRAFT_KEY);
 }
 
 export function loadSavedResult() {
