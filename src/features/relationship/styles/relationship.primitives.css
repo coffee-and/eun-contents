@@ -1,0 +1,39 @@
+html:has(.theme-relationship),
+body:has(.theme-relationship),
+#root:has(.theme-relationship) {
+  min-height: 100%;
+  background: #f9f8f7;
+}
+
+.theme-relationship {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.theme-relationship .page {
+  min-height: 100vh;
+  padding: 24px 16px 64px;
+  background: var(--bg);
+}
+
+.theme-relationship .app-shell {
+  max-width: 1120px;
+  margin: 0 auto;
+  --result-card-gap: var(--card-gap);
+}
+
+.theme-relationship .card {
+  padding: var(--card-padding);
+  margin-bottom: var(--card-gap);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  background: var(--card-bg);
+  box-shadow: none;
+}
+
+.theme-relationship .button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}

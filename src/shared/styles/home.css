@@ -1,0 +1,18 @@
+@import "./editorial/home-layout.css";
+@import "./editorial/home-cards.css";
+@import "./editorial/home-responsive.css";
+@import "./editorial/home-mark.css";
+@import "./editorial/home-polish.css";
+
+.theme-hub .hub-hero__tagline {
+  color: var(--hub-deep-rose);
+}
+
+.theme-hub .hub-back-button.text-action {
+  color: var(--hub-deep-rose);
+}
+
+.theme-hub .hub-back-button.text-action:hover,
+.theme-hub .hub-back-button.text-action:focus-visible {
+  color: var(--hub-primary-hover);
+}

@@ -1,0 +1,79 @@
+.theme-hub {
+  --hub-deep-ink: #29291d;
+  --hub-olive: #424436;
+  --hub-khaki: #5c573a;
+  --hub-brown: #9c7a5e;
+  --hub-deep-rose: #7b444a;
+  --hub-rose: #9c6763;
+  --hub-clay: #ab7769;
+  --hub-blush: #c89c8f;
+  --hub-peach: #d6b2a6;
+  --hub-taupe: #a28077;
+  --hub-stone: #c5b7ae;
+  --hub-featured-bg: #f1e4df;
+  --hub-featured-label: var(--hub-brown);
+  --hub-on-circle: var(--hub-peach);
+  --hub-on-triangle: #aebfd8;
+  --hub-on-intersection: #7f83ad;
+}
+
+.theme-hub .hub-hero {
+  border-bottom-color: var(--hub-olive);
+}
+
+.theme-hub .content-section__head {
+  border-bottom-color: var(--hub-stone);
+}
+
+.theme-hub .featured-card {
+  background: var(--hub-featured-bg);
+}
+
+.theme-hub .featured-card .content-card__number {
+  color: var(--hub-taupe);
+}
+
+.theme-hub .featured-card .content-card__category {
+  color: var(--hub-brown);
+}
+
+.theme-hub .category-card {
+  --category-accent: var(--hub-blush);
+  --category-button: var(--hub-deep-rose);
+  min-height: 280px;
+  border-top-color: var(--category-accent);
+}
+
+.theme-hub .category-card--together-questions {
+  --category-accent: var(--hub-brown);
+  --category-button: var(--hub-khaki);
+}
+
+.theme-hub .category-card--saju {
+  --category-accent: var(--hub-olive);
+  --category-button: var(--hub-rose);
+}
+
+.theme-hub .category-card--mini-games {
+  --category-accent: var(--hub-clay);
+  --category-button: var(--hub-deep-ink);
+}
+
+.theme-hub .category-card .content-card__number,
+.theme-hub .category-card__category {
+  color: var(--category-accent);
+}
+
+.theme-hub .category-card__title {
+  margin-bottom: 28px;
+}
+
+.theme-hub .category-card .content-card__link {
+  background: var(--category-button);
+  color: var(--hub-white);
+}
+
+.theme-hub .category-card .content-card__link:hover:not(:disabled) {
+  filter: brightness(0.88);
+  color: var(--hub-white);
+}

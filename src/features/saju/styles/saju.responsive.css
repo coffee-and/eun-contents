@@ -1,0 +1,39 @@
+@media (max-width: 720px) {
+  .theme-saju .page {
+    padding: 22px 18px 48px;
+  }
+
+  .theme-saju .saju-hero {
+    padding: 8px 0 26px;
+  }
+
+  .theme-saju .saju-selector {
+    padding: 22px;
+  }
+}
+
+@media (max-width: 640px) {
+  .theme-saju .saju-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-saju .saju-select-card {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .theme-saju .page {
+    padding-inline: 16px;
+  }
+
+  .theme-saju .saju-selector {
+    padding: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-saju .saju-select-card {
+    transition-duration: 0.01ms;
+  }
+}

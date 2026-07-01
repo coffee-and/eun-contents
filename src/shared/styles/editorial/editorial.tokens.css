@@ -1,0 +1,139 @@
+:root {
+  --editorial-font-family: var(--font-sans);
+
+  --editorial-display-size: var(--font-size-result-title);
+  --editorial-page-title-size: var(--font-size-page-title);
+  --editorial-page-subtitle-size: var(--font-size-body-large);
+  --editorial-section-title-size: var(--font-size-section-title);
+  --editorial-card-title-size: var(--font-size-card-title);
+  --editorial-question-title-size: var(--font-size-question-title);
+  --editorial-body-large-size: var(--font-size-body-large);
+  --editorial-body-size: var(--font-size-body);
+  --editorial-body-small-size: var(--font-size-body-small);
+  --editorial-caption-size: var(--font-size-caption);
+  --editorial-label-size: var(--font-size-label);
+  --editorial-button-size: var(--font-size-body);
+
+  --editorial-display-line-height: var(--line-height-title);
+  --editorial-title-line-height: var(--line-height-title);
+  --editorial-body-line-height: var(--line-height-body);
+  --editorial-compact-line-height: var(--line-height-tight);
+
+  --editorial-title-weight: 700;
+  --editorial-body-weight: 400;
+  --editorial-label-weight: 700;
+  --editorial-button-weight: 700;
+  --editorial-label-letter-spacing: var(--letter-spacing-label);
+
+  --editorial-space-1: var(--space-2xs);
+  --editorial-space-2: var(--space-xs);
+  --editorial-space-3: var(--space-sm);
+  --editorial-space-4: var(--space-md);
+  --editorial-space-5: var(--space-lg);
+  --editorial-space-6: var(--space-xl);
+  --editorial-space-7: var(--space-2xl);
+  --editorial-space-8: var(--space-4xl);
+
+  --editorial-page-inline-padding: clamp(16px, 4vw, 24px);
+  --editorial-page-block-padding: 64px;
+  --editorial-content-max-width: 1180px;
+  --editorial-reading-max-width: 760px;
+
+  --editorial-hero-gap: var(--editorial-space-6);
+  --editorial-section-gap: var(--editorial-space-7);
+  --editorial-card-gap: var(--editorial-space-5);
+  --editorial-field-gap: var(--editorial-space-3);
+  --editorial-action-gap: var(--editorial-space-3);
+  --editorial-header-gap: 28px;
+  --editorial-label-gap: var(--editorial-space-2);
+
+  --editorial-card-padding: var(--card-padding);
+  --editorial-card-padding-large: var(--card-padding-lg);
+  --editorial-control-padding-inline: 18px;
+  --editorial-control-padding-block: 12px;
+
+  --editorial-motion-fast: var(--motion-fast);
+  --editorial-motion-base: var(--motion-base);
+  --editorial-motion-slow: 240ms;
+  --editorial-ease-standard: var(--motion-ease);
+  --editorial-ease-emphasized: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --feature-bg: var(--editorial-bg);
+  --feature-bg-soft: var(--editorial-surface-soft);
+  --feature-surface: var(--editorial-surface);
+  --feature-surface-muted: var(--editorial-surface-soft);
+  --feature-surface-strong: var(--editorial-surface);
+
+  --feature-text: var(--editorial-ink);
+  --feature-text-soft: var(--editorial-text);
+  --feature-text-muted: var(--editorial-muted);
+  --feature-text-inverse: var(--color-white);
+
+  --feature-border: var(--editorial-line);
+  --feature-border-strong: var(--color-blue);
+
+  --feature-primary: var(--color-navy);
+  --feature-primary-hover: var(--color-navy-deep);
+  --feature-primary-soft: var(--color-blue-soft);
+  --feature-accent: var(--color-blue);
+  --feature-accent-soft: var(--color-blue-soft);
+
+  --feature-label-bg: var(--feature-primary-soft);
+  --feature-label-text: var(--feature-primary);
+  --feature-label-muted-bg: var(--feature-surface-muted);
+  --feature-label-muted-text: var(--feature-text-muted);
+  --feature-badge-bg: var(--feature-primary);
+  --feature-badge-text: var(--feature-text-inverse);
+
+  --feature-card-bg: var(--feature-surface);
+  --feature-card-border: var(--feature-border);
+  --feature-card-accent: var(--feature-primary);
+
+  --feature-button-primary-bg: var(--button-primary-bg, var(--feature-primary));
+  --feature-button-primary-hover-bg: var(
+    --button-primary-hover-bg,
+    var(--feature-primary-hover)
+  );
+  --feature-button-primary-text: var(--button-primary-text, var(--feature-text-inverse));
+
+  --feature-button-secondary-bg: var(
+    --button-secondary-bg,
+    var(--feature-primary-soft)
+  );
+  --feature-button-secondary-hover-bg: var(
+    --button-secondary-hover-bg,
+    var(--feature-accent-soft)
+  );
+  --feature-button-secondary-text: var(
+    --button-secondary-text,
+    var(--feature-primary)
+  );
+
+  --feature-button-disabled-bg: var(--button-disabled-bg, var(--color-disabled-bg));
+  --feature-button-disabled-text: var(
+    --button-disabled-text,
+    var(--color-disabled-text)
+  );
+
+  --feature-option-bg: var(--feature-primary-soft);
+  --feature-option-hover-bg: var(--feature-accent-soft);
+  --feature-option-selected-bg: var(--feature-primary);
+  --feature-option-text: var(--feature-text);
+  --feature-option-hover-text: var(--feature-text);
+  --feature-option-selected-text: var(--feature-text-inverse);
+
+  --feature-focus: var(--button-focus, var(--color-blue));
+  --feature-danger: var(--color-danger);
+  --feature-danger-soft: var(--color-danger-soft);
+  --feature-success: var(--color-olive);
+  --feature-success-soft: var(--color-olive-soft);
+}
+
+@media (max-width: 720px) {
+  :root {
+    --editorial-page-inline-padding: 16px;
+    --editorial-page-block-padding: 44px;
+    --editorial-control-padding-inline: 14px;
+    --editorial-control-padding-block: 11px;
+  }
+}

@@ -1,0 +1,104 @@
+.theme-relationship .premium-lock__preview-card {
+  border: 0;
+  background: var(--relationship-white);
+  color: var(--relationship-noir);
+}
+
+.theme-relationship .premium-lock__preview-card::before {
+  content: "";
+  display: block;
+  height: 10px;
+  margin: -20px -20px 16px;
+  background: var(--relationship-premium-band-1);
+}
+
+.theme-relationship .premium-lock__preview-card:nth-child(2)::before {
+  background: var(--relationship-premium-band-2);
+}
+
+.theme-relationship .premium-lock__preview-card:nth-child(3)::before {
+  background: var(--relationship-premium-band-3);
+}
+
+.theme-relationship .premium-lock__preview-card:nth-child(1) {
+  background: #fbfcfd;
+}
+
+.theme-relationship .premium-lock__preview-card:nth-child(2) {
+  background: #f7f3f8;
+}
+
+.theme-relationship .premium-lock__preview-card:nth-child(3) {
+  background: #fbf0f3;
+}
+
+.theme-relationship .premium-lock__preview-number {
+  color: var(--relationship-premium-number);
+}
+
+.theme-relationship .premium-report__label {
+  display: block;
+  padding: 14px 16px;
+  border: 0;
+  background: var(--relationship-deep-blue);
+  color: var(--relationship-white);
+}
+
+.theme-relationship .premium-report__summary div,
+.theme-relationship .premium-report__section {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.theme-relationship .premium-report__summary div {
+  background: #f2f4f7;
+}
+
+.theme-relationship .premium-report__summary div:nth-child(2n) {
+  background: #f3eef5;
+}
+
+.theme-relationship .premium-report__summary div:nth-child(3n) {
+  background: #f8edf1;
+}
+
+.theme-relationship .premium-report__summary div:nth-child(4n) {
+  background: #f5e1da;
+}
+
+.theme-relationship .premium-report__section {
+  padding: 0;
+  background: var(--relationship-white);
+}
+
+.theme-relationship .premium-report__section h4 {
+  margin: 0;
+  padding: 14px 18px;
+  background: var(--relationship-deep-blue);
+  color: var(--relationship-white);
+  font-size: clamp(1.02rem, 1.45vw, 1.2rem);
+}
+
+.theme-relationship .premium-report__section:nth-child(2n) h4 {
+  background: var(--relationship-slate-violet);
+}
+
+.theme-relationship .premium-report__section:nth-child(3n) h4 {
+  background: var(--relationship-dusty-pink);
+  color: var(--relationship-deep-blue);
+}
+
+.theme-relationship .premium-report__section:nth-child(4n) h4 {
+  background: var(--relationship-muted-rose);
+  color: var(--relationship-white);
+}
+
+.theme-relationship .premium-report__section > :not(h4) {
+  margin-left: 18px;
+  margin-right: 18px;
+}
+
+.theme-relationship .premium-report__section > :last-child {
+  margin-bottom: 18px;
+}

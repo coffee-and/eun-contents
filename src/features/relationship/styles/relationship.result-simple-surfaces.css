@@ -1,0 +1,80 @@
+.theme-relationship .capture-panel {
+  border: 0;
+  padding: clamp(28px, 4vw, 48px);
+  background: var(--relationship-result-pink-soft);
+  background-image: none;
+}
+
+.theme-relationship .capture-panel::before,
+.theme-relationship .capture-panel::after,
+.theme-relationship .capture-panel__hero::before,
+.theme-relationship .capture-panel__hero::after {
+  display: none;
+  content: none;
+}
+
+.theme-relationship .capture-panel__hero {
+  background: var(--relationship-result-pink-soft);
+  background-image: none;
+}
+
+.theme-relationship .capture-panel__hero-main {
+  padding-right: clamp(210px, 24vw, 330px);
+}
+
+.theme-relationship .capture-panel__title {
+  max-width: min(100%, 700px);
+  font-size: var(--editorial-section-title-size);
+  line-height: var(--editorial-title-line-height);
+}
+
+.theme-relationship .capture-panel__footer {
+  display: none;
+}
+
+.theme-relationship .result-card--core-analysis {
+  border: 0;
+  background: var(--relationship-result-blue-soft);
+  background-image: none;
+  color: var(--relationship-noir);
+}
+
+.theme-relationship .result-card--core-analysis .result-card__title,
+.theme-relationship .result-card--core-analysis .bullet-list {
+  max-width: min(100%, 760px);
+}
+
+.theme-relationship .result-card--core-analysis .bullet-list {
+  line-height: 1.72;
+}
+
+@media (max-width: 820px) {
+  .theme-relationship .capture-panel__hero-main {
+    padding-right: 0;
+  }
+
+  .theme-relationship .capture-panel__type-box {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-top: var(--space-md);
+    text-align: left;
+  }
+}
+
+.theme-relationship .result-card--core-analysis::before,
+.theme-relationship .result-card--core-analysis::after {
+  display: none;
+  content: none;
+}
+
+.theme-relationship .result-card--core-analysis,
+.theme-relationship .result-card--core-analysis .result-card__title,
+.theme-relationship .result-card--core-analysis .result-card__desc,
+.theme-relationship .result-card--core-analysis .bullet-list,
+.theme-relationship .result-card--core-analysis .bullet-list li,
+.theme-relationship .result-card--core-analysis strong,
+.theme-relationship .result-card--core-analysis span,
+.theme-relationship .result-card--core-analysis p {
+  color: var(--relationship-noir);
+}

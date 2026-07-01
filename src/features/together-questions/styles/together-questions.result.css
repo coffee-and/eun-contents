@@ -1,0 +1,28 @@
+.theme-together-questions .tq-complete-wrap {
+  padding-bottom: 48px;
+}
+
+.theme-together-questions .tq-journal-report {
+  margin: 0 0 20px;
+  text-align: left;
+}
+
+.theme-together-questions .tq-journal-report > h2,
+.theme-together-questions .tq-journal-report > p {
+  text-align: center;
+}
+
+.theme-together-questions .tq-answer-report {
+  margin-top: 26px;
+}
+
+.theme-together-questions .tq-answer-report p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.theme-together-questions .tq-export-actions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}

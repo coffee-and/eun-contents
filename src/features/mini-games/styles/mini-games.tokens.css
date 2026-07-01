@@ -1,0 +1,60 @@
+.theme-mini-games {
+  --mini-plum: #392933;
+  --mini-green-deep: #385249;
+  --mini-green: #519872;
+  --mini-moss: #6d8b74;
+  --mini-moss-deep: #5f7163;
+  --mini-sage: #a6b494;
+  --mini-cream: #f9f8f7;
+  --mini-soft-paper: #fcfbfa;
+  --mini-white: #ffffff;
+
+  --feature-bg: var(--mini-cream);
+  --feature-bg-soft: var(--mini-soft-paper);
+  --feature-surface: var(--mini-white);
+  --feature-surface-muted: var(--mini-soft-paper);
+  --feature-surface-strong: var(--mini-green-deep);
+
+  --feature-text: var(--mini-plum);
+  --feature-text-soft: var(--mini-green-deep);
+  --feature-text-muted: var(--mini-moss-deep);
+  --feature-text-inverse: var(--mini-white);
+
+  --feature-border: #ddd7da;
+  --feature-border-strong: var(--mini-green-deep);
+
+  --feature-primary: var(--mini-green-deep);
+  --feature-primary-hover: var(--mini-plum);
+  --feature-primary-soft: #e8eee8;
+  --feature-accent: var(--mini-green);
+  --feature-accent-soft: var(--mini-sage);
+
+  --feature-label-bg: #e8eee8;
+  --feature-label-text: var(--mini-green-deep);
+  --feature-label-muted-bg: #f0ebea;
+  --feature-label-muted-text: var(--mini-moss-deep);
+  --feature-badge-bg: var(--mini-green-deep);
+  --feature-badge-text: var(--mini-white);
+
+  --feature-card-bg: var(--mini-white);
+  --feature-card-border: #ddd7da;
+  --feature-card-accent: var(--mini-green);
+
+  --feature-button-primary-bg: var(--mini-green-deep);
+  --feature-button-primary-hover-bg: var(--mini-plum);
+  --feature-button-primary-text: var(--mini-white);
+  --feature-button-secondary-bg: #e8eee8;
+  --feature-button-secondary-hover-bg: #d9e5d9;
+  --feature-button-secondary-text: var(--mini-green-deep);
+  --feature-focus: var(--mini-plum);
+  --feature-option-bg: var(--feature-primary-soft);
+  --feature-option-hover-bg: var(--mini-sage);
+  --feature-option-selected-bg: var(--mini-green);
+  --feature-option-text: var(--feature-text);
+  --feature-option-hover-text: var(--feature-text);
+  --feature-option-selected-text: var(--mini-white);
+
+  --button-focus: var(--mini-plum);
+  --link-color: var(--mini-green-deep);
+  --link-color-hover: var(--mini-plum);
+}

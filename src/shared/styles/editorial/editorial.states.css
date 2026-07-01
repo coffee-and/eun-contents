@@ -1,0 +1,70 @@
+.editorial-state {
+  display: grid;
+  gap: var(--editorial-space-3);
+  padding: var(--editorial-card-padding-large);
+  border: 1px solid var(--feature-border);
+  border-radius: 0;
+  background: var(--feature-surface);
+  color: var(--feature-text);
+}
+
+.editorial-state__media {
+  max-width: 280px;
+}
+
+.editorial-state__title {
+  margin: 0;
+  color: var(--feature-text);
+  font-size: var(--editorial-section-title-size);
+  font-weight: var(--editorial-title-weight);
+  line-height: var(--editorial-title-line-height);
+}
+
+.editorial-state__description {
+  margin: 0;
+  max-width: var(--editorial-reading-max-width);
+  color: var(--feature-text-soft);
+  font-size: var(--editorial-body-size);
+  line-height: var(--editorial-body-line-height);
+}
+
+.editorial-state--error {
+  border-color: var(--feature-danger);
+}
+
+.editorial-state--empty,
+.editorial-state--not-found,
+.editorial-state--coming-soon {
+  background: var(--feature-surface-muted);
+}
+
+.theme-hub .route-state {
+  display: grid;
+  gap: 12px;
+  min-height: 320px;
+  align-content: center;
+  padding: 40px 0;
+  border-bottom: 6px solid var(--hub-rose);
+}
+
+.theme-hub .route-state > span {
+  color: var(--hub-wine);
+  font-size: var(--font-label);
+  font-weight: 700;
+  letter-spacing: var(--letter-label);
+}
+
+.theme-hub .route-state h1,
+.theme-hub .route-state p {
+  margin: 0;
+}
+
+.theme-hub .route-state h1 {
+  color: var(--hub-ink);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: var(--line-title);
+}
+
+.theme-hub .route-state p {
+  color: var(--hub-text-secondary);
+}

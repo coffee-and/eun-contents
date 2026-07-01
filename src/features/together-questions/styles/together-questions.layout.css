@@ -1,0 +1,107 @@
+.theme-together-questions .page {
+  min-height: 100vh;
+  padding: 32px 24px 64px;
+  background: var(--together-bg);
+}
+
+.theme-together-questions .app-shell {
+  width: min(100%, 1180px);
+  max-width: 1180px;
+  margin-inline: auto;
+}
+
+.theme-together-questions .tq-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 28px;
+  padding: 18px 0 34px;
+}
+
+.theme-together-questions .tq-hero__eyebrow,
+.theme-together-questions .tq-section__head > span,
+.theme-together-questions .tq-sheet-head span,
+.theme-together-questions .tq-complete-card > span,
+.theme-together-questions .tq-answer-report small {
+  display: block;
+  margin: 0 0 8px;
+  color: var(--together-forest);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.theme-together-questions .tq-hero h1,
+.theme-together-questions .tq-section__head h2,
+.theme-together-questions .tq-sheet-head h2,
+.theme-together-questions .tq-complete-card h2 {
+  margin: 0;
+  color: var(--together-text);
+  font-weight: 700;
+  line-height: 1.18;
+  word-break: keep-all;
+}
+
+.theme-together-questions .tq-hero h1 {
+  font-size: clamp(2.2rem, 4.2vw, 3.65rem);
+}
+
+.theme-together-questions .tq-section__head h2,
+.theme-together-questions .tq-sheet-head h2,
+.theme-together-questions .tq-complete-card h2 {
+  font-size: clamp(1.45rem, 2.4vw, 2.05rem);
+}
+
+.theme-together-questions .tq-hero p,
+.theme-together-questions .tq-sheet-head p,
+.theme-together-questions .tq-flow-note p,
+.theme-together-questions .tq-answer-report p {
+  margin: 10px 0 0;
+  color: var(--together-muted);
+  font-size: clamp(0.94rem, 1.35vw, 1.05rem);
+  line-height: 1.7;
+  word-break: keep-all;
+}
+
+.theme-together-questions .tq-panel,
+.theme-together-questions .tq-complete-card {
+  width: 100%;
+  padding: clamp(24px, 3.4vw, 40px);
+  border: 1px solid var(--together-border);
+  border-radius: 0;
+  background: var(--together-surface);
+  box-shadow: none;
+}
+
+.theme-together-questions .tq-section__head,
+.theme-together-questions .tq-sheet-head {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 26px;
+}
+
+.theme-together-questions .tq-sheet-head {
+  grid-template-columns: 1fr;
+  align-items: start;
+  column-gap: 24px;
+}
+
+.theme-together-questions .tq-alert {
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: 0;
+  background: var(--together-surface-warm);
+  color: var(--together-text);
+  font-weight: 700;
+}
+
+.theme-together-questions .tq-alert--success {
+  background: var(--together-surface-sage);
+  color: var(--together-forest);
+}
+
+.theme-together-questions .tq-alert--error {
+  background: var(--together-danger-soft);
+  color: var(--together-coral);
+}
