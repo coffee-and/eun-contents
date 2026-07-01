@@ -3,4 +3,5 @@
 @import "./mini-games.responsive.css";
 @import "./mini-games.cards.css";
 @import "./mini-games.memory.css";
+@import "./mini-games.selection-cleanup.css";
 @import "../../../shared/styles/editorial/editorial-type-scale.css";
