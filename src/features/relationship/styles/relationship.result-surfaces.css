@@ -1,5 +1,6 @@
 .theme-relationship .capture-panel {
-  background: var(--relationship-white);
+  border: 0;
+  background: var(--relationship-result-pink-soft);
 }
 
 .theme-relationship .capture-panel::before,
@@ -15,12 +16,7 @@
   margin: calc(-1 * clamp(22px, 3vw, 36px)) calc(-1 * clamp(22px, 3vw, 36px)) 24px;
   padding: clamp(28px, 4vw, 48px) clamp(22px, 3vw, 36px) clamp(34px, 5vw, 56px);
   overflow: hidden;
-  background: linear-gradient(
-    108deg,
-    var(--relationship-capture-soft-1) 0 52%,
-    var(--relationship-capture-soft-2) 52% 76%,
-    var(--relationship-capture-soft-3) 76% 100%
-  );
+  background: var(--relationship-result-pink-soft);
 }
 
 .theme-relationship .capture-panel__hero-main,
