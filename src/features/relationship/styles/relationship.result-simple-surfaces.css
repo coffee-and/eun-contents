@@ -1,0 +1,31 @@
+.theme-relationship .capture-panel {
+  border: 0;
+  background: var(--relationship-result-pink-soft);
+}
+
+.theme-relationship .capture-panel::before,
+.theme-relationship .capture-panel::after,
+.theme-relationship .capture-panel__hero::before,
+.theme-relationship .capture-panel__hero::after {
+  display: none;
+}
+
+.theme-relationship .capture-panel__hero {
+  background: var(--relationship-result-pink-soft);
+}
+
+.theme-relationship .result-card--core-analysis {
+  border: 0;
+  background: var(--relationship-result-blue-soft);
+  color: var(--relationship-noir);
+}
+
+.theme-relationship .result-card--core-analysis::before,
+.theme-relationship .result-card--core-analysis::after {
+  display: none;
+}
+
+.theme-relationship .result-card--core-analysis .result-card__title,
+.theme-relationship .result-card--core-analysis .bullet-list {
+  color: var(--relationship-noir);
+}
