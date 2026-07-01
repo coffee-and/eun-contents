@@ -64,7 +64,7 @@
 }
 
 .theme-relationship .result-card--actions .button--primary {
-  background: var(--relationship-navy);
+  background: var(--relationship-action-blue);
   color: var(--relationship-white);
 }
 
@@ -75,7 +75,7 @@
 }
 
 .theme-relationship .result-card--actions .button--primary:hover:not(:disabled) {
-  background: var(--relationship-deep-navy);
+  background: var(--relationship-action-blue-hover);
   color: var(--relationship-white);
 }
 
