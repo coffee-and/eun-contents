@@ -1,7 +1,7 @@
 .theme-together-questions {
-  --together-bg: #f8f5ef;
+  --together-bg: #f9f8f7;
   --together-surface: #ffffff;
-  --together-surface-warm: #fcfbf8;
+  --together-surface-warm: #fcfbfa;
   --together-surface-sage: #e7eee3;
   --together-surface-peach: #f8e6d7;
   --together-surface-cream: #f6ead8;
@@ -24,7 +24,7 @@
   --together-question-title-color: var(--together-heading-text);
   --together-question-number-color: var(--together-heading-text);
   --together-muted: #69706a;
-  --together-border: #d9d7d0;
+  --together-border: #ddd7da;
   --together-danger-soft: #fff1ef;
   --link-color: var(--together-olive);
   --link-color-hover: var(--together-forest);
