@@ -1,3 +1,4 @@
 @import "./saju.tokens.css";
 @import "./saju.selection.css";
 @import "./saju.responsive.css";
+@import "../../../shared/styles/editorial/editorial-type-scale.css";
