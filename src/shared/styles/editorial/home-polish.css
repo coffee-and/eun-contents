@@ -13,8 +13,8 @@
   --hub-featured-bg: #f1e4df;
   --hub-featured-label: var(--hub-brown);
   --hub-on-circle: var(--hub-peach);
-  --hub-on-triangle: #aebfd8;
-  --hub-on-intersection: #7f83ad;
+  --hub-on-triangle: #a7b8dc;
+  --hub-on-intersection: #8d80b7;
 }
 
 .theme-hub .hub-hero {
