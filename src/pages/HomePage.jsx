@@ -61,7 +61,11 @@ export function HomePage({ onNavigate }) {
       <section className="featured-content" aria-label="추천 콘텐츠">
         {featuredContent ? (
           <article className="featured-card">
-            <div className="home-mark" />
+            <div className="home-mark" aria-hidden="true">
+              <span className="home-mark__circle" />
+              <span className="home-mark__triangle" />
+              <span className="home-mark__intersection" />
+            </div>
             <div className="featured-card__body">
               <div className="featured-card__meta">
                 <span className="content-card__number">01</span>
