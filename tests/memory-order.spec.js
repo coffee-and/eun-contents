@@ -66,27 +66,35 @@ test.describe("memory order game logic", () => {
 });
 
 test.describe("memory order game UI", () => {
-  test("keeps panels aligned and lets one symbol button be clicked repeatedly", async ({ page }) => {
-    test.setTimeout(30000);
+  test("keeps panels aligned and restores progress on empty pedestals", async ({ page }) => {
+    test.setTimeout(40000);
     await page.setViewportSize({ width: 390, height: 844 });
     await page.addInitScript(() => {
-      Object.defineProperty(Math, "random", {
-        configurable: true,
-        value: () => 0.45,
-      });
+      const randomValues = [0.55, 0.43, 0.55];
+      let randomIndex = 0;
+      Math.random = () => {
+        const value = randomValues[randomIndex % randomValues.length];
+        randomIndex += 1;
+        return value;
+      };
     });
 
     await page.goto("/#/mini-games");
     await page.getByRole("button", { name: /순서 맞추기/ }).click();
     await page.getByRole("button", { name: "게임 시작" }).click();
 
+    const playShell = page.locator(".memory-game__play-shell");
     const problemPanel = page.locator(".memory-game__problem-panel");
     const selectionPanel = page.locator(".memory-game__selection-panel");
     const timerRow = page.locator(".memory-game__timer-row");
+    const sequence = page.locator(".memory-sequence");
+    const sequenceItems = sequence.locator(".memory-sequence__item");
+    const sequenceSymbols = sequence.locator(".memory-symbol");
 
     await expect(problemPanel).toBeVisible();
-    await expect(page.locator(".memory-sequence__item")).toHaveCount(3);
+    await expect(sequenceItems).toHaveCount(3);
     await expect(page.locator(".memory-card")).toHaveCount(8);
+    await expect(page.locator(".memory-sequence__cover")).toHaveCount(0);
 
     const [problemBox, selectionBox, timerBox] = await Promise.all([
       problemPanel.boundingBox(),
@@ -98,8 +106,12 @@ test.describe("memory order game UI", () => {
     expect(selectionBox).not.toBeNull();
     expect(timerBox).not.toBeNull();
     expect(Math.abs(problemBox.width - selectionBox.width)).toBeLessThanOrEqual(1);
-    expect(Math.abs(problemBox.x + problemBox.width - selectionBox.x - selectionBox.width)).toBeLessThanOrEqual(1);
-    expect(Math.abs(timerBox.x + timerBox.width - problemBox.x - problemBox.width)).toBeLessThanOrEqual(1);
+    expect(
+      Math.abs(problemBox.x + problemBox.width - selectionBox.x - selectionBox.width)
+    ).toBeLessThanOrEqual(1);
+    expect(
+      Math.abs(timerBox.x + timerBox.width - problemBox.x - problemBox.width)
+    ).toBeLessThanOrEqual(1);
 
     const pageWidth = await page.evaluate(() => ({
       clientWidth: document.documentElement.clientWidth,
@@ -107,18 +119,47 @@ test.describe("memory order game UI", () => {
     }));
     expect(pageWidth.scrollWidth).toBeLessThanOrEqual(pageWidth.clientWidth);
 
+    await expect(playShell).toHaveAttribute("data-phase", "preview", { timeout: 7000 });
+    await expect(sequenceSymbols).toHaveCount(3);
+    await expect(sequenceItems.locator(".memory-sequence__platform")).toHaveCount(3);
+
+    const cloudButton = page.getByRole("button", { name: "구름 선택" });
     const cherryButton = page.getByRole("button", { name: "체리 선택" });
-    await expect(cherryButton).toBeEnabled({ timeout: 12000 });
+    await expect(cloudButton).toBeEnabled({ timeout: 12000 });
+    await expect(playShell).toHaveAttribute("data-phase", "playing");
+
+    await expect(sequenceSymbols).toHaveCount(0);
+    await expect(sequenceItems.filter({ has: page.locator(".memory-symbol") })).toHaveCount(0);
+    await expect(sequence.locator(".memory-sequence__item.is-empty")).toHaveCount(3);
+    await expect(sequence.locator(".memory-sequence__platform")).toHaveCount(3);
+
+    const bubbleStyle = await cloudButton.evaluate((element) => {
+      const style = window.getComputedStyle(element);
+      return {
+        backgroundImage: style.backgroundImage,
+        opacity: style.opacity,
+      };
+    });
+    expect(bubbleStyle.backgroundImage).toContain("radial-gradient");
+    expect(bubbleStyle.backgroundImage).toContain("conic-gradient");
+    expect(bubbleStyle.opacity).toBe("1");
+
+    await cloudButton.click();
+    await expect(cloudButton).toBeEnabled();
+    await expect(sequenceSymbols).toHaveCount(1);
+    await expect(sequenceItems.nth(0)).toHaveAttribute("data-revealed", "true");
+    await expect(sequenceItems.nth(1)).toHaveAttribute("data-revealed", "false");
 
     await cherryButton.click();
     await expect(cherryButton).toBeEnabled();
-    await expect(cherryButton.locator(".memory-card__success")).toBeAttached();
+    await expect(sequenceSymbols).toHaveCount(2);
+    await expect(sequenceItems.nth(1)).toHaveAttribute("data-revealed", "true");
+    await expect(sequenceItems.nth(2)).toHaveAttribute("data-revealed", "false");
 
-    await cherryButton.click();
-    await expect(cherryButton).toBeEnabled();
-    await expect(cherryButton.locator(".memory-card__success")).toBeAttached();
-
-    await cherryButton.click();
+    await cloudButton.click();
+    await expect(cloudButton).toBeEnabled();
+    await expect(sequenceSymbols).toHaveCount(3);
+    await expect(sequenceItems.nth(2)).toHaveAttribute("data-revealed", "true");
     await expect(page.getByText("CLEAR!")).toBeVisible();
   });
 });
