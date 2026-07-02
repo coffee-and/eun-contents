@@ -1,8 +1,0 @@
-.theme-mini-games .mini-game-card {
-  grid-template-rows: auto 1fr auto;
-  min-height: 180px;
-}
-
-.theme-mini-games .mini-game-card__title {
-  align-self: center;
-}

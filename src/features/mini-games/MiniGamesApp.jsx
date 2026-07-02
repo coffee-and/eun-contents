@@ -1,18 +1,24 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { AppShell } from "../../shared/components/AppShell.jsx";
 import { FeatureHeader } from "../../shared/components/FeatureHeader.jsx";
+import { GamePlaceholder } from "../../shared/components/game/GamePlaceholder.jsx";
+import { GameStage } from "../../shared/components/game/GameStage.jsx";
 import { EditorialCard } from "../../shared/components/editorial/EditorialCard.jsx";
 import { EditorialLabel } from "../../shared/components/editorial/EditorialLabel.jsx";
-import { MINI_GAMES } from "./data/games.js";
+import { MINI_GAMES, MINI_GAME_STATUS } from "./data/games.js";
 import { MemoryOrderGame } from "./memory/MemoryOrderGame.jsx";
 import "./styles/mini-games.css";
 
 export default function MiniGamesApp({ onNavigateHome }) {
   const [selectedGameId, setSelectedGameId] = useState("");
-  const isMemoryGame = selectedGameId === "memory";
+  const selectedGame = useMemo(
+    () => MINI_GAMES.find((game) => game.id === selectedGameId) ?? null,
+    [selectedGameId]
+  );
+  const isMemoryGame = selectedGame?.id === "memory";
   const heroActions = [
     onNavigateHome ? { label: "← 다른 콘텐츠 보기", onClick: onNavigateHome } : null,
-    isMemoryGame ? { label: "← 다른 게임하기", onClick: () => setSelectedGameId("") } : null,
+    selectedGame ? { label: "← 다른 게임하기", onClick: () => setSelectedGameId("") } : null,
   ].filter(Boolean);
 
   return (
@@ -24,7 +30,21 @@ export default function MiniGamesApp({ onNavigateHome }) {
       />
 
       {isMemoryGame ? (
-        <MemoryOrderGame />
+        <MemoryOrderGame game={selectedGame} />
+      ) : selectedGame ? (
+        <GameStage
+          eyebrow={selectedGame.eyebrow}
+          title={selectedGame.title}
+          description={selectedGame.description}
+          fullscreenEnabled
+          ariaLabel={selectedGame.title}
+        >
+          <GamePlaceholder
+            title={selectedGame.title}
+            description={selectedGame.description}
+            status={selectedGame.statusLabel}
+          />
+        </GameStage>
       ) : (
         <EditorialCard className="mini-game-selector">
           <div className="mini-game-selector__head">
@@ -34,23 +54,21 @@ export default function MiniGamesApp({ onNavigateHome }) {
 
           <div className="mini-game-grid" role="group" aria-labelledby="mini-game-heading">
             {MINI_GAMES.map((game) => {
-              const isSelected = selectedGameId === game.id;
+              const isReady = game.status === MINI_GAME_STATUS.READY;
 
               return (
                 <button
                   type="button"
                   key={game.id}
-                  className={`mini-game-card editorial-option-card${
-                    isSelected ? " is-selected" : ""
-                  }`}
-                  aria-pressed={isSelected}
+                  className="mini-game-card editorial-option-card"
                   onClick={() => setSelectedGameId(game.id)}
                 >
                   <span className="mini-game-card__eyebrow">{game.eyebrow}</span>
                   <span className="mini-game-card__title">{game.title}</span>
-                  {isSelected ? (
-                    <span className="mini-game-card__status">선택됨</span>
-                  ) : null}
+                  <span className="mini-game-card__description">{game.description}</span>
+                  <span className="mini-game-card__status">
+                    {isReady ? game.statusLabel : "준비 중"}
+                  </span>
                 </button>
               );
             })}
