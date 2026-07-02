@@ -18,7 +18,7 @@ export function RelationshipModeSelect({ onSelectMode }) {
           <button
             key={mode}
             type="button"
-            className={`mode-card editorial-option-card mode-card--${mode}`}
+            className={`mode-card editorial-card editorial-surface-card mode-card--${mode}`}
             onClick={() => onSelectMode(mode)}
           >
             <span className="mode-card__label">{meta.shortLabel}</span>

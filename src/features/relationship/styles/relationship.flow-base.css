@@ -69,24 +69,18 @@
 }
 
 .theme-relationship .mode-card {
+  appearance: none;
   min-height: 168px;
-  padding: var(--card-padding);
-  border: 0;
-  border-top: 6px solid var(--relationship-mist);
-  border-radius: 0;
-  background: var(--relationship-surface);
   color: var(--text);
   text-align: left;
   cursor: pointer;
-  box-shadow: none;
   transition:
     background var(--motion-fast) var(--motion-ease),
-    border-color var(--motion-fast) var(--motion-ease);
+    color var(--motion-fast) var(--motion-ease);
 }
 
 .theme-relationship .mode-card:hover,
 .theme-relationship .mode-card:focus-visible {
-  border-top-color: var(--relationship-wine);
   background: var(--relationship-almond);
   transform: none;
 }
@@ -110,10 +104,6 @@
 
 .theme-relationship .question-card {
   overflow: hidden;
-  border-top: 6px solid var(--relationship-navy);
-  border-radius: 0;
-  background: var(--relationship-white);
-  box-shadow: none;
 }
 
 .theme-relationship .question-card__top,

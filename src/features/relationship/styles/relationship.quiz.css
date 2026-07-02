@@ -28,14 +28,6 @@
   background: var(--relationship-muted-rose);
 }
 
-.theme-relationship .question-card {
-  padding: clamp(22px, 3vw, 34px);
-  border: 1px solid var(--relationship-line);
-  border-radius: 0;
-  background: var(--relationship-white);
-  box-shadow: none;
-}
-
 .theme-relationship .question-card .badge,
 .theme-relationship .question-card__mode-label {
   display: inline-flex;
@@ -189,18 +181,7 @@
 }
 
 .theme-relationship .mode-select__grid .mode-card {
-  border: 0;
-  border-radius: 0;
   color: var(--relationship-noir);
-  box-shadow: none;
-}
-
-.theme-relationship .mode-card--couple {
-  background: var(--feature-option-bg);
-}
-
-.theme-relationship .mode-card--married {
-  background: var(--feature-option-bg);
 }
 
 .theme-relationship .mode-card--couple:hover,
