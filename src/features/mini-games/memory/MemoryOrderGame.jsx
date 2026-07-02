@@ -1,12 +1,18 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "../../../shared/components/Button.jsx";
+import { GameItemPanel } from "../../../shared/components/game/GameItemPanel.jsx";
 import { GameStage } from "../../../shared/components/game/GameStage.jsx";
+import {
+  createMemoryRound,
+  evaluateMemoryChoice,
+  getMemorySelectionSeconds,
+} from "./memoryOrder.logic.js";
 
 const KEY = "eunContents.memoryOrderGame.bestRound";
 const COUNTDOWN_LABELS = ["3", "2", "1", "START!"];
 const COUNTDOWN_STEP_MS = 1000;
 const ROUND_TRANSITION_MS = 900;
-const SELECTION_SECONDS_PER_TARGET = 2;
+const CORRECT_FEEDBACK_MS = 520;
 
 const PHASE = {
   IDLE: "idle",
@@ -29,7 +35,7 @@ const DEFAULT_GAME_META = {
   description: "제한 시간 동안 순서를 기억하고 그대로 선택하세요.",
 };
 
-const SYMBOLS = [
+export const MEMORY_SYMBOLS = [
   { id: "tulip", symbol: "🌷", name: "튤립" },
   { id: "sunflower", symbol: "🌻", name: "해바라기" },
   { id: "clover", symbol: "🍀", name: "네잎클로버" },
@@ -40,50 +46,25 @@ const SYMBOLS = [
   { id: "heart", symbol: "❤️", name: "하트" },
 ];
 
-function shuffle(items) {
-  const next = [...items];
-  for (let i = next.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [next[i], next[j]] = [next[j], next[i]];
-  }
-  return next;
-}
-
 function getBest() {
-  const value = Number(window.localStorage.getItem(KEY));
-  return Number.isFinite(value) && value > 0 ? value : 0;
+  try {
+    const value = Number(window.localStorage.getItem(KEY));
+    return Number.isFinite(value) && value > 0 ? value : 0;
+  } catch {
+    return 0;
+  }
 }
 
-function config(round) {
-  if (round >= 17) return { count: 20, seconds: 2, duplicates: true };
-  if (round >= 14) return { count: 15, seconds: 2, duplicates: true };
-  if (round >= 11) return { count: 12, seconds: 3, duplicates: true };
-  if (round >= 8) return { count: 10, seconds: 3, duplicates: true };
-  if (round >= 6) return { count: 8, seconds: 3, duplicates: false };
-  return { count: 5, seconds: round <= 3 ? 4 : 3, duplicates: false };
-}
-
-function makeRound(round) {
-  const rule = config(round);
-  const sequence = rule.duplicates
-    ? Array.from({ length: rule.count }, () => SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)])
-    : shuffle(SYMBOLS).slice(0, rule.count);
-  const cards = shuffle(
-    sequence.map((item, index) => ({
-      ...item,
-      cardId: `${round}-${item.id}-${index}`,
-    }))
-  );
-
-  return { ...rule, sequence, cards };
+function saveBest(round) {
+  try {
+    window.localStorage.setItem(KEY, String(round));
+  } catch {
+    // The game remains playable when storage is unavailable.
+  }
 }
 
 function formatTimer(milliseconds) {
   return Math.max(0, milliseconds / 1000).toFixed(2);
-}
-
-function getSelectionDuration(targetCount) {
-  return targetCount * SELECTION_SECONDS_PER_TARGET * 1000;
 }
 
 function MemorySymbol({ value }) {
@@ -113,21 +94,40 @@ function StopwatchIcon() {
   );
 }
 
+function CorrectBurst() {
+  return (
+    <span className="memory-card__success" aria-hidden="true">
+      <span className="memory-card__success-ring" />
+      {Array.from({ length: 8 }, (_, index) => (
+        <span
+          className="memory-card__success-particle"
+          key={index}
+          style={{ "--memory-particle-index": index }}
+        />
+      ))}
+      <span className="memory-card__success-label">GOOD!</span>
+    </span>
+  );
+}
+
 export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
-  const initialData = useMemo(() => makeRound(1), []);
+  const initialData = useMemo(() => createMemoryRound(1, MEMORY_SYMBOLS), []);
   const [round, setRound] = useState(1);
   const [data, setData] = useState(initialData);
   const [phase, setPhase] = useState(PHASE.IDLE);
   const [step, setStep] = useState(0);
-  const [selected, setSelected] = useState([]);
   const [best, setBest] = useState(() => getBest());
-  const [remainingMs, setRemainingMs] = useState(getSelectionDuration(initialData.sequence.length));
+  const [remainingMs, setRemainingMs] = useState(initialData.selectionSeconds * 1000);
   const [countdownIndex, setCountdownIndex] = useState(0);
   const [failureReason, setFailureReason] = useState(null);
   const [didBreakRecordThisAttempt, setDidBreakRecordThisAttempt] = useState(false);
+  const [correctFeedback, setCorrectFeedback] = useState(null);
+  const [correctAnnouncement, setCorrectAnnouncement] = useState("");
 
   const activeTimerRef = useRef(null);
   const roundTransitionTimerRef = useRef(null);
+  const feedbackTimerRef = useRef(null);
+  const feedbackSequenceRef = useRef(0);
   const previousPhaseRef = useRef(null);
   const resolvingRef = useRef(false);
   const phaseRef = useRef(phase);
@@ -135,38 +135,34 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
   const dataRef = useRef(data);
   const stepRef = useRef(step);
   const countdownIndexRef = useRef(countdownIndex);
-  const selectedSetRef = useRef(new Set());
   const stageContentRef = useRef(null);
   const pauseButtonRef = useRef(null);
   const resumeButtonRef = useRef(null);
   const retryButtonRef = useRef(null);
-  const selectedSet = useMemo(() => new Set(selected), [selected]);
-  const canPause = phase === PHASE.COUNTDOWN || phase === PHASE.PREVIEW || phase === PHASE.PLAYING;
-  const isStageCovered = phase === PHASE.COUNTDOWN || phase === PHASE.PAUSED || phase === PHASE.FAILED;
-  const shouldShowRound =
-    phase === PHASE.COUNTDOWN ||
-    phase === PHASE.PREVIEW ||
-    phase === PHASE.PLAYING ||
-    phase === PHASE.CLEARED;
+
+  const canPause =
+    phase === PHASE.COUNTDOWN || phase === PHASE.PREVIEW || phase === PHASE.PLAYING;
+  const isStageCovered =
+    phase === PHASE.COUNTDOWN || phase === PHASE.PAUSED || phase === PHASE.FAILED;
   const shouldShowTimer = phase === PHASE.PREVIEW || phase === PHASE.PLAYING;
   const timerText = formatTimer(remainingMs);
   const isTimerCritical = remainingMs > 0 && remainingMs <= 3000;
   const isTimerWarning = remainingMs > 0 && remainingMs <= 5000;
+  const sequenceDensity = data.count <= 4 ? "comfortable" : data.count <= 7 ? "compact" : "dense";
 
   phaseRef.current = phase;
   roundRef.current = round;
   dataRef.current = data;
   stepRef.current = step;
   countdownIndexRef.current = countdownIndex;
-  selectedSetRef.current = selectedSet;
 
   useEffect(() => {
-    if (round > best) {
-      window.localStorage.setItem(KEY, String(round));
+    if (phase !== PHASE.IDLE && round > best) {
+      saveBest(round);
       setBest(round);
       setDidBreakRecordThisAttempt(true);
     }
-  }, [best, round]);
+  }, [best, phase, round]);
 
   useEffect(() => {
     if (!stageContentRef.current) return;
@@ -211,9 +207,19 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
     roundTransitionTimerRef.current = null;
   }
 
+  function clearCorrectFeedback() {
+    if (feedbackTimerRef.current) {
+      window.clearTimeout(feedbackTimerRef.current);
+      feedbackTimerRef.current = null;
+    }
+    setCorrectFeedback(null);
+    setCorrectAnnouncement("");
+  }
+
   function clearGameTimers() {
     clearActiveTimer();
     clearRoundTransitionTimer();
+    clearCorrectFeedback();
   }
 
   function runTimer(kind, durationMs) {
@@ -284,7 +290,7 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
   }
 
   function startPreview() {
-    const nextDuration = dataRef.current.seconds * 1000;
+    const nextDuration = dataRef.current.previewSeconds * 1000;
     setPhase(PHASE.PREVIEW);
     phaseRef.current = PHASE.PREVIEW;
     setRemainingMs(nextDuration);
@@ -292,7 +298,7 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
   }
 
   function startSelection() {
-    const selectionDuration = getSelectionDuration(dataRef.current.sequence.length);
+    const selectionDuration = dataRef.current.selectionSeconds * 1000;
     resolvingRef.current = false;
     setPhase(PHASE.PLAYING);
     phaseRef.current = PHASE.PLAYING;
@@ -304,18 +310,18 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
     clearGameTimers();
     resolvingRef.current = false;
 
-    const nextData = makeRound(nextRound);
+    const nextData = createMemoryRound(nextRound, MEMORY_SYMBOLS);
     setRound(nextRound);
     roundRef.current = nextRound;
     setData(nextData);
     dataRef.current = nextData;
     setStep(0);
     stepRef.current = 0;
-    setSelected([]);
-    selectedSetRef.current = new Set();
     setFailureReason(null);
     setDidBreakRecordThisAttempt(false);
-    setRemainingMs(getSelectionDuration(nextData.sequence.length));
+    setCountdownIndex(0);
+    countdownIndexRef.current = 0;
+    setRemainingMs(nextData.selectionSeconds * 1000);
     startCountdown(0);
   }
 
@@ -323,7 +329,7 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
     clearGameTimers();
     resolvingRef.current = false;
 
-    const nextData = makeRound(1);
+    const nextData = createMemoryRound(1, MEMORY_SYMBOLS);
     setRound(1);
     roundRef.current = 1;
     setData(nextData);
@@ -333,12 +339,11 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
     previousPhaseRef.current = null;
     setStep(0);
     stepRef.current = 0;
-    setSelected([]);
-    selectedSetRef.current = new Set();
     setFailureReason(null);
     setDidBreakRecordThisAttempt(false);
     setCountdownIndex(0);
-    setRemainingMs(getSelectionDuration(nextData.sequence.length));
+    countdownIndexRef.current = 0;
+    setRemainingMs(nextData.selectionSeconds * 1000);
   }
 
   function startGame() {
@@ -356,6 +361,7 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
     resolvingRef.current = true;
     clearActiveTimer();
     clearRoundTransitionTimer();
+    clearCorrectFeedback();
     setFailureReason(reason);
     setPhase(PHASE.FAILED);
     phaseRef.current = PHASE.FAILED;
@@ -375,28 +381,61 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
     }, ROUND_TRANSITION_MS);
   }
 
-  function choose(card) {
-    if (phaseRef.current !== PHASE.PLAYING || resolvingRef.current || selectedSetRef.current.has(card.cardId)) {
-      return;
+  function playCorrectButtonMotion(button) {
+    if (!button?.animate) return;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+
+    button.getAnimations?.().forEach((animation) => animation.cancel());
+    button.animate(
+      [
+        { transform: "scale(1)" },
+        { transform: "scale(1.1)", offset: 0.42 },
+        { transform: "scale(1)" },
+      ],
+      {
+        duration: 360,
+        easing: "cubic-bezier(0.2, 0.8, 0.2, 1)",
+      }
+    );
+  }
+
+  function showCorrectFeedback(symbol) {
+    if (feedbackTimerRef.current) {
+      window.clearTimeout(feedbackTimerRef.current);
     }
 
-    const currentStep = stepRef.current;
+    feedbackSequenceRef.current += 1;
+    setCorrectFeedback({
+      symbolId: symbol.id,
+      sequence: feedbackSequenceRef.current,
+    });
+    setCorrectAnnouncement(`${symbol.name} 정답`);
 
-    if (card.id !== dataRef.current.sequence[currentStep].id) {
+    feedbackTimerRef.current = window.setTimeout(() => {
+      feedbackTimerRef.current = null;
+      setCorrectFeedback(null);
+      setCorrectAnnouncement("");
+    }, CORRECT_FEEDBACK_MS);
+  }
+
+  function choose(symbol, event) {
+    if (phaseRef.current !== PHASE.PLAYING || resolvingRef.current) return;
+
+    const currentStep = stepRef.current;
+    const result = evaluateMemoryChoice(dataRef.current.sequence, currentStep, symbol.id);
+
+    if (!result.correct) {
       failRound(FAILURE_REASON.WRONG);
       return;
     }
 
-    const nextSelectedSet = new Set(selectedSetRef.current);
-    nextSelectedSet.add(card.cardId);
-    selectedSetRef.current = nextSelectedSet;
+    playCorrectButtonMotion(event.currentTarget);
+    showCorrectFeedback(symbol);
 
-    const nextStep = currentStep + 1;
-    stepRef.current = nextStep;
-    setStep(nextStep);
-    setSelected([...nextSelectedSet]);
+    stepRef.current = result.nextStep;
+    setStep(result.nextStep);
 
-    if (nextStep === dataRef.current.sequence.length) {
+    if (result.complete) {
       completeRound();
     }
   }
@@ -454,85 +493,110 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
         className="memory-game__stage-content"
         aria-hidden={isStageCovered ? "true" : undefined}
       >
-          {phase === PHASE.IDLE ? (
-            <section className="memory-game__idle" aria-labelledby="memory-game-start-title">
-              <h3 id="memory-game-start-title">순서를 기억해 보세요.</h3>
-              <p>제한 시간 동안 순서를 기억하고 그대로 선택하세요.</p>
-              <Button className="memory-game__primary" type="button" onClick={startGame}>
-                게임 시작
-              </Button>
-            </section>
-          ) : (
-            <>
-              <div className="memory-game__play-meta">
-                <span aria-hidden="true" />
-                {shouldShowRound ? (
-                  <p className="memory-game__round" aria-label={`현재 ${round}라운드`}>
-                    — {round} ROUND —
-                  </p>
-                ) : null}
-                {shouldShowTimer ? (
-                  <div
-                    className={`memory-game__clock${isTimerWarning ? " is-warning" : ""}${isTimerCritical ? " is-critical" : ""}`}
-                    aria-label={`남은 시간 ${timerText}초`}
-                  >
-                    <span className="memory-game__clock-body">
-                      <StopwatchIcon />
-                      <span>{timerText}</span>
-                    </span>
-                  </div>
-                ) : (
-                  <span aria-hidden="true" />
-                )}
-              </div>
+        {phase === PHASE.IDLE ? (
+          <section className="memory-game__idle" aria-labelledby="memory-game-start-title">
+            <h3 id="memory-game-start-title">순서를 기억해 보세요.</h3>
+            <p>3개의 이모지부터 시작해 세 라운드마다 하나씩 늘어나요.</p>
+            <Button className="memory-game__primary" type="button" onClick={startGame}>
+              게임 시작
+            </Button>
+          </section>
+        ) : (
+          <div className="memory-game__play-shell" data-memory-count={data.count}>
+            <div className="memory-game__timer-row">
+              {shouldShowTimer ? (
+                <div
+                  className={`memory-game__clock${isTimerWarning ? " is-warning" : ""}${isTimerCritical ? " is-critical" : ""}`}
+                  aria-label={`남은 시간 ${timerText}초`}
+                >
+                  <span className="memory-game__clock-body">
+                    <StopwatchIcon />
+                    <span>{timerText}</span>
+                  </span>
+                </div>
+              ) : null}
+            </div>
 
-              <div className="memory-game__play-area">
-                <section className="memory-game__challenge" aria-live="polite">
-                  <div className="memory-sequence" aria-label="기억해야 할 이모지 순서">
-                    {data.sequence.map((item, index) => {
-                      const revealed = shouldReveal(index);
-                      return (
-                        <div
-                          className={`memory-sequence__item${revealed ? " is-revealed" : " is-covered"}`}
-                          key={`${item.id}-${index}`}
-                          aria-label={revealed ? `${item.name}, 순서 ${index + 1}` : `${index + 1}번째 순서 가려짐`}
-                        >
-                          {revealed ? <MemorySymbol value={item.symbol} /> : <span className="memory-sequence__cover" />}
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  {phase === PHASE.CLEARED ? (
-                    <div className="memory-game__feedback" aria-live="assertive">
-                      CLEAR!
+            <GameItemPanel
+              title={`${round} ROUND`}
+              variant="problem"
+              className="memory-game__problem-panel"
+              ariaLabel={`${round}라운드 기억할 순서`}
+            >
+              <div
+                className="memory-sequence"
+                data-count={data.count}
+                data-density={sequenceDensity}
+                aria-label="기억해야 할 이모지 순서"
+              >
+                {data.sequence.map((item, index) => {
+                  const revealed = shouldReveal(index);
+                  return (
+                    <div
+                      className={`memory-sequence__item${revealed ? " is-revealed" : " is-covered"}`}
+                      key={`${round}-${item.id}-${index}`}
+                      aria-label={
+                        revealed
+                          ? `${item.name}, 순서 ${index + 1}`
+                          : `${index + 1}번째 순서 가려짐`
+                      }
+                    >
+                      <span className="memory-sequence__display">
+                        {revealed ? (
+                          <MemorySymbol value={item.symbol} />
+                        ) : (
+                          <span className="memory-sequence__cover" aria-hidden="true">
+                            ?
+                          </span>
+                        )}
+                      </span>
+                      <span className="memory-sequence__platform" aria-hidden="true" />
                     </div>
-                  ) : null}
-                </section>
-
-                <section className="memory-game__board" aria-label="선택할 이모지">
-                  <p>이모지를 순서대로 선택하세요.</p>
-                  <div className="memory-card-grid">
-                    {data.cards.map((card) => {
-                      const picked = selectedSet.has(card.cardId);
-                      return (
-                        <button
-                          type="button"
-                          className={`memory-card${picked ? " is-selected" : ""}`}
-                          key={card.cardId}
-                          onClick={() => choose(card)}
-                          disabled={phase !== PHASE.PLAYING || picked}
-                          aria-label={`${card.name}${picked ? ", 선택됨" : ""}`}
-                        >
-                          <MemorySymbol value={card.symbol} />
-                        </button>
-                      );
-                    })}
-                  </div>
-                </section>
+                  );
+                })}
               </div>
-            </>
-          )}
+
+              {phase === PHASE.CLEARED ? (
+                <div className="memory-game__feedback" aria-live="assertive">
+                  CLEAR!
+                </div>
+              ) : null}
+            </GameItemPanel>
+
+            <GameItemPanel
+              title="순서대로 선택하세요"
+              variant="selection"
+              className="memory-game__selection-panel"
+              ariaLabel="선택할 이모지"
+            >
+              <div className="memory-card-grid">
+                {MEMORY_SYMBOLS.map((symbol) => {
+                  const showFeedback = correctFeedback?.symbolId === symbol.id;
+                  return (
+                    <button
+                      type="button"
+                      className="memory-card"
+                      key={symbol.id}
+                      onClick={(event) => choose(symbol, event)}
+                      disabled={phase !== PHASE.PLAYING}
+                      aria-label={`${symbol.name} 선택`}
+                    >
+                      <span className="memory-card__content">
+                        <MemorySymbol value={symbol.symbol} />
+                      </span>
+                      {showFeedback ? (
+                        <CorrectBurst key={correctFeedback.sequence} />
+                      ) : null}
+                    </button>
+                  );
+                })}
+              </div>
+              <span className="memory-game__sr-feedback" aria-live="polite">
+                {correctAnnouncement}
+              </span>
+            </GameItemPanel>
+          </div>
+        )}
       </div>
 
       {isStageCovered ? (
@@ -547,11 +611,20 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
           ) : null}
 
           {phase === PHASE.PAUSED ? (
-            <div className="memory-game__pause-overlay" role="dialog" aria-labelledby="memory-game-pause-title">
+            <div
+              className="memory-game__pause-overlay"
+              role="dialog"
+              aria-labelledby="memory-game-pause-title"
+            >
               <div className="memory-game__modal">
                 <h3 id="memory-game-pause-title">일시정지</h3>
                 <div className="memory-game__modal-actions">
-                  <Button ref={resumeButtonRef} className="memory-game__modal-button" type="button" onClick={resumeGame}>
+                  <Button
+                    ref={resumeButtonRef}
+                    className="memory-game__modal-button"
+                    type="button"
+                    onClick={resumeGame}
+                  >
                     계속하기
                   </Button>
                   <Button
@@ -568,7 +641,11 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
           ) : null}
 
           {phase === PHASE.FAILED ? (
-            <div className="memory-game__result-overlay" role="dialog" aria-labelledby="memory-game-result-title">
+            <div
+              className="memory-game__result-overlay"
+              role="dialog"
+              aria-labelledby="memory-game-result-title"
+            >
               <div className="memory-game__modal">
                 <h3 id="memory-game-result-title">{resultTitle}</h3>
                 <p className="memory-game__result-round">{round}라운드 실패</p>
@@ -576,7 +653,12 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
                   <p className="memory-game__result-detail">시간 초과</p>
                 ) : null}
                 <div className="memory-game__modal-actions">
-                  <Button ref={retryButtonRef} className="memory-game__modal-button" type="button" onClick={retryRound}>
+                  <Button
+                    ref={retryButtonRef}
+                    className="memory-game__modal-button"
+                    type="button"
+                    onClick={retryRound}
+                  >
                     재도전
                   </Button>
                   <Button
