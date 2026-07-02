@@ -1,10 +1,15 @@
 .theme-mini-games .memory-game {
-  --memory-card-size: clamp(76px, 10vw, 106px);
+  --memory-panel-width: min(100%, 980px);
+  --memory-problem-bg: #fbf7ef;
+  --memory-problem-border: #eadfce;
+  --memory-selection-bg: #fcf5f6;
+  --memory-selection-border: #eadcdf;
+  --memory-panel-shadow: 0 12px 32px rgb(57 41 51 / 0.055);
 }
 
 .theme-mini-games .memory-card:focus-visible {
   outline: 3px solid var(--feature-focus);
-  outline-offset: 3px;
+  outline-offset: 4px;
 }
 
 .theme-mini-games .memory-game__idle h3,
@@ -12,14 +17,14 @@
 .theme-mini-games .memory-game__modal h3,
 .theme-mini-games .memory-game__result-detail,
 .theme-mini-games .memory-game__result-round,
-.theme-mini-games .memory-game__board p {
+.theme-mini-games .memory-game__round {
   margin: 0;
 }
 
 .theme-mini-games .memory-game__stage-content {
   display: grid;
   align-content: center;
-  gap: var(--editorial-space-5);
+  min-width: 0;
   min-height: 100%;
 }
 
@@ -46,31 +51,31 @@
 }
 
 .theme-mini-games .memory-game__idle p {
-  max-width: 460px;
+  max-width: 520px;
   color: var(--feature-text-soft);
   line-height: var(--editorial-body-line-height);
 }
 
-.theme-mini-games .memory-game__play-meta {
+.theme-mini-games .memory-game__play-shell {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: center;
-  gap: var(--editorial-space-3);
+  gap: clamp(18px, 2.4vw, 28px);
+  width: var(--memory-panel-width);
+  min-width: 0;
+  margin-inline: auto;
+  padding-block: clamp(4px, 1vw, 12px);
 }
 
-.theme-mini-games .memory-game__round {
-  margin: 0;
-  color: var(--feature-text);
-  font-size: clamp(0.9rem, 2vw, 1.08rem);
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  text-align: center;
+.theme-mini-games .memory-game__timer-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 28px;
 }
 
 .theme-mini-games .memory-game__clock {
-  justify-self: end;
   display: inline-flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 6px;
   min-width: 92px;
   padding: 0;
@@ -103,82 +108,274 @@
   animation-duration: 220ms;
 }
 
-.theme-mini-games .memory-game__challenge,
-.theme-mini-games .memory-game__board {
-  position: relative;
-  display: grid;
-  gap: var(--editorial-space-4);
+.theme-mini-games .memory-game__problem-panel,
+.theme-mini-games .memory-game__selection-panel {
+  width: 100%;
+  min-width: 0;
 }
 
-.theme-mini-games .memory-game__board p {
-  color: var(--feature-text-soft);
-  font-weight: 700;
+.theme-mini-games .memory-game__problem-panel {
+  --game-item-panel-bg: var(--memory-problem-bg);
+  --game-item-panel-border: var(--memory-problem-border);
+  --game-item-panel-shadow: var(--memory-panel-shadow);
+  --game-item-panel-title-color: var(--feature-text);
 }
 
-.theme-mini-games .memory-sequence,
-.theme-mini-games .memory-card-grid {
+.theme-mini-games .memory-game__selection-panel {
+  --game-item-panel-bg: var(--memory-selection-bg);
+  --game-item-panel-border: var(--memory-selection-border);
+  --game-item-panel-shadow: var(--memory-panel-shadow);
+  --game-item-panel-title-color: var(--feature-text);
+}
+
+.theme-mini-games .memory-game__problem-panel .game-item-panel__content,
+.theme-mini-games .memory-game__selection-panel .game-item-panel__content {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--memory-card-size), var(--memory-card-size)));
-  justify-content: center;
   align-items: center;
-  gap: clamp(10px, 1.8vw, 16px);
+  min-width: 0;
 }
 
-.theme-mini-games .memory-sequence__item,
-.theme-mini-games .memory-card {
+.theme-mini-games .memory-sequence {
+  --memory-sequence-item-size: 94px;
+  --memory-sequence-gap: clamp(16px, 2.6vw, 28px);
+  --memory-sequence-symbol-size: clamp(2.9rem, 5.2vw, 4.5rem);
+
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: end;
+  gap: var(--memory-sequence-gap);
+  width: 100%;
+  min-width: 0;
+}
+
+.theme-mini-games .memory-sequence[data-density="compact"] {
+  --memory-sequence-item-size: 76px;
+  --memory-sequence-gap: clamp(10px, 1.6vw, 18px);
+  --memory-sequence-symbol-size: clamp(2.45rem, 4.3vw, 3.65rem);
+}
+
+.theme-mini-games .memory-sequence[data-density="dense"] {
+  --memory-sequence-item-size: 62px;
+  --memory-sequence-gap: clamp(6px, 1vw, 10px);
+  --memory-sequence-symbol-size: clamp(2rem, 3.5vw, 2.95rem);
+}
+
+.theme-mini-games .memory-sequence__item {
   position: relative;
+  display: grid;
+  grid-template-rows: minmax(44px, 1fr) auto;
+  place-items: end center;
+  flex: 0 1 var(--memory-sequence-item-size);
+  width: var(--memory-sequence-item-size);
+  min-width: 0;
+  height: calc(var(--memory-sequence-item-size) * 1.05);
+}
+
+.theme-mini-games .memory-sequence__display {
+  position: relative;
+  z-index: 2;
   display: grid;
   place-items: center;
   width: 100%;
+  min-width: 0;
+  transform: translateY(4px);
+}
+
+.theme-mini-games .memory-sequence__item .memory-symbol {
+  --memory-symbol-size: var(--memory-sequence-symbol-size);
+  filter: drop-shadow(0 4px 5px rgb(57 41 51 / 0.08));
+}
+
+.theme-mini-games .memory-sequence__platform {
+  position: relative;
+  display: block;
+  width: 88%;
+  height: clamp(12px, 1.7vw, 18px);
+  border: 1px solid rgb(119 102 91 / 0.12);
+  border-radius: 0 0 50% 50% / 0 0 65% 65%;
+  background: linear-gradient(180deg, #ffffff 0%, #f3f0eb 100%);
+  box-shadow:
+    0 8px 10px rgb(57 41 51 / 0.1),
+    inset 0 -2px 3px rgb(119 102 91 / 0.08);
+}
+
+.theme-mini-games .memory-sequence__platform::before {
+  content: "";
+  position: absolute;
+  inset: -7px -1px auto;
+  height: 13px;
+  border: 1px solid rgb(119 102 91 / 0.12);
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ffffff 0%, #faf8f4 100%);
+  box-shadow: inset 0 -2px 3px rgb(119 102 91 / 0.06);
+}
+
+.theme-mini-games .memory-sequence__cover {
+  display: grid;
+  place-items: center;
+  width: clamp(34px, 4vw, 48px);
   aspect-ratio: 1;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
+  border: 2px solid color-mix(in srgb, var(--feature-text) 34%, transparent);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.58);
+  color: color-mix(in srgb, var(--feature-text) 48%, transparent);
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.theme-mini-games .memory-sequence__item.is-revealed .memory-sequence__display {
+  animation: memory-reveal 260ms ease-out;
 }
 
 .theme-mini-games .memory-symbol {
   display: grid;
   place-items: center;
   font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
-  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-size: var(--memory-symbol-size, clamp(2.5rem, 6vw, 4.2rem));
   font-weight: 400;
   line-height: 1;
   user-select: none;
-  transition:
-    transform var(--editorial-motion-fast) var(--editorial-ease-standard),
-    opacity var(--editorial-motion-fast) var(--editorial-ease-standard);
+  transition: transform var(--editorial-motion-fast) var(--editorial-ease-standard);
 }
 
-.theme-mini-games .memory-sequence__item.is-covered {
-  background: var(--memory-card-hidden-bg);
-}
-
-.theme-mini-games .memory-sequence__cover {
-  display: block;
+.theme-mini-games .memory-card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(10px, 1.7vw, 18px);
   width: 100%;
-  height: 100%;
-}
-
-.theme-mini-games .memory-sequence__item.is-revealed {
-  animation: memory-reveal 260ms ease-out;
+  min-width: 0;
 }
 
 .theme-mini-games .memory-card {
-  appearance: none;
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: 0 1 clamp(64px, 8vw, 82px);
+  width: clamp(64px, 8vw, 82px);
+  min-width: 58px;
+  aspect-ratio: 1;
   padding: 0;
+  overflow: visible;
+  appearance: none;
+  border: 1px solid rgb(255 255 255 / 0.92);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 25%, rgb(255 255 255 / 0.98), rgb(255 255 255 / 0.58) 58%, rgb(255 255 255 / 0.34) 100%);
+  color: var(--feature-text);
+  box-shadow:
+    0 7px 18px rgb(57 41 51 / 0.09),
+    inset 0 0 0 1px rgb(143 122 136 / 0.08),
+    inset 0 7px 12px rgb(255 255 255 / 0.48);
   cursor: pointer;
+  transform-origin: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme-mini-games .memory-card::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgb(164 133 150 / 0.12);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.theme-mini-games .memory-card__content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+}
+
+.theme-mini-games .memory-card .memory-symbol {
+  --memory-symbol-size: clamp(2rem, 4.5vw, 3rem);
 }
 
 .theme-mini-games .memory-card:hover:not(:disabled) .memory-symbol {
-  transform: translateY(-3px) scale(1.06);
+  transform: translateY(-2px) scale(1.05);
 }
 
 .theme-mini-games .memory-card:disabled {
   cursor: default;
+  opacity: 1;
 }
 
-.theme-mini-games .memory-card.is-selected .memory-symbol {
-  opacity: 0.45;
+.theme-mini-games .memory-card:disabled .memory-symbol {
+  opacity: 1;
+}
+
+.theme-mini-games .memory-card__success {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  z-index: 4;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.theme-mini-games .memory-card__success-ring {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: calc(clamp(64px, 8vw, 82px) * 0.86);
+  aspect-ratio: 1;
+  border: 2px solid color-mix(in srgb, var(--feature-accent) 52%, white);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0.72);
+  opacity: 0;
+  animation: memory-success-ring 460ms ease-out both;
+}
+
+.theme-mini-games .memory-card__success-particle {
+  --memory-particle-angle: calc(var(--memory-particle-index) * 45deg);
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--feature-accent);
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 0.7);
+  transform: translate(-50%, -50%) rotate(var(--memory-particle-angle)) translateY(-12px) scale(0.5);
+  opacity: 0;
+  animation: memory-success-particle 440ms ease-out both;
+}
+
+.theme-mini-games .memory-card__success-particle:nth-of-type(3n) {
+  border-radius: 1px;
+  background: var(--feature-primary);
+}
+
+.theme-mini-games .memory-card__success-label {
+  position: absolute;
+  left: 12px;
+  bottom: 20px;
+  padding: 5px 8px;
+  border: 1px solid color-mix(in srgb, var(--feature-primary) 34%, transparent);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.92);
+  color: var(--feature-primary);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  transform: translate(-8px, 4px) rotate(7deg) scale(0.8);
+  opacity: 0;
+  animation: memory-success-label 500ms ease-out both;
+}
+
+.theme-mini-games .memory-game__sr-feedback {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .theme-mini-games .memory-game__overlay-layer {
@@ -200,7 +397,15 @@
   background: transparent;
 }
 
-.theme-mini-games .memory-game__countdown span {
+.theme-mini-games .memory-game__round {
+  color: var(--feature-text);
+  font-size: clamp(0.9rem, 2vw, 1.08rem);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-align: center;
+}
+
+.theme-mini-games .memory-game__countdown > span {
   color: var(--feature-text);
   font-size: clamp(4rem, 18vw, 7rem);
   font-weight: 900;
@@ -211,10 +416,10 @@
   position: absolute;
   inset: 50% auto auto 50%;
   z-index: 5;
-  padding: 16px 26px;
+  padding: 14px 22px;
   transform: translate(-50%, -50%);
   color: var(--feature-primary);
-  font-size: clamp(2.25rem, 8vw, 5rem);
+  font-size: clamp(2.2rem, 7vw, 4.5rem);
   font-weight: 900;
   letter-spacing: 0.08em;
   pointer-events: none;
@@ -275,11 +480,11 @@
 
 @keyframes memory-reveal {
   from {
-    transform: scale(0.72);
+    transform: translateY(4px) scale(0.72);
     opacity: 0.2;
   }
   to {
-    transform: scale(1);
+    transform: translateY(4px) scale(1);
     opacity: 1;
   }
 }
@@ -299,6 +504,49 @@
   }
 }
 
+@keyframes memory-success-ring {
+  0% {
+    transform: translate(-50%, -50%) scale(0.68);
+    opacity: 0;
+  }
+  24% {
+    opacity: 0.82;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.42);
+    opacity: 0;
+  }
+}
+
+@keyframes memory-success-particle {
+  0% {
+    transform: translate(-50%, -50%) rotate(var(--memory-particle-angle)) translateY(-12px) scale(0.45);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(var(--memory-particle-angle)) translateY(-48px) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes memory-success-label {
+  0% {
+    transform: translate(-8px, 4px) rotate(7deg) scale(0.72);
+    opacity: 0;
+  }
+  24% {
+    transform: translate(-8px, -2px) rotate(7deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-8px, -12px) rotate(7deg) scale(0.94);
+    opacity: 0;
+  }
+}
+
 @keyframes memory-clock-shake {
   0%,
   100% {
@@ -312,81 +560,132 @@
   }
 }
 
-@media (max-width: 720px) {
-  .theme-mini-games .memory-game {
-    --memory-card-size: clamp(68px, 20vw, 96px);
+@media (max-width: 760px) {
+  .theme-mini-games .memory-game__play-shell {
+    gap: 18px;
+  }
+
+  .theme-mini-games .memory-sequence {
+    --memory-sequence-gap: 10px;
+  }
+
+  .theme-mini-games .memory-sequence[data-density="dense"] {
+    --memory-sequence-item-size: 54px;
+    --memory-sequence-gap: 5px;
+    --memory-sequence-symbol-size: clamp(1.75rem, 6vw, 2.5rem);
+  }
+
+  .theme-mini-games .memory-card-grid {
+    gap: 10px;
   }
 }
 
 @media (max-width: 520px) {
-  .theme-mini-games .memory-game__play-meta {
-    grid-template-columns: 1fr;
-    justify-items: center;
+  .theme-mini-games .memory-game__play-shell {
+    padding-block: 0;
   }
 
-  .theme-mini-games .memory-game__play-meta > span {
-    display: none;
+  .theme-mini-games .memory-game__timer-row {
+    min-height: 24px;
   }
 
-  .theme-mini-games .memory-game__clock {
-    justify-self: center;
+  .theme-mini-games .memory-sequence {
+    flex-wrap: wrap;
+    align-items: end;
+    row-gap: 14px;
   }
 
-  .theme-mini-games .memory-sequence,
-  .theme-mini-games .memory-card-grid {
-    gap: 8px;
+  .theme-mini-games .memory-sequence__item {
+    flex-basis: clamp(48px, 17vw, 64px);
+    width: clamp(48px, 17vw, 64px);
+    height: clamp(54px, 19vw, 70px);
   }
 
-  .theme-mini-games .memory-sequence__item,
+  .theme-mini-games .memory-sequence__item .memory-symbol {
+    --memory-symbol-size: clamp(1.9rem, 9vw, 2.65rem);
+  }
+
   .theme-mini-games .memory-card {
-    min-width: 68px;
+    flex-basis: clamp(58px, 18vw, 70px);
+    width: clamp(58px, 18vw, 70px);
+    min-width: 54px;
+  }
+
+  .theme-mini-games .memory-card .memory-symbol {
+    --memory-symbol-size: clamp(1.8rem, 9vw, 2.55rem);
   }
 }
 
 @media (max-height: 760px) and (min-width: 769px) {
-  .theme-mini-games .memory-game {
-    --memory-card-size: clamp(58px, 8.5vw, 88px);
+  .theme-mini-games .memory-game__play-shell {
+    gap: 14px;
   }
 
-  .theme-mini-games .memory-game__stage-content {
-    gap: var(--editorial-space-3);
+  .theme-mini-games .memory-game__problem-panel,
+  .theme-mini-games .memory-game__selection-panel {
+    padding-block: 18px;
   }
 
-  .theme-mini-games .memory-symbol {
-    font-size: clamp(2.4rem, 6vw, 4.4rem);
+  .theme-mini-games .memory-sequence {
+    --memory-sequence-item-size: 58px;
+    --memory-sequence-gap: 8px;
+    --memory-sequence-symbol-size: clamp(1.9rem, 4vw, 2.7rem);
+  }
+
+  .theme-mini-games .memory-card {
+    flex-basis: 62px;
+    width: 62px;
   }
 }
 
 @media (orientation: landscape) and (max-height: 600px) {
-  .theme-mini-games .memory-game {
-    --memory-card-size: clamp(52px, 8vw, 76px);
-  }
-
   .theme-mini-games .memory-game__stage-content {
-    gap: var(--editorial-space-3);
+    align-content: start;
   }
 
-  .theme-mini-games .memory-game__play-area {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: start;
-    gap: var(--editorial-space-4);
+  .theme-mini-games .memory-game__play-shell {
+    gap: 12px;
   }
 
-  .theme-mini-games .memory-symbol {
-    font-size: clamp(2.1rem, 7vw, 3.8rem);
+  .theme-mini-games .memory-game__timer-row {
+    min-height: 22px;
   }
 
-  .theme-mini-games .memory-game__idle {
-    padding-block: var(--editorial-space-5);
+  .theme-mini-games .memory-game__problem-panel,
+  .theme-mini-games .memory-game__selection-panel {
+    gap: 12px;
+    padding: 14px 18px;
+  }
+
+  .theme-mini-games .memory-sequence__item {
+    height: 58px;
+  }
+
+  .theme-mini-games .memory-card {
+    flex-basis: 56px;
+    width: 56px;
+    min-width: 52px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .theme-mini-games .memory-game__clock.is-warning .memory-game__clock-body,
-  .theme-mini-games .memory-sequence__item.is-revealed,
-  .theme-mini-games .memory-game__feedback {
+  .theme-mini-games .memory-sequence__item.is-revealed .memory-sequence__display,
+  .theme-mini-games .memory-game__feedback,
+  .theme-mini-games .memory-card__success-ring,
+  .theme-mini-games .memory-card__success-particle,
+  .theme-mini-games .memory-card__success-label {
     animation: none;
     transition-duration: 0.01ms;
+  }
+
+  .theme-mini-games .memory-card__success-ring {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 0.55;
+  }
+
+  .theme-mini-games .memory-card__success-label {
+    transform: translate(-8px, -4px) rotate(0) scale(1);
+    opacity: 1;
   }
 }
