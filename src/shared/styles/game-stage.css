@@ -159,13 +159,6 @@ body.game-stage-scroll-locked {
   gap: var(--editorial-space-2);
 }
 
-.game-placeholder__status {
-  color: var(--feature-text-muted);
-  font-size: var(--editorial-label-size);
-  font-weight: var(--editorial-label-weight);
-  letter-spacing: var(--editorial-label-letter-spacing);
-}
-
 @media (max-width: 720px) {
   .game-stage__inner {
     gap: var(--editorial-space-4);

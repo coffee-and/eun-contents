@@ -26,8 +26,8 @@ const FAILURE_REASON = {
 
 const DEFAULT_GAME_META = {
   eyebrow: "MEMORY / ORDER",
-  title: "기억력 게임",
-  description: "이모지 순서를 기억해 선택하세요.",
+  title: "순서 맞추기",
+  description: "제한 시간 동안 순서를 기억하고 그대로 선택하세요.",
 };
 
 const SYMBOLS = [
@@ -458,10 +458,8 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
         >
           {phase === PHASE.IDLE ? (
             <section className="memory-game__idle" aria-labelledby="memory-game-start-title">
-              <h3 id="memory-game-start-title">이모지 순서를 기억해 보세요.</h3>
-              <p>
-                제한시간 동안 보여지는 이모지를 순서대로 다시 선택하면 다음 라운드로 넘어갑니다.
-              </p>
+              <h3 id="memory-game-start-title">순서를 기억해 보세요.</h3>
+              <p>제한 시간 동안 순서를 기억하고 그대로 선택하세요.</p>
               <Button className="memory-game__primary" type="button" onClick={startGame}>
                 게임 시작
               </Button>

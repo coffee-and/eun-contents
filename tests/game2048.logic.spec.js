@@ -1,4 +1,4 @@
-import { expect, test } from "./playwrightTest.js";
+import { expect, test } from "@playwright/test";
 import {
   GAME_2048_DIRECTION,
 } from "../src/features/mini-games/game-2048/game2048.constants.js";

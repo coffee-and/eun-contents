@@ -25,7 +25,7 @@ import "./game-2048.css";
 const DEFAULT_GAME_META = {
   eyebrow: "NUMBER / MERGE",
   title: "2048",
-  description: "같은 숫자를 합쳐 2048을 완성하세요.",
+  description: "목표 타일을 차례로 완성해 2048에 도전하세요.",
 };
 
 const KEY_TO_DIRECTION = {

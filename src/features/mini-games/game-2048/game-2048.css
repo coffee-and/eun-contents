@@ -205,7 +205,7 @@
   display: grid;
   place-items: center;
   padding: var(--editorial-space-5);
-  background: var(--memory-overlay-bg);
+  background: var(--feature-surface);
 }
 
 .theme-mini-games .game-2048__modal {
