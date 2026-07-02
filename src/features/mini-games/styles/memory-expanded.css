@@ -1,3 +1,26 @@
+.theme-mini-games .game-stage:fullscreen.memory-game,
+.theme-mini-games .game-stage.is-focus-mode.memory-game {
+  --memory-panel-width: min(100%, 1080px);
+}
+
+.theme-mini-games .memory-game__stage-content {
+  grid-template-rows: minmax(0, 1fr);
+  align-content: stretch;
+  height: 100%;
+}
+
+.theme-mini-games .game-stage:fullscreen .memory-game__stage-content,
+.theme-mini-games .game-stage.is-focus-mode .memory-game__stage-content {
+  height: 100%;
+  min-height: 100%;
+  scrollbar-gutter: stable;
+}
+
+.theme-mini-games .memory-game__idle {
+  align-content: center;
+  min-height: 100%;
+}
+
 .theme-mini-games .memory-game__play-shell {
   align-self: center;
 }
