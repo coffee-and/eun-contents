@@ -94,19 +94,9 @@
 
 .game-stage:fullscreen .game-stage__content,
 .game-stage.is-focus-mode .game-stage__content {
-  display: grid;
-  grid-template-rows: minmax(0, 1fr);
   height: 100%;
   min-height: 0;
   overflow: hidden;
-  overscroll-behavior: contain;
-}
-
-.game-stage:fullscreen .game-stage__content > *,
-.game-stage.is-focus-mode .game-stage__content > * {
-  min-height: 0;
-  height: 100%;
-  overflow: auto;
   overscroll-behavior: contain;
 }
 

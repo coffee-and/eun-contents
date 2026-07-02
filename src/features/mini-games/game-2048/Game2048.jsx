@@ -341,12 +341,11 @@ export function Game2048({ game = DEFAULT_GAME_META }) {
       fullscreenEnabled
       ariaLabel="2048 게임"
     >
-      <div className="game-2048__stage">
-        <div
-          ref={stageContentRef}
-          className="game-2048__stage-content"
-          aria-hidden={isStageCovered ? "true" : undefined}
-        >
+      <div
+        ref={stageContentRef}
+        className="game-2048__stage-content"
+        aria-hidden={isStageCovered ? "true" : undefined}
+      >
           {phase === GAME_2048_PHASE.IDLE ? (
             <section className="game-2048__idle" aria-labelledby="game-2048-start-title">
               <p className="game-2048__idle-round">ROUND 1</p>
@@ -418,71 +417,74 @@ export function Game2048({ game = DEFAULT_GAME_META }) {
               </p>
             </>
           )}
-        </div>
-
-        {phase === GAME_2048_PHASE.MILESTONE_CLEAR && !isResetConfirmOpen ? (
-          <div className="game-2048__overlay" role="dialog" aria-labelledby="game-2048-milestone-title">
-            <div className="game-2048__modal">
-              <p className="game-2048__modal-eyebrow">ROUND {round} CLEAR</p>
-              <h3 id="game-2048-milestone-title">{formatNumber(currentTarget)} 타일을 완성했어요.</h3>
-              <p>NEXT TARGET</p>
-              <strong>{formatNumber(getNextTargetLabel(targetIndex))}</strong>
-              <Button ref={milestoneButtonRef} type="button" onClick={continueToNextTarget}>
-                다음 목표 {formatNumber(getNextTargetLabel(targetIndex))}
-              </Button>
-            </div>
-          </div>
-        ) : null}
-
-        {phase === GAME_2048_PHASE.COMPLETED && !isResetConfirmOpen ? (
-          <div className="game-2048__overlay" role="dialog" aria-labelledby="game-2048-complete-title">
-            <div className="game-2048__modal">
-              <h3 id="game-2048-complete-title">2048 COMPLETE</h3>
-              <p>모든 목표를 달성했어요.</p>
-              <p>최종 목표를 완성했습니다.</p>
-              <div className="game-2048__modal-actions">
-                <Button ref={completedContinueButtonRef} type="button" onClick={continueEndless}>
-                  계속 플레이
-                </Button>
-                <Button type="button" variant="secondary" onClick={startNewGame}>
-                  새 게임
-                </Button>
-              </div>
-            </div>
-          </div>
-        ) : null}
-
-        {phase === GAME_2048_PHASE.GAME_OVER && !isResetConfirmOpen ? (
-          <div className="game-2048__overlay" role="dialog" aria-labelledby="game-2048-game-over-title">
-            <div className="game-2048__modal">
-              <h3 id="game-2048-game-over-title">GAME OVER</h3>
-              <p>최종 점수</p>
-              <strong>{formatNumber(score)}</strong>
-              <p>최대 타일 {formatNumber(maxTile)}</p>
-              <Button ref={gameOverButtonRef} type="button" onClick={startNewGame}>
-                새 게임
-              </Button>
-            </div>
-          </div>
-        ) : null}
-
-        {isResetConfirmOpen ? (
-          <div className="game-2048__overlay" role="dialog" aria-labelledby="game-2048-reset-title">
-            <div className="game-2048__modal">
-              <h3 id="game-2048-reset-title">새 게임을 시작할까요?</h3>
-              <p>현재 보드와 점수가 초기화됩니다. 최고 점수는 유지됩니다.</p>
-              <div className="game-2048__modal-actions">
-                <Button ref={resetCancelButtonRef} type="button" variant="secondary" onClick={closeResetConfirm}>
-                  계속 플레이
-                </Button>
-                <Button type="button" onClick={startNewGame}>
-                  새 게임
-                </Button>
-              </div>
-            </div>
-          </div>
-        ) : null}
       </div>
+
+      {isStageCovered ? (
+        <div className="game-2048__overlay-layer">
+            {phase === GAME_2048_PHASE.MILESTONE_CLEAR && !isResetConfirmOpen ? (
+              <div className="game-2048__overlay" role="dialog" aria-labelledby="game-2048-milestone-title">
+                <div className="game-2048__modal">
+                  <p className="game-2048__modal-eyebrow">ROUND {round} CLEAR</p>
+                  <h3 id="game-2048-milestone-title">{formatNumber(currentTarget)} 타일을 완성했어요.</h3>
+                  <p>NEXT TARGET</p>
+                  <strong>{formatNumber(getNextTargetLabel(targetIndex))}</strong>
+                  <Button ref={milestoneButtonRef} type="button" onClick={continueToNextTarget}>
+                    다음 목표 {formatNumber(getNextTargetLabel(targetIndex))}
+                  </Button>
+                </div>
+              </div>
+            ) : null}
+
+            {phase === GAME_2048_PHASE.COMPLETED && !isResetConfirmOpen ? (
+              <div className="game-2048__overlay" role="dialog" aria-labelledby="game-2048-complete-title">
+                <div className="game-2048__modal">
+                  <h3 id="game-2048-complete-title">2048 COMPLETE</h3>
+                  <p>모든 목표를 달성했어요.</p>
+                  <p>최종 목표를 완성했습니다.</p>
+                  <div className="game-2048__modal-actions">
+                    <Button ref={completedContinueButtonRef} type="button" onClick={continueEndless}>
+                      계속 플레이
+                    </Button>
+                    <Button type="button" variant="secondary" onClick={startNewGame}>
+                      새 게임
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ) : null}
+
+            {phase === GAME_2048_PHASE.GAME_OVER && !isResetConfirmOpen ? (
+              <div className="game-2048__overlay" role="dialog" aria-labelledby="game-2048-game-over-title">
+                <div className="game-2048__modal">
+                  <h3 id="game-2048-game-over-title">GAME OVER</h3>
+                  <p>최종 점수</p>
+                  <strong>{formatNumber(score)}</strong>
+                  <p>최대 타일 {formatNumber(maxTile)}</p>
+                  <Button ref={gameOverButtonRef} type="button" onClick={startNewGame}>
+                    새 게임
+                  </Button>
+                </div>
+              </div>
+            ) : null}
+
+            {isResetConfirmOpen ? (
+              <div className="game-2048__overlay" role="dialog" aria-labelledby="game-2048-reset-title">
+                <div className="game-2048__modal">
+                  <h3 id="game-2048-reset-title">새 게임을 시작할까요?</h3>
+                  <p>현재 보드와 점수가 초기화됩니다. 최고 점수는 유지됩니다.</p>
+                  <div className="game-2048__modal-actions">
+                    <Button ref={resetCancelButtonRef} type="button" variant="secondary" onClick={closeResetConfirm}>
+                      계속 플레이
+                    </Button>
+                    <Button type="button" onClick={startNewGame}>
+                      새 게임
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ) : null}
+        </div>
+      ) : null}
     </GameStage>
   );
 }

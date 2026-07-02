@@ -450,12 +450,11 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
       fullscreenEnabled
       ariaLabel={game.title}
     >
-      <div className="memory-game__stage">
-        <div
-          ref={stageContentRef}
-          className="memory-game__stage-content"
-          aria-hidden={isStageCovered ? "true" : undefined}
-        >
+      <div
+        ref={stageContentRef}
+        className="memory-game__stage-content"
+        aria-hidden={isStageCovered ? "true" : undefined}
+      >
           {phase === PHASE.IDLE ? (
             <section className="memory-game__idle" aria-labelledby="memory-game-start-title">
               <h3 id="memory-game-start-title">순서를 기억해 보세요.</h3>
@@ -478,8 +477,10 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
                     className={`memory-game__clock${isTimerWarning ? " is-warning" : ""}${isTimerCritical ? " is-critical" : ""}`}
                     aria-label={`남은 시간 ${timerText}초`}
                   >
-                    <StopwatchIcon />
-                    <span>{timerText}</span>
+                    <span className="memory-game__clock-body">
+                      <StopwatchIcon />
+                      <span>{timerText}</span>
+                    </span>
                   </div>
                 ) : (
                   <span aria-hidden="true" />
@@ -533,63 +534,66 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
               </div>
             </>
           )}
-        </div>
-
-        {phase === PHASE.COUNTDOWN ? (
-          <div className="memory-game__countdown" role="status" aria-live="assertive">
-            <p className="memory-game__round" aria-label={`현재 ${round}라운드`}>
-              — {round} ROUND —
-            </p>
-            <span>{COUNTDOWN_LABELS[countdownIndex]}</span>
-          </div>
-        ) : null}
-
-        {phase === PHASE.PAUSED ? (
-          <div className="memory-game__pause-overlay" role="dialog" aria-labelledby="memory-game-pause-title">
-            <div className="memory-game__modal">
-              <h3 id="memory-game-pause-title">일시정지</h3>
-              <div className="memory-game__modal-actions">
-                <Button ref={resumeButtonRef} className="memory-game__modal-button" type="button" onClick={resumeGame}>
-                  계속하기
-                </Button>
-                <Button
-                  className="memory-game__modal-button"
-                  variant="secondary"
-                  type="button"
-                  onClick={resetToIdle}
-                >
-                  처음부터 다시 시작
-                </Button>
-              </div>
-            </div>
-          </div>
-        ) : null}
-
-        {phase === PHASE.FAILED ? (
-          <div className="memory-game__result-overlay" role="dialog" aria-labelledby="memory-game-result-title">
-            <div className="memory-game__modal">
-              <h3 id="memory-game-result-title">{resultTitle}</h3>
-              <p className="memory-game__result-round">{round}라운드 실패</p>
-              {isTimeoutFailure ? (
-                <p className="memory-game__result-detail">시간 초과</p>
-              ) : null}
-              <div className="memory-game__modal-actions">
-                <Button ref={retryButtonRef} className="memory-game__modal-button" type="button" onClick={retryRound}>
-                  재도전
-                </Button>
-                <Button
-                  className="memory-game__modal-button"
-                  variant="secondary"
-                  type="button"
-                  onClick={resetToIdle}
-                >
-                  처음부터 다시 시작
-                </Button>
-              </div>
-            </div>
-          </div>
-        ) : null}
       </div>
+
+      {isStageCovered ? (
+        <div className="memory-game__overlay-layer">
+          {phase === PHASE.COUNTDOWN ? (
+            <div className="memory-game__countdown" role="status" aria-live="assertive">
+              <p className="memory-game__round" aria-label={`현재 ${round}라운드`}>
+                — {round} ROUND —
+              </p>
+              <span>{COUNTDOWN_LABELS[countdownIndex]}</span>
+            </div>
+          ) : null}
+
+          {phase === PHASE.PAUSED ? (
+            <div className="memory-game__pause-overlay" role="dialog" aria-labelledby="memory-game-pause-title">
+              <div className="memory-game__modal">
+                <h3 id="memory-game-pause-title">일시정지</h3>
+                <div className="memory-game__modal-actions">
+                  <Button ref={resumeButtonRef} className="memory-game__modal-button" type="button" onClick={resumeGame}>
+                    계속하기
+                  </Button>
+                  <Button
+                    className="memory-game__modal-button"
+                    variant="secondary"
+                    type="button"
+                    onClick={resetToIdle}
+                  >
+                    처음부터 다시 시작
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ) : null}
+
+          {phase === PHASE.FAILED ? (
+            <div className="memory-game__result-overlay" role="dialog" aria-labelledby="memory-game-result-title">
+              <div className="memory-game__modal">
+                <h3 id="memory-game-result-title">{resultTitle}</h3>
+                <p className="memory-game__result-round">{round}라운드 실패</p>
+                {isTimeoutFailure ? (
+                  <p className="memory-game__result-detail">시간 초과</p>
+                ) : null}
+                <div className="memory-game__modal-actions">
+                  <Button ref={retryButtonRef} className="memory-game__modal-button" type="button" onClick={retryRound}>
+                    재도전
+                  </Button>
+                  <Button
+                    className="memory-game__modal-button"
+                    variant="secondary"
+                    type="button"
+                    onClick={resetToIdle}
+                  >
+                    처음부터 다시 시작
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
     </GameStage>
   );
 }

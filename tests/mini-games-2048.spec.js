@@ -67,7 +67,7 @@ async function expectCenteredInGameContent(page, selector) {
   expect(Math.abs(boxes.targetCenterY - boxes.contentCenterY)).toBeLessThanOrEqual(boxes.tolerance);
 }
 
-async function expectFillsGameContent(page, selector) {
+async function expectCoversGameContent(page, selector) {
   const boxes = await page.evaluate((targetSelector) => {
     const content = document.querySelector(".game-stage__content");
     const target = document.querySelector(targetSelector);
@@ -85,6 +85,28 @@ async function expectFillsGameContent(page, selector) {
   expect(boxes).not.toBeNull();
   expect(boxes.topDelta).toBeLessThanOrEqual(1);
   expect(boxes.heightDelta).toBeLessThanOrEqual(1);
+}
+
+async function expectSequenceClockShakeIsolated(page) {
+  const animation = await page.evaluate(() => {
+    const clock = document.querySelector(".memory-game__clock");
+    const clockBody = document.querySelector(".memory-game__clock-body");
+    if (!clock || !clockBody) return null;
+
+    const clockStyle = window.getComputedStyle(clock);
+    const bodyStyle = window.getComputedStyle(clockBody);
+
+    return {
+      clockName: clockStyle.animationName,
+      bodyName: bodyStyle.animationName,
+      bodyDuration: bodyStyle.animationDuration,
+    };
+  });
+
+  expect(animation).not.toBeNull();
+  expect(animation.clockName).toBe("none");
+  expect(animation.bodyName).toContain("memory-clock-shake");
+  expect(animation.bodyDuration).not.toBe("0s");
 }
 
 async function expectStableExpandedContentLayout(page) {
@@ -286,7 +308,7 @@ test.describe("2048 mini game", () => {
       await expectExpandedStageLayout(page);
       await page.getByRole("button", { name: "새 게임" }).click();
       await expect(page.getByRole("dialog", { name: "새 게임을 시작할까요?" })).toBeVisible();
-      await expectFillsGameContent(page, ".game-2048__stage");
+      await expectCoversGameContent(page, ".game-2048__overlay-layer");
       await expectCenteredInGameContent(page, ".game-2048__modal");
 
       await page.getByRole("dialog", { name: "새 게임을 시작할까요?" }).getByRole("button", { name: "계속 플레이" }).click();
@@ -309,7 +331,6 @@ test.describe("2048 mini game", () => {
       await page.getByRole("button", { name: "게임 크게 보기" }).click();
       await expectExpandedStageLayout(page);
       await expect(page.getByRole("button", { name: "게임 시작" })).toBeVisible();
-      await expectFillsGameContent(page, ".memory-game__stage");
       await expectCenteredInGameContent(page, ".memory-game__idle");
 
       await page.getByRole("button", { name: "전체화면 종료" }).click();
@@ -337,17 +358,58 @@ test.describe("2048 mini game", () => {
 
       await page.getByRole("button", { name: "게임 시작" }).click();
       await expect(page.locator(".memory-game__countdown")).toBeVisible();
-      await expectFillsGameContent(page, ".memory-game__stage");
-      await expectFillsGameContent(page, ".memory-game__countdown");
+      await expect(page.locator(".memory-game__stage-content")).toHaveAttribute("aria-hidden", "true");
+      await expectCoversGameContent(page, ".memory-game__overlay-layer");
+      await expectCoversGameContent(page, ".memory-game__countdown");
       await expectStableExpandedContentLayout(page);
 
       await page.getByRole("button", { name: "일시정지" }).click();
       await expect(page.getByRole("dialog", { name: "일시정지" })).toBeVisible();
+      await expectCoversGameContent(page, ".memory-game__overlay-layer");
       await expectCenteredInGameContent(page, ".memory-game__modal");
 
       await page.getByRole("button", { name: "전체화면 종료" }).click();
       await expect(page.locator(".game-stage")).not.toHaveClass(/is-focus-mode/);
       await expectNoHorizontalOverflow(page);
     }
+  });
+
+  test("keeps sequence timer shake isolated and result overlay centered", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await openMiniGames(page);
+    await page.locator(".mini-game-card").first().click();
+    await page.getByRole("button", { name: "게임 크게 보기" }).click();
+    await expectExpandedStageLayout(page);
+
+    await page.getByRole("button", { name: "게임 시작" }).click();
+    await expect(page.locator(".memory-game__countdown")).toBeVisible();
+    await expectCoversGameContent(page, ".memory-game__countdown");
+
+    await expect(page.locator(".memory-game__clock.is-warning")).toBeVisible({ timeout: 6000 });
+    await expectSequenceClockShakeIsolated(page);
+    await expectStableExpandedContentLayout(page);
+
+    const firstName = await page.locator(".memory-sequence__item").first().getAttribute("aria-label");
+    const expectedName = firstName?.split(",")[0] ?? "";
+    await expect(page.locator(".memory-game__clock.is-critical")).toBeVisible({ timeout: 3000 });
+    await expectSequenceClockShakeIsolated(page);
+    await expect(page.locator(".memory-card:not([disabled])").first()).toBeVisible({ timeout: 7000 });
+
+    const wrongCardIndex = await page.locator(".memory-card:not([disabled])").evaluateAll(
+      (cards, name) => cards.findIndex((card) => !card.getAttribute("aria-label")?.includes(name)),
+      expectedName
+    );
+    expect(wrongCardIndex).toBeGreaterThanOrEqual(0);
+    await page.locator(".memory-card:not([disabled])").nth(wrongCardIndex).click();
+
+    await expect(page.getByRole("dialog", { name: "GAME OVER" })).toBeVisible();
+    await expect(page.locator(".memory-game__stage-content")).toHaveAttribute("aria-hidden", "true");
+    await expectCoversGameContent(page, ".memory-game__overlay-layer");
+    await expectCenteredInGameContent(page, ".memory-game__modal");
+    await expectExpandedStageLayout(page);
+
+    await page.getByRole("button", { name: "전체화면 종료" }).click();
+    await expect(page.locator(".game-stage")).not.toHaveClass(/is-focus-mode/);
+    await expectNoHorizontalOverflow(page);
   });
 });

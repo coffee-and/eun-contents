@@ -6,16 +6,19 @@
   --game-2048-tile-dark: var(--feature-text-inverse);
 }
 
-.theme-mini-games .game-2048__stage {
-  position: relative;
-  min-height: inherit;
-}
-
 .theme-mini-games .game-2048__stage-content {
   display: grid;
+  align-content: center;
   justify-items: center;
   gap: var(--editorial-space-5);
   min-height: 100%;
+}
+
+.theme-mini-games .game-stage:fullscreen .game-2048__stage-content,
+.theme-mini-games .game-stage.is-focus-mode .game-2048__stage-content {
+  min-height: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
 }
 
 .theme-mini-games .game-2048__idle,
@@ -198,14 +201,21 @@
   text-align: center;
 }
 
-.theme-mini-games .game-2048__overlay {
+.theme-mini-games .game-2048__overlay-layer {
   position: absolute;
   inset: 0;
   z-index: 10;
+  background: var(--feature-surface);
+}
+
+.theme-mini-games .game-2048__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
   display: grid;
   place-items: center;
   padding: var(--editorial-space-5);
-  background: var(--feature-surface);
+  background: transparent;
 }
 
 .theme-mini-games .game-2048__modal {
