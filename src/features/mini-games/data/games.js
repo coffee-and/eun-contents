@@ -17,8 +17,8 @@ export const MINI_GAMES = [
     title: "2048",
     eyebrow: "NUMBER / MERGE",
     description: "같은 숫자를 합쳐 2048을 완성하세요.",
-    status: MINI_GAME_STATUS.COMING_SOON,
-    statusLabel: "준비 중",
+    status: MINI_GAME_STATUS.READY,
+    statusLabel: "구현됨",
   },
   {
     id: "gomoku",

@@ -6,8 +6,14 @@ import { GameStage } from "../../shared/components/game/GameStage.jsx";
 import { EditorialCard } from "../../shared/components/editorial/EditorialCard.jsx";
 import { EditorialLabel } from "../../shared/components/editorial/EditorialLabel.jsx";
 import { MINI_GAMES, MINI_GAME_STATUS } from "./data/games.js";
+import { Game2048 } from "./game-2048/Game2048.jsx";
 import { MemoryOrderGame } from "./memory/MemoryOrderGame.jsx";
 import "./styles/mini-games.css";
+
+const READY_GAME_COMPONENTS = {
+  memory: MemoryOrderGame,
+  "2048": Game2048,
+};
 
 export default function MiniGamesApp({ onNavigateHome }) {
   const [selectedGameId, setSelectedGameId] = useState("");
@@ -15,7 +21,7 @@ export default function MiniGamesApp({ onNavigateHome }) {
     () => MINI_GAMES.find((game) => game.id === selectedGameId) ?? null,
     [selectedGameId]
   );
-  const isMemoryGame = selectedGame?.id === "memory";
+  const SelectedGameComponent = selectedGame ? READY_GAME_COMPONENTS[selectedGame.id] : null;
   const heroActions = [
     onNavigateHome ? { label: "← 다른 콘텐츠 보기", onClick: onNavigateHome } : null,
     selectedGame ? { label: "← 다른 게임하기", onClick: () => setSelectedGameId("") } : null,
@@ -29,8 +35,8 @@ export default function MiniGamesApp({ onNavigateHome }) {
         actions={heroActions}
       />
 
-      {isMemoryGame ? (
-        <MemoryOrderGame game={selectedGame} />
+      {SelectedGameComponent ? (
+        <SelectedGameComponent game={selectedGame} />
       ) : selectedGame ? (
         <GameStage
           eyebrow={selectedGame.eyebrow}
