@@ -16,15 +16,18 @@
   margin: 0;
 }
 
-.theme-mini-games .memory-game__stage {
-  position: relative;
-  min-height: inherit;
-}
-
 .theme-mini-games .memory-game__stage-content {
   display: grid;
+  align-content: center;
   gap: var(--editorial-space-5);
   min-height: 100%;
+}
+
+.theme-mini-games .game-stage:fullscreen .memory-game__stage-content,
+.theme-mini-games .game-stage.is-focus-mode .memory-game__stage-content {
+  min-height: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
 }
 
 .theme-mini-games .memory-game__idle {
@@ -86,11 +89,17 @@
   flex: 0 0 auto;
 }
 
-.theme-mini-games .memory-game__clock.is-warning {
+.theme-mini-games .memory-game__clock-body {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.theme-mini-games .memory-game__clock.is-warning .memory-game__clock-body {
   animation: memory-clock-shake 340ms linear infinite;
 }
 
-.theme-mini-games .memory-game__clock.is-critical {
+.theme-mini-games .memory-game__clock.is-critical .memory-game__clock-body {
   animation-duration: 220ms;
 }
 
@@ -172,16 +181,23 @@
   opacity: 0.45;
 }
 
+.theme-mini-games .memory-game__overlay-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: var(--memory-overlay-bg);
+}
+
 .theme-mini-games .memory-game__countdown {
   position: absolute;
   inset: 0;
-  z-index: 8;
+  z-index: 1;
   display: grid;
   align-content: center;
   place-items: center;
   gap: var(--editorial-space-4);
   pointer-events: none;
-  background: var(--memory-overlay-bg);
+  background: transparent;
 }
 
 .theme-mini-games .memory-game__countdown span {
@@ -209,11 +225,11 @@
 .theme-mini-games .memory-game__result-overlay {
   position: absolute;
   inset: 0;
-  z-index: 10;
+  z-index: 1;
   display: grid;
   place-items: center;
   padding: var(--editorial-space-5);
-  background: var(--memory-overlay-bg);
+  background: transparent;
 }
 
 .theme-mini-games .memory-game__modal {
@@ -367,7 +383,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .theme-mini-games .memory-game__clock.is-warning,
+  .theme-mini-games .memory-game__clock.is-warning .memory-game__clock-body,
   .theme-mini-games .memory-sequence__item.is-revealed,
   .theme-mini-games .memory-game__feedback {
     animation: none;

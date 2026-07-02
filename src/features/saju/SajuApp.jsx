@@ -11,7 +11,7 @@ export default function SajuApp({ onNavigateHome }) {
   return (
     <AppShell>
       <FeatureHeader
-        eyebrow="SAJU & INSIGHT"
+        eyebrow="SAJU & TAROT"
         title="사주·타로"
         onNavigateHome={onNavigateHome}
       />

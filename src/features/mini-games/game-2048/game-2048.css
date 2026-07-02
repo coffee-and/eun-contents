@@ -1,0 +1,329 @@
+.theme-mini-games .game-2048 {
+  --game-2048-board-size: min(100%, 560px);
+  --game-2048-board-bg: #d7cfc9;
+  --game-2048-cell-bg: #eee9e5;
+  --game-2048-tile-light: var(--feature-text);
+  --game-2048-tile-dark: var(--feature-text-inverse);
+}
+
+.theme-mini-games .game-2048__stage-content {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--editorial-space-5);
+  min-height: 100%;
+}
+
+.theme-mini-games .game-stage:fullscreen .game-2048__stage-content,
+.theme-mini-games .game-stage.is-focus-mode .game-2048__stage-content {
+  min-height: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.theme-mini-games .game-2048__idle,
+.theme-mini-games .game-2048__modal {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: var(--editorial-space-4);
+  width: min(100%, 520px);
+  min-height: min(420px, 62dvh);
+  text-align: center;
+}
+
+.theme-mini-games .game-2048__idle h3,
+.theme-mini-games .game-2048__idle p,
+.theme-mini-games .game-2048__idle-round,
+.theme-mini-games .game-2048__hint,
+.theme-mini-games .game-2048__modal h3,
+.theme-mini-games .game-2048__modal p,
+.theme-mini-games .game-2048__modal-eyebrow {
+  margin: 0;
+}
+
+.theme-mini-games .game-2048__idle-round,
+.theme-mini-games .game-2048__modal-eyebrow {
+  color: var(--feature-primary);
+  font-size: var(--editorial-label-size);
+  font-weight: var(--editorial-label-weight);
+  letter-spacing: var(--editorial-label-letter-spacing);
+}
+
+.theme-mini-games .game-2048__idle h3,
+.theme-mini-games .game-2048__modal h3 {
+  color: var(--feature-text);
+  font-size: var(--editorial-section-title-size);
+  line-height: var(--editorial-title-line-height);
+}
+
+.theme-mini-games .game-2048__idle p,
+.theme-mini-games .game-2048__hint,
+.theme-mini-games .game-2048__modal p {
+  color: var(--feature-text-soft);
+  line-height: var(--editorial-body-line-height);
+}
+
+.theme-mini-games .game-2048__meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--editorial-space-3);
+  width: min(100%, 720px);
+}
+
+.theme-mini-games .game-2048__meta div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--feature-card-border);
+  background: var(--feature-surface-muted);
+}
+
+.theme-mini-games .game-2048__meta span {
+  color: var(--feature-text-muted);
+  font-size: var(--editorial-label-size);
+  font-weight: var(--editorial-label-weight);
+  letter-spacing: var(--editorial-label-letter-spacing);
+}
+
+.theme-mini-games .game-2048__meta strong {
+  overflow: hidden;
+  color: var(--feature-text);
+  font-size: clamp(1.08rem, 2.4vw, 1.45rem);
+  font-weight: 900;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.theme-mini-games .game-2048__board {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: clamp(8px, 1.4vw, 14px);
+  width: var(--game-2048-board-size);
+  max-width: 560px;
+  aspect-ratio: 1;
+  padding: clamp(8px, 1.4vw, 14px);
+  border: 0;
+  background: var(--game-2048-board-bg);
+  touch-action: none;
+}
+
+.theme-mini-games .game-2048__board:focus-visible {
+  outline: 3px solid var(--feature-focus);
+  outline-offset: 4px;
+}
+
+.theme-mini-games .game-2048__cell {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  border: 0;
+  background: var(--game-2048-cell-bg);
+  color: var(--game-2048-tile-light);
+  font-size: clamp(1.45rem, 6vw, 3.5rem);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  user-select: none;
+}
+
+.theme-mini-games .game-2048__cell span {
+  display: block;
+  max-width: 100%;
+}
+
+.theme-mini-games .game-2048__cell.has-value {
+  animation: game-2048-tile-in 150ms ease-out;
+}
+
+.theme-mini-games .game-2048__cell.is-medium {
+  font-size: clamp(1.28rem, 5vw, 3rem);
+}
+
+.theme-mini-games .game-2048__cell.is-small {
+  font-size: clamp(1rem, 4vw, 2.35rem);
+}
+
+.theme-mini-games .game-2048__cell.is-tiny {
+  font-size: clamp(0.78rem, 3vw, 1.65rem);
+}
+
+.theme-mini-games .game-2048__cell[data-value="2"] {
+  background: #f4efe9;
+}
+
+.theme-mini-games .game-2048__cell[data-value="4"] {
+  background: #ece4dc;
+}
+
+.theme-mini-games .game-2048__cell[data-value="8"],
+.theme-mini-games .game-2048__cell[data-value="16"],
+.theme-mini-games .game-2048__cell[data-value="32"],
+.theme-mini-games .game-2048__cell[data-value="64"] {
+  background: var(--feature-primary-soft);
+}
+
+.theme-mini-games .game-2048__cell[data-value="128"] {
+  background: #cad8c8;
+}
+
+.theme-mini-games .game-2048__cell[data-value="256"] {
+  background: var(--feature-accent-soft);
+}
+
+.theme-mini-games .game-2048__cell[data-value="512"] {
+  background: var(--feature-accent);
+  color: var(--game-2048-tile-dark);
+}
+
+.theme-mini-games .game-2048__cell[data-value="1024"] {
+  background: var(--feature-primary);
+  color: var(--game-2048-tile-dark);
+}
+
+.theme-mini-games .game-2048__cell[data-value="2048"] {
+  background: var(--feature-text);
+  color: var(--game-2048-tile-dark);
+}
+
+.theme-mini-games .game-2048__cell[data-value="4096"],
+.theme-mini-games .game-2048__cell[data-value="8192"],
+.theme-mini-games .game-2048__cell.is-tiny {
+  background: var(--mini-plum);
+  color: var(--game-2048-tile-dark);
+}
+
+.theme-mini-games .game-2048__hint {
+  text-align: center;
+}
+
+.theme-mini-games .game-2048__overlay-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: var(--feature-surface);
+}
+
+.theme-mini-games .game-2048__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  padding: var(--editorial-space-5);
+  background: transparent;
+}
+
+.theme-mini-games .game-2048__modal {
+  min-height: auto;
+}
+
+.theme-mini-games .game-2048__modal h3 {
+  max-width: 560px;
+}
+
+.theme-mini-games .game-2048__modal > strong {
+  color: var(--feature-primary);
+  font-size: clamp(2.4rem, 9vw, 5rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.theme-mini-games .game-2048__modal-actions {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.theme-mini-games .game-2048__modal .button {
+  width: min(100%, 240px);
+}
+
+@keyframes game-2048-tile-in {
+  from {
+    transform: scale(0.88);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 720px) {
+  .theme-mini-games .game-2048 {
+    --game-2048-board-size: min(100%, 88vw, 520px);
+  }
+
+  .theme-mini-games .game-2048__stage-content {
+    gap: var(--editorial-space-4);
+  }
+
+  .theme-mini-games .game-2048__meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .theme-mini-games .game-2048__meta div {
+    padding: 12px;
+  }
+
+  .theme-mini-games .game-2048__cell {
+    font-size: clamp(1.3rem, 10vw, 2.5rem);
+  }
+}
+
+@media (max-height: 760px) and (min-width: 769px) {
+  .theme-mini-games .game-2048 {
+    --game-2048-board-size: min(100%, 500px, 58dvh);
+  }
+
+  .theme-mini-games .game-2048__stage-content {
+    gap: var(--editorial-space-3);
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .theme-mini-games .game-2048 {
+    --game-2048-board-size: min(52dvh, 48vw);
+  }
+
+  .theme-mini-games .game-2048__stage-content {
+    grid-template-columns: minmax(220px, var(--game-2048-board-size)) minmax(190px, 1fr);
+    grid-template-areas:
+      "board meta"
+      "board hint";
+    align-items: center;
+    justify-content: center;
+    gap: var(--editorial-space-3);
+  }
+
+  .theme-mini-games .game-2048__meta {
+    grid-area: meta;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-self: end;
+  }
+
+  .theme-mini-games .game-2048__board {
+    grid-area: board;
+  }
+
+  .theme-mini-games .game-2048__hint {
+    grid-area: hint;
+    align-self: start;
+  }
+
+  .theme-mini-games .game-2048__idle {
+    min-height: min(320px, 70dvh);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-mini-games .game-2048__cell.has-value {
+    animation: none;
+  }
+}

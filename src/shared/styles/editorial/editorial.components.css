@@ -82,6 +82,14 @@
   box-shadow: none;
 }
 
+.editorial-entry-selector {
+  width: 100%;
+  border: 1px solid var(--editorial-line);
+  border-radius: 0;
+  background: var(--feature-surface);
+  box-shadow: none;
+}
+
 .editorial-surface-card {
   background: var(--feature-surface);
   box-shadow: none;

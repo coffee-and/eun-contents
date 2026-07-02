@@ -9,6 +9,7 @@
     "build": "vite build",
     "build:pages": "vite build --mode github-pages",
     "preview": "vite preview",
+    "test:e2e": "playwright test",
     "predeploy": "npm run build:pages",
     "deploy": "gh-pages -d dist"
   },
@@ -19,6 +20,7 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "@vitejs/plugin-react": "^4.3.1",
     "gh-pages": "^6.3.0",
     "vercel": "^54.17.3",

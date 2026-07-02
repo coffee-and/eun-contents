@@ -44,6 +44,7 @@
 .theme-relationship .mode-select {
   margin-bottom: var(--card-gap);
   padding: 32px;
+  border-color: var(--editorial-line);
   border-radius: 0;
   background: var(--relationship-white);
   box-shadow: none;
@@ -71,6 +72,10 @@
 .theme-relationship .mode-card {
   appearance: none;
   min-height: 168px;
+  padding: var(--editorial-card-padding);
+  border: 0;
+  border-radius: 0;
+  background: var(--feature-option-bg);
   color: var(--text);
   text-align: left;
   cursor: pointer;
@@ -81,6 +86,7 @@
 
 .theme-relationship .mode-card:hover,
 .theme-relationship .mode-card:focus-visible {
+  border: 0;
   background: var(--relationship-almond);
   transform: none;
 }

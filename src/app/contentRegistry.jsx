@@ -38,7 +38,7 @@ export const CONTENT_REGISTRY = [
   {
     id: "saju",
     route: "saju",
-    category: "SAJU & INSIGHT",
+    category: "SAJU & TAROT",
     title: "사주·타로",
     description: "사주와 타로를 통해\n나의 기질과 지금의 흐름을 살펴봐요",
     status: CONTENT_STATUS.ACTIVE,
