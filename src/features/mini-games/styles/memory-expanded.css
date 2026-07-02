@@ -24,3 +24,17 @@
 .theme-mini-games .memory-game__play-shell {
   align-self: center;
 }
+
+.theme-mini-games .memory-game__modal {
+  width: min(100%, 440px);
+  padding: clamp(26px, 4vw, 38px);
+  border: 1px solid var(--memory-problem-border);
+  border-radius: 22px;
+  background: var(--memory-problem-bg);
+  box-shadow: 0 18px 48px rgb(57 41 51 / 0.09);
+}
+
+.theme-mini-games .memory-game__result-overlay .memory-game__modal {
+  border-color: var(--memory-selection-border);
+  background: var(--memory-selection-bg);
+}
