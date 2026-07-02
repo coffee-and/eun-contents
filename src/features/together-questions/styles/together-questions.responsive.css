@@ -1,28 +1,10 @@
 @media (max-width: 1024px) {
-  .theme-together-questions .page {
-    padding-inline: 28px;
-  }
-
   .theme-together-questions .tq-card-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 720px) {
-  .theme-together-questions .page {
-    padding: 22px 18px 48px;
-  }
-
-  .theme-together-questions .app-shell {
-    width: 100%;
-  }
-
-  .theme-together-questions .tq-hero {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 8px 0 26px;
-  }
-
   .theme-together-questions .tq-panel,
   .theme-together-questions .tq-complete-card {
     padding: 20px;
@@ -57,10 +39,6 @@
 }
 
 @media (max-width: 420px) {
-  .theme-together-questions .page {
-    padding-inline: 16px;
-  }
-
   .theme-together-questions .tq-panel,
   .theme-together-questions .tq-complete-card {
     padding: 18px;
@@ -88,7 +66,7 @@
     max-width: none;
   }
 
-  .theme-together-questions .tq-hero,
+  .theme-together-questions .feature-header,
   .theme-together-questions .tq-alert,
   .theme-together-questions .tq-export-actions {
     display: none;

@@ -1,7 +1,3 @@
-.theme-together-questions .tq-start {
-  border-top: 18px solid var(--together-forest);
-}
-
 .theme-together-questions .tq-draft-notice {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;

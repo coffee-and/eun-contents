@@ -11,12 +11,8 @@ export default function SajuApp({ onNavigateHome }) {
   return (
     <AppShell>
       <FeatureHeader
-        className="saju-hero"
-        copyClassName="saju-hero__copy"
         eyebrow="SAJU & INSIGHT"
-        eyebrowClassName="saju-hero__eyebrow"
         title="사주·타로"
-        titleClassName="saju-hero__title"
         onNavigateHome={onNavigateHome}
       />
 

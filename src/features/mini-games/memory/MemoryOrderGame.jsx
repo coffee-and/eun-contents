@@ -1,12 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "../../../shared/components/Button.jsx";
-import { TextAction } from "../../../shared/components/TextAction.jsx";
 import { EditorialCard } from "../../../shared/components/editorial/EditorialCard.jsx";
 import { EditorialLabel } from "../../../shared/components/editorial/EditorialLabel.jsx";
 import "./memory-game.css";
 
 const KEY = "eunContents.memoryOrderGame.bestRound";
-const COUNTDOWN_LABELS = ["3", "2", "1", "시작"];
+const COUNTDOWN_LABELS = ["3", "2", "1", "START!"];
 const COUNTDOWN_STEP_MS = 1000;
 const ROUND_TRANSITION_MS = 900;
 const SELECTION_SECONDS_PER_TARGET = 2;
@@ -110,7 +109,7 @@ function StopwatchIcon() {
   );
 }
 
-export function MemoryOrderGame({ onBack }) {
+export function MemoryOrderGame() {
   const initialData = useMemo(() => makeRound(1), []);
   const [round, setRound] = useState(1);
   const [data, setData] = useState(initialData);
@@ -133,13 +132,13 @@ export function MemoryOrderGame({ onBack }) {
   const stepRef = useRef(step);
   const countdownIndexRef = useRef(countdownIndex);
   const selectedSetRef = useRef(new Set());
-  const contentRef = useRef(null);
+  const stageContentRef = useRef(null);
   const pauseButtonRef = useRef(null);
   const resumeButtonRef = useRef(null);
   const retryButtonRef = useRef(null);
   const selectedSet = useMemo(() => new Set(selected), [selected]);
   const canPause = phase === PHASE.COUNTDOWN || phase === PHASE.PREVIEW || phase === PHASE.PLAYING;
-  const isInteractionBlocked = phase === PHASE.PAUSED || phase === PHASE.FAILED;
+  const isStageCovered = phase === PHASE.COUNTDOWN || phase === PHASE.PAUSED || phase === PHASE.FAILED;
   const shouldShowRound = phase === PHASE.COUNTDOWN || phase === PHASE.PREVIEW || phase === PHASE.PLAYING || phase === PHASE.CLEARED;
   const shouldShowTimer = phase === PHASE.PREVIEW || phase === PHASE.PLAYING;
   const timerText = formatTimer(remainingMs);
@@ -162,9 +161,9 @@ export function MemoryOrderGame({ onBack }) {
   }, [best, round]);
 
   useEffect(() => {
-    if (!contentRef.current) return;
-    contentRef.current.inert = isInteractionBlocked;
-  }, [isInteractionBlocked]);
+    if (!stageContentRef.current) return;
+    stageContentRef.current.inert = isStageCovered;
+  }, [isStageCovered]);
 
   useEffect(() => {
     if (phase === PHASE.PAUSED) {
@@ -418,168 +417,172 @@ export function MemoryOrderGame({ onBack }) {
     return phase === PHASE.PREVIEW || index < step || phase === PHASE.CLEARED;
   }
 
-  const failureLabel = failureReason === FAILURE_REASON.TIMEOUT ? "시간 초과" : "실패";
   const resultTitle = didBreakRecordThisAttempt ? "최고기록 갱신!" : "GAME OVER";
+  const isTimeoutFailure = failureReason === FAILURE_REASON.TIMEOUT;
 
   return (
     <div className="memory-game">
-      <div
-        ref={contentRef}
-        className="memory-game__content"
-        aria-hidden={isInteractionBlocked ? "true" : undefined}
-      >
-        <div className="editorial-top-actions">
-          <TextAction className="editorial-top-action" onClick={onBack}>
-            다른 게임하기
-          </TextAction>
+      <EditorialCard className="memory-game__panel">
+        <div className="memory-game__header">
+          <div>
+            <EditorialLabel variant="section">MEMORY / ORDER</EditorialLabel>
+            <h2>기억력 게임</h2>
+          </div>
+          {canPause ? (
+            <Button
+              ref={pauseButtonRef}
+              className="memory-game__pause"
+              variant="secondary"
+              type="button"
+              onClick={pauseGame}
+            >
+              일시정지
+            </Button>
+          ) : null}
         </div>
 
-        <EditorialCard className="memory-game__panel">
-          <div className="memory-game__header">
-            <div>
-              <EditorialLabel variant="section">MEMORY / ORDER</EditorialLabel>
-              <h2>기억력 게임</h2>
-            </div>
-            {canPause ? (
-              <Button
-                ref={pauseButtonRef}
-                className="memory-game__pause"
-                variant="secondary"
-                type="button"
-                onClick={pauseGame}
-              >
-                일시정지
-              </Button>
-            ) : null}
-          </div>
-
-          {phase === PHASE.IDLE ? (
-            <section className="memory-game__idle" aria-labelledby="memory-game-start-title">
-              <h3 id="memory-game-start-title">이모지 순서를 기억해 보세요.</h3>
-              <p>제한시간 동안 보여지는 이모지를 순서대로 다시 선택하면 다음 라운드로 넘어갑니다.</p>
-              <Button className="memory-game__primary" type="button" onClick={startGame}>
-                게임 시작
-              </Button>
-            </section>
-          ) : (
-            <>
-              <div className="memory-game__play-meta">
-                <span aria-hidden="true" />
-                {shouldShowRound ? (
-                  <p className="memory-game__round" aria-label={`현재 ${round}라운드`}>
-                    — {round} ROUND —
-                  </p>
-                ) : null}
-                {shouldShowTimer ? (
-                  <div
-                    className={`memory-game__clock${isTimerWarning ? " is-warning" : ""}${isTimerCritical ? " is-critical" : ""}`}
-                    aria-label={`남은 시간 ${timerText}초`}
-                  >
-                    <StopwatchIcon />
-                    <span>{timerText}</span>
-                  </div>
-                ) : (
+        <div className="memory-game__stage">
+          <div
+            ref={stageContentRef}
+            className="memory-game__stage-content"
+            aria-hidden={isStageCovered ? "true" : undefined}
+          >
+            {phase === PHASE.IDLE ? (
+              <section className="memory-game__idle" aria-labelledby="memory-game-start-title">
+                <h3 id="memory-game-start-title">이모지 순서를 기억해 보세요.</h3>
+                <p>
+                  제한시간 동안 보여지는 이모지를 순서대로 다시 선택하면 다음 라운드로
+                  넘어갑니다.
+                </p>
+                <Button className="memory-game__primary" type="button" onClick={startGame}>
+                  게임 시작
+                </Button>
+              </section>
+            ) : (
+              <>
+                <div className="memory-game__play-meta">
                   <span aria-hidden="true" />
-                )}
-              </div>
-
-              <section className="memory-game__challenge" aria-live="polite">
-                <div className="memory-sequence" aria-label="기억해야 할 이모지 순서">
-                  {data.sequence.map((item, index) => {
-                    const revealed = shouldReveal(index);
-                    return (
-                      <div
-                        className={`memory-sequence__item${revealed ? " is-revealed" : " is-covered"}`}
-                        key={`${item.id}-${index}`}
-                        aria-label={revealed ? `${item.name}, 순서 ${index + 1}` : `${index + 1}번째 순서 가려짐`}
-                      >
-                        {revealed ? <MemorySymbol value={item.symbol} /> : <span className="memory-sequence__cover" />}
-                      </div>
-                    );
-                  })}
+                  {shouldShowRound ? (
+                    <p className="memory-game__round" aria-label={`현재 ${round}라운드`}>
+                      — {round} ROUND —
+                    </p>
+                  ) : null}
+                  {shouldShowTimer ? (
+                    <div
+                      className={`memory-game__clock${isTimerWarning ? " is-warning" : ""}${isTimerCritical ? " is-critical" : ""}`}
+                      aria-label={`남은 시간 ${timerText}초`}
+                    >
+                      <StopwatchIcon />
+                      <span>{timerText}</span>
+                    </div>
+                  ) : (
+                    <span aria-hidden="true" />
+                  )}
                 </div>
 
-                {phase === PHASE.CLEARED ? (
-                  <div className="memory-game__feedback" aria-live="assertive">
-                    CLEAR!
+                <section className="memory-game__challenge" aria-live="polite">
+                  <div className="memory-sequence" aria-label="기억해야 할 이모지 순서">
+                    {data.sequence.map((item, index) => {
+                      const revealed = shouldReveal(index);
+                      return (
+                        <div
+                          className={`memory-sequence__item${revealed ? " is-revealed" : " is-covered"}`}
+                          key={`${item.id}-${index}`}
+                          aria-label={revealed ? `${item.name}, 순서 ${index + 1}` : `${index + 1}번째 순서 가려짐`}
+                        >
+                          {revealed ? <MemorySymbol value={item.symbol} /> : <span className="memory-sequence__cover" />}
+                        </div>
+                      );
+                    })}
                   </div>
+
+                  {phase === PHASE.CLEARED ? (
+                    <div className="memory-game__feedback" aria-live="assertive">
+                      CLEAR!
+                    </div>
+                  ) : null}
+                </section>
+
+                <section className="memory-game__board" aria-label="선택할 이모지">
+                  <p>이모지를 순서대로 선택하세요.</p>
+                  <div className="memory-card-grid">
+                    {data.cards.map((card) => {
+                      const picked = selectedSet.has(card.cardId);
+                      return (
+                        <button
+                          type="button"
+                          className={`memory-card${picked ? " is-selected" : ""}`}
+                          key={card.cardId}
+                          onClick={() => choose(card)}
+                          disabled={phase !== PHASE.PLAYING || picked}
+                          aria-label={`${card.name}${picked ? ", 선택됨" : ""}`}
+                        >
+                          <MemorySymbol value={card.symbol} />
+                        </button>
+                      );
+                    })}
+                  </div>
+                </section>
+              </>
+            )}
+          </div>
+
+          {phase === PHASE.COUNTDOWN ? (
+            <div className="memory-game__countdown" role="status" aria-live="assertive">
+              <p className="memory-game__round" aria-label={`현재 ${round}라운드`}>
+                — {round} ROUND —
+              </p>
+              <span>{COUNTDOWN_LABELS[countdownIndex]}</span>
+            </div>
+          ) : null}
+
+          {phase === PHASE.PAUSED ? (
+            <div className="memory-game__pause-overlay" role="dialog" aria-modal="true" aria-labelledby="memory-game-pause-title">
+              <div className="memory-game__modal">
+                <h3 id="memory-game-pause-title">일시정지</h3>
+                <div className="memory-game__modal-actions">
+                  <Button ref={resumeButtonRef} className="memory-game__modal-button" type="button" onClick={resumeGame}>
+                    계속하기
+                  </Button>
+                  <Button
+                    className="memory-game__modal-button"
+                    variant="secondary"
+                    type="button"
+                    onClick={resetToIdle}
+                  >
+                    처음부터 다시 시작
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ) : null}
+
+          {phase === PHASE.FAILED ? (
+            <div className="memory-game__result-overlay" role="dialog" aria-modal="true" aria-labelledby="memory-game-result-title">
+              <div className="memory-game__modal">
+                <h3 id="memory-game-result-title">{resultTitle}</h3>
+                <p className="memory-game__result-round">{round}라운드 실패</p>
+                {isTimeoutFailure ? (
+                  <p className="memory-game__result-detail">시간 초과</p>
                 ) : null}
-              </section>
-
-              <section className="memory-game__board" aria-label="선택할 이모지">
-                <p>이모지를 순서대로 선택하세요.</p>
-                <div className="memory-card-grid">
-                  {data.cards.map((card) => {
-                    const picked = selectedSet.has(card.cardId);
-                    return (
-                      <button
-                        type="button"
-                        className={`memory-card${picked ? " is-selected" : ""}`}
-                        key={card.cardId}
-                        onClick={() => choose(card)}
-                        disabled={phase !== PHASE.PLAYING || picked}
-                        aria-label={`${card.name}${picked ? ", 선택됨" : ""}`}
-                      >
-                        <MemorySymbol value={card.symbol} />
-                      </button>
-                    );
-                  })}
+                <div className="memory-game__modal-actions">
+                  <Button ref={retryButtonRef} className="memory-game__modal-button" type="button" onClick={retryRound}>
+                    재도전
+                  </Button>
+                  <Button
+                    className="memory-game__modal-button"
+                    variant="secondary"
+                    type="button"
+                    onClick={resetToIdle}
+                  >
+                    처음부터 다시 시작
+                  </Button>
                 </div>
-              </section>
-
-              {phase === PHASE.COUNTDOWN ? (
-                <div className="memory-game__countdown" role="status" aria-live="assertive">
-                  <span>{COUNTDOWN_LABELS[countdownIndex]}</span>
-                </div>
-              ) : null}
-            </>
-          )}
-        </EditorialCard>
-      </div>
-
-      {phase === PHASE.PAUSED ? (
-        <div className="memory-game__pause-overlay" role="dialog" aria-modal="true" aria-labelledby="memory-game-pause-title">
-          <div className="memory-game__modal">
-            <h3 id="memory-game-pause-title">일시정지</h3>
-            <div className="memory-game__modal-actions">
-              <Button ref={resumeButtonRef} className="memory-game__modal-button" type="button" onClick={resumeGame}>
-                계속하기
-              </Button>
-              <Button
-                className="memory-game__modal-button"
-                variant="secondary"
-                type="button"
-                onClick={resetToIdle}
-              >
-                처음부터 다시 시작
-              </Button>
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
-      ) : null}
-
-      {phase === PHASE.FAILED ? (
-        <div className="memory-game__result-overlay" role="dialog" aria-modal="true" aria-labelledby="memory-game-result-title">
-          <div className="memory-game__modal">
-            <p className="memory-game__result-reason">{failureLabel}</p>
-            <h3 id="memory-game-result-title">{resultTitle}</h3>
-            <p className="memory-game__result-round">{round}라운드 실패</p>
-            <div className="memory-game__modal-actions">
-              <Button ref={retryButtonRef} className="memory-game__modal-button" type="button" onClick={retryRound}>
-                재도전
-              </Button>
-              <Button
-                className="memory-game__modal-button"
-                variant="secondary"
-                type="button"
-                onClick={resetToIdle}
-              >
-                처음부터 다시 시작
-              </Button>
-            </div>
-          </div>
-        </div>
-      ) : null}
+      </EditorialCard>
     </div>
   );
 }

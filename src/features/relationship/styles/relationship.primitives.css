@@ -9,17 +9,6 @@ body:has(.theme-relationship),
   min-height: 100vh;
   background: var(--bg);
   color: var(--text);
-}
-
-.theme-relationship .page {
-  min-height: 100vh;
-  padding: 24px 16px 64px;
-  background: var(--bg);
-}
-
-.theme-relationship .app-shell {
-  max-width: 1120px;
-  margin: 0 auto;
   --result-card-gap: var(--card-gap);
 }
 
