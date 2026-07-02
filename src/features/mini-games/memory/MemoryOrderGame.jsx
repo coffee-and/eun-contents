@@ -547,7 +547,7 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
         ) : null}
 
         {phase === PHASE.PAUSED ? (
-          <div className="memory-game__pause-overlay" role="dialog" aria-modal="true" aria-labelledby="memory-game-pause-title">
+          <div className="memory-game__pause-overlay" role="dialog" aria-labelledby="memory-game-pause-title">
             <div className="memory-game__modal">
               <h3 id="memory-game-pause-title">일시정지</h3>
               <div className="memory-game__modal-actions">
@@ -568,7 +568,7 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
         ) : null}
 
         {phase === PHASE.FAILED ? (
-          <div className="memory-game__result-overlay" role="dialog" aria-modal="true" aria-labelledby="memory-game-result-title">
+          <div className="memory-game__result-overlay" role="dialog" aria-labelledby="memory-game-result-title">
             <div className="memory-game__modal">
               <h3 id="memory-game-result-title">{resultTitle}</h3>
               <p className="memory-game__result-round">{round}라운드 실패</p>

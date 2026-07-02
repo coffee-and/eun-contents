@@ -9,6 +9,7 @@
 
 .game-stage__inner {
   display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   gap: var(--editorial-space-5);
   width: 100%;
   margin-inline: auto;
@@ -68,14 +69,17 @@
 }
 
 .game-stage:fullscreen {
-  overflow: auto;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
   background: var(--feature-bg);
 }
 
 .game-stage:fullscreen .game-stage__inner,
 .game-stage.is-focus-mode .game-stage__inner {
   width: min(calc(100% - 48px), 960px);
-  min-height: 100dvh;
+  height: 100dvh;
+  min-height: 0;
   align-content: start;
   padding:
     max(24px, env(safe-area-inset-top))
@@ -86,8 +90,9 @@
 
 .game-stage:fullscreen .game-stage__content,
 .game-stage.is-focus-mode .game-stage__content {
-  min-height: min(680px, calc(100dvh - 190px));
+  min-height: 0;
   overflow: auto;
+  overscroll-behavior: contain;
 }
 
 .game-stage.is-focus-mode {
@@ -96,7 +101,7 @@
   z-index: 1000;
   width: 100%;
   height: 100dvh;
-  overflow: auto;
+  overflow: hidden;
   background: var(--feature-bg);
 }
 
@@ -108,6 +113,11 @@ body.game-stage-scroll-locked {
   display: grid;
   place-items: center;
   min-height: inherit;
+}
+
+.game-stage:fullscreen .game-placeholder,
+.game-stage.is-focus-mode .game-placeholder {
+  min-height: 100%;
 }
 
 .game-placeholder__card {
@@ -201,10 +211,6 @@ body.game-stage-scroll-locked {
     padding-block: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-bottom));
   }
 
-  .game-stage:fullscreen .game-stage__content,
-  .game-stage.is-focus-mode .game-stage__content {
-    min-height: calc(100dvh - 150px);
-  }
 }
 
 @media (orientation: landscape) and (max-height: 600px) {
@@ -232,9 +238,7 @@ body.game-stage-scroll-locked {
     display: none;
   }
 
-  .game-stage__content,
-  .game-stage:fullscreen .game-stage__content,
-  .game-stage.is-focus-mode .game-stage__content {
+  .game-stage__content {
     min-height: calc(100dvh - 92px);
   }
 
