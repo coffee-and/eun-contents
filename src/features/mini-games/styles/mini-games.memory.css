@@ -1,7 +1,5 @@
 .theme-mini-games .memory-game {
-  position: relative;
-  display: grid;
-  gap: var(--editorial-space-4);
+  --memory-card-size: clamp(76px, 10vw, 106px);
 }
 
 .theme-mini-games .memory-card:focus-visible {
@@ -9,23 +7,6 @@
   outline-offset: 3px;
 }
 
-.theme-mini-games .memory-game__panel {
-  position: relative;
-  display: grid;
-  gap: var(--editorial-space-5);
-  overflow: hidden;
-  padding: clamp(22px, 3.6vw, 42px);
-  background: var(--feature-surface);
-}
-
-.theme-mini-games .memory-game__header {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--editorial-space-5);
-  align-items: start;
-}
-
-.theme-mini-games .memory-game__header h2,
 .theme-mini-games .memory-game__idle h3,
 .theme-mini-games .memory-game__idle p,
 .theme-mini-games .memory-game__modal h3,
@@ -35,16 +16,9 @@
   margin: 0;
 }
 
-.theme-mini-games .memory-game__header h2 {
-  margin-top: var(--editorial-space-2);
-  color: var(--feature-text);
-  font-size: var(--editorial-section-title-size);
-  line-height: var(--editorial-title-line-height);
-}
-
 .theme-mini-games .memory-game__stage {
   position: relative;
-  min-height: clamp(420px, 54vw, 640px);
+  min-height: inherit;
 }
 
 .theme-mini-games .memory-game__stage-content {
@@ -134,8 +108,8 @@
 
 .theme-mini-games .memory-sequence,
 .theme-mini-games .memory-card-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--memory-card-size), var(--memory-card-size)));
   justify-content: center;
   align-items: center;
   gap: clamp(10px, 1.8vw, 16px);
@@ -146,7 +120,7 @@
   position: relative;
   display: grid;
   place-items: center;
-  width: clamp(86px, 12vw, 126px);
+  width: 100%;
   aspect-ratio: 1;
   border: 0;
   background: transparent;
@@ -323,17 +297,8 @@
 }
 
 @media (max-width: 720px) {
-  .theme-mini-games .memory-game__header {
-    grid-template-columns: 1fr;
-  }
-
-  .theme-mini-games .memory-game__pause {
-    justify-self: start;
-  }
-
-  .theme-mini-games .memory-sequence__item,
-  .theme-mini-games .memory-card {
-    width: clamp(76px, 20vw, 104px);
+  .theme-mini-games .memory-game {
+    --memory-card-size: clamp(68px, 20vw, 96px);
   }
 }
 
@@ -358,8 +323,46 @@
 
   .theme-mini-games .memory-sequence__item,
   .theme-mini-games .memory-card {
-    width: calc(25% - 6px);
     min-width: 68px;
+  }
+}
+
+@media (max-height: 760px) and (min-width: 769px) {
+  .theme-mini-games .memory-game {
+    --memory-card-size: clamp(58px, 8.5vw, 88px);
+  }
+
+  .theme-mini-games .memory-game__stage-content {
+    gap: var(--editorial-space-3);
+  }
+
+  .theme-mini-games .memory-symbol {
+    font-size: clamp(2.4rem, 6vw, 4.4rem);
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .theme-mini-games .memory-game {
+    --memory-card-size: clamp(52px, 8vw, 76px);
+  }
+
+  .theme-mini-games .memory-game__stage-content {
+    gap: var(--editorial-space-3);
+  }
+
+  .theme-mini-games .memory-game__play-area {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--editorial-space-4);
+  }
+
+  .theme-mini-games .memory-symbol {
+    font-size: clamp(2.1rem, 7vw, 3.8rem);
+  }
+
+  .theme-mini-games .memory-game__idle {
+    padding-block: var(--editorial-space-5);
   }
 }
 
