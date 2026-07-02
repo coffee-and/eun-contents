@@ -1,38 +1,5 @@
-.theme-saju .page {
-  min-height: 100vh;
-  padding: 32px 24px 64px;
-  background: var(--feature-bg);
-  color: var(--feature-text);
-}
-
-.theme-saju .app-shell {
-  width: min(100%, var(--editorial-content-max-width));
-  margin-inline: auto;
-}
-
-.theme-saju .saju-hero {
-  padding: 18px 0 34px;
-}
-
-.theme-saju .saju-hero__eyebrow {
-  color: var(--feature-primary);
-}
-
-.theme-saju .saju-hero__title {
-  color: var(--feature-text);
-  font-size: var(--editorial-page-title-size);
-}
-
-.theme-saju .saju-hero__subtitle {
-  max-width: 640px;
-  color: var(--feature-text-soft);
-  line-height: var(--editorial-body-line-height);
-  word-break: keep-all;
-}
-
 .theme-saju .saju-selector {
   padding: clamp(24px, 3.4vw, 40px);
-  border-top: 12px solid var(--feature-accent);
   background: var(--feature-surface);
   cursor: default;
 }

@@ -1,12 +1,4 @@
 @media (max-width: 720px) {
-  .theme-mini-games .page {
-    padding: 22px 18px 48px;
-  }
-
-  .theme-mini-games .mini-games-hero {
-    padding: 8px 0 26px;
-  }
-
   .theme-mini-games .mini-game-selector {
     padding: 22px;
   }
@@ -23,10 +15,6 @@
 }
 
 @media (max-width: 420px) {
-  .theme-mini-games .page {
-    padding-inline: 16px;
-  }
-
   .theme-mini-games .mini-game-selector {
     padding: 18px;
   }

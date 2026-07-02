@@ -12,38 +12,10 @@
 }
 
 @media (max-width: 768px) {
-  .theme-relationship .page {
-    padding: 16px 14px 36px;
-  }
-
-  .theme-relationship .hero,
   .theme-relationship .capture-panel__hero,
   .theme-relationship .capture-panel__footer {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .theme-relationship .hero {
-    gap: var(--space-sm);
-    margin-bottom: 12px;
-    padding-top: 18px;
-  }
-
-  .theme-relationship .hero__copy {
-    flex-basis: auto;
-  }
-
-  .theme-relationship .hero__home-button {
-    order: -1;
-    align-self: flex-end;
-  }
-
-  .theme-relationship .hero__title {
-    font-size: clamp(1.9rem, 9vw, 2.55rem);
-  }
-
-  .theme-relationship .hero__subtitle {
-    font-size: 0.96rem;
   }
 
   .theme-relationship .progress {
@@ -132,10 +104,6 @@
 }
 
 @media (max-width: 420px) {
-  .theme-relationship .page {
-    padding-inline: 12px;
-  }
-
   .theme-relationship .question-card__index {
     flex-basis: 100%;
     width: 100%;

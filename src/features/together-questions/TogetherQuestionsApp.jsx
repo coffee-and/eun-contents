@@ -210,14 +210,9 @@ export default function TogetherQuestionsApp({ onNavigateHome }) {
   return (
     <AppShell>
       <FeatureHeader
-        className="tq-hero"
-        copyClassName="tq-hero__copy"
         eyebrow="QUESTIONS TOGETHER"
-        eyebrowClassName="tq-hero__eyebrow"
         title="함께하는 문답"
-        titleClassName="tq-hero__title"
         subtitle="내 마음을 차례대로 적고, 완성된 나의 문답집을 저장하거나 공유해요."
-        subtitleClassName="tq-hero__subtitle"
         onNavigateHome={onNavigateHome}
         onRestart={step !== SESSION_STEPS.START ? handleRestart : null}
       />
