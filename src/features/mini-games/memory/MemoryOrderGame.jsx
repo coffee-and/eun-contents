@@ -5,7 +5,6 @@ import { GameStage } from "../../../shared/components/game/GameStage.jsx";
 import {
   createMemoryRound,
   evaluateMemoryChoice,
-  getMemorySelectionSeconds,
 } from "./memoryOrder.logic.js";
 
 const KEY = "eunContents.memoryOrderGame.bestRound";
@@ -502,7 +501,11 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
             </Button>
           </section>
         ) : (
-          <div className="memory-game__play-shell" data-memory-count={data.count}>
+          <div
+            className="memory-game__play-shell"
+            data-memory-count={data.count}
+            data-phase={phase}
+          >
             <div className="memory-game__timer-row">
               {shouldShowTimer ? (
                 <div
@@ -533,22 +536,17 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
                   const revealed = shouldReveal(index);
                   return (
                     <div
-                      className={`memory-sequence__item${revealed ? " is-revealed" : " is-covered"}`}
+                      className={`memory-sequence__item${revealed ? " is-revealed" : " is-empty"}`}
+                      data-revealed={revealed ? "true" : "false"}
                       key={`${round}-${item.id}-${index}`}
                       aria-label={
                         revealed
                           ? `${item.name}, 순서 ${index + 1}`
-                          : `${index + 1}번째 순서 가려짐`
+                          : `${index + 1}번째 순서, 아직 맞히지 않음`
                       }
                     >
                       <span className="memory-sequence__display">
-                        {revealed ? (
-                          <MemorySymbol value={item.symbol} />
-                        ) : (
-                          <span className="memory-sequence__cover" aria-hidden="true">
-                            ?
-                          </span>
-                        )}
+                        {revealed ? <MemorySymbol value={item.symbol} /> : null}
                       </span>
                       <span className="memory-sequence__platform" aria-hidden="true" />
                     </div>
