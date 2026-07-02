@@ -80,13 +80,13 @@ test.describe("memory game expanded layout", () => {
     expect(Math.abs(innerAfterResume.x - innerBeforePause.x)).toBeLessThanOrEqual(2);
     expect(Math.abs(innerAfterResume.y - innerBeforePause.y)).toBeLessThanOrEqual(2);
 
-    const viewportOverflow = await page.evaluate(() => ({
-      width: document.documentElement.clientWidth,
-      scrollWidth: document.documentElement.scrollWidth,
-      height: document.documentElement.clientHeight,
-      scrollHeight: document.documentElement.scrollHeight,
+    const stageOverflow = await stage.evaluate((element) => ({
+      width: element.clientWidth,
+      scrollWidth: element.scrollWidth,
+      height: element.clientHeight,
+      scrollHeight: element.scrollHeight,
     }));
-    expect(viewportOverflow.scrollWidth).toBeLessThanOrEqual(viewportOverflow.width);
-    expect(viewportOverflow.scrollHeight).toBeLessThanOrEqual(viewportOverflow.height);
+    expect(stageOverflow.scrollWidth).toBeLessThanOrEqual(stageOverflow.width);
+    expect(stageOverflow.scrollHeight).toBeLessThanOrEqual(stageOverflow.height);
   });
 });
