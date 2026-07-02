@@ -2,3 +2,6 @@
 @import "./mini-games.selection.css";
 @import "./mini-games.responsive.css";
 @import "./mini-games.memory.css";
+@import "./memory-pedestal-refinement.css";
+@import "./memory-bubble-refinement.css";
+@import "./memory-expanded.css";
