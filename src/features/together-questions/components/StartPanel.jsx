@@ -27,7 +27,7 @@ export function StartPanel({ startForm, canStart, isBusy, onSubmit, onChangeForm
   }
 
   return (
-    <EditorialCard as="form" className="tq-panel tq-start" onSubmit={onSubmit}>
+    <EditorialCard as="form" className="tq-panel tq-start editorial-entry-selector" onSubmit={onSubmit}>
       {hasDraft ? (
         <section className="tq-draft-notice" aria-label="작성 중인 문답 안내">
           <div>
@@ -46,7 +46,7 @@ export function StartPanel({ startForm, canStart, isBusy, onSubmit, onChangeForm
       ) : null}
 
       <div className="tq-section__head">
-        <EditorialLabel variant="section">START / 01</EditorialLabel>
+        <EditorialLabel variant="section">SELECT</EditorialLabel>
         <h2>누구와의 문답을 시작할까요?</h2>
       </div>
 

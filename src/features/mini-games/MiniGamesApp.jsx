@@ -51,9 +51,9 @@ export default function MiniGamesApp({ onNavigateHome }) {
           />
         </GameStage>
       ) : (
-        <EditorialCard className="mini-game-selector">
+        <EditorialCard className="mini-game-selector editorial-entry-selector">
           <div className="mini-game-selector__head">
-            <EditorialLabel variant="section">SELECT / 01</EditorialLabel>
+            <EditorialLabel variant="section">SELECT</EditorialLabel>
             <h2 id="mini-game-heading">어떤 게임으로 쉬어갈까요?</h2>
           </div>
 

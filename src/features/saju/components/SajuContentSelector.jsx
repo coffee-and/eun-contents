@@ -4,9 +4,9 @@ import { SAJU_CONTENT_TYPES } from "../data/contentTypes.js";
 
 export function SajuContentSelector({ selectedId, onSelect }) {
   return (
-    <EditorialCard className="saju-selector">
+    <EditorialCard className="saju-selector editorial-entry-selector">
       <div className="saju-selector__head">
-        <EditorialLabel variant="section">SELECT / 01</EditorialLabel>
+        <EditorialLabel variant="section">SELECT</EditorialLabel>
         <h2 id="saju-content-heading">어떤 방식으로 나를 들여다볼까요?</h2>
       </div>
 

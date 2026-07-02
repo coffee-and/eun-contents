@@ -78,3 +78,7 @@
   background: var(--together-danger-soft);
   color: var(--together-coral);
 }
+
+.theme-together-questions .tq-start.editorial-entry-selector {
+  border-color: var(--editorial-line);
+}
