@@ -1,0 +1,98 @@
+.theme-mini-games .memory-sequence {
+  --memory-pedestal-height: 48px;
+  --memory-pedestal-top-height: 14px;
+}
+
+.theme-mini-games .memory-sequence[data-density="compact"] {
+  --memory-pedestal-height: 42px;
+  --memory-pedestal-top-height: 13px;
+}
+
+.theme-mini-games .memory-sequence[data-density="dense"] {
+  --memory-pedestal-height: 36px;
+  --memory-pedestal-top-height: 11px;
+}
+
+.theme-mini-games .memory-sequence__display {
+  padding-bottom: 0;
+  transform: translateY(2px);
+}
+
+.theme-mini-games .memory-pedestal__shadow {
+  inset: auto 12% -4px;
+  height: 7px;
+  background: rgb(57 41 51 / 0.055);
+  filter: blur(5px);
+}
+
+.theme-mini-games .memory-pedestal__body {
+  inset: calc(var(--memory-pedestal-top-height) * 0.48) 0 4px;
+  border-color: rgb(119 102 91 / 0.12);
+  border-top-color: transparent;
+  border-radius: 0 0 14px 14px / 0 0 8px 8px;
+  background:
+    linear-gradient(
+      90deg,
+      rgb(119 102 91 / 0.08) 0%,
+      rgb(255 255 255 / 0.06) 18%,
+      rgb(255 255 255 / 0.26) 50%,
+      rgb(255 255 255 / 0.05) 82%,
+      rgb(119 102 91 / 0.09) 100%
+    ),
+    linear-gradient(180deg, #f9f7f3 0%, #efebe5 58%, #e7e3dc 100%);
+  box-shadow:
+    inset 0 -3px 4px rgb(119 102 91 / 0.075),
+    inset 8px 0 10px rgb(119 102 91 / 0.035),
+    inset -8px 0 10px rgb(119 102 91 / 0.035);
+}
+
+.theme-mini-games .memory-pedestal__body::after {
+  inset: auto -1px -2px;
+  height: 9px;
+  border-color: rgb(119 102 91 / 0.075);
+  background: linear-gradient(180deg, #ebe7e0 0%, #e3dfd8 100%);
+  opacity: 0.72;
+}
+
+.theme-mini-games .memory-pedestal__top {
+  height: var(--memory-pedestal-top-height);
+  border-color: rgb(119 102 91 / 0.12);
+  background:
+    radial-gradient(ellipse at 50% 30%, #ffffff 0%, #fbfaf7 52%, #eeeae4 100%);
+  box-shadow:
+    inset 0 -2px 3px rgb(119 102 91 / 0.055),
+    0 1px 1px rgb(255 255 255 / 0.9);
+}
+
+@media (max-width: 760px) {
+  .theme-mini-games .memory-sequence[data-density="dense"] {
+    --memory-pedestal-height: 34px;
+    --memory-pedestal-top-height: 10px;
+  }
+}
+
+@media (max-width: 520px) {
+  .theme-mini-games .memory-sequence[data-density="comfortable"],
+  .theme-mini-games .memory-sequence[data-density="compact"] {
+    --memory-pedestal-height: 38px;
+    --memory-pedestal-top-height: 11px;
+  }
+
+  .theme-mini-games .memory-pedestal__body {
+    border-radius: 0 0 11px 11px / 0 0 7px 7px;
+  }
+}
+
+@media (max-height: 760px) and (min-width: 769px) {
+  .theme-mini-games .memory-sequence {
+    --memory-pedestal-height: 36px;
+    --memory-pedestal-top-height: 10px;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .theme-mini-games .memory-sequence {
+    --memory-pedestal-height: 34px;
+    --memory-pedestal-top-height: 10px;
+  }
+}
