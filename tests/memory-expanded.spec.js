@@ -1,13 +1,15 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("memory game expanded layout", () => {
-  test("keeps the card surface, pedestal size, and modal inside the expanded stage", async ({ page }) => {
+  test("keeps the card surface, cylinder pedestal, and state views inside the expanded stage", async ({ page }) => {
+    test.setTimeout(40000);
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.addInitScript(() => {
       Object.defineProperty(HTMLElement.prototype, "requestFullscreen", {
         configurable: true,
         value: undefined,
       });
+      Math.random = () => 0.45;
     });
 
     await page.goto("/#/mini-games");
@@ -17,10 +19,19 @@ test.describe("memory game expanded layout", () => {
 
     const stage = page.locator(".game-stage.memory-game");
     const inner = stage.locator(".game-stage__inner");
-    const platform = stage.locator(".memory-sequence__platform").first();
+    const overlay = stage.locator(".memory-game__overlay-layer");
+    const pedestal = stage.locator(".memory-pedestal").first();
+    const pedestalTop = pedestal.locator(".memory-pedestal__top");
+    const pedestalBody = pedestal.locator(".memory-pedestal__body");
+    const pedestalShadow = pedestal.locator(".memory-pedestal__shadow");
     const sequenceItem = stage.locator(".memory-sequence__item").first();
 
     await expect(stage).toHaveClass(/is-focus-mode/);
+    await expect(overlay).toHaveAttribute("data-state", "countdown");
+    await expect(overlay.locator(".memory-game__state-view")).toHaveAttribute(
+      "data-state",
+      "countdown"
+    );
 
     const surface = await inner.evaluate((element) => {
       const style = window.getComputedStyle(element);
@@ -35,50 +46,95 @@ test.describe("memory game expanded layout", () => {
     expect(Number.parseFloat(surface.borderTopWidth)).toBeGreaterThan(0);
     expect(Number.parseFloat(surface.borderRadius)).toBeGreaterThan(0);
 
-    const [innerBeforePause, itemBox, platformBox] = await Promise.all([
-      inner.boundingBox(),
-      sequenceItem.boundingBox(),
-      platform.boundingBox(),
-    ]);
-
+    const innerBeforePause = await inner.boundingBox();
     expect(innerBeforePause).not.toBeNull();
-    expect(itemBox).not.toBeNull();
-    expect(platformBox).not.toBeNull();
     expect(innerBeforePause.x).toBeGreaterThanOrEqual(8);
     expect(innerBeforePause.y).toBeGreaterThanOrEqual(8);
-    expect(platformBox.width / itemBox.width).toBeGreaterThan(0.9);
-    expect(platformBox.height).toBeGreaterThanOrEqual(10);
 
     await page.getByRole("button", { name: "일시정지" }).click();
-    const dialog = page.getByRole("dialog", { name: "일시정지" });
-    await expect(dialog).toBeVisible();
+    const pauseDialog = page.getByRole("dialog", { name: "일시정지" });
+    const pauseStateView = pauseDialog.locator(".memory-game__state-view");
+    await expect(pauseDialog).toBeVisible();
+    await expect(overlay).toHaveAttribute("data-state", "paused");
+    await expect(pauseStateView).toHaveAttribute("data-state", "paused");
 
-    const modal = dialog.locator(".memory-game__modal");
-    const [innerWhilePaused, modalBox, modalColor] = await Promise.all([
+    const [innerWhilePaused, pauseBox, pauseBorderWidth] = await Promise.all([
       inner.boundingBox(),
-      modal.boundingBox(),
-      modal.evaluate((element) => window.getComputedStyle(element).backgroundColor),
+      pauseStateView.boundingBox(),
+      pauseStateView.evaluate((element) =>
+        Number.parseFloat(window.getComputedStyle(element).borderTopWidth)
+      ),
     ]);
 
     expect(innerWhilePaused).not.toBeNull();
-    expect(modalBox).not.toBeNull();
+    expect(pauseBox).not.toBeNull();
     expect(Math.abs(innerWhilePaused.x - innerBeforePause.x)).toBeLessThanOrEqual(2);
     expect(Math.abs(innerWhilePaused.y - innerBeforePause.y)).toBeLessThanOrEqual(2);
-    expect(modalBox.x).toBeGreaterThanOrEqual(innerWhilePaused.x);
-    expect(modalBox.y).toBeGreaterThanOrEqual(innerWhilePaused.y);
-    expect(modalBox.x + modalBox.width).toBeLessThanOrEqual(
+    expect(pauseBorderWidth).toBe(0);
+    expect(pauseBox.x).toBeGreaterThanOrEqual(innerWhilePaused.x);
+    expect(pauseBox.y).toBeGreaterThanOrEqual(innerWhilePaused.y);
+    expect(pauseBox.x + pauseBox.width).toBeLessThanOrEqual(
       innerWhilePaused.x + innerWhilePaused.width
     );
-    expect(modalBox.y + modalBox.height).toBeLessThanOrEqual(
+    expect(pauseBox.y + pauseBox.height).toBeLessThanOrEqual(
       innerWhilePaused.y + innerWhilePaused.height
     );
-    expect(modalColor).not.toBe("rgba(0, 0, 0, 0)");
 
     await page.getByRole("button", { name: "계속하기" }).click();
-    const innerAfterResume = await inner.boundingBox();
-    expect(innerAfterResume).not.toBeNull();
-    expect(Math.abs(innerAfterResume.x - innerBeforePause.x)).toBeLessThanOrEqual(2);
-    expect(Math.abs(innerAfterResume.y - innerBeforePause.y)).toBeLessThanOrEqual(2);
+    await expect(stage.locator(".memory-game__play-shell")).toHaveAttribute(
+      "data-phase",
+      "playing",
+      { timeout: 15000 }
+    );
+
+    const [itemBox, pedestalBox, topBox, bodyBox, shadowBox] = await Promise.all([
+      sequenceItem.boundingBox(),
+      pedestal.boundingBox(),
+      pedestalTop.boundingBox(),
+      pedestalBody.boundingBox(),
+      pedestalShadow.boundingBox(),
+    ]);
+
+    expect(itemBox).not.toBeNull();
+    expect(pedestalBox).not.toBeNull();
+    expect(topBox).not.toBeNull();
+    expect(bodyBox).not.toBeNull();
+    expect(shadowBox).not.toBeNull();
+    expect(pedestalBox.width / itemBox.width).toBeGreaterThan(0.84);
+    expect(pedestalBox.height).toBeGreaterThanOrEqual(24);
+    expect(bodyBox.height).toBeGreaterThan(topBox.height);
+    expect(shadowBox.y).toBeGreaterThan(bodyBox.y);
+    await expect(stage.locator(".memory-sequence__item.is-empty")).toHaveCount(3);
+    await expect(stage.locator(".memory-pedestal")).toHaveCount(3);
+
+    await page.getByRole("button", { name: "구름 선택" }).click();
+    const failedDialog = page.getByRole("dialog", { name: /GAME OVER|최고기록 갱신/ });
+    const failedStateView = failedDialog.locator(".memory-game__state-view");
+    await expect(failedDialog).toBeVisible();
+    await expect(overlay).toHaveAttribute("data-state", "failed");
+    await expect(failedStateView).toHaveAttribute("data-state", "failed");
+
+    const [innerWhileFailed, failedBox, failedBorderWidth] = await Promise.all([
+      inner.boundingBox(),
+      failedStateView.boundingBox(),
+      failedStateView.evaluate((element) =>
+        Number.parseFloat(window.getComputedStyle(element).borderTopWidth)
+      ),
+    ]);
+
+    expect(innerWhileFailed).not.toBeNull();
+    expect(failedBox).not.toBeNull();
+    expect(Math.abs(innerWhileFailed.x - innerBeforePause.x)).toBeLessThanOrEqual(2);
+    expect(Math.abs(innerWhileFailed.y - innerBeforePause.y)).toBeLessThanOrEqual(2);
+    expect(failedBorderWidth).toBe(0);
+    expect(failedBox.x).toBeGreaterThanOrEqual(innerWhileFailed.x);
+    expect(failedBox.y).toBeGreaterThanOrEqual(innerWhileFailed.y);
+    expect(failedBox.x + failedBox.width).toBeLessThanOrEqual(
+      innerWhileFailed.x + innerWhileFailed.width
+    );
+    expect(failedBox.y + failedBox.height).toBeLessThanOrEqual(
+      innerWhileFailed.y + innerWhileFailed.height
+    );
 
     const stageOverflow = await stage.evaluate((element) => ({
       width: element.clientWidth,
