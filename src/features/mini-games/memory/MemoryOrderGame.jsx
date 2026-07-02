@@ -66,10 +66,30 @@ function formatTimer(milliseconds) {
   return Math.max(0, milliseconds / 1000).toFixed(2);
 }
 
+function focusElement(element) {
+  if (!element?.focus) return;
+
+  try {
+    element.focus({ preventScroll: true });
+  } catch {
+    element.focus();
+  }
+}
+
 function MemorySymbol({ value }) {
   return (
     <span className="memory-symbol" aria-hidden="true">
       {value}
+    </span>
+  );
+}
+
+function MemoryPedestal() {
+  return (
+    <span className="memory-sequence__platform memory-pedestal" aria-hidden="true">
+      <span className="memory-pedestal__shadow" />
+      <span className="memory-pedestal__body" />
+      <span className="memory-pedestal__top" />
     </span>
   );
 }
@@ -170,11 +190,11 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
 
   useEffect(() => {
     if (phase === PHASE.PAUSED) {
-      resumeButtonRef.current?.focus();
+      focusElement(resumeButtonRef.current);
     }
 
     if (phase === PHASE.FAILED) {
-      retryButtonRef.current?.focus();
+      focusElement(retryButtonRef.current);
     }
   }, [phase]);
 
@@ -456,7 +476,7 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
     phaseRef.current = previousPhase;
     previousPhaseRef.current = null;
     resumeActiveTimer();
-    window.setTimeout(() => pauseButtonRef.current?.focus(), 0);
+    window.requestAnimationFrame(() => focusElement(pauseButtonRef.current));
   }
 
   function shouldReveal(index) {
@@ -538,6 +558,7 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
                     <div
                       className={`memory-sequence__item${revealed ? " is-revealed" : " is-empty"}`}
                       data-revealed={revealed ? "true" : "false"}
+                      data-symbol-id={item.id}
                       key={`${round}-${item.id}-${index}`}
                       aria-label={
                         revealed
@@ -548,7 +569,7 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
                       <span className="memory-sequence__display">
                         {revealed ? <MemorySymbol value={item.symbol} /> : null}
                       </span>
-                      <span className="memory-sequence__platform" aria-hidden="true" />
+                      <MemoryPedestal />
                     </div>
                   );
                 })}
@@ -598,76 +619,88 @@ export function MemoryOrderGame({ game = DEFAULT_GAME_META }) {
       </div>
 
       {isStageCovered ? (
-        <div className="memory-game__overlay-layer">
+        <div className="memory-game__overlay-layer" data-state={phase}>
           {phase === PHASE.COUNTDOWN ? (
-            <div className="memory-game__countdown" role="status" aria-live="assertive">
-              <p className="memory-game__round" aria-label={`현재 ${round}라운드`}>
+            <div
+              className="memory-game__state-view"
+              data-state="countdown"
+              role="status"
+              aria-live="assertive"
+            >
+              <p className="memory-game__state-kicker" aria-label={`현재 ${round}라운드`}>
                 — {round} ROUND —
               </p>
-              <span>{COUNTDOWN_LABELS[countdownIndex]}</span>
+              <p className="memory-game__state-title memory-game__state-title--countdown">
+                {COUNTDOWN_LABELS[countdownIndex]}
+              </p>
             </div>
           ) : null}
 
           {phase === PHASE.PAUSED ? (
             <div
-              className="memory-game__pause-overlay"
+              className="memory-game__state-view"
+              data-state="paused"
               role="dialog"
               aria-labelledby="memory-game-pause-title"
             >
-              <div className="memory-game__modal">
-                <h3 id="memory-game-pause-title">일시정지</h3>
-                <div className="memory-game__modal-actions">
-                  <Button
-                    ref={resumeButtonRef}
-                    className="memory-game__modal-button"
-                    type="button"
-                    onClick={resumeGame}
-                  >
-                    계속하기
-                  </Button>
-                  <Button
-                    className="memory-game__modal-button"
-                    variant="secondary"
-                    type="button"
-                    onClick={resetToIdle}
-                  >
-                    처음부터 다시 시작
-                  </Button>
-                </div>
+              <h3 className="memory-game__state-title" id="memory-game-pause-title">
+                일시정지
+              </h3>
+              <div className="memory-game__state-actions">
+                <Button
+                  ref={resumeButtonRef}
+                  className="memory-game__state-button"
+                  type="button"
+                  onClick={resumeGame}
+                >
+                  계속하기
+                </Button>
+                <Button
+                  className="memory-game__state-button"
+                  variant="secondary"
+                  type="button"
+                  onClick={resetToIdle}
+                >
+                  처음부터 다시 시작
+                </Button>
               </div>
             </div>
           ) : null}
 
           {phase === PHASE.FAILED ? (
             <div
-              className="memory-game__result-overlay"
+              className="memory-game__state-view"
+              data-state="failed"
               role="dialog"
               aria-labelledby="memory-game-result-title"
             >
-              <div className="memory-game__modal">
-                <h3 id="memory-game-result-title">{resultTitle}</h3>
-                <p className="memory-game__result-round">{round}라운드 실패</p>
-                {isTimeoutFailure ? (
-                  <p className="memory-game__result-detail">시간 초과</p>
-                ) : null}
-                <div className="memory-game__modal-actions">
-                  <Button
-                    ref={retryButtonRef}
-                    className="memory-game__modal-button"
-                    type="button"
-                    onClick={retryRound}
-                  >
-                    재도전
-                  </Button>
-                  <Button
-                    className="memory-game__modal-button"
-                    variant="secondary"
-                    type="button"
-                    onClick={resetToIdle}
-                  >
-                    처음부터 다시 시작
-                  </Button>
-                </div>
+              <h3
+                className="memory-game__state-title memory-game__state-title--failed"
+                id="memory-game-result-title"
+              >
+                {resultTitle}
+              </h3>
+              <div className="memory-game__state-details">
+                <p>{round}라운드 실패</p>
+                {isTimeoutFailure ? <p>시간 초과</p> : null}
+              </div>
+              <div className="memory-game__state-actions">
+                <Button
+                  ref={retryButtonRef}
+                  className="memory-game__state-button"
+                  type="button"
+                  onClick={retryRound}
+                >
+                  재도전
+                </Button>
+                <Button
+                  className="memory-game__state-button"
+                  variant="secondary"
+                  type="button"
+                  onClick={resetToIdle}
+                >
+                  처음부터 다시 시작
+                </Button>
               </div>
             </div>
           ) : null}
