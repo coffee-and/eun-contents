@@ -18,20 +18,12 @@
 
 .theme-mini-games .memory-game__stage {
   position: relative;
-  display: grid;
   min-height: inherit;
-  height: 100%;
 }
 
 .theme-mini-games .memory-game__stage-content {
   display: grid;
   gap: var(--editorial-space-5);
-  min-height: 100%;
-  min-width: 0;
-}
-
-.theme-mini-games .game-stage:fullscreen .memory-game__stage,
-.theme-mini-games .game-stage.is-focus-mode .memory-game__stage {
   min-height: 100%;
 }
 

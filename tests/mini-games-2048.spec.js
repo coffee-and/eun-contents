@@ -67,6 +67,55 @@ async function expectCenteredInGameContent(page, selector) {
   expect(Math.abs(boxes.targetCenterY - boxes.contentCenterY)).toBeLessThanOrEqual(boxes.tolerance);
 }
 
+async function expectFillsGameContent(page, selector) {
+  const boxes = await page.evaluate((targetSelector) => {
+    const content = document.querySelector(".game-stage__content");
+    const target = document.querySelector(targetSelector);
+    if (!content || !target) return null;
+
+    const contentBox = content.getBoundingClientRect();
+    const targetBox = target.getBoundingClientRect();
+
+    return {
+      topDelta: Math.abs(targetBox.top - contentBox.top),
+      heightDelta: Math.abs(targetBox.height - contentBox.height),
+    };
+  }, selector);
+
+  expect(boxes).not.toBeNull();
+  expect(boxes.topDelta).toBeLessThanOrEqual(1);
+  expect(boxes.heightDelta).toBeLessThanOrEqual(1);
+}
+
+async function expectStableExpandedContentLayout(page) {
+  const samples = [];
+
+  for (let index = 0; index < 5; index += 1) {
+    samples.push(
+      await page.evaluate(() => {
+        const inner = document.querySelector(".game-stage__inner")?.getBoundingClientRect();
+        const content = document.querySelector(".game-stage__content")?.getBoundingClientRect();
+
+        return {
+          innerTop: inner?.top ?? 0,
+          innerHeight: inner?.height ?? 0,
+          contentTop: content?.top ?? 0,
+          contentHeight: content?.height ?? 0,
+        };
+      })
+    );
+    await page.waitForTimeout(160);
+  }
+
+  const first = samples[0];
+  for (const sample of samples.slice(1)) {
+    expect(Math.abs(sample.innerTop - first.innerTop)).toBeLessThanOrEqual(1);
+    expect(Math.abs(sample.innerHeight - first.innerHeight)).toBeLessThanOrEqual(1);
+    expect(Math.abs(sample.contentTop - first.contentTop)).toBeLessThanOrEqual(1);
+    expect(Math.abs(sample.contentHeight - first.contentHeight)).toBeLessThanOrEqual(1);
+  }
+}
+
 async function expectSelectionPanelHierarchy(page, route, outerSelector, innerSelector) {
   await page.goto(route);
   await expect(page.locator(outerSelector)).toBeVisible();
@@ -226,6 +275,29 @@ test.describe("2048 mini game", () => {
     }
   });
 
+  test("centers the 2048 reset dialog inside expanded game content", async ({ page }) => {
+    for (const viewport of REQUIRED_VIEWPORTS) {
+      await page.setViewportSize(viewport);
+      await open2048(page);
+      await page.getByRole("button", { name: "게임 시작" }).click();
+      const boardBeforeConfirm = await getBoardValues(page);
+
+      await page.getByRole("button", { name: "게임 크게 보기" }).click();
+      await expectExpandedStageLayout(page);
+      await page.getByRole("button", { name: "새 게임" }).click();
+      await expect(page.getByRole("dialog", { name: "새 게임을 시작할까요?" })).toBeVisible();
+      await expectFillsGameContent(page, ".game-2048__stage");
+      await expectCenteredInGameContent(page, ".game-2048__modal");
+
+      await page.getByRole("dialog", { name: "새 게임을 시작할까요?" }).getByRole("button", { name: "계속 플레이" }).click();
+      expect(await getBoardValues(page)).toEqual(boardBeforeConfirm);
+
+      await page.getByRole("button", { name: "전체화면 종료" }).click();
+      await expect(page.locator(".game-stage")).not.toHaveClass(/is-focus-mode/);
+      await expectNoHorizontalOverflow(page);
+    }
+  });
+
   test("keeps the sequence game expanded layout stable", async ({ page }) => {
     for (const viewport of REQUIRED_VIEWPORTS) {
       await page.setViewportSize(viewport);
@@ -237,6 +309,8 @@ test.describe("2048 mini game", () => {
       await page.getByRole("button", { name: "게임 크게 보기" }).click();
       await expectExpandedStageLayout(page);
       await expect(page.getByRole("button", { name: "게임 시작" })).toBeVisible();
+      await expectFillsGameContent(page, ".memory-game__stage");
+      await expectCenteredInGameContent(page, ".memory-game__idle");
 
       await page.getByRole("button", { name: "전체화면 종료" }).click();
       await expect(page.locator(".game-stage")).not.toHaveClass(/is-focus-mode/);
@@ -263,6 +337,9 @@ test.describe("2048 mini game", () => {
 
       await page.getByRole("button", { name: "게임 시작" }).click();
       await expect(page.locator(".memory-game__countdown")).toBeVisible();
+      await expectFillsGameContent(page, ".memory-game__stage");
+      await expectFillsGameContent(page, ".memory-game__countdown");
+      await expectStableExpandedContentLayout(page);
 
       await page.getByRole("button", { name: "일시정지" }).click();
       await expect(page.getByRole("dialog", { name: "일시정지" })).toBeVisible();
