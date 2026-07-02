@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "../../../shared/components/Button.jsx";
 import { GameStage } from "../../../shared/components/game/GameStage.jsx";
-import "./memory-game.css";
 
 const KEY = "eunContents.memoryOrderGame.bestRound";
 const COUNTDOWN_LABELS = ["3", "2", "1", "START!"];
