@@ -6,6 +6,11 @@ function joinClassNames(values) {
   return values.filter(Boolean).join(" ");
 }
 
+function focusElement(element) {
+  if (!element) return;
+  element.focus({ preventScroll: true });
+}
+
 export function GameStage({
   actions,
   ariaLabel,
@@ -30,7 +35,7 @@ export function GameStage({
       setIsFullscreen(isCurrentFullscreen);
 
       if (!document.fullscreenElement && !isCurrentFullscreen) {
-        expandButtonRef.current?.focus();
+        window.requestAnimationFrame(() => focusElement(expandButtonRef.current));
       }
     }
 
@@ -57,8 +62,10 @@ export function GameStage({
   }, [isFocusMode]);
 
   useEffect(() => {
-    if (!isExpanded) return;
-    expandButtonRef.current?.focus();
+    if (!isExpanded) return undefined;
+
+    const frameId = window.requestAnimationFrame(() => focusElement(expandButtonRef.current));
+    return () => window.cancelAnimationFrame(frameId);
   }, [isExpanded]);
 
   async function enterExpandedMode() {
@@ -91,8 +98,7 @@ export function GameStage({
 
     setIsFocusMode(false);
     window.setTimeout(() => {
-      previousFocusRef.current?.focus?.();
-      expandButtonRef.current?.focus();
+      focusElement(previousFocusRef.current ?? expandButtonRef.current);
     }, 0);
   }
 
@@ -133,6 +139,7 @@ export function GameStage({
                 variant="secondary"
                 type="button"
                 onClick={handleToggleExpanded}
+                aria-expanded={isExpanded}
                 aria-label={isExpanded ? "전체화면 종료" : "게임 크게 보기"}
               >
                 {isExpanded ? "전체화면 종료" : "크게 보기"}
